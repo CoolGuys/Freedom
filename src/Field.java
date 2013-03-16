@@ -13,7 +13,24 @@ import javax.swing.KeyStroke;
 @SuppressWarnings("serial")
 class Field extends JPanel
 {
-	public Field()
+	private Tile [][] tiles;
+	private int xSize; 	//размеры поля
+	private int ySize;
+	
+	public int getXsize(){
+		return(xSize);
+	}
+	
+	public int getYsize(){
+		return(ySize);
+	}
+	
+	
+	public Tile [][] getTiles(){
+		return this.tiles;
+	}
+	
+	public Field() //Ушаков, добавь заполнение массива клеток и размеров поля из файла 
 	{
 		super();
 		setPreferredSize(new Dimension(1000,600));
@@ -61,5 +78,6 @@ class Field extends JPanel
 			repaint();
 		}
 	}
+	
 }
 
