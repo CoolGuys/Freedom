@@ -1,3 +1,5 @@
+import java.awt.Color;
+
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
@@ -9,7 +11,7 @@ class Frame extends JFrame
 		this.height = aHeight;
 		this.width = aWidth;
 		this.setSize(width, height);
-		this.setTitle("Movement test");
+		this.setTitle("FreedomGame");
 
 		Field playerHolder = new Field();
 		add(playerHolder);
