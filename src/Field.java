@@ -11,6 +11,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+/**
+ * Понятно, что тут начинается самая попка для комментирования. Я иду спать,
+ * потом допишу
+ * 
+ * @author gleb
+ * 
+ */
 @SuppressWarnings("serial")
 class Field extends JPanel
 {
@@ -45,9 +52,9 @@ class Field extends JPanel
 		
 		
 		InputMap imap = getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-		imap.put(KeyStroke.getKeyStroke("pressed W"), "move.up");
-		imap.put(KeyStroke.getKeyStroke("pressed A"), "move.right");
-		imap.put(KeyStroke.getKeyStroke("pressed D"), "move.left");
+		imap.put(KeyStroke.getKeyStroke("W"), "move.up");
+		imap.put(KeyStroke.getKeyStroke("A"), "move.right");
+		imap.put(KeyStroke.getKeyStroke("D"), "move.left");
 		imap.put(KeyStroke.getKeyStroke("S"), "move.down");
 		ActionMap amap = getActionMap();
 		amap.put("move.up", moveUp);
