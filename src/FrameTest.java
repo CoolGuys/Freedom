@@ -105,7 +105,7 @@ class Player
 		this.y = y;
 		try
 		{
-			texture = ImageIO.read(new File("Player.gif"));
+			texture = ImageIO.read(new File("/home/gleb/Player.gif"));
 		} catch (IOException e)
 		{
 			e.printStackTrace();
