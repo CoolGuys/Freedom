@@ -3,7 +3,7 @@ import java.awt.Color;
 import javax.swing.JFrame;
 
 @SuppressWarnings("serial")
-class Frame extends JFrame
+class Frame extends JFrame // это тестовый комент
 {
 
 	public Frame(int aWidth, int aHeight)
