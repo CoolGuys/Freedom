@@ -36,9 +36,7 @@ class Frame extends JFrame
 		this.setTitle("Tile");
 
 		Field playerHolder = new Field();
-		//Timer t = new Timer(10, playerHolder);
 		add(playerHolder);
-		//t.start();
 	}
 
 	private int height;
@@ -105,7 +103,7 @@ class Player
 		this.y = y;
 		try
 		{
-			texture = ImageIO.read(new File("/home/gleb/Player.gif"));
+			texture = ImageIO.read(new File("Player.gif"));
 		} catch (IOException e)
 		{
 			e.printStackTrace();
