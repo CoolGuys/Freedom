@@ -21,7 +21,7 @@ public class Tile {
 	
 	
 	public Tile(int a, int b){//Ушаков, здесь добавь заполнение массива content
-		this.content = new Stuff[3]; //это - дефолт. 
+		this.content = new Stuff[3]; //3 - это по максимуму, чтоб не париться. 
 		this.x = a;
 		this.y = b;
 	}

@@ -4,6 +4,15 @@ public class Robot extends Stuff {
 	private char direction;
 	Stuff container;
 	
+	public Robot(int a, int b, char direct, Stuff c)
+	{ // Ушаков, допиши! @ivan /**А почему у робота уже в конструкторе контейнер
+		// заполняется? И еще я перенес конструктор перед методами, так типа
+		// прилично делать) @gleb
+		super(a, b);
+		direction = direct;
+		container = c;
+	}
+	
 	public char getDirection(){  //you'll get 'F' in case of mistake
 		if (this.direction == 'N') return ('N');
 		if (this.direction == 'S') return ('S');
@@ -13,11 +22,6 @@ public class Robot extends Stuff {
 		return('F');
 	}
 	
-	public Robot (int a, int b, char direct, Stuff c ){ //Ушаков, допиши!
-		super(a,b);
-		direction = direct;
-		container = c;
-	}
 	
 	public boolean canGo( Tile [][] tiles, int xMax,int  yMax ){  //стоит объект - false
 		int x = this.getX();
