@@ -12,7 +12,7 @@ public class Tile {
 	private Image texture;
 	
 	public Stuff [] content; //change to private later
-	private int contentAmount; // кол-во объектов на клетке, может стать багом в случае лазера
+	public int contentAmount; // кол-во объектов на клетке, может стать багом в случае лазера; public в силу необходимости изменения
 
 	public Tile(int a, int b, int contentAmountin, Stuff stuffin[]){//зполнение массива content
 		this.content = new Stuff[3]; //3 - это по максимуму, чтоб не париться. 
