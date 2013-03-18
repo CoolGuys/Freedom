@@ -28,7 +28,7 @@ class Field extends JPanel
 {
 
 	
-	public Field() //Ушаков, добавь заполнение массива клеток и размеров поля из файла 
+	public Field() //Добавь заполнение массива клеток и размеров поля из файла 
 	{
 		super();
 		this.setBackground(Color.BLACK);
