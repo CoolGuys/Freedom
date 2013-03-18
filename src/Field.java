@@ -98,7 +98,7 @@ class Field extends JPanel
 	
 	
 	//Это вложенный класс слушателя событий, такая форма записи распространена для них
-	//Профит в том, что он имеет доступ к плееру, который какбэ приват.
+	//Профит в том, что он имеет доступ к плееру, который какбэ приватное поле другого класса.
 	public class MovementAction extends AbstractAction
 	{
 		public MovementAction(String name)
