@@ -39,6 +39,8 @@ class Frame extends JFrame // это тестовый комент
 		 * 
 		 */
 		
+		
+		
 		this.height = aHeight;
 		this.width = aWidth;
 		this.setSize(width, height);
