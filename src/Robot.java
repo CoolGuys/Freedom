@@ -1,11 +1,5 @@
 
 public class Robot  {
-	//Я отказался от наследования stuffа роботом, т.к. это вызывает траблы. рисуем робота отдельно
-	//Траблы: надо давать изменять координаты stuff
-	//проблемы с поднятием
-	
-	//Сухой остаток: похоже, надо забивать на координаты у stuffa и рисовать его "по месту".
-	//иначе надо давать к его координатам полный доступ, а мы можем обойтись без этого.
 	
 	int x;
 	int y;
@@ -118,15 +112,9 @@ public class Robot  {
 	public void take(Tile tile){ //метод поднятия объекта: если объект берется и есть куда положить - делаем это
 		if(!this.ifEmpty) return;
 		
-		int n = tile.getContentAmount() - 1;
-		if (!tile.content[n].getIfCanTake()) return;
-		//исключения обработаны, далее:
-		
-		this.container = tile.content[n];
-		this.ifEmpty = false;
-		tile.content[n] = null;
-		tile.contentAmount--;
-		
+		this.container = tile.takeObject();
+		if (this.container != null) {
+			this.ifEmpty = false; 
+		}
 	}
-
 }

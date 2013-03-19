@@ -1,15 +1,24 @@
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 
-public class StartScreen
+public class StartScreen extends JPanel
 {
-	public StartScreen()
+	public StartScreen(GraphicsHolderAndController aCreator)
 	{
+		setPreferredSize(new Dimension(1000,600));
+		
+		this.addMouseListener(new MouseHandler());
+		
+		creator = aCreator;
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		try
@@ -32,7 +41,9 @@ public class StartScreen
 		else
 			return 0;
 	}
-	public void draw(Graphics g)
+	
+	@Override
+	public void paintComponent(Graphics g)
 	{
 		g.drawImage(wallpaper, 0, 0, null);
 			buttons[1].draw(g);
@@ -41,7 +52,22 @@ public class StartScreen
 	
 	private GButton[] buttons; 
 	private Image wallpaper;
-
+	private GraphicsHolderAndController creator;
+	
+	
+	private class MouseHandler extends MouseAdapter
+	{
+		@Override
+		public void mouseClicked(MouseEvent e)
+		{
+			System.out.println("LOL");
+			if (reactToClick(e.getPoint())==1)
+			{
+				creator.setWhatIsDrawn("Field");
+				creator.repaint();
+			}
+		}
+	}
 }
 
 class GButton
@@ -70,4 +96,6 @@ class GButton
 	int positionX, positionY;
 	String text;
 	Image texture;
+	
+	
 }

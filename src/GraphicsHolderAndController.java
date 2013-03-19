@@ -26,13 +26,16 @@ public class GraphicsHolderAndController extends JPanel
 		
 		this.createInputMap();
 		this.createMovementController();
-		this.addMouseListener(new MouseHandler());
 		
-		startScreen = new StartScreen();
+		startScreen = new StartScreen(this);
+		this.add(startScreen);
 		whatIsDrawn = "StartScreen";
 		gameField = new GameField();
 		
+		
 	}
+	
+	
 	
 	//Метод, создающий таблицу ввода нашей JPanel
 	public void createInputMap()
@@ -64,11 +67,15 @@ public class GraphicsHolderAndController extends JPanel
 
 	}
 	
+	public void setWhatIsDrawn(String target)
+	{
+		this.whatIsDrawn = target;
+	}
 
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		if (whatIsDrawn.equals("Field"))
+	/*	if (whatIsDrawn.equals("Field"))
 		{
 		super.paintComponent(g);
 		player.draw(g);
@@ -76,7 +83,7 @@ public class GraphicsHolderAndController extends JPanel
 		else if (whatIsDrawn.equals("StartScreen"))
 		{
 			startScreen.draw(g);
-		}
+		}*/
 	}
 	
 	private StartScreen startScreen; 
@@ -97,7 +104,7 @@ public class GraphicsHolderAndController extends JPanel
 		{
 			duty = (String) getValue(Action.NAME);
 			ActionListener smoother = new MovementSmoother();
-			t = new Timer(40, smoother);
+			t = new Timer(2, smoother);
 			t.start();
 		}
 		
@@ -112,28 +119,26 @@ public class GraphicsHolderAndController extends JPanel
 		private class MovementSmoother implements ActionListener
 		{
 			@Override
-			public void actionPerformed(ActionEvent e)
-			{
-				System.out.println("LOL\n");
-				player.move(duty);
-				GraphicsHolderAndController.MovementAction.this.repaintOuter();
+			public void actionPerformed(ActionEvent e) {
+				if (whatIsDrawn.equals("Field")) {
+					if (counter <= 5) {
+						player.move(duty);
+						GraphicsHolderAndController.MovementAction.this
+								.repaintOuter();
+						System.out.print(counter);
+						counter++;
+					} else {
+						System.out.println("Stopped");
+						t.stop();
+						counter = 0;
+					}
+				}
 			}
+			
+			int counter=0;
 		}
 	}
-	
-	private class MouseHandler extends MouseAdapter
-	{
-		@Override
-		public void mouseClicked(MouseEvent e)
-		{
-			System.out.println("LOL");
-			if (startScreen.reactToClick(e.getPoint())==1)
-			{
-				whatIsDrawn = "Field";
-				repaint();
-			}
-		}
-	}
+
 	
 	
 }
