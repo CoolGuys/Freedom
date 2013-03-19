@@ -30,13 +30,13 @@ class Player
 	public void move(String direction)
 	{
 		if (direction.equals("up") == true)
-			y -= 30;
+			y -= 150;
 		else if (direction.equals("down") == true)
-			y += 30;
+			y += 150;
 		else if (direction.equals("left") == true)
-			x += 30;
+			x += 150;
 		else
-			x -= 30;
+			x -= 150;
 	}
 
 	private Image texture;

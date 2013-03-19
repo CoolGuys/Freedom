@@ -1,16 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ActionMap;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import java.awt.event.*;
+import javax.swing.*;
 
 
 /**
@@ -92,7 +84,6 @@ public class GraphicsHolderAndController extends JPanel
 	private Player player;
 	private String whatIsDrawn;
 	
-	
 	//Это вложенный класс обработчика событий (команд на движение), такая форма записи распространена для них
 	//Профит в том, что он имеет доступ к плееру, который, вроде бы, приватное поле другого класса.
 	private class MovementAction extends AbstractAction
@@ -104,9 +95,29 @@ public class GraphicsHolderAndController extends JPanel
 
 		public void actionPerformed(ActionEvent e)
 		{
-			String duty = (String) getValue(Action.NAME);
-			player.move(duty);
+			duty = (String) getValue(Action.NAME);
+			ActionListener smoother = new MovementSmoother();
+			t = new Timer(40, smoother);
+			t.start();
+		}
+		
+		public void repaintOuter()
+		{
 			repaint();
+		}
+		
+		Timer t;
+		String duty;
+		
+		private class MovementSmoother implements ActionListener
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("LOL\n");
+				player.move(duty);
+				GraphicsHolderAndController.MovementAction.this.repaintOuter();
+			}
 		}
 	}
 	
@@ -118,10 +129,11 @@ public class GraphicsHolderAndController extends JPanel
 			System.out.println("LOL");
 			if (startScreen.reactToClick(e.getPoint())==1)
 			{
-				
 				whatIsDrawn = "Field";
 				repaint();
 			}
 		}
 	}
+	
+	
 }

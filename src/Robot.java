@@ -72,11 +72,11 @@ public class Robot  {
 	public boolean canGo( Tile [][] tiles){  //стоит объект - false;
 		
 		if (this.direction == 'N') {
-			if(tiles[x][y+1].getContentAmount()==0) return true;
+			if(tiles[x][y-1].getContentAmount()==0) return true;
 		}
 		
 		if (this.direction == 'S') {
-			if(tiles[x][y-1].getContentAmount()==0) return true;
+			if(tiles[x][y+1].getContentAmount()==0) return true;
 		}
 		
 		if (this.direction == 'W') {
@@ -91,7 +91,7 @@ public class Robot  {
 		
 	}
 	
-	public void move(char way,Tile [][] tiles){ 
+	public void move(char way, Tile [][] tiles){ 
 		//основной метод: подсовываем ему направление, если оно валидно и мы туда не смотрим,
 		// поворачиваемся туда, иначе начинаем туда двигаться, если на соседней клетке нет объектов
 		if (ifDirection(way)){
@@ -102,8 +102,8 @@ public class Robot  {
 			
 			else {
 				if (canGo(tiles)) {
-					if (this.direction == 'N') y++ ;
-					if (this.direction == 'S') y-- ;
+					if (this.direction == 'N') y-- ;
+					if (this.direction == 'S') y++ ;
 					if (this.direction == 'W') x-- ;					
 					if (this.direction == 'E') x++ ;
 					return;
