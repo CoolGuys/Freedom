@@ -1,6 +1,6 @@
 import java.awt.Color;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 /**
  * Класс Frame является наследником класса JFrame. Различие между ними
@@ -48,8 +48,8 @@ class Frame extends JFrame // это тестовый комент
 
 		// Как раз тут и создается объект класса Field, а потом добавляется,
 		// собственно, на фрейм this, то бишь, на конструирующийся
-		Field playerHolder = new Field();
-		this.add(playerHolder);
+		GraphicsHolderAndController GUI = new GraphicsHolderAndController();
+		this.add(GUI);
 		
 	}
 	//Понятно, что значат эти поля
