@@ -49,7 +49,7 @@ class Frame extends JFrame // это тестовый комент
 
 		// Как раз тут и создается объект класса Field, а потом добавляется,
 		// собственно, на фрейм this, то бишь, на конструирующийся
-		GraphicsHolderAndController GUI = new GraphicsHolderAndController();
+		GraphicsController GUI = new GraphicsController();
 		this.add(GUI);
 		
 	}
