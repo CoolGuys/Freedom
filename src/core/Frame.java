@@ -1,3 +1,4 @@
+package core;
 import java.awt.Color;
 
 import javax.swing.*;

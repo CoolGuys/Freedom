@@ -1,3 +1,4 @@
+package core;
 //ящик, имеет по большому счету лишь цвет
 public class Box extends Stuff{
 	private char colour; // договоренность: имеем R,G,B

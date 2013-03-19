@@ -1,3 +1,4 @@
+package core;
 //общее для все имеющихся объектов
 import java.awt.Graphics;
 import java.awt.Image;
