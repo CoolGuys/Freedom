@@ -19,7 +19,7 @@ public class StartScreen extends JPanel {
 
 		this.addMouseListener(new MouseHandler());
 
-		creator = aCreator;
+		controller = aCreator;
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		try
@@ -43,6 +43,7 @@ public class StartScreen extends JPanel {
 
 	@Override
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		g.drawImage(wallpaper, 0, 0, null);
 		buttons[1].draw(g);
 
@@ -50,17 +51,18 @@ public class StartScreen extends JPanel {
 
 	private GButton[] buttons;
 	private Image wallpaper;
-	private GraphicsController creator;
+	private GraphicsController controller;
 
 	private class MouseHandler extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1)
 			{
-				creator.remove(creator.getStartScreen());
-				creator.add(creator.getGameField());
-				creator.getGameField().requestFocusInWindow();
-				creator.revalidate();
+				controller.remove(controller.getStartScreen());
+				controller.add(controller.getGameField());
+				controller.getGameField().requestFocusInWindow();
+				controller.revalidate();
+				controller.repaint();
 			}
 		}
 	}

@@ -45,6 +45,7 @@ class GameField extends JPanel {
 		imap.put(KeyStroke.getKeyStroke("A"), "move.right");
 		imap.put(KeyStroke.getKeyStroke("D"), "move.left");
 		imap.put(KeyStroke.getKeyStroke("S"), "move.down");
+		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 	}
 
 	// Метод, который сопоставляет соответствующие движению поля таблицы ввода
@@ -54,11 +55,13 @@ class GameField extends JPanel {
 		MovementAction moveDown = new MovementAction("down");
 		MovementAction moveLeft = new MovementAction("left");
 		MovementAction moveRight = new MovementAction("right");
+		PauseAction pause = new PauseAction();
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
 		amap.put("move.down", moveDown);
 		amap.put("move.left", moveLeft);
 		amap.put("move.right", moveRight);
+		amap.put("pause", pause);
 	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
@@ -115,10 +118,10 @@ class GameField extends JPanel {
 			
 			duty = (String) getValue(Action.NAME);
 			ActionListener smoother = new MovementSmoother();
-			t = new Timer(5, smoother);
+			t = new Timer(10, smoother);
 			t.start();
 			isActionStillPerformed=true;
-			logger.info("Created Timer"+t.toString()+ "\nand started it."+"Action source:" + e.toString());
+			//logger.info("Created Timer"+t.toString()+ "\nand started it."+"Action source:" + e.toString());
 			logger.exiting("GameField.MovementAction", "actionPerformed");
 			}
 		}
@@ -132,25 +135,39 @@ class GameField extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				logger.entering("GameField.MovementAction.MovementSmoother", "actionPerformed");
-				logger.info(e.toString()+"\n");
+				//logger.info(e.toString()+"\n");
 				if (counter <= 5)
 				{
 					player.move(duty);
 					controller.repaint();
-					logger.warning("Moved player and repainted controller");
+					//logger.warning("Moved player and repainted controller");
 					counter++;
 				} else
 				{
-					// System.out.println("Stopped");
 					counter = 0;
 					t.stop();
 					isActionStillPerformed=false;
-					logger.warning("Stopped the timer"+t.toString());
+					//logger.warning("Stopped the timer"+t.toString());
 				}
 				logger.exiting("GameField.MovementAction.MovementSmoother", "actionPerformed");
 
 			}
 			int counter = 0;
+		}
+		
+	}
+	private class PauseAction extends AbstractAction
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			logger.entering("PauseAction", "actionPerformed");
+			controller.remove(controller.getGameField());
+			controller.add(controller.getStartScreen());
+			controller.getStartScreen().requestFocusInWindow();
+			controller.revalidate();
+			controller.repaint();
+			logger.info("Paused");
+			logger.exiting("PauseAction", "actionPerformed");
 		}
 	}
 }
