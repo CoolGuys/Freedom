@@ -1,5 +1,4 @@
 package core;
-import java.awt.Color;
 
 import javax.swing.*;
 
@@ -8,17 +7,15 @@ import javax.swing.*;
  * заключается лишь в конструкторе: JFrame после сборки имеет довольно
  * бесполезный размер 0х0, размер же нашего фрейма задается разработчиком.
  * Конструктором объекта класса Frame создается объект класса Field (этот класс - наследник класса
- * JPanel от Swing), являющийся основопологающим в данной архитектуре.
- * В нем планируется разместить всю начинку нашей программы, те сам уровень с
- * объектами, проверки, слушатели и обработчики событий и тд.
+ * JPanel от Swing)
  * 
  * Таким образом имеем следующую простую структуру:
  * 
- * *Frame***********х
- * *#Field##########*
- * *#      Всё     #*
- * *################*
- * ******************
+ * *Frame***************х
+ * *#GraphicsController#*
+ * *#  Все псевдоокна  #*
+ * *####################*
+ * **********************
  * 
  * @author gleb
  * 
@@ -41,7 +38,7 @@ class Frame extends JFrame // это тестовый комент
 		 */
 		
 		
-		
+		getContentPane().setLayout(null);
 		this.height = aHeight;
 		this.width = aWidth;
 		this.setSize(width, height);
@@ -49,7 +46,7 @@ class Frame extends JFrame // это тестовый комент
 
 		// Как раз тут и создается объект класса Field, а потом добавляется,
 		// собственно, на фрейм this, то бишь, на конструирующийся
-		GraphicsController GUI = new GraphicsController();
+		GraphicsController GUI = new GraphicsController(width, height);
 		this.add(GUI);
 		
 	}

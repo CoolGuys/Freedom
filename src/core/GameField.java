@@ -19,7 +19,7 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 class GameField extends JPanel {
-	
+
 	// Иван, подумайте над конструктором, объекты ведь на вас, и напишите норм
 	// комментарий
 	// @gleb
@@ -110,62 +110,60 @@ class GameField extends JPanel {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			
-		
+
 			logger.entering("GameField.MovementAction", "actionPerformed", e);
-			if(isActionStillPerformed==false)
-			{	
-			
-			duty = (String) getValue(Action.NAME);
-			ActionListener smoother = new MovementSmoother();
-			t = new Timer(10, smoother);
-			t.start();
-			isActionStillPerformed=true;
-			//logger.info("Created Timer"+t.toString()+ "\nand started it."+"Action source:" + e.toString());
-			logger.exiting("GameField.MovementAction", "actionPerformed");
+			if (isActionStillPerformed == false)
+			{
+
+				duty = (String) getValue(Action.NAME);
+				ActionListener smoother = new MovementSmoother();
+				t = new Timer(10, smoother);
+				t.start();
+				isActionStillPerformed = true;
+				// logger.info("Created Timer"+t.toString()+
+				// "and started it."+"Action source:" + e.toString());
+				logger.exiting("GameField.MovementAction", "actionPerformed");
 			}
 		}
 
 		Timer t;
 		String duty;
 
-		boolean isActionStillPerformed=false;
+		boolean isActionStillPerformed = false;
 
 		private class MovementSmoother implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				logger.entering("GameField.MovementAction.MovementSmoother", "actionPerformed");
-				//logger.info(e.toString()+"\n");
+				logger.entering("GameField.MovementAction.MovementSmoother",
+						"actionPerformed");
+				// logger.info(e.toString()+"\n");
 				if (counter <= 5)
 				{
 					player.move(duty);
 					controller.repaint();
-					//logger.warning("Moved player and repainted controller");
+					// logger.warning("Moved player and repainted controller");
 					counter++;
 				} else
 				{
 					counter = 0;
 					t.stop();
-					isActionStillPerformed=false;
-					//logger.warning("Stopped the timer"+t.toString());
+					isActionStillPerformed = false;
+					// logger.warning("Stopped the timer"+t.toString());
 				}
-				logger.exiting("GameField.MovementAction.MovementSmoother", "actionPerformed");
+				logger.exiting("GameField.MovementAction.MovementSmoother",
+						"actionPerformed");
 
 			}
+
 			int counter = 0;
 		}
-		
+
 	}
-	private class PauseAction extends AbstractAction
-	{
-		public void actionPerformed(ActionEvent e)
-		{
+
+	private class PauseAction extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
 			logger.entering("PauseAction", "actionPerformed");
-			controller.remove(controller.getGameField());
-			controller.add(controller.getStartScreen());
-			controller.getStartScreen().requestFocusInWindow();
-			controller.revalidate();
-			controller.repaint();
+			controller.swapDisplays(controller.getStartScreen(), controller.getGameField());
 			logger.info("Paused");
 			logger.exiting("PauseAction", "actionPerformed");
 		}

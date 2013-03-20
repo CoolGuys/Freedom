@@ -3,6 +3,7 @@ package core;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import javax.swing.*;
 
@@ -16,15 +17,20 @@ import javax.swing.*;
  */
 @SuppressWarnings("serial")
 public class GraphicsController extends JPanel {
-	public GraphicsController()
+	public GraphicsController(int dimensionX, int dimensionY)
 	{
 		super();
+		this.setLayout(null);
 		this.setBackground(Color.WHITE);
-		setPreferredSize(new Dimension(1000, 600));
+		this.setSize(new Dimension(dimensionX, dimensionY));
+		
+		this.dimensionX = dimensionX;
+		this.dimensionY = dimensionY;
 		
 		setStartScreen(new StartScreen(this));
 		setGameField(new GameField(this));
 		this.add(getStartScreen());
+		startScreen.setBounds(0, 0, dimensionX, dimensionY);
 	}
 
 
@@ -43,8 +49,21 @@ public class GraphicsController extends JPanel {
 	public void setGameField(GameField gameField) {
 		this.gameField = gameField;
 	}
+	
+	public void swapDisplays(JPanel toAdd, JPanel toRemove) {
+		remove(toRemove);
+		add(toAdd);
+		toAdd.requestFocusInWindow();
+		toAdd.setBounds(0, 0, dimensionX, dimensionY);
+		revalidate();
+		repaint();
+	}
 
 	private StartScreen startScreen;
 	private GameField gameField;
+	
+	private int dimensionX;
+	private int dimensionY;
+	
 
 }

@@ -15,7 +15,7 @@ import javax.swing.*;
 public class StartScreen extends JPanel {
 	public StartScreen(GraphicsController aCreator)
 	{
-		setPreferredSize(new Dimension(1000, 600));
+		
 
 		this.addMouseListener(new MouseHandler());
 
@@ -44,7 +44,7 @@ public class StartScreen extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(wallpaper, 0, 0, null);
+		g.drawImage(wallpaper, 0, 0, this.getWidth(), this.getHeight()-25, null);
 		buttons[1].draw(g);
 
 	}
@@ -58,11 +58,7 @@ public class StartScreen extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1)
 			{
-				controller.remove(controller.getStartScreen());
-				controller.add(controller.getGameField());
-				controller.getGameField().requestFocusInWindow();
-				controller.revalidate();
-				controller.repaint();
+				controller.swapDisplays(controller.getGameField(), controller.getStartScreen());
 			}
 		}
 	}
