@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class StartScreen extends JPanel {
+public class StartScreen extends JLayeredPane {
 	public StartScreen(GraphicsController aCreator)
 	{
 		
@@ -22,6 +22,7 @@ public class StartScreen extends JPanel {
 		controller = aCreator;
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
+		buttons[2] = new GButton("Exit", 100, 300);
 		try
 		{
 			wallpaper = ImageIO.read(new File(
@@ -37,16 +38,20 @@ public class StartScreen extends JPanel {
 				&& p.getX() <= buttons[1].positionX + 100
 				&& p.getY() >= buttons[1].positionY && p.getY() <= buttons[1].positionY + 35))
 			return 1;
-		else
+		else if((p.getX() >= buttons[2].positionX
+				&& p.getX() <= buttons[2].positionX + 100
+				&& p.getY() >= buttons[2].positionY && p.getY() <= buttons[2].positionY + 35))
+			return 2;
+			
 			return 0;
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(wallpaper, 0, 0, this.getWidth(), this.getHeight()-25, null);
+		g.drawImage(wallpaper, 0, 0, this.getWidth(), this.getHeight(), null);
 		buttons[1].draw(g);
-
+		buttons[2].draw(g);
 	}
 
 	private GButton[] buttons;
@@ -54,11 +59,18 @@ public class StartScreen extends JPanel {
 	private GraphicsController controller;
 
 	private class MouseHandler extends MouseAdapter {
+		
+		//1==start
+		//2=exit
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1)
 			{
 				controller.swapDisplays(controller.getGameField(), controller.getStartScreen());
+			}
+			else if (reactToClick(e.getPoint()) == 2)
+			{
+				System.exit(0);
 			}
 		}
 	}

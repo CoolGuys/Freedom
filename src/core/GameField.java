@@ -18,7 +18,7 @@ import javax.swing.*;
  * 
  */
 @SuppressWarnings("serial")
-class GameField extends JPanel {
+class GameField extends JLayeredPane {
 
 	// Иван, подумайте над конструктором, объекты ведь на вас, и напишите норм
 	// комментарий

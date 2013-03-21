@@ -37,7 +37,7 @@ class Frame extends JFrame // это тестовый комент
 		 * 
 		 */
 		
-		
+		setUndecorated(true);
 		getContentPane().setLayout(null);
 		this.height = aHeight;
 		this.width = aWidth;

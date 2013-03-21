@@ -50,7 +50,7 @@ public class GraphicsController extends JPanel {
 		this.gameField = gameField;
 	}
 	
-	public void swapDisplays(JPanel toAdd, JPanel toRemove) {
+	public void swapDisplays(JLayeredPane toAdd, JLayeredPane toRemove) {
 		remove(toRemove);
 		add(toAdd);
 		toAdd.requestFocusInWindow();
