@@ -27,29 +27,21 @@ class Frame extends JFrame // это тестовый комент
 
 	public Frame(int aWidth, int aHeight)
 	{
-		/* Это конструктор фрейма. Что в нем происходит,
-		 * по поряку следования:
-		 * 
-		 * Получение высоты
-		 * Получение ширины
-		 * Задание размера полученными значениями
-		 * Задание имени (оно будет отображено в панельке над окном, на которой еще крестик для закрытия)
-		 * 
-		 */
+		// Это конструктор фрейма.
+
 		
 		setUndecorated(true);
 		getContentPane().setLayout(null);
 		this.height = aHeight;
 		this.width = aWidth;
 		this.setSize(width, height);
-		this.setTitle("FreedomGame");
 
 		// Как раз тут и создается объект класса Field, а потом добавляется,
 		// собственно, на фрейм this, то бишь, на конструирующийся
 		GraphicsController GUI = new GraphicsController(width, height);
 		this.add(GUI);
 		
-	}
+	} 
 	//Понятно, что значат эти поля
 	private int height;
 	private int width;

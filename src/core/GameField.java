@@ -33,7 +33,7 @@ class GameField extends JLayeredPane {
 
 		this.createInputMap();
 		this.createMovementController();
-		player = new Player(10, 10);
+		robot = new Robot(10, 10, "S", null, null, aController);
 		logger.exiting("GraphicsController", "<init>");
 
 	}
@@ -51,10 +51,10 @@ class GameField extends JLayeredPane {
 	// Метод, который сопоставляет соответствующие движению поля таблицы ввода
 	// полям таблицы действий, которые будут вызывать методы движения робота
 	private void createMovementController() {
-		MovementAction moveUp = new MovementAction("up");
-		MovementAction moveDown = new MovementAction("down");
-		MovementAction moveLeft = new MovementAction("left");
-		MovementAction moveRight = new MovementAction("right");
+		MovementAction moveUp = new MovementAction("N");
+		MovementAction moveDown = new MovementAction("S");
+		MovementAction moveLeft = new MovementAction("E");
+		MovementAction moveRight = new MovementAction("W");
 		PauseAction pause = new PauseAction();
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
@@ -73,7 +73,7 @@ class GameField extends JLayeredPane {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		player.draw(g);
+		robot.draw(g);
 	}
 
 	public void unloadLevel() {
@@ -92,7 +92,7 @@ class GameField extends JLayeredPane {
 		return this.tiles;
 	}
 
-	private Player player;
+	private Robot robot;
 	private Tile[][] tiles;
 	private int xSize; // размеры поля
 	private int ySize;
@@ -110,54 +110,8 @@ class GameField extends JLayeredPane {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-
-			logger.entering("GameField.MovementAction", "actionPerformed", e);
-			if (isActionStillPerformed == false)
-			{
-
-				duty = (String) getValue(Action.NAME);
-				ActionListener smoother = new MovementSmoother();
-				t = new Timer(10, smoother);
-				t.start();
-				isActionStillPerformed = true;
-				// logger.info("Created Timer"+t.toString()+
-				// "and started it."+"Action source:" + e.toString());
-				logger.exiting("GameField.MovementAction", "actionPerformed");
-			}
+			robot.moveToNextTile((String)getValue(Action.NAME));
 		}
-
-		Timer t;
-		String duty;
-
-		boolean isActionStillPerformed = false;
-
-		private class MovementSmoother implements ActionListener {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				logger.entering("GameField.MovementAction.MovementSmoother",
-						"actionPerformed");
-				// logger.info(e.toString()+"\n");
-				if (counter <= 5)
-				{
-					player.move(duty);
-					controller.repaint();
-					// logger.warning("Moved player and repainted controller");
-					counter++;
-				} else
-				{
-					counter = 0;
-					t.stop();
-					isActionStillPerformed = false;
-					// logger.warning("Stopped the timer"+t.toString());
-				}
-				logger.exiting("GameField.MovementAction.MovementSmoother",
-						"actionPerformed");
-
-			}
-
-			int counter = 0;
-		}
-
 	}
 
 	private class PauseAction extends AbstractAction {

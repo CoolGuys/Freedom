@@ -15,8 +15,6 @@ import javax.swing.*;
 public class StartScreen extends JLayeredPane {
 	public StartScreen(GraphicsController aCreator)
 	{
-		
-
 		this.addMouseListener(new MouseHandler());
 
 		controller = aCreator;

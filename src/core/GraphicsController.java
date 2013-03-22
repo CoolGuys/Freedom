@@ -24,6 +24,7 @@ public class GraphicsController extends JPanel {
 		this.setBackground(Color.WHITE);
 		this.setSize(new Dimension(dimensionX, dimensionY));
 		
+		
 		this.dimensionX = dimensionX;
 		this.dimensionY = dimensionY;
 		
@@ -48,6 +49,7 @@ public class GraphicsController extends JPanel {
 
 	public void setGameField(GameField gameField) {
 		this.gameField = gameField;
+		this.gameField.setOpaque(true);
 	}
 	
 	public void swapDisplays(JLayeredPane toAdd, JLayeredPane toRemove) {
