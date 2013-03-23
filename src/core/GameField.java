@@ -28,7 +28,7 @@ class GameField extends JLayeredPane {
 		logger.entering("GameField", "<init>", aController);
 		logger.info("Creating GameField");
 		setPreferredSize(new Dimension(1000, 600));
-		setBackground(Color.BLACK);
+		setBackground(Color.DARK_GRAY);
 		this.controller = aController;
 
 		this.createInputMap();
@@ -69,7 +69,7 @@ class GameField extends JLayeredPane {
 	}
 
 	// Метод будет производить рисование всего, что лежит в массиве Tile (у
-	// всего будет вызываться метод drawSelf)
+	// всего будет вызываться метод draw)
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);

@@ -18,7 +18,7 @@ public class Robot implements Movable {
 	private Tile[][] environment;
 	private GraphicsController painter;
 	private boolean isMoving;
-	public static int step = 6;
+	public static int step = 10;
 
 	Image textureN;
 	Image textureS;
@@ -179,13 +179,13 @@ public class Robot implements Movable {
 
 	public void draw(Graphics g) {
 		if (direction.equals("N"))
-			g.drawImage(textureN, x, y, 30, 30, null);
+			g.drawImage(textureN, x, y, 50, 50, null);
 		else if (direction.equals("S"))
-			g.drawImage(textureS, x, y, 30, 30, null);
+			g.drawImage(textureS, x, y, 50, 50, null);
 		else if (direction.equals("E"))
-			g.drawImage(textureE, x, y, 30, 30, null);
+			g.drawImage(textureE, x, y, 50, 50, null);
 		else
-			g.drawImage(textureW, x, y, 30, 30, null);
+			g.drawImage(textureW, x, y, 50, 50, null);
 	}
 
 	@Override
