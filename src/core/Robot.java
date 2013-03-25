@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-public class Robot implements Movable {
+public class Robot extends Stuff implements Movable {
 
 	int x;
 	int y;
@@ -18,7 +18,8 @@ public class Robot implements Movable {
 	private Tile[][] environment;
 	private GraphicsController painter;
 	private boolean isMoving;
-	public static int step = 10;
+	private int size = 50;
+	private int step = size/5;
 
 	Image textureN;
 	Image textureS;
@@ -31,8 +32,7 @@ public class Robot implements Movable {
 	public Robot(int posX, int posY, String direction, Stuff c, Tile[][] tiles,
 			GraphicsController painter)
 	{
-		this.x = posX;
-		this.y = posY;
+		super(posX, posY, false);
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
@@ -78,9 +78,7 @@ public class Robot implements Movable {
 		return (this.y);
 	}
 
-	// Нет, это было точно бесполезно, если у робота в поле направления
-	// рандомная
-	// буква - это уже все, пипец программе настал @gleb
+	
 	public String getDirection() {
 		return this.direction;
 	}
@@ -179,13 +177,13 @@ public class Robot implements Movable {
 
 	public void draw(Graphics g) {
 		if (direction.equals("N"))
-			g.drawImage(textureN, x, y, 50, 50, null);
+			g.drawImage(textureN, x, y, size, size, null);
 		else if (direction.equals("S"))
-			g.drawImage(textureS, x, y, 50, 50, null);
+			g.drawImage(textureS, x, y, size, size, null);
 		else if (direction.equals("E"))
-			g.drawImage(textureE, x, y, 50, 50, null);
+			g.drawImage(textureE, x, y, size, size, null);
 		else
-			g.drawImage(textureW, x, y, 50, 50, null);
+			g.drawImage(textureW, x, y, size, size, null);
 	}
 
 	@Override

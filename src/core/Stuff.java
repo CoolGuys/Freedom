@@ -11,13 +11,13 @@ public class Stuff {
 	
 	private int x;
 	private int y;
-	private boolean ifCanTake; //"поднимаем" ли объект?
+	private boolean pickable; //"поднимаем" ли объект?
 	//private Image texture;
 	
-	public Stuff(int a, int b, boolean ifIcan){ //Глеб, допиши здесь создание рисунка
-		this.x = a;
-		this.y = b;
-		this.ifCanTake = ifIcan;
+	public Stuff(int posX, int posY, boolean pickable){ //Глеб, допиши здесь создание рисунка
+		this.x = posX;
+		this.y = posY;
+		this.pickable = pickable;
 	}
 	
 	//////////////
@@ -30,7 +30,7 @@ public class Stuff {
 	}
 	
 	public boolean getIfCanTake(){
-		return this.ifCanTake;
+		return this.pickable;
 	}
 	/////////////////////
 	
