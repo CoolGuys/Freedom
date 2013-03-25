@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 public class Stuff {
 	//ДОБАВЛЕНО	 поле "могу ли взять"
 	
-	private int x;
-	private int y;
+	protected int x;
+	protected int y;
 	private boolean pickable; //"поднимаем" ли объект?
 	//private Image texture;
 	

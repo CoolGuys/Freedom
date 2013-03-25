@@ -10,8 +10,6 @@ import javax.imageio.ImageIO;
 
 public class Robot extends Stuff implements Movable {
 
-	int x;
-	int y;
 	private String direction;
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
@@ -69,7 +67,7 @@ public class Robot extends Stuff implements Movable {
 	}
 
 	// блок выдачи полей
-
+/*
 	public int getX() {
 		return (this.x);
 	}
@@ -77,7 +75,7 @@ public class Robot extends Stuff implements Movable {
 	public int getY() {
 		return (this.y);
 	}
-
+*/
 	
 	public String getDirection() {
 		return this.direction;
