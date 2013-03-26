@@ -1,4 +1,4 @@
-package core;
+package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+
+import com.freedom.core.GraphicsController;
+import com.freedom.core.MovementAnimator;
+
 
 public class Robot extends Stuff implements Moveable {
 
@@ -39,10 +43,10 @@ public class Robot extends Stuff implements Moveable {
 
 		try
 		{
-			textureN = ImageIO.read(new File("Textures/RobotN.png"));
-			textureS = ImageIO.read(new File("Textures/RobotS.png"));
-			textureE = ImageIO.read(new File("Textures/RobotE.png"));
-			textureW = ImageIO.read(new File("Textures/RobotW.png"));
+			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
+			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
+			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
+			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
 		} catch (IOException e)
 		{
 			e.printStackTrace();

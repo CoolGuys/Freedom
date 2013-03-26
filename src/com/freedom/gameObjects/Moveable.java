@@ -1,4 +1,4 @@
-package core;
+package com.freedom.gameObjects;
 
 public interface Moveable {
 	public void move(String diretion);

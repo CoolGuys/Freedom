@@ -1,4 +1,4 @@
-package core;
+package com.freedom.core;
 
 import javax.swing.*;
 

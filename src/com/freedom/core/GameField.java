@@ -1,10 +1,13 @@
-package core;
+package com.freedom.core;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.util.logging.Logger;
 
 import javax.swing.*;
+
+import com.freedom.gameObjects.Robot;
+import com.freedom.gameObjects.Tile;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет

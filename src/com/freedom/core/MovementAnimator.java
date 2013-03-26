@@ -1,4 +1,6 @@
-package core;
+package com.freedom.core;
+
+import com.freedom.gameObjects.Moveable;
 
 public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 

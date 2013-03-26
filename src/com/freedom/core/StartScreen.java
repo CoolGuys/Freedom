@@ -1,4 +1,4 @@
-package core;
+package com.freedom.core;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,7 +24,7 @@ public class StartScreen extends JLayeredPane {
 		try
 		{
 			wallpaper = ImageIO.read(new File(
-					"Textures/StartScreenWallpaper.png"));
+					"Resource/Textures/StartScreenWallpaper.png"));
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -82,7 +82,7 @@ class GButton {
 		text = aText;
 		try
 		{
-			texture = ImageIO.read(new File("Textures/GButton.gif"));
+			texture = ImageIO.read(new File("Resource/Textures/GButton.gif"));
 		} catch (IOException e)
 		{
 			// TODO Auto-generated catch block
