@@ -1,6 +1,6 @@
 package core;
 
-public class MovementAnimator<MovingObj extends Movable> implements Runnable {
+public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 
 	public MovementAnimator(GraphicsController g, MovingObj mover,
 			String direction)

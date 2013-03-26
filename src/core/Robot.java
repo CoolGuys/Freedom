@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-public class Robot extends Stuff implements Movable {
+public class Robot extends Stuff implements Moveable {
 
 	private String direction;
 	private Stuff container;
