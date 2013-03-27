@@ -9,6 +9,10 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -21,12 +25,12 @@ public class StartScreen extends JLayeredPane {
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		buttons[2] = new GButton("Exit", 100, 300);
-		try
-		{
+		try {
 			wallpaper = ImageIO.read(new File(
 					"Resource/Textures/StartScreenWallpaper.png"));
-		} catch (IOException e)
-		{
+			buttonClickedSound = new File("Resource/Sound/ButtonClicked.wav");
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -36,12 +40,12 @@ public class StartScreen extends JLayeredPane {
 				&& p.getX() <= buttons[1].positionX + 100
 				&& p.getY() >= buttons[1].positionY && p.getY() <= buttons[1].positionY + 35))
 			return 1;
-		else if((p.getX() >= buttons[2].positionX
+		else if ((p.getX() >= buttons[2].positionX
 				&& p.getX() <= buttons[2].positionX + 100
 				&& p.getY() >= buttons[2].positionY && p.getY() <= buttons[2].positionY + 35))
 			return 2;
-			
-			return 0;
+
+		return 0;
 	}
 
 	@Override
@@ -55,19 +59,21 @@ public class StartScreen extends JLayeredPane {
 	private GButton[] buttons;
 	private Image wallpaper;
 	private GraphicsController controller;
+	private File buttonClickedSound;
 
 	private class MouseHandler extends MouseAdapter {
-		
-		//1==start
-		//2=exit
+
+		// 1==start
+		// 2==exit
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (reactToClick(e.getPoint()) == 1)
-			{
-				controller.swapDisplays(controller.getGameField(), controller.getStartScreen());
-			}
-			else if (reactToClick(e.getPoint()) == 2)
-			{
+			if (reactToClick(e.getPoint()) == 1) {
+
+				controller.swapDisplays(controller.getGameField(),
+						controller.getStartScreen());
+				SoundEngine.playClip(buttonClickedSound);
+				
+			} else if (reactToClick(e.getPoint()) == 2) {
 				System.exit(0);
 			}
 		}
@@ -80,11 +86,9 @@ class GButton {
 		positionX = posX;
 		positionY = posY;
 		text = aText;
-		try
-		{
+		try {
 			texture = ImageIO.read(new File("Resource/Textures/GButton.gif"));
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
