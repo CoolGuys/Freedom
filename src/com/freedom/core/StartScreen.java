@@ -9,10 +9,6 @@ import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -68,10 +64,12 @@ public class StartScreen extends JLayeredPane {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1) {
-
+				
+					SoundEngine.playClip(buttonClickedSound);
+				
 				controller.swapDisplays(controller.getGameField(),
 						controller.getStartScreen());
-				SoundEngine.playClip(buttonClickedSound);
+				
 				
 			} else if (reactToClick(e.getPoint()) == 2) {
 				System.exit(0);
