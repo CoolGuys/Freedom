@@ -31,6 +31,7 @@ public class GraphicsController extends JPanel {
 		setGameField(new GameField(this));
 		this.add(getStartScreen());
 		startScreen.setBounds(0, 0, dimensionX, dimensionY);
+		startScreen.activate();
 	}
 
 

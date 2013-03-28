@@ -121,6 +121,7 @@ class GameField extends JLayeredPane {
 		public void actionPerformed(ActionEvent e) {
 			logger.entering("PauseAction", "actionPerformed");
 			controller.swapDisplays(controller.getStartScreen(), controller.getGameField());
+			controller.getStartScreen().activate();
 			logger.info("Paused");
 			logger.exiting("PauseAction", "actionPerformed");
 		}

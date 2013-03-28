@@ -1,6 +1,6 @@
 package com.freedom.core;
 
-import java.awt.Dimension;
+
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import com.freedom.core.SoundEngine.SoundPlayer;
 
 @SuppressWarnings("serial")
 public class StartScreen extends JLayeredPane {
@@ -21,14 +23,21 @@ public class StartScreen extends JLayeredPane {
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		buttons[2] = new GButton("Exit", 100, 300);
+//		startScreenSoundEngine = new SoundEngine();
+		
 		try {
 			wallpaper = ImageIO.read(new File(
 					"Resource/Textures/StartScreenWallpaper.png"));
 			buttonClickedSound = new File("Resource/Sound/ButtonClicked.wav");
+			backgroundMusic = new File("Resource/Sound/TestBackgroundSound.wav");
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void activate() {
+		backgroundMusicPlayer = SoundEngine.playClip(backgroundMusic, "LoopContinuously");
 	}
 
 	public int reactToClick(Point2D p) {
@@ -56,6 +65,9 @@ public class StartScreen extends JLayeredPane {
 	private Image wallpaper;
 	private GraphicsController controller;
 	private File buttonClickedSound;
+	private File backgroundMusic;
+	private SoundPlayer backgroundMusicPlayer;
+//	private SoundEngine startScreenSoundEngine; 
 
 	private class MouseHandler extends MouseAdapter {
 
@@ -65,6 +77,7 @@ public class StartScreen extends JLayeredPane {
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1) {
 				
+					backgroundMusicPlayer.stopPlaying();
 					SoundEngine.playClip(buttonClickedSound);
 				
 				controller.swapDisplays(controller.getGameField(),
