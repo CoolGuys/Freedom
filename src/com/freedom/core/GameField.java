@@ -11,11 +11,11 @@ import com.freedom.gameObjects.Tile;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
- * операции с ними под контролем объекта класса GraphicsHolderAndController
- * Поэтому имеено сюда должен быть добавлен процесс создания уровня, то есть
+ * операции с ними под контролем объекта класса GraphicsController
+ * Поэтому имеено сюда должен быть добавлен процесс загрузки уровня, то есть
  * метод, считывающий из файла уровень, удаляющий его из памяти при прохождении,
  * и еще что-нибудь. Сам знаешь, кто, тебе надо будет над этим поработать
- * *****Ушаков, отредактируй это описание после того, как добавишь***
+ * *****отредактируй это описание после того, как добавишь***
  * 
  * @author gleb
  * 
@@ -113,7 +113,7 @@ class GameField extends JLayeredPane {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			robot.moveToNextTile((String)getValue(Action.NAME));
+			robot.moveToNextTile((String) getValue(Action.NAME));
 		}
 	}
 

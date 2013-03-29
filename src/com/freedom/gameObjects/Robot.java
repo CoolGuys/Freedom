@@ -28,9 +28,9 @@ public class Robot extends Stuff implements Moveable {
 	Image textureE;
 	Image textureW;
 
-	private static Logger logger = Logger.getLogger("Core.Robot");
+//	private static Logger logger = Logger.getLogger("Core.Robot");
 
-	// /конструктор (я выпилил второй, буду ставить null в вызове @gleb)
+	// /конструктор (я выпилил второй, буду ставить null в вызове) @gleb
 	public Robot(int posX, int posY, String direction, Stuff c, Tile[][] tiles,
 			GraphicsController painter)
 	{
@@ -71,7 +71,7 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	// блок выдачи полей
-/*
+
 	public int getX() {
 		return (this.x);
 	}
@@ -79,7 +79,6 @@ public class Robot extends Stuff implements Moveable {
 	public int getY() {
 		return (this.y);
 	}
-*/
 	
 	public String getDirection() {
 		return this.direction;

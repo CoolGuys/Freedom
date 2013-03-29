@@ -40,6 +40,9 @@ public class StartScreen extends JLayeredPane {
 		backgroundMusicPlayer = SoundEngine.playClip(backgroundMusic, "LoopContinuously");
 	}
 
+	public void deactivate() {
+		backgroundMusicPlayer.fadeOut();
+	}
 	public int reactToClick(Point2D p) {
 		if ((p.getX() >= buttons[1].positionX
 				&& p.getX() <= buttons[1].positionX + 100
@@ -77,7 +80,7 @@ public class StartScreen extends JLayeredPane {
 		public void mouseClicked(MouseEvent e) {
 			if (reactToClick(e.getPoint()) == 1) {
 				
-					backgroundMusicPlayer.stopPlaying();
+					deactivate();
 					SoundEngine.playClip(buttonClickedSound);
 				
 				controller.swapDisplays(controller.getGameField(),

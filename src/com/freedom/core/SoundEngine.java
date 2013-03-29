@@ -19,7 +19,7 @@ public class SoundEngine {
 			player = new SoundPlayer(clipFile, true);
 		else
 			player = new SoundPlayer(clipFile, true);
-		ExecutorService pool = Executors.newCachedThreadPool();
+		
 		pool.submit(player);
 		return player;
 	}
@@ -32,7 +32,7 @@ public class SoundEngine {
 		return player;
 	}
 
-		
+	private static ExecutorService pool = Executors.newCachedThreadPool();
 	//public static stopClip
 //	static ArrayList<Future<?>> players;
 	
@@ -47,6 +47,7 @@ public class SoundEngine {
 		public void run() {
 			logger.setLevel(Level.OFF);
 			logger.info("Entering RUN: " + this.toString());
+
 			try {
 				AudioListener listener = new AudioListener();
 				AudioInputStream input = AudioSystem
@@ -54,6 +55,7 @@ public class SoundEngine {
 				logger.info("--InputSream: " + input.toString());
 				clip = AudioSystem.getClip();
 				clip.open(input);
+				volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
 				if (looping == false) {
 					clip.addLineListener(listener);
@@ -85,13 +87,49 @@ public class SoundEngine {
 		{
 			clip.stop();
 		}
+		
+		
+		public void fadeOut() {
+			
+			pool.submit(new Fader());
+		}
 
 		private boolean looping;
 		File soundFile;
-		long clipLength;
 		Clip clip;
-		Logger logger = Logger.getLogger("SoundPlayer");
+		FloatControl volume; 
+			Logger logger = Logger.getLogger("SoundPlayer");
+		
 
+		private class Fader implements Runnable {
+
+			@Override
+			public void run() {
+				for (float i=0; i<10; i=(float) (i+0.05)) {
+					volume.setValue(-i);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				for (float i=10; i<70; i=(float) (i+0.1)) {
+					volume.setValue(-i);
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				clip.stop();
+			}
+			
+		}
+		
 		private class AudioListener implements LineListener {
 			private boolean done = false;
 
