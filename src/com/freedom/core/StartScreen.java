@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -15,11 +17,10 @@ import com.freedom.core.SoundEngine.SoundPlayer;
 
 @SuppressWarnings("serial")
 public class StartScreen extends JLayeredPane {
-	public StartScreen(GraphicsController aCreator)
+	public StartScreen()
 	{
 		this.addMouseListener(new MouseHandler());
 
-		controller = aCreator;
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		buttons[2] = new GButton("Exit", 100, 300);
@@ -59,6 +60,7 @@ public class StartScreen extends JLayeredPane {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		logger.info("Painting");
 		g.drawImage(wallpaper, 0, 0, this.getWidth(), this.getHeight(), null);
 		buttons[1].draw(g);
 		buttons[2].draw(g);
@@ -66,12 +68,11 @@ public class StartScreen extends JLayeredPane {
 
 	private GButton[] buttons;
 	private Image wallpaper;
-	private GraphicsController controller;
 	private File buttonClickedSound;
 	private File backgroundMusic;
-	private SoundPlayer backgroundMusicPlayer;
-//	private SoundEngine startScreenSoundEngine; 
+	private SoundPlayer backgroundMusicPlayer; 
 
+	Logger logger = Logger.getLogger("StartScreen");
 	private class MouseHandler extends MouseAdapter {
 
 		// 1==start
@@ -83,8 +84,8 @@ public class StartScreen extends JLayeredPane {
 					deactivate();
 					SoundEngine.playClip(buttonClickedSound);
 				
-				controller.swapDisplays(controller.getGameField(),
-						controller.getStartScreen());
+				ScreensHolder.swapDisplays(ScreensHolder.getInstance().getGameScreen(),
+						ScreensHolder.getInstance().getStartScreen());
 				
 				
 			} else if (reactToClick(e.getPoint()) == 2) {

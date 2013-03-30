@@ -12,7 +12,7 @@ import javax.swing.*;
  * Таким образом имеем следующую простую структуру:
  * 
  * *Frame***************х
- * *#GraphicsController#*
+ * *#ScreensHolder######*
  * *#  Все псевдоокна  #*
  * *####################*
  * **********************
@@ -22,27 +22,22 @@ import javax.swing.*;
  */
 
 @SuppressWarnings("serial")
-class Frame extends JFrame // это тестовый комент
+class Frame extends JFrame 
 {
 
 	public Frame(int aWidth, int aHeight)
 	{
-		// Это конструктор фрейма.
-
-		
 		setUndecorated(true);
 		getContentPane().setLayout(null);
 		this.height = aHeight;
 		this.width = aWidth;
 		this.setSize(width, height);
-
-		// Как раз тут и создается объект класса Field, а потом добавляется,
-		// собственно, на фрейм this, то бишь, на конструирующийся
-		GraphicsController GUI = new GraphicsController(width, height);
-		this.add(GUI);
+		
+		ScreensHolder.setDimensions(aWidth, aHeight);
+		ScreensHolder.getInstance().createScreens();
+		this.add(ScreensHolder.getInstance());
 		
 	} 
-	//Понятно, что значат эти поля
 	private int height;
 	private int width;
 }

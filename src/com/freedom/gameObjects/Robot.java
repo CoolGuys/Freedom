@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.freedom.core.GraphicsController;
+import com.freedom.core.ScreensHolder;
 import com.freedom.core.MovementAnimator;
 
 
@@ -18,7 +18,7 @@ public class Robot extends Stuff implements Moveable {
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
 	private Tile[][] environment;
-	private GraphicsController painter;
+	private ScreensHolder painter;
 	private boolean isMoving;
 	private int size = 50;
 	private int step = size/5;
@@ -31,14 +31,12 @@ public class Robot extends Stuff implements Moveable {
 //	private static Logger logger = Logger.getLogger("Core.Robot");
 
 	// /конструктор (я выпилил второй, буду ставить null в вызове) @gleb
-	public Robot(int posX, int posY, String direction, Stuff c, Tile[][] tiles,
-			GraphicsController painter)
+	public Robot(int posX, int posY, String direction, Stuff c, Tile[][] tiles)
 	{
 		super(posX, posY, false);
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
-		this.painter = painter;
 		isEmpty = false;
 
 		try
@@ -134,13 +132,13 @@ public class Robot extends Stuff implements Moveable {
 		if (!direction.equals(this.direction))
 		{
 			this.direction = direction;
-			painter.repaint();
+			ScreensHolder.getInstance().repaint();
 		}
 
 		else if (!isMoving)
 		{
 			isMoving = true;
-			Runnable r = new MovementAnimator<Robot>(painter, this,
+			Runnable r = new MovementAnimator<Robot>(this,
 					this.direction);
 			Thread t = new Thread(r);
 			t.start();

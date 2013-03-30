@@ -4,10 +4,10 @@ import com.freedom.gameObjects.Moveable;
 
 public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 
-	public MovementAnimator(GraphicsController g, MovingObj mover,
+	public MovementAnimator(MovingObj mover,
 			String direction)
 	{
-		this.theOneToRepaint = g;
+		this.theOneToRepaint = ScreensHolder.getInstance();
 		this.direction = direction;
 		this.theOneToMove = mover;
 	}
@@ -31,6 +31,6 @@ public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 
 	private MovingObj theOneToMove;
 	private String direction;
-	private GraphicsController theOneToRepaint;
+	private ScreensHolder theOneToRepaint;
 
 }
