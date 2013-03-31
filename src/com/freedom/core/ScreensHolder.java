@@ -41,12 +41,13 @@ public class ScreensHolder extends JPanel {
 	}
 	public void setGameScreen(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
+		this.gameScreen.setDimensions(dimensionX, dimensionY);
 		this.gameScreen.setOpaque(true);
 	}
 	
 	public void createScreens() {
-		setStartScreen(new StartScreen());
-		setGameScreen(new GameScreen());
+		setStartScreen(StartScreen.getInstance());
+		setGameScreen(GameScreen.getInstance());
 		add(getStartScreen());
 		startScreen.setBounds(0, 0, dimensionX, dimensionY);
 		startScreen.activate();

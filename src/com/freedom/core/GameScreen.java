@@ -11,18 +11,19 @@ import com.freedom.gameObjects.*;
 @SuppressWarnings("serial")
 public class GameScreen extends JLayeredPane {
 	
-		public GameScreen()
+		private GameScreen()
 		{
-			setPreferredSize(new Dimension(1000, 600));
 			setBackground(Color.DARK_GRAY);
-
 			this.createInputMap();
 			this.createMovementController();
+			GameField.getInstance().loadLevel("TEST", 1);
 			
-			GameField.loadLevel("TEST", 1);
 		}
 		
-		// Метод, создающий таблицу ввода нашей JPanel
+		public void setDimensions(int width, int height) {
+			this.setSize(width, height);
+		}
+		
 		public void createInputMap() {
 			InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
 			imap.put(KeyStroke.getKeyStroke("W"), "move.up");
@@ -32,8 +33,6 @@ public class GameScreen extends JLayeredPane {
 			imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 		}
 		
-		// Метод, который сопоставляет соответствующие движению поля таблицы ввода
-		// полям таблицы действий, которые будут вызывать методы движения робота
 		private void createMovementController() {
 			MovementAction moveUp = new MovementAction("N");
 			MovementAction moveDown = new MovementAction("S");
@@ -48,21 +47,24 @@ public class GameScreen extends JLayeredPane {
 			amap.put("pause", pause);
 		}
 		
-		// Метод будет производить рисование всего, что лежит в массиве Tile (у
-		// всего будет вызываться метод draw)
 		@Override
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			GameField.draw(g);
 		}
 		
+		public void activate() {
+		}
+		
+		public static GameScreen getInstance() {
+			return INSTANCE;
+		}
+		
+		
 		Logger logger = Logger.getLogger("GameScreen");
+		private static final GameScreen INSTANCE = new GameScreen();
 		
 		
-		// Это вложенный класс обработчика событий (команд на движение), такая форма
-		// записи распространена для них
-		// Профит в том, что он имеет доступ к плееру, который, вроде бы, приватное
-		// поле другого класса.
 		private class MovementAction extends AbstractAction {
 			public MovementAction(String name)
 			{

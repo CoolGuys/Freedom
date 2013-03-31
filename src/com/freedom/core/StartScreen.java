@@ -17,14 +17,13 @@ import com.freedom.core.SoundEngine.SoundPlayer;
 
 @SuppressWarnings("serial")
 public class StartScreen extends JLayeredPane {
-	public StartScreen()
+	private StartScreen()
 	{
 		this.addMouseListener(new MouseHandler());
 
 		buttons = new GButton[3];
 		buttons[1] = new GButton("Start", 100, 100);
 		buttons[2] = new GButton("Exit", 100, 300);
-//		startScreenSoundEngine = new SoundEngine();
 		
 		try {
 			wallpaper = ImageIO.read(new File(
@@ -65,12 +64,18 @@ public class StartScreen extends JLayeredPane {
 		buttons[1].draw(g);
 		buttons[2].draw(g);
 	}
+	
+	public static StartScreen getInstance() {
+		return INSTANCE;
+	}
 
 	private GButton[] buttons;
 	private Image wallpaper;
 	private File buttonClickedSound;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer; 
+	
+	private static final StartScreen INSTANCE = new StartScreen();
 
 	Logger logger = Logger.getLogger("StartScreen");
 	private class MouseHandler extends MouseAdapter {
