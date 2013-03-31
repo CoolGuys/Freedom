@@ -10,38 +10,27 @@ import javax.sound.sampled.LineEvent.Type;
 
 public class SoundEngine {
 
-	public static SoundPlayer playClip(File clipFile, String loop) {
-		
-		
+	
+	public static SoundPlayer playClip(File clipFile, int loopCode, int volume) {
+
 		SoundPlayer player;
 
-		if(loop.equals("LoopContinuously"))
-			player = new SoundPlayer(clipFile, true);
-		else
-			player = new SoundPlayer(clipFile, true);
-		
-		pool.submit(player);
-		return player;
-	}
-	
-	public static Runnable playClip(File clipFile) {
-		SoundPlayer player = new SoundPlayer(clipFile, false);
+		player = new SoundPlayer(clipFile, loopCode, volume);
 
-		ExecutorService pool = Executors.newCachedThreadPool();
 		pool.submit(player);
 		return player;
 	}
+
 
 	private static ExecutorService pool = Executors.newCachedThreadPool();
-	//public static stopClip
-//	static ArrayList<Future<?>> players;
-	
+
 	public static class SoundPlayer implements Runnable {
 
-		public SoundPlayer(File soundFile, boolean loop)
+		public SoundPlayer(File soundFile, int loop, int volume)
 		{
 			this.soundFile = soundFile;
-			this.looping = loop;
+			this.loopCode = loop;
+			this.initVolumeValue = volume;
 		}
 
 		public void run() {
@@ -55,17 +44,28 @@ public class SoundEngine {
 				logger.info("--InputSream: " + input.toString());
 				clip = AudioSystem.getClip();
 				clip.open(input);
-				volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				volume = (FloatControl) clip
+						.getControl(FloatControl.Type.MASTER_GAIN);
+				volume.setValue(initVolumeValue);
 
-				if (looping == false) {
+				if (loopCode == -1) {
 					clip.addLineListener(listener);
 					clip.start();
 
 					logger.info("--Waiting");
 					listener.waitUntilDone(clip);
 					logger.info("--Waited");
-				} else
+				} 
+				else if(loopCode<0) {
+					clip.loop(-loopCode);
+				}
+				else if(loopCode == 0)
 					clip.loop(Clip.LOOP_CONTINUOUSLY);
+				else
+					{
+					clip.setLoopPoints(loopCode, -1);
+					clip.loop(Clip.LOOP_CONTINUOUSLY);
+					}
 
 			} catch (UnsupportedAudioFileException e) {
 				// TODO Auto-generated catch block
@@ -82,54 +82,41 @@ public class SoundEngine {
 			}
 
 		}
-		
-		public void stopPlaying()
-		{
+
+		public void stopPlaying() {
 			clip.stop();
 		}
-		
-		
+
 		public void fadeOut() {
-			
+
 			pool.submit(new Fader());
 		}
 
-		private boolean looping;
-		File soundFile;
-		Clip clip;
-		FloatControl volume; 
-			Logger logger = Logger.getLogger("SoundPlayer");
-		
+		private int loopCode;
+		private File soundFile;
+		private Clip clip;
+		private FloatControl volume;
+		private int initVolumeValue;
+		Logger logger = Logger.getLogger("SoundPlayer");
 
 		private class Fader implements Runnable {
 
 			@Override
 			public void run() {
-				for (float i=0; i<10; i=(float) (i+0.05)) {
-					volume.setValue(-i);
+				for (float i = volume.getValue(); i > -70; i = (float) (i - 0.05)) {
+					volume.setValue(i);
 					try {
-						Thread.sleep(10);
+						Thread.sleep(7);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-				}
-				for (float i=10; i<70; i=(float) (i+0.1)) {
-					volume.setValue(-i);
-					try {
-						Thread.sleep(5);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
 				}
 				clip.stop();
 			}
-			
+
 		}
-		
+
 		private class AudioListener implements LineListener {
 			private boolean done = false;
 

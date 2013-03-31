@@ -2,6 +2,7 @@ package com.freedom.core;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
@@ -19,6 +20,7 @@ public class ScreensHolder extends JPanel {
 	private ScreensHolder()
 	{
 		super();
+		logger.setLevel(Level.OFF);
 		logger.info("Entering the constructor...");
 		setLayout(null);
 		setBackground(Color.WHITE);
