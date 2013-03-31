@@ -12,10 +12,11 @@ public class Robot implements Movable {
 
 	int x;
 	int y;
-	private String direction;
+	private String direction;  
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
 	private Tile[][] environment;
+	
 	private GraphicsController painter;
 	private boolean isMoving;
 	public static int step = 10;
@@ -54,6 +55,7 @@ public class Robot implements Movable {
 
 	/*
 	 * Этот метод выглядит ненужным)) @gleb
+	 * В финальной версии выпилим, пока для уверенности, что все комильфо, пусть останется @ivan
 	 */
 	private boolean ifDirection(char dir) { // проверка, является ли направление
 											// правильно заданным
@@ -95,29 +97,29 @@ public class Robot implements Movable {
 
 	// конец блока выдачи
 
-	public boolean canGo(Tile[][] tiles) { // стоит объект - false;
+	public boolean canGo() { // стоит объект - false;
 
 		if (this.direction.equals("N"))
 		{
-			if (tiles[x][y - 1].getContentAmount() == 0)
+			if (environment[x][y - 1].getContentAmount() == 0)
 				return true;
 		}
 
 		if (this.direction.equals("S"))
 		{
-			if (tiles[x][y + 1].getContentAmount() == 0)
+			if (environment[x][y + 1].getContentAmount() == 0)
 				return true;
 		}
 
 		if (this.direction.equals("W"))
 		{
-			if (tiles[x - 1][y].getContentAmount() == 0)
+			if (environment[x - 1][y].getContentAmount() == 0)
 				return true;
 		}
 
 		if (this.direction.equals("E"))
 		{
-			if (tiles[x + 1][y].getContentAmount() == 0)
+			if (environment[x + 1][y].getContentAmount() == 0)
 				return true;
 		}
 
@@ -138,7 +140,13 @@ public class Robot implements Movable {
 			painter.repaint();
 		}
 
-		else if (!isMoving)
+		else {
+			/*if(!canGo()) {
+				isMoving = false;
+				return;
+			}*/
+			
+			if (!isMoving)
 		{
 			isMoving = true;
 			Runnable r = new MovementAnimator<Robot>(painter, this,
@@ -147,6 +155,8 @@ public class Robot implements Movable {
 			t.start();
 		} else
 			return;
+			
+		}
 	}
 
 	public void move(String direction) {
@@ -170,7 +180,7 @@ public class Robot implements Movable {
 		if (!this.isEmpty)
 			return;
 
-		// this.container = environment[].takeObject();
+		 //this.container = environment.takeObject();
 		if (this.container != null)
 		{
 			this.isEmpty = false;
