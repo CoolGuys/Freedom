@@ -8,8 +8,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.freedom.utilities.MovementAnimator;
-import com.freedom.view.ScreensHolder;
+import com.freedom.core.*;
 
 
 public class Robot extends Stuff implements Moveable {
