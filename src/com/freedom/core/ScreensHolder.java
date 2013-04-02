@@ -9,7 +9,7 @@ import javax.swing.*;
 
 /**
  * GraphicsController - контролирующий интерфейс класс. Здесь будет
- * осуществляться рисование всех возможных частей графического интерфея
+ * осуществляться хранение и размещения всех частей графического интерфея
  * программы 
  * 
  * @author gleb
@@ -24,10 +24,6 @@ public class ScreensHolder extends JPanel {
 		logger.info("Entering the constructor...");
 		setLayout(null);
 		setBackground(Color.WHITE);
-		
-		
-		logger.info("Addind screens...");
-	
 	}
 
 	public StartScreen getStartScreen() {

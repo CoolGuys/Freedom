@@ -36,7 +36,7 @@ public class StartScreen extends JLayeredPane {
 	}
 	
 	public void activate() {
-		backgroundMusicPlayer = SoundEngine.playClip(backgroundMusic, 1678867, -20);
+		backgroundMusicPlayer = SoundEngine.playClip(backgroundMusic, 1679500, -20);
 	}
 
 	public void deactivate() {
@@ -86,7 +86,7 @@ public class StartScreen extends JLayeredPane {
 			if (reactToClick(e.getPoint()) == 1) {
 				
 					deactivate();
-					SoundEngine.playClip(buttonClickedSound, -1, 0);
+					SoundEngine.playClip(buttonClickedSound, -1, -20);
 				
 				ScreensHolder.swapDisplays(ScreensHolder.getInstance().getGameScreen(),
 						ScreensHolder.getInstance().getStartScreen());

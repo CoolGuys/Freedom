@@ -1,43 +1,23 @@
 package com.freedom.core;
+
 import java.awt.*;
 import javax.swing.*;
 
-
 /**
- * Класс FreedomGame производит начальный запуск программы. В
- * него помещен метод Main(), внутри которого выделяется отдельный специальный
- * поток для отрисовки графики библиотекой Swing
+ * Класс FreedomGame производит начальный запуск программы.
  * 
  * @author gleb
  * 
  */
-public class FreedomGame
-{
+public class FreedomGame {
 
-	public static void main(String[] args)
-	{
-		//Выделение нового потока для Swing (не трогать, работает исключительно на магии)
-		
-		EventQueue.invokeLater(new Runnable() 
-		{
-			public void run()
-			{
-
-				/* Создание объекта класса Frame с размером в 1000х600 пикслелов. Frame - класс, описывающий окно, 
-				 * управление которым осуществляет в последствии оконный менеджер. Помимо графических процессов, 
-				 * внутри него будут работать и все внутренние, не-графические, процессы программы.
-				 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
 				Frame frame = new Frame(1024, 532);
-				
-				// Здесь указывается, какая операция будет выполнена при закрытии окна пользователем:
-				// операция "закончить выполнение"
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				
-				// Команда, делающая наш фрейм видимым пользователю. До ее вызова ничего нового на экране не происходит
 				frame.setVisible(true);
 			}
 		});
 	}
 }
-
-

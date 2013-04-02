@@ -3,7 +3,6 @@ package com.freedom.gameObjects;
 import java.awt.*;
 import java.util.logging.Logger;
 
-import com.freedom.core.ScreensHolder;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет

@@ -8,9 +8,29 @@ import java.util.logging.Logger;
 import javax.sound.sampled.*;
 import javax.sound.sampled.LineEvent.Type;
 
+/**
+ * Класс SoundEngine создает для переданного звукового файла отдельный поток, в
+ * котором выполняется проигрывание этого файла.
+ * 
+ * @author gleb
+ * 
+ */
+
 public class SoundEngine {
 
-	
+	/**
+	 * 
+	 * @param clipFile
+	 *            файл для проигрывания
+	 * @param loopCode
+	 *            код для определения типа повтора 
+	 *            -- отриц. - противоположное количество раз, целиком; 
+	 *            -- 0 - бесконечно, целиком; 
+	 *            -- полож. - куcок со значения loopCode и до конца, бесконечно
+	 * @param volume
+	 * 				громкость (0 - по умолчанию)
+	 * @return
+	 */
 	public static SoundPlayer playClip(File clipFile, int loopCode, int volume) {
 
 		SoundPlayer player;
@@ -20,7 +40,6 @@ public class SoundEngine {
 		pool.submit(player);
 		return player;
 	}
-
 
 	private static ExecutorService pool = Executors.newCachedThreadPool();
 
@@ -55,17 +74,14 @@ public class SoundEngine {
 					logger.info("--Waiting");
 					listener.waitUntilDone(clip);
 					logger.info("--Waited");
-				} 
-				else if(loopCode<0) {
+				} else if (loopCode < 0) {
 					clip.loop(-loopCode);
-				}
-				else if(loopCode == 0)
+				} else if (loopCode == 0)
 					clip.loop(Clip.LOOP_CONTINUOUSLY);
-				else
-					{
+				else {
 					clip.setLoopPoints(loopCode, -1);
 					clip.loop(Clip.LOOP_CONTINUOUSLY);
-					}
+				}
 
 			} catch (UnsupportedAudioFileException e) {
 				// TODO Auto-generated catch block
