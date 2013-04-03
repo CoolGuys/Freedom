@@ -1,5 +1,7 @@
 package com.freedom.view;
 
+import java.awt.Dimension;
+import java.awt.Toolkit; 
 import javax.swing.*;
 
 /**
@@ -12,13 +14,21 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 class Frame extends JFrame {
 	
-	public Frame(int aWidth, int aHeight)
+	public Frame()
 	{
 		setUndecorated(true);
 		getContentPane().setLayout(null);
-		this.setSize(aWidth, aHeight);
-		ScreensHolder.setDimensions(aWidth, aHeight);
+		
+		Toolkit kit = Toolkit.getDefaultToolkit();
+		Dimension screenSize = kit.getScreenSize();
+		height = screenSize.height;
+		width = screenSize.width;
+		
+		this.setSize(width, height);
+		ScreensHolder.setDimensions(width, height);
 		ScreensHolder.getInstance().createScreens();
 		this.add(ScreensHolder.getInstance());
 	}
+	private int height, width;
+	
 }

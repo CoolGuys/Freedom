@@ -14,7 +14,7 @@ public class FreedomGame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				Frame frame = new Frame(1024, 532);
+				Frame frame = new Frame();
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
 			}

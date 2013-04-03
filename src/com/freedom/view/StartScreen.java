@@ -1,6 +1,6 @@
 package com.freedom.view;
 
-
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -12,6 +12,7 @@ import java.util.logging.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.freedom.utilities.GAction;
 import com.freedom.utilities.SoundEngine;
 import com.freedom.utilities.SoundEngine.SoundPlayer;
 import com.freedom.utilities.StartScreenModel;
@@ -21,52 +22,69 @@ public class StartScreen extends JLayeredPane {
 	private StartScreen()
 	{
 		logger.setLevel(Level.OFF);
-		this.addMouseListener(new MouseHandler());
 
+		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
+				ScreensHolder.getInstance().getHeight());
+		this.setBackground(Color.BLACK);
+		this.setOpaque(true);
+		this.addMouseListener(new MouseHandler());
 	}
-	
-	
+
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		logger.info("Painting");
-		g.drawImage(wallpaper, 0, 0, this.getWidth(), this.getHeight(), null);
-		buttons[1].draw(g);
-		buttons[2].draw(g);
+		startScreenModel.draw(g);
+	}
+
+	public static void activateModel() {
+		startScreenModel.activate();
+	}
+	
+	public static void deactivateModel() {
+		startScreenModel.deactivate();
 	}
 	
 	public static StartScreen getInstance() {
 		return INSTANCE;
 	}
 
-	private StartScreenModel startScreenModel = StartScreenModel.getInstance();
-	
-	private static final StartScreen INSTANCE = new StartScreen();
+	private static StartScreenModel startScreenModel = StartScreenModel.getInstance();
 
+	private static final StartScreen INSTANCE = new StartScreen();
 	Logger logger = Logger.getLogger("StartScreen");
+
+	
 	
 	private class MouseHandler extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
-			startScreenModel.reactToClick(e.getPoint());
-			
-			
-			
-			/*if (reactToClick(e.getPoint()) == 1) {
-				
-					deactivate();
-					SoundEngine.playClip(buttonClickedSound, -1, -20);
-				
-				ScreensHolder.swapDisplays(ScreensHolder.getInstance().getGameScreen(),
-						ScreensHolder.getInstance().getStartScreen());
-				
-				
-			} else if (reactToClick(e.getPoint()) == 2) {
-				System.exit(0);
-			}*/
+
+			String s = startScreenModel.reactToClick(e.getPoint());
+			if (!s.equals("NothingHappened")) {
+				GAction m;
+				try {
+					m = (GAction) Class.forName(s).newInstance();
+					m.performAction();
+				} catch (InstantiationException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IllegalAccessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	
+	public static class StartGameAction extends GAction {
+		public void performAction() {
+			deactivateModel();
+			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
 		}
 	}
 }
-

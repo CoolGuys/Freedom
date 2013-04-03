@@ -5,10 +5,9 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
-
 import javax.imageio.ImageIO;
-
-import com.freedom.core.*;
+import com.freedom.view.*;
+import com.freedom.utilities.*;
 
 
 public class Robot extends Stuff implements Moveable {

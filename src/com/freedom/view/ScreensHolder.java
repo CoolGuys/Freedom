@@ -6,6 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+import com.freedom.utilities.StartScreenModel;
+
 
 /**
  * GraphicsController - контролирующий интерфейс класс. Здесь будет
@@ -26,38 +28,30 @@ public class ScreensHolder extends JPanel {
 		setBackground(Color.WHITE);
 	}
 
-	public StartScreen getStartScreen() {
-		return startScreen;
-	}
-
-	public void setStartScreen(StartScreen startScreen) {
-		this.startScreen = startScreen;
-	}
-
-	public GameScreen getGameScreen() {
-		return gameScreen;
-	}
-	public void setGameScreen(GameScreen gameScreen) {
-		this.gameScreen = gameScreen;
-		this.gameScreen.setDimensions(dimensionX, dimensionY);
-		this.gameScreen.setOpaque(true);
-	}
-	
 	public void createScreens() {
-		setStartScreen(StartScreen.getInstance());
-		setGameScreen(GameScreen.getInstance());
-		add(getStartScreen());
-		startScreen.setBounds(0, 0, dimensionX, dimensionY);
-		startScreen.activate();
+		startScreen = StartScreen.getInstance();
+		StartScreenModel.getInstance().addButtons();
+		gameScreen = GameScreen.getInstance();
+		addScreen(StartScreen.getInstance());
+		StartScreen.activateModel();
 	}
 	
-	public static void swapDisplays(JLayeredPane toAdd, JLayeredPane toRemove) {
-		INSTANCE.remove(toRemove);
+	public void addScreen(JLayeredPane toAdd) {
 		INSTANCE.add(toAdd);
 		toAdd.requestFocusInWindow();
-		toAdd.setBounds(0, 0, INSTANCE.dimensionX, INSTANCE.dimensionY);
 		INSTANCE.revalidate();
 		INSTANCE.repaint();
+	}
+	
+	public void removeScreen(JLayeredPane toRemove) {
+		INSTANCE.remove(toRemove);
+		INSTANCE.revalidate();
+		INSTANCE.repaint();
+	}
+	
+	public static void swapScreens(JLayeredPane toAdd, JLayeredPane toRemove) {
+		INSTANCE.removeScreen(toRemove);
+		INSTANCE.addScreen(toAdd);
 	}
 
 	public static ScreensHolder getInstance() {

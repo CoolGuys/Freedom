@@ -13,16 +13,16 @@ public class GameScreen extends JLayeredPane {
 	
 		private GameScreen()
 		{
-			setBackground(Color.DARK_GRAY);
+			this.setBackground(Color.DARK_GRAY);
+			this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
+					ScreensHolder.getInstance().getHeight());
+			this.setOpaque(true);
 			this.createInputMap();
 			this.createMovementController();
 			GameField.getInstance().loadLevel("TEST", 1);
 			
 		}
 		
-		public void setDimensions(int width, int height) {
-			this.setSize(width, height);
-		}
 		
 		public void createInputMap() {
 			InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -79,7 +79,7 @@ public class GameScreen extends JLayeredPane {
 		private class PauseAction extends AbstractAction {
 			public void actionPerformed(ActionEvent e) {
 				logger.entering("PauseAction", "actionPerformed");
-				ScreensHolder.swapDisplays(StartScreen.getInstance(), GameScreen.getInstance());
+				ScreensHolder.swapScreens(StartScreen.getInstance(), GameScreen.getInstance());
 				StartScreenModel.getInstance().activate();
 				logger.info("Paused");
 				logger.exiting("PauseAction", "actionPerformed");
