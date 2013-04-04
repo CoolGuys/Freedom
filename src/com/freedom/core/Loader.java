@@ -30,7 +30,7 @@ public class Loader {
 						newstuff = cla.newInstance();
 						//newstuff.
 						//System.out.println(newstuff.getClass().getName());
-						newstuff.ReadLvlFile(sc);
+						//newstuff.ReadLvlFile(sc);
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
