@@ -14,8 +14,9 @@ public class Robot extends Stuff implements Moveable {
 
 	private String direction;
 	private Stuff container;
-	private boolean isEmpty;
+	private boolean isEmpty; // пуст ли контейнер
 	private Cell[][] environment;
+	private ScreensHolder painter;
 	private boolean isMoving;
 	private int size = 50;
 	private int step = size / 5;
@@ -26,9 +27,9 @@ public class Robot extends Stuff implements Moveable {
 	Image textureW;
 
 	// private static Logger logger = Logger.getLogger("Core.Robot");
-	
-	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles)
-	{
+
+	// /конструктор (я выпилил второй, буду ставить null в вызове) @gleb
+	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles) {
 		super(posX, posY, false, false);
 		this.direction = direction;
 		this.container = c;
@@ -45,6 +46,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 	}
+
+	// блок выдачи полей
 
 	public int getX() {
 		return (this.x);
@@ -66,25 +69,27 @@ public class Robot extends Stuff implements Moveable {
 		return (this.container);
 	}
 
+	// конец блока выдачи
 
-	public boolean canGo(Tile[][] tiles) { 
+	public boolean canGo() {
+
 		if (this.direction.equals("N")) {
-			if (environment[x][y - 1].getContentAmount() == 0)
+			if (environment[x][y - 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("S")) {
-			if (environment[x][y + 1].getContentAmount() == 0)
+			if (environment[x][y + 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("W")) {
-			if (environment[x - 1][y].getContentAmount() == 0)
+			if (environment[x - 1][y].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("E")) {
-			if (environment[x + 1][y].getContentAmount() == 0)
+			if (environment[x + 1][y].ifCanPassThrough())
 				return true;
 		}
 
@@ -95,13 +100,12 @@ public class Robot extends Stuff implements Moveable {
 	// Ваня, верни проверку canGo потом
 	public void moveToNextTile(String direction) {
 
-
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
 			ScreensHolder.getInstance().repaint();
 		}
 
-		else if (!isMoving) {
+		else if ((!isMoving)&(this.canGo())) {
 			isMoving = true;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
@@ -122,19 +126,75 @@ public class Robot extends Stuff implements Moveable {
 			x -= step;
 	}
 
-	// Здесь аргумент не имеет смысла, робот может брать Stuff только перед
-	// собой!
 	// Нужно доработать и брать с уловиями на направление
 	// @gleb
-	public void take() { // метод поднятия объекта: если объект берется
-	// и есть куда положить - делаем это
+	public void take() { 
 		if (!this.isEmpty)
 			return;
 
-		// this.container = environment[].takeObject();
 		if (this.container != null) {
 			this.isEmpty = false;
+			return;
 		}
+		
+		
+		if (this.direction.equals("N")) {
+			this.container = environment[x][y - 1].takeObject();
+			this.isEmpty = false;
+			return;
+		}
+		
+		if (this.direction.equals("S")) {
+			this.container = environment[x][y + 1].takeObject();
+			this.isEmpty = false;
+			return;
+		}
+
+		if (this.direction.equals("W")) {
+			this.container = environment[x - 1][y].takeObject();
+			this.isEmpty = false;
+			return;
+		}
+
+		if (this.direction.equals("E")) {
+			this.container = environment[x + 1][y].takeObject();
+			this.isEmpty = false;
+		}
+
+	}
+	
+	public void put(){
+		if(this.isEmpty)
+			return;
+		
+		if (this.direction.equals("N")) {
+			environment[x][y - 1].add(this.container);
+			this.container = null;
+			this.isEmpty = true;
+			return;
+		}
+		
+		if (this.direction.equals("S")) {
+			environment[x][y + 1].add(this.container);
+			this.container = null;
+			this.isEmpty = true;
+			return;
+		}
+
+		if (this.direction.equals("W")) {
+			environment[x - 1][y].add(this.container);
+			this.container = null;
+			this.isEmpty = true;
+			return;
+		}
+
+		if (this.direction.equals("E")) {
+			environment[x + 1][y].add(this.container);
+			this.container = null;
+			this.isEmpty = true;
+		}
+		
+			
 	}
 
 	public void draw(Graphics g) {

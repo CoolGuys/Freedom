@@ -84,7 +84,11 @@ public class Cell {
 	}
 
 	// /конец блока
-
+	
+	
+	
+	//Everithing for robot:
+	
 	public Stuff takeObject() { // метод, выдающий роботу объект
 		if (this.contentAmount == 1) // на мне ничего ничего не лежит
 			return null;
@@ -96,5 +100,16 @@ public class Cell {
 		this.deleteStuff();
 		return (buf);
 	}
+	
+	public boolean ifCanPassThrough(){
+		if(this.contentAmount==1)
+			return true;
+		for(int i = 1; i < this.contentAmount; i++){
+			if (!this.content[i].ifCanPass())
+				return false;
+		}
+		return true;
+	}
+	
 
 }
