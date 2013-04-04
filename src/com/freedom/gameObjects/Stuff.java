@@ -9,8 +9,8 @@ import javax.imageio.ImageIO;
 public class Stuff {
 	//ДОБАВЛЕНО	 поле "могу ли взять"
 	
-	protected int x;
-	protected int y;
+	protected int x; //вообще говоря, они не нужны. 
+	protected int y; // если они нигде не упростят реализации, избавиться!
 	private boolean pickable; //"поднимаем" ли объект?
 	private boolean passable; //можем ли пройти сквозь объект?
 	//private Image texture;
