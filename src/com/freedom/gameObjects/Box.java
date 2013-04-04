@@ -6,7 +6,7 @@ public class Box extends Stuff{
 	private char colour; // договоренность: имеем R,G,B
 	
 	public Box(int a, int b, char colour){//введешь невалидный цвет - ящик обагрится кровью.
-		super(a,b,true);
+		super(a,b,true,false);
 		
 		if(this.ifColourValide(colour)) 
 			this.colour = colour;
