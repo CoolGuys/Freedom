@@ -1,8 +1,17 @@
 Level 1
-com.freedom.gameObjects.Box 3 4 r
-com.freedom.gameObjects.Box 4 4 b
+com.freedom.gameObjects.Box 3 4 R
+com.freedom.gameObjects.Box 4 4 G
 /Level
 Level 2
-com.freedom.gameObjects.Box 3 4 r
-com.freedom.gameObjects.Box 3 6 b
+com.freedom.gameObjects.Box 3 4 B
+com.freedom.gameObjects.Box 3 6 B
 /Level
+Level 3
+com.freedom.gameObjects.Box 1 4 B
+com.freedom.gameObjects.Box 2 4 B
+com.freedom.gameObjects.Box 12 6 B
+com.freedom.gameObjects.Stuff 12 4
+com.freedom.gameObjects.Box 3 4 B
+com.freedom.gameObjects.Stuff 312 6
+/Level
+end

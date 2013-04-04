@@ -11,7 +11,6 @@ public class Box extends Stuff {
 		this.x = sc.nextInt(); // В данном случае считывает x y и color
 		this.y = sc.nextInt();
 		this.colour = sc.next().charAt(0);
-		System.out.println("x=" + this.x + "y=" + this.y + "c=" + this.colour);
 	}
 
 	public Box() {

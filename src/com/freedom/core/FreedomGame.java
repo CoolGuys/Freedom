@@ -19,12 +19,6 @@ public class FreedomGame {
 				Frame frame = new Frame(1024, 532);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setVisible(true);
-				/*try {
-					//Loader.test(1);
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}*/
 			}
 		});
 	}
