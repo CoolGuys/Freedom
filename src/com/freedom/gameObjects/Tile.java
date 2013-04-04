@@ -4,7 +4,11 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
-
+/**
+ * хочу уметь добавлять объекты типа Stuff в массив Tiles
+ * @author ush
+ *
+ */
 
 //объект класса Плитка.
 public class Tile {
@@ -15,11 +19,11 @@ public class Tile {
 	
 	private Stuff [] content; // объекты, лежащие на клетке
 	private int contentAmount; // кол-во объектов на клетке, может стать багом в случае лазера; 
-	public Tile (int a, int b, int contentAmountin, Stuff stuffin[]){//зполнение массива content
+	public Tile (int a, int b, int contentAmountIn, Stuff stuffin[]){//зполнение массива content
 		this.content = new Stuff[3]; //3 - это по максимуму, чтоб не париться. 
 		this.x = a;
 		this.y = b;
-		this.contentAmount = contentAmountin;
+		this.contentAmount = contentAmountIn;
 		int i1;
 		for(i1=0;i1<this.contentAmount;i1++)
 		{

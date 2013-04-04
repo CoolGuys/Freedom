@@ -1,0 +1,8 @@
+Level 1
+com.freedom.gameObjects.Box 3 4 r
+com.freedom.gameObjects.Box 4 4 b
+/Level
+Level 2
+com.freedom.gameObjects.Box 3 4 r
+com.freedom.gameObjects.Box 3 6 b
+/Level
