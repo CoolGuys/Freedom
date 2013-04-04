@@ -20,7 +20,9 @@ public class Stuff implements IStuff{
 		this.x=sc.nextInt();
 		this.y=sc.nextInt();
 	}
-	
+	public Stuff(){
+		
+	}
 	public Stuff(int posX, int posY, boolean pickable){ //Глеб, допиши здесь создание рисунка
 		this.x = posX;
 		this.y = posY;
