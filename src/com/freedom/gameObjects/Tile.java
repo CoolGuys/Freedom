@@ -15,7 +15,7 @@ public class Tile extends Stuff{
 		return y;
 	}
 	
-	public Tile(int x,int y, boolean take, boolean pass){
-		super(x,y,take,pass);
+	public Tile(int x,int y){
+		super(x,y,false,false);
 	}
 }
