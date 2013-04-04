@@ -24,8 +24,6 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 
-		// Понятно, что начальная позиция робота должна задаваться уровнем
-		// @gleb
 		robot = new Robot(10, 10, "S", null, null);
 	}
 

@@ -1,27 +1,27 @@
 package com.freedom.gameObjects;
 
 
-//ящик, имеет по большому счету лишь цвет
 public class Box extends Stuff{
-	private char colour; // договоренность: имеем R,G,B
+	private String colour; // договоренность: имеем R,G,B
 	
-	public Box(int a, int b, char colour){//введешь невалидный цвет - ящик обагрится кровью.
+	public Box(int a, int b, String colour){
 		super(a,b,true,false);
+		this.colour = colour;
 		
-		if(this.ifColourValide(colour)) 
-			this.colour = colour;
-		
-		else this.colour = 'R';
 	}
-
-	private boolean ifColourValide(char color){
+	
+	/*
+	 * К удалению, таких багов не будет, ситуация как и в роботе с направлением
+	 * @gleb
+	 */
+	/*private boolean ifColourValide(char color){
 		if (color == 'R') return true;
 		if (color == 'G') return true;
 		if (color == 'B') return true;
 		return false;
-	}
+	}*/
 	
-	public char getColour(){
+	public String getColour(){
 		return this.colour;
 	}
 }

@@ -2,10 +2,17 @@ package com.freedom.core;
 
 import com.freedom.gameObjects.Moveable;
 
+/**
+ * Класс MovementAnimator выполняет операции по изменению пространственного
+ * положения в почти непрерывном режиме
+ * 
+ * @author gleb
+ * 
+ * @param <MovingObj> - объект, с которым работает класс
+ */
 public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 
-	public MovementAnimator(MovingObj mover,
-			String direction)
+	public MovementAnimator(MovingObj mover, String direction)
 	{
 		this.theOneToRepaint = ScreensHolder.getInstance();
 		this.direction = direction;
@@ -13,16 +20,13 @@ public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 	}
 
 	public void run() {
-		try
-		{
-			for (int i = 0; i <= 5; i++)
-			{
+		try {
+			for (int i = 0; i <= 5; i++) {
 				theOneToMove.move(direction);
 				theOneToRepaint.repaint();
 				Thread.sleep(10);
 			}
-		} catch (InterruptedException e)
-		{
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

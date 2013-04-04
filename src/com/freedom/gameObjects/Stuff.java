@@ -1,19 +1,11 @@
 package com.freedom.gameObjects;
-//общее для все имеющихся объектов
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Stuff {
-	//ДОБАВЛЕНО	 поле "могу ли взять"
 	
 	protected int x;
 	protected int y;
 	private boolean pickable; //"поднимаем" ли объект?
 	private boolean passable; //можем ли пройти сквозь объект?
-	//private Image texture;
 	
 	public Stuff(int posX, int posY, boolean pickable, boolean passable){
 		this.x = posX;
@@ -22,7 +14,6 @@ public class Stuff {
 		this.passable = passable;
 	}
 	
-	//////////////
 	public int getX(){ 
 		return(this.x);
 	}
@@ -38,6 +29,5 @@ public class Stuff {
 	public boolean ifCanPass(){
 		return this.passable;
 	}
-	/////////////////////
 	
 }

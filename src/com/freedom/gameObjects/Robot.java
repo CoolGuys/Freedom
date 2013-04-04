@@ -10,190 +10,154 @@ import javax.imageio.ImageIO;
 
 import com.freedom.core.*;
 
-
 public class Robot extends Stuff implements Moveable {
 
-private String direction;
-private Stuff container;
-private boolean isEmpty; // пуст ли контейнер
-private Cell[][] environment;
-private ScreensHolder painter;
-private boolean isMoving;
-private int size = 50;
-private int step = size/5;
+	private String direction;
+	private Stuff container;
+	private boolean isEmpty;
+	private Cell[][] environment;
+	private boolean isMoving;
+	private int size = 50;
+	private int step = size / 5;
 
-Image textureN;
-Image textureS;
-Image textureE;
-Image textureW;
+	Image textureN;
+	Image textureS;
+	Image textureE;
+	Image textureW;
 
-// private static Logger logger = Logger.getLogger("Core.Robot");
+	// private static Logger logger = Logger.getLogger("Core.Robot");
+	
+	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles)
+	{
+		super(posX, posY, false, false);
+		this.direction = direction;
+		this.container = c;
+		this.environment = tiles;
+		isEmpty = false;
 
-// /конструктор (я выпилил второй, буду ставить null в вызове) @gleb
-public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles)
-{
-super(posX, posY, false,false);
-this.direction = direction;
-this.container = c;
-this.environment = tiles;
-isEmpty = false;
+		try {
+			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
+			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
+			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
+			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-try
-{
-textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
-textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
-textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
-textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
-} catch (IOException e)
-{
-e.printStackTrace();
-}
+	}
 
-}
+	public int getX() {
+		return (this.x);
+	}
 
-/*
-* Этот метод выглядит ненужным)) @gleb
-*/
-private boolean ifDirection(char dir) { // проверка, является ли направление
-// правильно заданным
-if (dir == 'N')
-return true;
-if (dir == 'S')
-return true;
-if (dir == 'W')
-return true;
-if (dir == 'E')
-return true;
-return false;
-}
+	public int getY() {
+		return (this.y);
+	}
 
-// блок выдачи полей
+	public String getDirection() {
+		return this.direction;
+	}
 
-public int getX() {
-return (this.x);
-}
+	public boolean getIfEmpty() {
+		return (this.isEmpty);
+	}
 
-public int getY() {
-return (this.y);
-}
+	public Stuff getContent() {
+		return (this.container);
+	}
 
-public String getDirection() {
-return this.direction;
-}
 
-public boolean getIfEmpty() {
-return (this.isEmpty);
-}
+	public boolean canGo(Tile[][] tiles) { 
+		if (this.direction.equals("N")) {
+			if (environment[x][y - 1].getContentAmount() == 0)
+				return true;
+		}
 
-public Stuff getContent() {
-return (this.container);
-}
+		if (this.direction.equals("S")) {
+			if (environment[x][y + 1].getContentAmount() == 0)
+				return true;
+		}
 
-// конец блока выдачи
+		if (this.direction.equals("W")) {
+			if (environment[x - 1][y].getContentAmount() == 0)
+				return true;
+		}
 
-public boolean canGo(Tile[][] tiles) { // стоит объект - false;
+		if (this.direction.equals("E")) {
+			if (environment[x + 1][y].getContentAmount() == 0)
+				return true;
+		}
 
-if (this.direction.equals("N"))
-{
-if (environment[x][y - 1].getContentAmount() == 0)
-return true;
-}
+		return false;
 
-if (this.direction.equals("S"))
-{
-if (environment[x][y + 1].getContentAmount() == 0)
-return true;
-}
+	}
 
-if (this.direction.equals("W"))
-{
-if (environment[x - 1][y].getContentAmount() == 0)
-return true;
-}
+	// Ваня, верни проверку canGo потом
+	public void moveToNextTile(String direction) {
 
-if (this.direction.equals("E"))
-{
-if (environment[x + 1][y].getContentAmount() == 0)
-return true;
-}
 
-return false;
+		if (!direction.equals(this.direction)) {
+			this.direction = direction;
+			ScreensHolder.getInstance().repaint();
+		}
 
-}
+		else if (!isMoving) {
+			isMoving = true;
+			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+			Thread t = new Thread(r);
+			t.start();
+		} else
+			return;
+	}
 
-// Ваня, верни проверку canGo потом
-public void moveToNextTile(String direction) {
-// основной метод: подсовываем ему направление, если оно валидно и мы
-// туда не смотрим,
-// поворачиваемся туда, иначе начинаем туда двигаться, если на соседней
-// клетке нет объектов
+	public void move(String direction) {
 
-if (!direction.equals(this.direction))
-{
-this.direction = direction;
-ScreensHolder.getInstance().repaint();
-}
+		if (direction.equals("N"))
+			y -= step;
+		else if (direction.equals("S"))
+			y += step;
+		else if (direction.equals("E"))
+			x += step;
+		else
+			x -= step;
+	}
 
-else if (!isMoving)
-{
-isMoving = true;
-Runnable r = new MovementAnimator<Robot>(this,
-this.direction);
-Thread t = new Thread(r);
-t.start();
-} else
-return;
-}
+	// Здесь аргумент не имеет смысла, робот может брать Stuff только перед
+	// собой!
+	// Нужно доработать и брать с уловиями на направление
+	// @gleb
+	public void take() { // метод поднятия объекта: если объект берется
+	// и есть куда положить - делаем это
+		if (!this.isEmpty)
+			return;
 
-public void move(String direction) {
+		// this.container = environment[].takeObject();
+		if (this.container != null) {
+			this.isEmpty = false;
+		}
+	}
 
-if (direction.equals("N"))
-y -= step;
-else if (direction.equals("S"))
-y += step;
-else if (direction.equals("E"))
-x += step;
-else
-x -= step;
-}
+	public void draw(Graphics g) {
+		if (direction.equals("N"))
+			g.drawImage(textureN, x, y, size, size, null);
+		else if (direction.equals("S"))
+			g.drawImage(textureS, x, y, size, size, null);
+		else if (direction.equals("E"))
+			g.drawImage(textureE, x, y, size, size, null);
+		else
+			g.drawImage(textureW, x, y, size, size, null);
+	}
 
-// Здесь аргумент не имеет смысла, робот может брать Stuff только перед
-// собой!
-// Нужно доработать и брать с уловиями на направление
-// @gleb
-public void take() { // метод поднятия объекта: если объект берется
-// и есть куда положить - делаем это
-if (!this.isEmpty)
-return;
+	@Override
+	public boolean checkIfBeingMoved() {
+		// TODO Auto-generated method stub
+		return isMoving;
+	}
 
-// this.container = environment[].takeObject();
-if (this.container != null)
-{
-this.isEmpty = false;
-}
-}
-
-public void draw(Graphics g) {
-if (direction.equals("N"))
-g.drawImage(textureN, x, y, size, size, null);
-else if (direction.equals("S"))
-g.drawImage(textureS, x, y, size, size, null);
-else if (direction.equals("E"))
-g.drawImage(textureE, x, y, size, size, null);
-else
-g.drawImage(textureW, x, y, size, size, null);
-}
-
-@Override
-public boolean checkIfBeingMoved() {
-// TODO Auto-generated method stub
-return isMoving;
-}
-
-@Override
-public void tellIfBeingMoved(boolean isMoved) {
-// TODO Auto-generated method stub
-isMoving = isMoved;
-}
+	@Override
+	public void tellIfBeingMoved(boolean isMoved) {
+		// TODO Auto-generated method stub
+		isMoving = isMoved;
+	}
 
 }

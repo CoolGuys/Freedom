@@ -1,9 +1,4 @@
 package com.freedom.gameObjects;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 
 public class Tile extends Stuff{
 	
@@ -16,6 +11,6 @@ public class Tile extends Stuff{
 	}
 	
 	public Tile(int x,int y){
-		super(x,y,false,false);
+		super(x,y,false,true);
 	}
 }
