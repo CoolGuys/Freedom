@@ -6,12 +6,14 @@ import java.util.Scanner;
 public class Box extends Stuff {
 	private char colour; // договоренность: имеем R,G,B
 
+
 	public void ReadLvlFile(Scanner sc) {// Метод, который считывает всю инфу из
 											// файла с лвлами
 		this.x = sc.nextInt(); // В данном случае считывает x y и color
 		this.y = sc.nextInt();
 		this.colour = sc.next().charAt(0);
 	}
+	
 
 	public Box() {
 		
@@ -19,7 +21,7 @@ public class Box extends Stuff {
 
 	public Box(int a, int b, char colour) {// введешь невалидный цвет - ящик
 											// обагрится кровью.
-		super(a, b, true);
+		super(a, b, true, false);
 
 		if (this.ifColourValide(colour))
 			this.colour = colour;

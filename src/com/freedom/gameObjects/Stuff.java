@@ -1,12 +1,6 @@
 package com.freedom.gameObjects;
-//общее для все имеющихся объектов
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.Scanner;
 
-import javax.imageio.ImageIO;
 
 public class Stuff implements IStuff{
 	//ДОБАВЛЕНО	 поле "могу ли взять"
@@ -14,6 +8,7 @@ public class Stuff implements IStuff{
 	protected int x;
 	protected int y;
 	private boolean pickable; //"поднимаем" ли объект?
+	private boolean passable; //можем ли пройти сквозь объект?
 	//private Image texture;
 	
 	public void ReadLvlFile(Scanner sc){//чтение инфы о себе из файла
@@ -23,10 +18,12 @@ public class Stuff implements IStuff{
 	public Stuff(){
 		
 	}
-	public Stuff(int posX, int posY, boolean pickable){ //Глеб, допиши здесь создание рисунка
+
+	public Stuff(int posX, int posY, boolean pickable, boolean passable){
 		this.x = posX;
 		this.y = posY;
 		this.pickable = pickable;
+		this.passable = passable;
 	}
 	
 	//////////////
@@ -40,6 +37,10 @@ public class Stuff implements IStuff{
 	
 	public boolean getIfCanTake(){
 		return this.pickable;
+	}
+	
+	public boolean ifCanPass(){
+		return this.passable;
 	}
 	/////////////////////
 	
