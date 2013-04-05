@@ -6,21 +6,27 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-//объект класса Плитка.
 public class Cell {
 
 	private int x;
 	private int y;
 	private Image texture;
 
-	private Stuff[] content; // объекты, лежащие на клетке
-	private int contentAmount; // кол-во объектов на клетке, может стать багом в
-								// случае лазера;
+	
+	/*
+	 * Нужно изменить, думаю, потребуется ArrayList
+	 * @gleb
+	 */
+	private Stuff[] content; 
+	private int contentAmount; 
 
-	public Cell(int a, int b, int contentAmountin, Stuff stuffin[]) {// зполнение
-																		// массива
-																		// content
-		this.content = new Stuff[4]; // 3 - это по максимуму, чтоб не париться.
+	/*
+	 * Это тоже надо будет изменить, вынести заполнение stuffIn в отдельный метод
+	 * @gleb
+	 */
+	public Cell(int a, int b, int contentAmountin, Stuff stuffin[])
+	{
+		this.content = new Stuff[4]; // 4 - это по максимуму, чтоб не париться.
 		this.x = a;
 		this.y = b;
 		this.contentAmount = contentAmountin;
@@ -30,7 +36,8 @@ public class Cell {
 		}
 	}
 
-	public Cell(int a, int b) {
+	public Cell(int a, int b)
+	{
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 1;
@@ -41,21 +48,23 @@ public class Cell {
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 4)
 			return false;
-		
+
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		return true;
 	}
 
-	private void deleteStuff() { //удаляет "верхний" элемент
+	/*
+	 * Нужно изменить, должен удаляться первый попавшийся Stuff с pickable==true
+	 * @gleb
+	 */
+	private void deleteStuff() { // удаляет "верхний" элемент
 		if (this.contentAmount == 1)
 			return;
-		
+
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
 	}
-	
-	
 
 	// блок выдачи информации
 	public int getContentAmount() {
@@ -75,17 +84,32 @@ public class Cell {
 	}
 
 	// /конец блока
-
+	
+	
+	
+	//Everithing for robot:
+	
 	public Stuff takeObject() { // метод, выдающий роботу объект
 		if (this.contentAmount == 1) // на мне ничего ничего не лежит
 			return null;
 
-		if (!this.content[this.contentAmount - 1].getIfCanTake()) 
+		if (!this.content[this.contentAmount - 1].getIfCanTake())
 			return null;
 
 		Stuff buf = this.content[this.contentAmount - 1];
 		this.deleteStuff();
 		return (buf);
 	}
+	
+	public boolean ifCanPassThrough(){
+		if(this.contentAmount==1)
+			return true;
+		for(int i = 1; i < this.contentAmount; i++){
+			if (!this.content[i].ifCanPass())
+				return false;
+		}
+		return true;
+	}
+	
 
 }

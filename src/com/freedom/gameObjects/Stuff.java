@@ -3,13 +3,11 @@ import java.util.Scanner;
 
 
 public class Stuff implements IStuff{
-	//ДОБАВЛЕНО	 поле "могу ли взять"
 	
-	protected int x;
-	protected int y;
+	protected int x; //вообще говоря, они не нужны. 
+	protected int y; // если они нигде не упростят реализации, избавиться!
 	private boolean pickable; //"поднимаем" ли объект?
 	private boolean passable; //можем ли пройти сквозь объект?
-	//private Image texture;
 	
 	public void ReadLvlFile(Scanner sc){//чтение инфы о себе из файла
 		this.x=sc.nextInt();
@@ -26,7 +24,6 @@ public class Stuff implements IStuff{
 		this.passable = passable;
 	}
 	
-	//////////////
 	public int getX(){ 
 		return(this.x);
 	}
@@ -42,6 +39,5 @@ public class Stuff implements IStuff{
 	public boolean ifCanPass(){
 		return this.passable;
 	}
-	/////////////////////
 	
 }
