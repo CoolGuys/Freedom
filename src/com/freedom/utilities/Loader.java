@@ -1,4 +1,4 @@
-package com.freedom.core;
+package com.freedom.utilities;
 
 //package com.freedom.gameObjects;
 import java.io.*;

@@ -1,4 +1,4 @@
-package com.freedom.core;
+package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -6,22 +6,23 @@ import java.awt.event.ActionEvent;
 import java.util.logging.Logger;
 import javax.swing.*;
 import com.freedom.gameObjects.*;
+import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends JLayeredPane {
 	
 		private GameScreen()
 		{
-			setBackground(Color.DARK_GRAY);
+			this.setBackground(Color.DARK_GRAY);
+			this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
+					ScreensHolder.getInstance().getHeight());
+			this.setOpaque(true);
 			this.createInputMap();
 			this.createMovementController();
 			GameField.getInstance().loadLevel("TEST", 1);
 			
 		}
 		
-		public void setDimensions(int width, int height) {
-			this.setSize(width, height);
-		}
 		
 		public void createInputMap() {
 			InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -78,8 +79,8 @@ public class GameScreen extends JLayeredPane {
 		private class PauseAction extends AbstractAction {
 			public void actionPerformed(ActionEvent e) {
 				logger.entering("PauseAction", "actionPerformed");
-				ScreensHolder.swapDisplays(ScreensHolder.getInstance().getStartScreen(), ScreensHolder.getInstance().getGameScreen());
-				ScreensHolder.getInstance().getStartScreen().activate();
+				ScreensHolder.swapScreens(StartScreen.getInstance(), GameScreen.getInstance());
+				StartScreenModel.getInstance().activate();
 				logger.info("Paused");
 				logger.exiting("PauseAction", "actionPerformed");
 			}

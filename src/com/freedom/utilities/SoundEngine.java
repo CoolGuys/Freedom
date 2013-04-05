@@ -1,4 +1,4 @@
-package com.freedom.core;
+package com.freedom.utilities;
 
 import java.io.*;
 import java.util.concurrent.*;
