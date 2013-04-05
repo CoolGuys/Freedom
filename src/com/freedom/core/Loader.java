@@ -29,16 +29,14 @@ public class Loader {
 				if (Number == LevelNum) {
 					Object newstuff;
 					try {
-						Class cla = Class.forName(StrDump);
+						Class<?> cla = Class.forName(StrDump);
 						
 							newstuff = cla.newInstance();
-						//	System.out.println(newstuff.getClass().g);
-							//if(newstuff.getClass().equals("com.freedom.gameObjects.Stuff")){
 							logger.info("creating Stuff--"
 									+ newstuff.getClass().getName());
 							((Stuff) newstuff).ReadLvlFile(sc);
 				
-						// newstuff.ReadLvlFile(sc);
+
 					} catch (InstantiationException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
