@@ -51,6 +51,8 @@ public class Cell {
 
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
+		element.x = this.x;
+		element.y = this.y;
 		return true;
 	}
 
@@ -87,7 +89,7 @@ public class Cell {
 	
 	
 	
-	//Everithing for robot:
+	//Everything for robot:
 	
 	public Stuff takeObject() { // метод, выдающий роботу объект
 		if (this.contentAmount == 1) // на мне ничего ничего не лежит
