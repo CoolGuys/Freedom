@@ -1,6 +1,5 @@
 package com.freedom.utilities;
 
-//package com.freedom.gameObjects;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Logger;
@@ -38,19 +37,16 @@ public class Loader {
 				
 
 					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						logger.severe("Error creating stuff! --"
 								+ e.getMessage());
 						break;
 					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						logger.severe("Error creating stuff! --"
 								+ e.getMessage());
 						break;
 					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 						logger.severe("Error creating stuff! --"
 								+ e.getMessage());
