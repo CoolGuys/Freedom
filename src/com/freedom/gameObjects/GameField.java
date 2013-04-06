@@ -57,7 +57,7 @@ public class GameField {
 
 	private static Robot robot;
 	private static Tile[][] tiles;
-	private static int xSize; // размеры поля
+	private static int xSize; 
 	private static int ySize;
 	private static Logger logger = Logger.getLogger("Core.GameField");
 
