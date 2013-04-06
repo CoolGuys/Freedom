@@ -14,7 +14,7 @@ public class StartScreenModel {
 
 	private StartScreenModel()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 
 		try {
 			backgroundPicture = ImageIO.read(new File("Resource/UtilityPictures/startScreenBackground.png"));
@@ -75,9 +75,9 @@ public class StartScreenModel {
 		Point p = new Point();
 
 		p.x = 0;
-		p.y = -StartScreen.getInstance().getWidth() * 9 / 32
+		p.y = -StartScreen.getInstance().getWidth() * 761 / 3032
 				+ StartScreen.getInstance().getHeight() / 2;
-
+		logger.info(p.y+"");
 		return p;
 	}
 
