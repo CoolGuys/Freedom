@@ -17,7 +17,7 @@ public class StartScreenModel {
 		logger.setLevel(Level.OFF);
 
 		try {
-			wallpaper = ImageIO.read(new File("Resource/tileTest.png"));
+			backgroundPicture = ImageIO.read(new File("Resource/UtilityPictures/startScreenBackground.png"));
 			backgroundMusic = new File("Resource/Sound/BackgroundMusic.au");
 
 		} catch (IOException e) {
@@ -52,7 +52,7 @@ public class StartScreenModel {
 
 	public void draw(Graphics g) {
 
-		g.drawImage(wallpaper, this.calculateWallpaperPosition().x, this
+		g.drawImage(backgroundPicture, this.calculateWallpaperPosition().x, this
 				.calculateWallpaperPosition().y, StartScreen.getInstance()
 				.getWidth(), StartScreen.getInstance().getWidth() * 761 / 1516,
 				null);
@@ -82,7 +82,7 @@ public class StartScreenModel {
 	}
 
 	private GButton[] buttons = new GButton[4];
-	private Image wallpaper;
+	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
 	private static final StartScreenModel INSTANCE = new StartScreenModel();
