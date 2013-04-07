@@ -92,7 +92,7 @@ public class Cell {
 	//Everything for robot:
 	
 	public Stuff takeObject() { // метод, выдающий роботу объект
-		if (this.contentAmount == 1) // на мне ничего ничего не лежит
+		if (this.contentAmount == 1)
 			return null;
 
 		if (!this.content[this.contentAmount - 1].getIfCanTake())
