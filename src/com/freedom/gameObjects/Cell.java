@@ -12,29 +12,13 @@ public class Cell {
 	private int y;
 	private Image texture;
 
-	
 	/*
 	 * Нужно изменить, думаю, потребуется ArrayList
+	 * 
 	 * @gleb
 	 */
-	private Stuff[] content; 
-	private int contentAmount; 
-
-	/*
-	 * Это тоже надо будет изменить, вынести заполнение stuffIn в отдельный метод
-	 * @gleb
-	 */
-	public Cell(int a, int b, int contentAmountin, Stuff stuffin[])
-	{
-		this.content = new Stuff[4]; // 4 - это по максимуму, чтоб не париться.
-		this.x = a;
-		this.y = b;
-		this.contentAmount = contentAmountin;
-		int i1;
-		for (i1 = 0; i1 < this.contentAmount; i1++) {
-			this.content[i1] = stuffin[i1];
-		}
-	}
+	private Stuff[] content;
+	private int contentAmount;
 
 	public Cell(int a, int b)
 	{
@@ -42,7 +26,16 @@ public class Cell {
 		this.y = b;
 		this.contentAmount = 1;
 		this.content = new Stuff[4];
-		this.content[0] = new Tile(a, b);
+
+		/*
+		 * Это нужно изменить. В случае, когда есть провал, не нужно иметь тайл
+		 * под ним, согласуйтесь с Ушем, чтобы все объекты считывались из файла
+		 * на равных в случае, если там есть строка для нужного целла, или в
+		 * противном случае, заполнялась одним только тайлом по-дефолту
+		 * 
+		 * @gleb
+		 */
+		this.content[0] = new Tile();
 	}
 
 	public boolean add(Stuff element) {
@@ -58,6 +51,7 @@ public class Cell {
 
 	/*
 	 * Нужно изменить, должен удаляться первый попавшийся Stuff с pickable==true
+	 * 
 	 * @gleb
 	 */
 	private void deleteStuff() { // удаляет "верхний" элемент
@@ -86,32 +80,29 @@ public class Cell {
 	}
 
 	// /конец блока
-	
-	
-	
-	//Everything for robot:
-	
+
+	// Everything for robot:
+
 	public Stuff takeObject() { // метод, выдающий роботу объект
 		if (this.contentAmount == 1)
 			return null;
 
-		if (!this.content[this.contentAmount - 1].getIfCanTake())
+		if (!this.content[this.contentAmount - 1].getIfTakeable())
 			return null;
 
 		Stuff buf = this.content[this.contentAmount - 1];
 		this.deleteStuff();
 		return (buf);
 	}
-	
-	public boolean ifCanPassThrough(){
-		if(this.contentAmount==1)
+
+	public boolean ifCanPassThrough() {
+		if (this.contentAmount == 1)
 			return true;
-		for(int i = 1; i < this.contentAmount; i++){
-			if (!this.content[i].ifCanPass())
+		for (int i = 1; i < this.contentAmount; i++) {
+			if (!this.content[i].getIfPassable())
 				return false;
 		}
 		return true;
 	}
-	
 
 }

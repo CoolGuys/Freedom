@@ -16,6 +16,7 @@ class Frame extends JFrame {
 	
 	public Frame()
 	{
+		super("Freedom");
 		setUndecorated(true);
 		getContentPane().setLayout(null);
 		

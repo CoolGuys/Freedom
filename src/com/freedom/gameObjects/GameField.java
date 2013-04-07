@@ -20,6 +20,7 @@ public class GameField {
 
 	private GameField()
 	{
+		cellSize = 50;
 	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
@@ -39,8 +40,8 @@ public class GameField {
 		return (ySize);
 	}
 
-	public static Tile[][] getTiles() {
-		return tiles;
+	public static Cell[][] getCells() {
+		return cells;
 	}
 
 	public static Robot getRobot() {
@@ -54,12 +55,16 @@ public class GameField {
 	public static GameField getInstance() {
 		return INSTANCE;
 	}
+	public static int getcellSize() {
+		return cellSize;
+	}
 
 	private static Robot robot;
-	private static Tile[][] tiles;
+	private static Cell[][] cells;
 	private static int xSize; 
 	private static int ySize;
 	private static Logger logger = Logger.getLogger("Core.GameField");
+	private static int cellSize;
 
 	private static final GameField INSTANCE = new GameField();
 
