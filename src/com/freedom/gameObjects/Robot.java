@@ -15,10 +15,8 @@ public class Robot extends Stuff implements Moveable {
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
 	private Cell[][] environment;
-	private ScreensHolder painter;
 	private boolean isMoving;
-	private int size = 50;
-	private int step = size / 5;
+	private int step = getSize() / 5;
 
 	Image textureN;
 	Image textureS;
@@ -27,9 +25,8 @@ public class Robot extends Stuff implements Moveable {
 
 	// private static Logger logger = Logger.getLogger("Core.Robot");
 
-	// /конструктор (я выпилил второй, буду ставить null в вызове) @gleb
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles) {
-		super(posX, posY, false, false);
+		super(false, false);
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
@@ -46,7 +43,6 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
-	// блок выдачи полей
 
 	public int getX() {
 		return (this.x);
@@ -68,7 +64,6 @@ public class Robot extends Stuff implements Moveable {
 		return (this.container);
 	}
 
-	// конец блока выдачи
 
 	public boolean canGo() {
 
@@ -96,7 +91,6 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
-	// Ваня, верни проверку canGo потом
 	public void moveToNextTile(String direction) {
 
 		if (!direction.equals(this.direction)) {
@@ -198,13 +192,13 @@ public class Robot extends Stuff implements Moveable {
 
 	public void draw(Graphics g) {
 		if (direction.equals("N"))
-			g.drawImage(textureN, x, y, size, size, null);
+			g.drawImage(textureN, x, y, getSize(), getSize(), null);
 		else if (direction.equals("S"))
-			g.drawImage(textureS, x, y, size, size, null);
+			g.drawImage(textureS, x, y, getSize(), getSize(), null);
 		else if (direction.equals("E"))
-			g.drawImage(textureE, x, y, size, size, null);
+			g.drawImage(textureE, x, y, getSize(), getSize(), null);
 		else
-			g.drawImage(textureW, x, y, size, size, null);
+			g.drawImage(textureW, x, y, getSize(), getSize(), null);
 	}
 
 	@Override

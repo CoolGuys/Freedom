@@ -33,7 +33,7 @@ public class Loader {
 							newstuff = cla.newInstance();
 							logger.info("creating Stuff--"
 									+ newstuff.getClass().getName());
-							((Stuff) newstuff).ReadLvlFile(sc);
+							((Stuff) newstuff).readLvlFile(sc);
 				
 
 					} catch (InstantiationException e) {

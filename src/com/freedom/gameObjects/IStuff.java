@@ -9,5 +9,5 @@ import java.util.Scanner;
  * 
  */
 public interface IStuff {
-	void ReadLvlFile(Scanner sc);//название функции говорит само за себя
+	void readLvlFile(Scanner sc);//название функции говорит само за себя
 }
