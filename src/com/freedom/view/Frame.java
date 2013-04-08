@@ -2,6 +2,10 @@ package com.freedom.view;
 
 import java.awt.Dimension;
 import java.awt.Toolkit; 
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -19,6 +23,12 @@ class Frame extends JFrame {
 		super("Freedom");
 		setUndecorated(true);
 		getContentPane().setLayout(null);
+		try {
+			setIconImage(ImageIO.read(new File("Resource/Textures/RobotN.png")));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
