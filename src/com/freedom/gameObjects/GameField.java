@@ -35,7 +35,7 @@ public class GameField {
 			e.printStackTrace();
 		}
 
-		robot = new Robot(1, 1, "S", null, cells);
+		robot = new Robot(3, 3, "S", null, cells);
 	}
 
 	public static void unloadLevel() {
