@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -37,6 +38,11 @@ public class Tile extends Stuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void readLvlFile(Scanner sc){
+		this.x = sc.nextInt(); 
+		this.y = sc.nextInt();		
 	}
 
 	public void draw(Graphics g) {
