@@ -45,7 +45,7 @@ public class Loader {
 									+ newstuff.getClass().getName());
 							((Stuff) newstuff).readLvlFile(sc);
 							//System.out.println("GLEB="+((Stuff) newstuff).getX()+" "+((Stuff) newstuff).getClass().getSimpleName());
-							cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Tile) newstuff));
+							cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 				
 
 					} catch (InstantiationException e) {
