@@ -2,6 +2,7 @@ package com.freedom.utilities;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.freedom.gameObjects.*;
@@ -15,6 +16,9 @@ import com.freedom.gameObjects.*;
  */
 public class Loader {
 	public static Cell[][] readLvl(int Number) throws FileNotFoundException {
+		
+		logger.setLevel(Level.OFF);
+		
 		Cell[][] cells = new Cell[10][10];
 		for(int x=1;x<10;x++){
 			for(int y=1;y<10;y++){

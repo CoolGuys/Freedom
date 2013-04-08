@@ -35,7 +35,7 @@ public class GameField {
 			e.printStackTrace();
 		}
 
-		robot = new Robot(5, 5, "S", null, cells);
+		robot = new Robot(1, 1, "S", null, cells);
 	}
 
 	public static void unloadLevel() {
@@ -59,6 +59,14 @@ public class GameField {
 	}
 
 	public static void draw(Graphics g) {
+		for(int x = 1; x<10; x++){
+			for(int y =1; y<10; y++) {
+				for(int i=0; i<cells[x][y].getContentAmount(); i++)
+				{
+					cells[x][y].getContent()[i].draw(g);
+				}
+			}
+		}
 		robot.draw(g);
 	}
 	

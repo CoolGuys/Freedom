@@ -19,18 +19,17 @@ public class Tile extends Stuff {
 	// if you want tile to be pit, just put damage = maxDamage
 	// we also don't need coordinates - it'll get them while pulling to cell
 
-	public Tile() { //это - плитка
+	public Tile() { 
 		super(false, true,0);
 			try {
-				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
+				texture = ImageIO.read(new File("Resource/Textures/TileTest.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	}
 	
-	public Tile(boolean ifPit){ //это провал
-		//Глеб, за тобой рисунок
+	public Tile(boolean ifPit){ 
 		super(false, true, Robot.maxLives);
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
@@ -46,7 +45,7 @@ public class Tile extends Stuff {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(texture, getX(), getY(), getSize(), getSize(), null);
+		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
 	}
 
 	private static Image texture;

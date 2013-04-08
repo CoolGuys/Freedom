@@ -1,11 +1,12 @@
 package com.freedom.gameObjects;
+import java.awt.Graphics;
 import java.util.Scanner;
 
 
 public class Stuff implements IStuff{
 	
-	protected int x; 
-	protected int y; 
+	protected double x; 
+	protected double y; 
 	private boolean pickable; 
 	private boolean passable;
 	private int size = GameField.getcellSize();
@@ -33,11 +34,11 @@ public class Stuff implements IStuff{
 	
 	
 	public int getX(){ 
-		return(this.x);
+		return((int)this.x);
 	}
 	
 	public int getY() {
-		return(this.y);
+		return((int)this.y);
 	}
 	
 	public int getSize() {
@@ -54,6 +55,11 @@ public class Stuff implements IStuff{
 	
 	public int getDamage(){
 		return this.damage;
+	}
+
+
+	public void draw(Graphics g) {
+		
 	}
 	
 }
