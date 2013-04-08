@@ -34,7 +34,6 @@ public class GameField {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		robot = new Robot(3, 3, "S", null, cells);
 	}
 
