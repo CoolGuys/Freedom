@@ -15,6 +15,8 @@ public class Robot extends Stuff implements Moveable {
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
 	private Cell[][] environment;
+	
+	
 	private boolean isMoving;
 	private int step = getSize() / 5;
 	
@@ -30,6 +32,8 @@ public class Robot extends Stuff implements Moveable {
 
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles) {
 		super(false, false,0);
+		super.x = posX;
+		super.y = posY;
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;

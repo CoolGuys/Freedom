@@ -28,7 +28,6 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 
-		robot = new Robot(0, 0, "S", null, null);
 		try {
 			cells=Loader.readLvl(2);
 		} catch (FileNotFoundException e) {
@@ -36,6 +35,7 @@ public class GameField {
 			e.printStackTrace();
 		}
 
+		robot = new Robot(5, 5, "S", null, cells);
 	}
 
 	public static void unloadLevel() {
