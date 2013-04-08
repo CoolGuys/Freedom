@@ -25,7 +25,7 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 
-		robot = new Robot(10, 10, "S", null, null);
+		robot = new Robot(0, 0, "S", null, null);
 	}
 
 	public static void unloadLevel() {

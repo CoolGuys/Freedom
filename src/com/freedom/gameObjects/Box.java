@@ -8,7 +8,7 @@ public class Box extends Stuff {
 
 	public Box()
 	{
-		super(true, false);
+		super(true, false,0);
 		//texture = ImageIO...
 	}
 

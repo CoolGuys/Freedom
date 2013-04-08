@@ -7,8 +7,10 @@ public class Stuff implements IStuff{
 	protected int x; 
 	protected int y; 
 	private boolean pickable; 
-	private boolean passable; 
+	private boolean passable;
 	private int size = GameField.getcellSize();
+	
+	private int damage; //number of lives you loose
 	
 	public void readLvlFile(Scanner sc) {
 		this.x=sc.nextInt();
@@ -16,11 +18,19 @@ public class Stuff implements IStuff{
 	}
 
 
-	public Stuff(boolean pickable, boolean passable){
-
+	public Stuff(boolean pickable, boolean passable, int damage){
 		this.pickable = pickable;
 		this.passable = passable;
+		this.damage = damage;
 	}
+	
+	public Stuff(boolean pickable, boolean passable){
+		this.pickable = pickable;
+		this.passable = passable;
+		this.damage = 0;
+	}
+	
+	
 	
 	public int getX(){ 
 		return(this.x);
@@ -40,6 +50,10 @@ public class Stuff implements IStuff{
 	
 	public boolean getIfPassable(){
 		return this.passable;
+	}
+	
+	public int getDamage(){
+		return this.damage;
 	}
 	
 }

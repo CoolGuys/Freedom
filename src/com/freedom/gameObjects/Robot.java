@@ -17,6 +17,9 @@ public class Robot extends Stuff implements Moveable {
 	private Cell[][] environment;
 	private boolean isMoving;
 	private int step = getSize() / 5;
+	
+	private int lives;
+	protected static int maxLives = 1;
 
 	Image textureN;
 	Image textureS;
@@ -26,7 +29,7 @@ public class Robot extends Stuff implements Moveable {
 	// private static Logger logger = Logger.getLogger("Core.Robot");
 
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles) {
-		super(false, false);
+		super(false, false,0);
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
@@ -40,7 +43,8 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		
+		lives = 1;
 	}
 
 
@@ -63,6 +67,11 @@ public class Robot extends Stuff implements Moveable {
 	public Stuff getContent() {
 		return (this.container);
 	}
+	
+	public int getLives(){
+		return this.lives;
+	}
+	
 
 
 	public boolean canGo() {
