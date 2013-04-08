@@ -16,7 +16,7 @@ public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 	public void run() {
 		try
 		{
-			for (int i = 0; i <= 5; i++)
+			for (int i = 0; i < 5; i++)
 			{
 				theOneToMove.move(direction);
 				theOneToRepaint.repaint();
@@ -27,6 +27,7 @@ public class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		theOneToMove.recalibrate();
 		theOneToMove.tellIfBeingMoved(false);
 	}
 

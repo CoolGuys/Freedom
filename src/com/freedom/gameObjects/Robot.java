@@ -15,18 +15,25 @@ public class Robot extends Stuff implements Moveable {
 	private Stuff container;
 	private boolean isEmpty; // пуст ли контейнер
 	private Cell[][] environment;
+	
+	
 	private boolean isMoving;
-	private int step = getSize() / 5;
+	private double step = 0.2;
+	
+	private int lives;
+	protected static int maxLives = 1;
 
 	Image textureN;
 	Image textureS;
 	Image textureE;
 	Image textureW;
 
-	// private static Logger logger = Logger.getLogger("Core.Robot");
+	private static Logger logger = Logger.getLogger("Robot");
 
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles) {
-		super(false, false);
+		super(false, false,0);
+		super.x = posX;
+		super.y = posY;
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
@@ -40,16 +47,8 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-	}
-
-
-	public int getX() {
-		return (this.x);
-	}
-
-	public int getY() {
-		return (this.y);
+		
+		lives = 1;
 	}
 
 	public String getDirection() {
@@ -63,21 +62,33 @@ public class Robot extends Stuff implements Moveable {
 	public Stuff getContent() {
 		return (this.container);
 	}
-
+	
+	public int getLives(){
+		return this.lives;
+	}
+	
+	public void recalibrate() {
+		x = (int) Math.round(x);
+		y = (int) Math.round(y);
+		
+	}
 
 	public boolean canGo() {
-
+		int x = (int) this.x;
+		int y = (int) this.y;
 		if (this.direction.equals("N")) {
 			if (environment[x][y - 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("S")) {
+			//logger.info("Checking S direction");
 			if (environment[x][y + 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("W")) {
+			System.out.print(1);
 			if (environment[x - 1][y].ifCanPassThrough())
 				return true;
 		}
@@ -92,12 +103,14 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void moveToNextTile(String direction) {
+		
 
+		logger.info(direction);
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
 			ScreensHolder.getInstance().repaint();
 		}
-
+		
 		else if ((!isMoving)&(this.canGo())) {
 			isMoving = true;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
@@ -122,6 +135,10 @@ public class Robot extends Stuff implements Moveable {
 	// Нужно доработать и брать с уловиями на направление
 	// @gleb
 	public void take() { 
+
+		int x = (int) this.x;
+		int y = (int) this.y;
+		
 		if (!this.isEmpty)
 			return;
 
@@ -157,6 +174,9 @@ public class Robot extends Stuff implements Moveable {
 	}
 	
 	public void put(){
+
+		int x = (int) this.x;
+		int y = (int) this.y;
 		if(this.isEmpty)
 			return;
 		
@@ -191,14 +211,17 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void draw(Graphics g) {
+
+
+		logger.info("Coords:" + x + " " + y);
 		if (direction.equals("N"))
-			g.drawImage(textureN, x, y, getSize(), getSize(), null);
+			g.drawImage(textureN,(int) (x*getSize()),(int)( y*getSize()), getSize(), getSize(), null);
 		else if (direction.equals("S"))
-			g.drawImage(textureS, x, y, getSize(), getSize(), null);
+			g.drawImage(textureS, (int)(x*getSize()), (int)(y*getSize()), getSize(), getSize(), null);
 		else if (direction.equals("E"))
-			g.drawImage(textureE, x, y, getSize(), getSize(), null);
+			g.drawImage(textureE, (int)(x*getSize()), (int)(y*getSize()), getSize(), getSize(), null);
 		else
-			g.drawImage(textureW, x, y, getSize(), getSize(), null);
+			g.drawImage(textureW, (int)(x*getSize()), (int)(y*getSize()), getSize(), getSize(), null);
 	}
 
 	@Override

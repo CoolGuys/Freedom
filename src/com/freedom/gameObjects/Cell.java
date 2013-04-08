@@ -20,22 +20,11 @@ public class Cell {
 	private Stuff[] content;
 	private int contentAmount;
 
-	public Cell(int a, int b)
-	{
+	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
-		this.contentAmount = 1;
+		this.contentAmount = 0;
 		this.content = new Stuff[4];
-
-		/*
-		 * Это нужно изменить. В случае, когда есть провал, не нужно иметь тайл
-		 * под ним, согласуйтесь с Ушем, чтобы все объекты считывались из файла
-		 * на равных в случае, если там есть строка для нужного целла, или в
-		 * противном случае, заполнялась одним только тайлом по-дефолту
-		 * 
-		 * @gleb
-		 */
-		this.content[0] = new Tile();
 	}
 
 	public boolean add(Stuff element) {
@@ -50,16 +39,25 @@ public class Cell {
 	}
 
 	/*
-	 * Нужно изменить, должен удаляться первый попавшийся Stuff с pickable==true
+	 * теперь уникален в удалении только лазерный луч
 	 * 
-	 * @gleb
+	 * @ivan
 	 */
-	private void deleteStuff() { // удаляет "верхний" элемент
+	private Stuff deleteStuff() {
 		if (this.contentAmount == 1)
-			return;
+			return null;
 
+		Stuff buf;
 		this.contentAmount--;
-		this.content[this.contentAmount] = null;
+		if (this.content[this.contentAmount] instanceof LaserBeam) {
+			buf = this.content[this.contentAmount - 1];
+			this.content[this.contentAmount - 1] = this.content[this.contentAmount];
+			this.content[this.contentAmount] = null;
+		} else {
+			buf = this.content[this.contentAmount];
+			this.content[this.contentAmount] = null;
+		}
+		return buf;
 	}
 
 	// блок выдачи информации
@@ -83,26 +81,37 @@ public class Cell {
 
 	// Everything for robot:
 
-	public Stuff takeObject() { // метод, выдающий роботу объект
-		if (this.contentAmount == 1) // на мне ничего ничего не лежит
+	
+	//выдаем роботу объект;
+	// из-под лаз. луча его можно взять
+	public Stuff takeObject() {
+		if (this.contentAmount == 1)
 			return null;
 
-		if (!this.content[this.contentAmount - 1].getIfTakeable())
-			return null;
-
-		Stuff buf = this.content[this.contentAmount - 1];
-		this.deleteStuff();
-		return (buf);
+		if (this.content[this.contentAmount] instanceof LaserBeam) {
+			if (!this.content[this.contentAmount - 2].getIfTakeable())
+				return null;
+		} else {
+			if (!this.content[this.contentAmount - 1].getIfTakeable())
+				return null;
+		}
+		return this.deleteStuff();
 	}
 
 	public boolean ifCanPassThrough() {
-		if (this.contentAmount == 1)
-			return true;
-		for (int i = 1; i < this.contentAmount; i++) {
+		for (int i = 0; i < this.contentAmount; i++) {
 			if (!this.content[i].getIfPassable())
 				return false;
 		}
 		return true;
+	}
+
+	public int getDamage() {
+		int buf = 0;
+		for (int i = 0; i < this.contentAmount; i++)
+			buf = buf + this.content[i].getDamage();
+
+		return buf;
 	}
 
 }

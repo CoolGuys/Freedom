@@ -13,7 +13,7 @@ public class GameScreen extends JLayeredPane {
 	
 		private GameScreen()
 		{
-			this.setBackground(Color.DARK_GRAY);
+			this.setBackground(Color.BLACK);
 			this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 					ScreensHolder.getInstance().getHeight());
 			this.setOpaque(true);

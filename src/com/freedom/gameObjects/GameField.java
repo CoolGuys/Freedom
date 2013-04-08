@@ -1,7 +1,10 @@
 package com.freedom.gameObjects;
 
 import java.awt.*;
+import java.io.FileNotFoundException;
 import java.util.logging.Logger;
+
+import com.freedom.utilities.Loader;
 
 
 /**
@@ -25,7 +28,13 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 
-		robot = new Robot(10, 10, "S", null, null);
+		try {
+			cells=Loader.readLvl(2);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		robot = new Robot(3, 3, "S", null, cells);
 	}
 
 	public static void unloadLevel() {
@@ -49,6 +58,14 @@ public class GameField {
 	}
 
 	public static void draw(Graphics g) {
+		for(int x = 1; x<10; x++){
+			for(int y =1; y<10; y++) {
+				for(int i=0; i<cells[x][y].getContentAmount(); i++)
+				{
+					cells[x][y].getContent()[i].draw(g);
+				}
+			}
+		}
 		robot.draw(g);
 	}
 	
