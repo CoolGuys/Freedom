@@ -5,4 +5,6 @@ public interface Moveable {
 	public boolean checkIfBeingMoved();
 	public void tellIfBeingMoved(boolean isMoved);
 	public void recalibrate();
+	public int getX();
+	public int getY();
 }
