@@ -14,7 +14,7 @@ public class StartScreenModel {
 
 	private StartScreenModel()
 	{
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 
 		try {
 			backgroundPicture = ImageIO.read(new File("Resource/UtilityPictures/startScreenBackground.png"));
