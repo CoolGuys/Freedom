@@ -3,6 +3,9 @@ package com.freedom.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import com.freedom.gameObjects.*;
@@ -10,7 +13,8 @@ import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends JLayeredPane {
-
+	
+	
 	private GameScreen()
 	{
 		this.setBackground(Color.BLACK);
@@ -19,7 +23,9 @@ public class GameScreen extends JLayeredPane {
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
+		GameField.getInstance().setCellSize(scale);
 		GameField.getInstance().loadLevel("TEST", 1);
+		logger.setLevel(Level.OFF);
 
 	}
 
@@ -34,6 +40,12 @@ public class GameScreen extends JLayeredPane {
 		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
 		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
 		imap.put(KeyStroke.getKeyStroke("K"), "turn.down");
+
+		imap.put(KeyStroke.getKeyStroke("shift W"), "offset.up");
+		imap.put(KeyStroke.getKeyStroke("shift D"), "offset.right");
+		imap.put(KeyStroke.getKeyStroke("shift A"), "offset.left");
+		imap.put(KeyStroke.getKeyStroke("shift S"), "offset.down");
+		
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 
 	}
@@ -49,6 +61,11 @@ public class GameScreen extends JLayeredPane {
 		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
 		InteractAction interact = new InteractAction();
+		FieldOffsetAction offsetUp = new FieldOffsetAction("N");
+		FieldOffsetAction offsetDown = new FieldOffsetAction("S");
+		FieldOffsetAction offsetLeft = new FieldOffsetAction("W");
+		FieldOffsetAction offsetRight = new FieldOffsetAction("E");
+		
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
 		amap.put("move.down", moveDown);
@@ -60,6 +77,11 @@ public class GameScreen extends JLayeredPane {
 		amap.put("turn.left", turnLeft);
 		amap.put("turn.right", turnRight);
 		amap.put("turn.down", turnDown);
+		
+		amap.put("offset.up", offsetUp);
+		amap.put("offset.left", offsetLeft);
+		amap.put("offset.right", offsetRight);
+		amap.put("offset.down", offsetDown);
 		
 	}
 
@@ -76,6 +98,23 @@ public class GameScreen extends JLayeredPane {
 		return INSTANCE;
 	}
 
+	
+	public void changeOffset(String direction) {
+		logger.info("Offsettig");
+		if (direction.equals("N"))
+			setLocation(this.getLocation().x, this.getLocation().y-scale);
+		if (direction.equals("W"))
+			setLocation(this.getLocation().x-scale, this.getLocation().y);
+		if (direction.equals("E"))
+			setLocation(this.getLocation().x+scale, this.getLocation().y);
+		if (direction.equals("S"))
+			setLocation(this.getLocation().x, this.getLocation().y+scale);
+		revalidate();
+		repaint();
+	}
+	
+	private int scale = 50;
+	
 	Logger logger = Logger.getLogger("GameScreen");
 	private static final GameScreen INSTANCE = new GameScreen();
 
@@ -85,12 +124,15 @@ public class GameScreen extends JLayeredPane {
 			putValue(Action.NAME, name);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			GameField.getRobot().moveCoarse((String) getValue(Action.NAME));
 		}
 	}
 
 	private class PauseAction extends AbstractAction {
+		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			logger.entering("PauseAction", "actionPerformed");
 			ScreensHolder.swapScreens(StartScreen.getInstance(),
@@ -102,6 +144,8 @@ public class GameScreen extends JLayeredPane {
 	}
 
 	private class InteractAction extends AbstractAction {
+		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GameField.getRobot().getIfEmpty())
 				GameField.getRobot().take();
@@ -115,10 +159,23 @@ public class GameScreen extends JLayeredPane {
 		{
 			putValue(Action.NAME, name);
 		}
-
+		
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			GameField.getRobot().moveFine((String) getValue(Action.NAME));
-			logger.info("LOL");
+		}
+	}
+	
+	private class FieldOffsetAction extends AbstractAction {
+		public FieldOffsetAction(String name)
+		{
+			putValue(Action.NAME, name);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			logger.info("Offset requested");
+			changeOffset((String) getValue(Action.NAME));
 		}
 	}
 }

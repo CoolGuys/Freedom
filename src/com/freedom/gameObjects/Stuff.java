@@ -11,7 +11,7 @@ public class Stuff implements IStuff{
 	protected Image texture;
 	private boolean pickable; 
 	private boolean passable;
-	private int size = GameField.getcellSize();
+	private int size = GameField.getCellSize();
 	
 	private int damage; //number of lives you loose
 	

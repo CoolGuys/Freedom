@@ -20,10 +20,6 @@ import com.freedom.utilities.Loader;
 
 public class GameField {
 
-	private GameField()
-	{
-		cellSize = 50;
-	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
 
@@ -72,10 +68,14 @@ public class GameField {
 		return INSTANCE;
 	}
 
-	public static int getcellSize() {
+	public static int getCellSize() {
 		return cellSize;
 	}
 
+	public void setCellSize(int scale) {
+		GameField.cellSize = scale;	
+	}
+	
 	private static Robot robot;
 	private static Cell[][] cells;
 	private static int xSize;
@@ -84,5 +84,6 @@ public class GameField {
 	private static int cellSize;
 
 	private static final GameField INSTANCE = new GameField();
+
 
 }

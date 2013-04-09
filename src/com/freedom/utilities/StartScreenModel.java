@@ -26,7 +26,13 @@ public class StartScreenModel {
 	}
 
 	public void addButtons() {
-		buttons[0] = new GButton(null, 4, 4, "com.freedom.view.StartScreen$StartGameAction");
+		buttons[0] = new GButton(null, 2, 4, "com.freedom.view.StartScreen$StartGameAction");
+		buttons[1] = new GButton(null, 1, 6, "com.freedom.view.StartScreen$ExitGameAction");
+		try {
+			buttons[1].setTexture(ImageIO.read(new File("Resource/UtilityPictures/buttonExit.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void activate() {
@@ -43,10 +49,10 @@ public class StartScreenModel {
 	}
 
 	public String reactToClick(Point p) {
-		//for (GButton b : buttons) {
-			if (!buttons[0].checkIfPressed(p).equals("WasNotPressed"))
-				return buttons[0].actionName;
-		//}
+		for (GButton b : buttons) {
+			if (!b.checkIfPressed(p).equals("WasNotPressed"))
+				return b.actionName;
+		}
 		return "NothingHappened";
 	}
 
@@ -57,6 +63,7 @@ public class StartScreenModel {
 				.getWidth(), StartScreen.getInstance().getWidth() * 761 / 1516,
 				null);
 		buttons[0].draw(g);
+		buttons[1].draw(g);
 	}
 
 	private double[] calculateWallpaperParameters() {
@@ -67,7 +74,7 @@ public class StartScreenModel {
 
 		parameters[0] = (2.0 * width * (aspect - 0.5));
 		parameters[1] = (1.0 / 12.0 * width * (14.0 - 26.0 * aspect));
-		System.out.println(Arrays.toString(parameters));
+		//System.out.println(Arrays.toString(parameters));
 		return parameters;
 	}
 
@@ -81,7 +88,7 @@ public class StartScreenModel {
 		return p;
 	}
 
-	private GButton[] buttons = new GButton[4];
+	private GButton[] buttons = new GButton[2];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -129,6 +136,10 @@ public class StartScreenModel {
 				return "WasNotPressed";
 		}
 
+		public void setTexture(Image i) {
+			texture = i;
+		}
+		
 		public void draw(Graphics g) {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
 					null);

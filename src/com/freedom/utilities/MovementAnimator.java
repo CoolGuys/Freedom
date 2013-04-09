@@ -1,14 +1,17 @@
 package com.freedom.utilities;
 
+import javax.swing.JLayeredPane;
+
 import com.freedom.gameObjects.GameField;
 import com.freedom.gameObjects.Moveable;
+import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
 public final class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 
 	public MovementAnimator(MovingObj mover, String direction)
 	{
-		this.theOneToRepaint = ScreensHolder.getInstance();
+		this.theOneToRepaint = GameScreen.getInstance();
 		this.direction = direction;
 		this.theOneToMove = mover;
 	}
@@ -20,8 +23,8 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 
 				theOneToRepaint.repaint((theOneToMove.getX() - 1) * 50,
 						(theOneToMove.getY() - 1) * 50,
-						GameField.getcellSize() * 3,
-						GameField.getcellSize() * 3);
+						GameField.getCellSize() * 3,
+						GameField.getCellSize() * 3);
 				Thread.sleep(10);
 			}
 		} catch (InterruptedException e) {
@@ -34,6 +37,6 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 
 	private MovingObj theOneToMove;
 	private String direction;
-	private ScreensHolder theOneToRepaint;
+	private JLayeredPane theOneToRepaint;
 
 }

@@ -22,10 +22,11 @@ public class ScreensHolder extends JPanel {
 	private ScreensHolder()
 	{
 		super();
+
+		this.setBackground(Color.BLACK);
 		logger.setLevel(Level.OFF);
 		logger.info("Entering the constructor...");
 		setLayout(null);
-		setBackground(Color.WHITE);
 	}
 
 	public void createScreens() {

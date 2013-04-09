@@ -87,4 +87,9 @@ public class StartScreen extends JLayeredPane {
 			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
 		}
 	}
+	public static class ExitGameAction extends GAction {
+		public void performAction() {
+			System.exit(0);
+		}
+	}
 }

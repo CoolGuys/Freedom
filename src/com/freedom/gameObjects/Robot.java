@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import com.freedom.view.*;
@@ -49,6 +50,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		lives = 1;
+		
+		logger.setLevel(Level.ALL);
 	}
 
 	public double getStep() {
@@ -92,7 +95,6 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("W")) {
-			System.out.print(1);
 			if (environment[x - 1][y].ifCanPassThrough())
 				return true;
 		}
