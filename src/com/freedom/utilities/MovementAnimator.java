@@ -17,6 +17,7 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 		try {
 			for (int i = 0; i < 1.0/theOneToMove.getStep(); i++) {
 				theOneToMove.move(direction);
+
 				theOneToRepaint.repaint((theOneToMove.getX() - 1) * 50,
 						(theOneToMove.getY() - 1) * 50,
 						GameField.getcellSize() * 3,
