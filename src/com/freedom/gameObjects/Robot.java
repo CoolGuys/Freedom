@@ -50,6 +50,10 @@ public class Robot extends Stuff implements Moveable {
 		
 		lives = 1;
 	}
+	
+	public double getStep() {
+		return step;
+	}
 
 	public String getDirection() {
 		return this.direction;
