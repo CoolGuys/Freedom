@@ -30,7 +30,11 @@ public class Cell {
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 4)
 			return false;
-
+		
+		for(int i = 0; i< this.contentAmount; i++){ //с этим местом аккуратнее при работе
+			if(!this.content[i].getIfPassable())
+				return false;
+		}
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;

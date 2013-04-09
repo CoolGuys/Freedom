@@ -7,4 +7,5 @@ public interface Moveable {
 	public void recalibrate();
 	public int getX();
 	public int getY();
+	public double getStep();
 }
