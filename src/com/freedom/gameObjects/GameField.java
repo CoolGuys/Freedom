@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import com.freedom.utilities.Loader;
 
-
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
  * операции с ними под контролем объекта класса GameScreen Поэтому имеено сюда
@@ -29,7 +28,7 @@ public class GameField {
 	public void loadLevel(String pathToPackage, int levelID) {
 
 		try {
-			cells=Loader.readLvl(2);
+			cells = Loader.readLvl(2);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,27 +57,28 @@ public class GameField {
 	}
 
 	public static void draw(Graphics g) {
-		for(int x = 1; x<10; x++){
-			for(int y =1; y<10; y++) {
-				for(int i=0; i<cells[x][y].getContentAmount(); i++)
-				{
-					cells[x][y].getContent()[i].draw(g);
+		for (int x = 1; x < 10; x++) {
+			for (int y = 1; y < 10; y++) {
+				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
+					if (cells[x][y].getContent()[i] != null)
+						cells[x][y].getContent()[i].draw(g);
 				}
 			}
 		}
 		robot.draw(g);
 	}
-	
+
 	public static GameField getInstance() {
 		return INSTANCE;
 	}
+
 	public static int getcellSize() {
 		return cellSize;
 	}
 
 	private static Robot robot;
 	private static Cell[][] cells;
-	private static int xSize; 
+	private static int xSize;
 	private static int ySize;
 	private static Logger logger = Logger.getLogger("Core.GameField");
 	private static int cellSize;
