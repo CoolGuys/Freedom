@@ -1,5 +1,6 @@
 package com.freedom.gameObjects;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.Scanner;
 
 
@@ -7,6 +8,7 @@ public class Stuff implements IStuff{
 	
 	protected double x; 
 	protected double y; 
+	protected Image texture;
 	private boolean pickable; 
 	private boolean passable;
 	private int size = GameField.getcellSize();
@@ -57,6 +59,9 @@ public class Stuff implements IStuff{
 		return this.damage;
 	}
 
+	public Image getTexture() {
+		return this.texture;
+	}
 
 	public void draw(Graphics g) {
 		

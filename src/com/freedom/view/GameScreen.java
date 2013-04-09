@@ -26,19 +26,27 @@ public class GameScreen extends JLayeredPane {
 	public void createInputMap() {
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
 		imap.put(KeyStroke.getKeyStroke("W"), "move.up");
-		imap.put(KeyStroke.getKeyStroke("A"), "move.right");
-		imap.put(KeyStroke.getKeyStroke("D"), "move.left");
+		imap.put(KeyStroke.getKeyStroke("D"), "move.right");
+		imap.put(KeyStroke.getKeyStroke("A"), "move.left");
 		imap.put(KeyStroke.getKeyStroke("S"), "move.down");
-		imap.put(KeyStroke.getKeyStroke("E"), "interact");
+		imap.put(KeyStroke.getKeyStroke("U"), "interact");
+		imap.put(KeyStroke.getKeyStroke("I"), "turn.up");
+		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
+		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
+		imap.put(KeyStroke.getKeyStroke("K"), "turn.down");
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 
 	}
 
 	private void createMovementController() {
-		MovementAction moveUp = new MovementAction("N");
-		MovementAction moveDown = new MovementAction("S");
-		MovementAction moveLeft = new MovementAction("E");
-		MovementAction moveRight = new MovementAction("W");
+		CoarseMovementAction moveUp = new CoarseMovementAction("N");
+		CoarseMovementAction moveDown = new CoarseMovementAction("S");
+		CoarseMovementAction moveLeft = new CoarseMovementAction("W");
+		CoarseMovementAction moveRight = new CoarseMovementAction("E");
+		FineMovementAction turnUp = new FineMovementAction("N");
+		FineMovementAction turnDown = new FineMovementAction("S");
+		FineMovementAction turnLeft = new FineMovementAction("W");
+		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
 		InteractAction interact = new InteractAction();
 		ActionMap amap = this.getActionMap();
@@ -48,6 +56,11 @@ public class GameScreen extends JLayeredPane {
 		amap.put("move.right", moveRight);
 		amap.put("pause", pause);
 		amap.put("interact", interact);
+		amap.put("turn.up", turnUp);
+		amap.put("turn.left", turnLeft);
+		amap.put("turn.right", turnRight);
+		amap.put("turn.down", turnDown);
+		
 	}
 
 	@Override
@@ -66,14 +79,14 @@ public class GameScreen extends JLayeredPane {
 	Logger logger = Logger.getLogger("GameScreen");
 	private static final GameScreen INSTANCE = new GameScreen();
 
-	private class MovementAction extends AbstractAction {
-		public MovementAction(String name)
+	private class CoarseMovementAction extends AbstractAction {
+		public CoarseMovementAction(String name)
 		{
 			putValue(Action.NAME, name);
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			GameField.getRobot().moveToNextTile((String) getValue(Action.NAME));
+			GameField.getRobot().moveCoarse((String) getValue(Action.NAME));
 		}
 	}
 
@@ -94,6 +107,18 @@ public class GameScreen extends JLayeredPane {
 				GameField.getRobot().take();
 			else
 				GameField.getRobot().put();
+		}
+	}
+
+	private class FineMovementAction extends AbstractAction {
+		public FineMovementAction(String name)
+		{
+			putValue(Action.NAME, name);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			GameField.getRobot().moveFine((String) getValue(Action.NAME));
+			logger.info("LOL");
 		}
 	}
 }

@@ -44,5 +44,4 @@ public class Box extends Stuff {
 	}
 	
 	private String color; 
-	private Image texture;
 }

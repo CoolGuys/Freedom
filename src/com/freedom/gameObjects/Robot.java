@@ -17,7 +17,7 @@ public class Robot extends Stuff implements Moveable {
 	private Cell[][] environment;
 
 	private boolean isMoving;
-	private double step = 0.2;
+	private double step = 0.1;
 
 	private int lives;
 	protected static int maxLives = 1;
@@ -106,15 +106,28 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
-	public void moveToNextTile(String direction) {
+	public void moveCoarse(String direction) {
 
 		logger.info(direction);
-		//if (!direction.equals(this.direction)) {
+		this.direction = direction;
+		ScreensHolder.getInstance().repaint();
+
+		if ((!isMoving) & (this.canGo())) {
+			isMoving = true;
+			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+			Thread t = new Thread(r);
+			t.start();
+		} else
+			return;
+	}
+
+	public void moveFine(String direction) {
+		if (!direction.equals(this.direction)) {
 			this.direction = direction;
 			ScreensHolder.getInstance().repaint();
-		//}
-
-		 if ((!isMoving) & (this.canGo())) {
+			return;
+		}
+		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
@@ -149,10 +162,10 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		}
 		//
-		
+
 		if (this.direction.equals("N")) {
 			this.container = environment[x][y - 1].takeObject();
-			if(this.container == null) 
+			if (this.container == null)
 				return;
 			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
@@ -161,7 +174,7 @@ public class Robot extends Stuff implements Moveable {
 
 		if (this.direction.equals("S")) {
 			this.container = environment[x][y + 1].takeObject();
-			if(this.container == null) 
+			if (this.container == null)
 				return;
 			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
@@ -170,7 +183,7 @@ public class Robot extends Stuff implements Moveable {
 
 		if (this.direction.equals("W")) {
 			this.container = environment[x - 1][y].takeObject();
-			if(this.container == null) 
+			if (this.container == null)
 				return;
 			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
@@ -179,7 +192,7 @@ public class Robot extends Stuff implements Moveable {
 
 		if (this.direction.equals("E")) {
 			this.container = environment[x + 1][y].takeObject();
-			if(this.container == null) 
+			if (this.container == null)
 				return;
 			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
@@ -194,7 +207,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 
 		if (this.direction.equals("N")) {
-			if(!environment[x][y - 1].add(this.container))
+			if (!environment[x][y - 1].add(this.container))
 				return;
 			this.container = null;
 			this.isEmpty = true;
@@ -203,7 +216,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("S")) {
-			if(!environment[x][y + 1].add(this.container))
+			if (!environment[x][y + 1].add(this.container))
 				return;
 			this.container = null;
 			this.isEmpty = true;
@@ -212,7 +225,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("W")) {
-			if(!environment[x - 1][y].add(this.container))
+			if (!environment[x - 1][y].add(this.container))
 				return;
 			this.container = null;
 			this.isEmpty = true;
@@ -221,7 +234,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("E")) {
-			if(!environment[x + 1][y].add(this.container))
+			if (!environment[x + 1][y].add(this.container))
 				return;
 			this.container = null;
 			this.isEmpty = true;
@@ -232,7 +245,9 @@ public class Robot extends Stuff implements Moveable {
 
 	public void draw(Graphics g) {
 		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
-				+ (int) (x * getSize()) +" " + (int) (y * getSize()));
+				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
+		
+		
 		if (direction.equals("N"))
 			g.drawImage(textureN, (int) (x * getSize()), (int) (y * getSize()),
 					getSize(), getSize(), null);
@@ -245,6 +260,13 @@ public class Robot extends Stuff implements Moveable {
 		else
 			g.drawImage(textureW, (int) (x * getSize()), (int) (y * getSize()),
 					getSize(), getSize(), null);
+		
+		
+		if(container!=null) {
+			g.drawImage(container.getTexture(), (int) (x * getSize()), (int) (y * getSize()),
+				getSize(), getSize(), null);
+			logger.info(container.toString());
+		}
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class Tile extends Stuff {
 	public Tile() { 
 		super(false, true,0);
 			try {
-				texture = ImageIO.read(new File("Resource/Textures/TileTest.png"));
+				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
