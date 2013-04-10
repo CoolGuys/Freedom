@@ -16,24 +16,39 @@ import org.w3c.dom.NodeList;*/
 
 import com.freedom.gameObjects.*;
 
+
 /**
- * Данный класс предназначен для чтения уровней из файла В данный момент он не
- * закончен, потому что требуется возможность добавлять объекты в массив Tiles
+ * !!!!!!!!!!!!!!!!!!!Attention please!!!!!!!!!!!
  * 
- * @author ush
+ * Итак все костыли убраны и пришло время написать инструкцию по применению
+ * сейчас файл имеет вид xml документа вида
  * 
+ * <?xml version="1.0"?>
+ * <levels> //здеся хранится набор лвлов и у каждого есть поле num с номером
+ *   <level num="1" width="Ширина в клктках" height="Высота в клетках">
+ *		//внутри тега level хранится информация об объектах
+ *		<obj class="com.freedom.gameObjects.Tile" x="1" y="1"></obj>
+ *		// тег obj создаёт объект который наследует стафф
+ *		// в атребуте класс должно содераться полное имя объекта
+ *		//в самом объекте должен содежаться пустой конструктор и метод 
+ *		// readLvlFile(Element obj) который обращается к атрибутам тега через
+ *		// функции вроде obj.getAttribute("x")
+ *		<robot x="1" y="1"></robot>//robot имеет такой вид
+ *   </level>
+ *   <level num="2" width="Ширина в клктках" height="Высота в клетках">
+ *		  
+ *   </level>  
+ * </levels>
+ * 
+ * @author ushale
+ *
  */
+
+
 public class Loader {
 	public static Cell[][] readLvl(int Number){
 		
 		logger.setLevel(Level.OFF);
-		
-	/*	Cell[][] cells = new Cell[10][10];
-		for(int x=1;x<10;x++){
-			for(int y=1;y<10;y++){
-				cells[x][y]=new Cell(x, y);
-			}
-		}*/
 		Cell[][] cells = null;
 
         File fXml=new File("Level1.lvl");
@@ -74,18 +89,9 @@ public class Loader {
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
 				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells));
 				    	//System.out.println(robot.toString());
-				    
+				    	//logger.info("2Dump=|" + StrDump + "|");
 				    }
 			    }
-			    
-				//NodeList nljx = elj.getElementsByTagName("number");
-				//NodeList nljy = elj.getElementsByTagName("y");
-				//Element eljy = (Element) nljy.item(0);
-				//NodeList nljyc = eljy.getChildNodes();
-			    //	System.out.println("x, y ["
-				//		+ ((Node) nljxc.item(0)).getNodeValue() + ", "
-				//		+ ((Node) nljyc.item(0)).getNodeValue() + "]");
-				// }
 			}
 			
         }
@@ -93,57 +99,6 @@ public class Loader {
         	ei.printStackTrace();
         }
         return cells;
-        
-		/*
-		logger.info("loader starting");
-		Scanner sc;
-		sc = new Scanner(new File("Level1.lvl"));
-		String StrDump = sc.next();
-		logger.info("1Dump=|" + StrDump + "|");
-		while (StrDump.equals("Level")) {
-			int LevelNum = sc.nextInt();
-			StrDump = sc.next();
-			logger.info("2Dump=|" + StrDump + "|");
-			while (!StrDump.equals("/Level")) {
-				if (Number == LevelNum) {
-					Object newstuff;
-					try {
-						Class<?> cla = Class.forName(StrDump);
-						
-							newstuff = cla.newInstance();
-							logger.info("creating Stuff--"
-									+ newstuff.getClass().getName());
-							((Stuff) newstuff).readLvlFile(sc);
-							//System.out.println("GLEB="+((Stuff) newstuff).getX()+" "+((Stuff) newstuff).getClass().getSimpleName());
-							cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
-				
-
-					} catch (InstantiationException e) {
-						e.printStackTrace();
-						logger.severe("Error creating stuff! --"
-								+ e.getMessage());
-						break;
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-						logger.severe("Error creating stuff! --"
-								+ e.getMessage());
-						break;
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-						logger.severe("Error creating stuff! --"
-								+ e.getMessage());
-						break;
-					}
-				}
-				StrDump = sc.next();
-				logger.info("3Dump=|" + StrDump + "|");
-			}
-			StrDump = sc.next();
-			logger.info("4Dump=|" + StrDump + "|");
-
-		}
-		logger.info("end");
-		return cells;*/
 	}
 	
 	private static Logger logger = Logger.getLogger("Loader");
