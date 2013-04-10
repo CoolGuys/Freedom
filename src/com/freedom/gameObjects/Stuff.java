@@ -1,6 +1,10 @@
 package com.freedom.gameObjects;
 import java.awt.Graphics;
 import java.util.Scanner;
+import javax.xml.parsers.*;
+import org.w3c.dom.*;
+
+import org.w3c.dom.Element;
 
 
 public class Stuff implements IStuff{
@@ -13,11 +17,19 @@ public class Stuff implements IStuff{
 	
 	private int damage; //number of lives you loose
 	
-	public void readLvlFile(Scanner sc) {
-		this.x=sc.nextInt();
-		this.y=sc.nextInt();
+	public void readLvlFile(Element obj) {
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
+//			this.x=sc.nextInt();
+//			this.y=sc.nextInt();
 	}
 
+	public Stuff(){
+		this.pickable = true;
+		this.passable = false;
+		this.damage = 0;
+	}
+	
 
 	public Stuff(boolean pickable, boolean passable, int damage){
 		this.pickable = pickable;

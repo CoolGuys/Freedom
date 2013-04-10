@@ -29,6 +29,18 @@ public class Robot extends Stuff implements Moveable {
 
 	private static Logger logger = Logger.getLogger("Robot");
 
+	public Robot(){
+		super();
+		try {
+			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
+			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
+			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
+			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles)
 	{
 		super(false, false, 0);
