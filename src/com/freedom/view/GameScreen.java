@@ -45,6 +45,12 @@ public class GameScreen extends JLayeredPane {
 		imap.put(KeyStroke.getKeyStroke("shift D"), "offset.right");
 		imap.put(KeyStroke.getKeyStroke("shift A"), "offset.left");
 		imap.put(KeyStroke.getKeyStroke("shift S"), "offset.down");
+		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.up");
+		imap.put(KeyStroke.getKeyStroke("shift L"), "fineOffset.right");
+		imap.put(KeyStroke.getKeyStroke("shift J"), "fineOffset.left");
+		imap.put(KeyStroke.getKeyStroke("shift K"), "fineOffset.down");
+		
+		
 		
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 
@@ -61,10 +67,14 @@ public class GameScreen extends JLayeredPane {
 		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
 		InteractAction interact = new InteractAction();
-		FieldOffsetAction offsetUp = new FieldOffsetAction("N");
-		FieldOffsetAction offsetDown = new FieldOffsetAction("S");
-		FieldOffsetAction offsetLeft = new FieldOffsetAction("W");
-		FieldOffsetAction offsetRight = new FieldOffsetAction("E");
+		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
+		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
+		FieldCoarseOffsetAction offsetLeft = new FieldCoarseOffsetAction("W");
+		FieldCoarseOffsetAction offsetRight = new FieldCoarseOffsetAction("E");
+		FieldFineOffsetAction fineOffsetUp = new FieldFineOffsetAction("N");
+		FieldFineOffsetAction fineOffsetDown = new FieldFineOffsetAction("S");
+		FieldFineOffsetAction fineOffsetLeft = new FieldFineOffsetAction("W");
+		FieldFineOffsetAction fineOffsetRight = new FieldFineOffsetAction("E");
 		
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
@@ -82,6 +92,10 @@ public class GameScreen extends JLayeredPane {
 		amap.put("offset.left", offsetLeft);
 		amap.put("offset.right", offsetRight);
 		amap.put("offset.down", offsetDown);
+		amap.put("fineOffset.up", fineOffsetUp);
+		amap.put("fineOffset.left", fineOffsetLeft);
+		amap.put("fineOffset.right", fineOffsetRight);
+		amap.put("fineOffset.down", fineOffsetDown);
 		
 	}
 
@@ -99,21 +113,37 @@ public class GameScreen extends JLayeredPane {
 	}
 
 	
-	public void changeOffset(String direction) {
+	public void changeOffsetCoarse(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
-			setLocation(this.getLocation().x, this.getLocation().y-scale);
+			setLocation(this.getLocation().x, this.getLocation().y-coarseOffset);
 		if (direction.equals("W"))
-			setLocation(this.getLocation().x-scale, this.getLocation().y);
+			setLocation(this.getLocation().x-coarseOffset, this.getLocation().y);
 		if (direction.equals("E"))
-			setLocation(this.getLocation().x+scale, this.getLocation().y);
+			setLocation(this.getLocation().x+coarseOffset, this.getLocation().y);
 		if (direction.equals("S"))
-			setLocation(this.getLocation().x, this.getLocation().y+scale);
+			setLocation(this.getLocation().x, this.getLocation().y+scale+coarseOffset);
+		revalidate();
+		repaint();
+	}
+	
+	public void changeOffsetFine(String direction) {
+		logger.info("Offsettig");
+		if (direction.equals("N"))
+			setLocation(this.getLocation().x, this.getLocation().y-fineOffset);
+		if (direction.equals("W"))
+			setLocation(this.getLocation().x-fineOffset, this.getLocation().y);
+		if (direction.equals("E"))
+			setLocation(this.getLocation().x+fineOffset, this.getLocation().y);
+		if (direction.equals("S"))
+			setLocation(this.getLocation().x, this.getLocation().y+fineOffset);
 		revalidate();
 		repaint();
 	}
 	
 	private int scale = 50;
+	private final int fineOffset = scale/2;
+	private final int coarseOffset = (scale*3)/2;
 	
 	Logger logger = Logger.getLogger("GameScreen");
 	private static final GameScreen INSTANCE = new GameScreen();
@@ -166,8 +196,8 @@ public class GameScreen extends JLayeredPane {
 		}
 	}
 	
-	private class FieldOffsetAction extends AbstractAction {
-		public FieldOffsetAction(String name)
+	private class FieldCoarseOffsetAction extends AbstractAction {
+		public FieldCoarseOffsetAction(String name)
 		{
 			putValue(Action.NAME, name);
 		}
@@ -175,7 +205,20 @@ public class GameScreen extends JLayeredPane {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			logger.info("Offset requested");
-			changeOffset((String) getValue(Action.NAME));
+			changeOffsetCoarse((String) getValue(Action.NAME));
+		}
+	}
+	
+	private class FieldFineOffsetAction extends AbstractAction {
+		public FieldFineOffsetAction(String name)
+		{
+			putValue(Action.NAME, name);
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			logger.info("Offset requested");
+			changeOffsetFine((String) getValue(Action.NAME));
 		}
 	}
 }
