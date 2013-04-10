@@ -7,6 +7,8 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 public class Wall extends Stuff{
 	
 	public Wall(){
@@ -18,9 +20,9 @@ public class Wall extends Stuff{
 		}
 	}
 
-	public void readLvlFile(Scanner sc) {
-		this.x = sc.nextInt(); // В данном случае считывает x y и color
-		this.y = sc.nextInt();
+	public void readLvlFile(Element obj) {
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
 	}
 	public void draw(Graphics g) {
 		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);

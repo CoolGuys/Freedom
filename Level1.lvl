@@ -153,10 +153,9 @@
      	<obj class="com.freedom.gameObjects.Tile" x="15" y="8"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="15" y="9"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="15" y="10"></obj>
-     	<obj class="com.freedom.gameObjects.Box" x="1" y="1" color="B"></obj>
-     	<obj class="com.freedom.gameObjects.Box" x="2" y="1" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="2" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="3" y="1" color="B"></obj>
-     	<obj class="com.freedom.gameObjects.Box" x="4" y="1" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="4" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="5" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="6" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="7" y="1" color="B"></obj>
@@ -170,7 +169,7 @@
      	<obj class="com.freedom.gameObjects.Box" x="14" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="15" y="1" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="1" y="2" color="B"></obj>
-     	<obj class="com.freedom.gameObjects.Box" x="2" y="2" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="2" y="2" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="3" y="2" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="4" y="2" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="5" y="2" color="B"></obj>
@@ -186,8 +185,8 @@
      	<obj class="com.freedom.gameObjects.Box" x="15" y="2" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="3" y="3" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="1" y="3" color="B"></obj>
-     	<obj class="com.freedom.gameObjects.Box" x="2" y="3" color="B"></obj>
-     	<robot x="5" y="5"></robot>
+     	<obj class="com.freedom.gameObjects.Wall" x="2" y="3" color="B"></obj>
+     	<robot x="1" y="1"></robot>
     </level>
     <level num="3" width="10" height="10">
     </level>
