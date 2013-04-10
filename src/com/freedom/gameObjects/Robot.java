@@ -51,7 +51,7 @@ public class Robot extends Stuff implements Moveable {
 
 		lives = 1;
 		
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 	}
 
 	public double getStep() {
