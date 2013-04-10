@@ -27,12 +27,12 @@ public class StartScreenModel {
 
 	public void addButtons() {
 		buttons[0] = new GButton(null, 2, 4, "com.freedom.view.StartScreen$StartGameAction");
-		//buttons[1] = new GButton(null, 1, 6, "com.freedom.view.StartScreen$ExitGameAction");
-		//try {
-			//buttons[1].setTexture(ImageIO.read(new File("Resource/UtilityPictures/buttonExit.png")));
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//}
+		buttons[1] = new GButton(null, 1, 6, "com.freedom.view.StartScreen$ExitGameAction");
+		try {
+			buttons[1].setTexture(ImageIO.read(new File("Resource/UtilityPictures/buttonExit.png")));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void activate() {
@@ -63,7 +63,7 @@ public class StartScreenModel {
 				.getWidth(), StartScreen.getInstance().getWidth() * 761 / 1516,
 				null);
 		buttons[0].draw(g);
-		//buttons[1].draw(g);
+		buttons[1].draw(g);
 	}
 
 	private double[] calculateWallpaperParameters() {
@@ -88,7 +88,7 @@ public class StartScreenModel {
 		return p;
 	}
 
-	private GButton[] buttons = new GButton[1];
+	private GButton[] buttons = new GButton[2];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -143,7 +143,7 @@ public class StartScreenModel {
 		public void draw(Graphics g) {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
 					null);
-			// g.drawString(text, positionX + 40, positionY + 15);
+//			 g.drawString(text, positionX + 40, positionY + 15);
 		}
 
 		private int positionX, positionY;

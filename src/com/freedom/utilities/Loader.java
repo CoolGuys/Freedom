@@ -71,7 +71,7 @@ public class Loader {
 				    NodeList robotlist=doc.getElementsByTagName("robot");
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
-				    	System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
+				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
 				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells));
 				    	//System.out.println(robot.toString());
 				    
