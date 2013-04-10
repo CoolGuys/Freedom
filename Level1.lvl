@@ -68,31 +68,31 @@
      	<obj class="com.freedom.gameObjects.Tile" x="7" y="3"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="7" y="4"></obj>
        	<obj class="com.freedom.gameObjects.Tile" x="7" y="5"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="7" y="6"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="7" y="7"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="7" y="8"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="7" y="9"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="7" y="10"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="7" y="6"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="7" y="7"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="7" y="8"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="7" y="9"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="7" y="10"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="8" y="1"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="8" y="2"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="8" y="3"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="8" y="4"></obj>
        	<obj class="com.freedom.gameObjects.Tile" x="8" y="5"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="8" y="6"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="8" y="7"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="8" y="8"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="8" y="9"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="8" y="10"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="8" y="6"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="8" y="7"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="8" y="8"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="8" y="9"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="8" y="10"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="9" y="1"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="9" y="2"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="9" y="3"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="9" y="4"></obj>
        	<obj class="com.freedom.gameObjects.Tile" x="9" y="5"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="9" y="6"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="9" y="7"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="9" y="8"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="9" y="9"></obj>
-     	<obj class="com.freedom.gameObjects.Tile" x="9" y="10"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="9" y="6"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="9" y="7"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="9" y="8"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="9" y="9"></obj>
+     	<obj class="com.freedom.gameObjects.Tile2" x="9" y="10"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="10" y="1"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="10" y="2"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="10" y="3"></obj>
@@ -185,7 +185,21 @@
      	<obj class="com.freedom.gameObjects.Box" x="15" y="2" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="3" y="3" color="B"></obj>
      	<obj class="com.freedom.gameObjects.Box" x="1" y="3" color="B"></obj>
-     	<obj class="com.freedom.gameObjects.Wall" x="2" y="3" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="10" y="10" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="10" y="9" color="B"></obj>
+        <obj class="com.freedom.gameObjects.Wall" x="10" y="8" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="10" y="7" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="10" y="6" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="10" y="5" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="10" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="9" color="B"></obj>
+        <obj class="com.freedom.gameObjects.Wall" x="6" y="8" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="7" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="6" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="5" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="6" y="5" color="B"></obj>
+     	<obj class="com.freedom.gameObjects.Wall" x="7" y="5" color="B"></obj>
+        <obj class="com.freedom.gameObjects.Wall" x="8" y="5" color="B"></obj>
      	<robot x="1" y="1"></robot>
     </level>
     <level num="3" width="10" height="10">
