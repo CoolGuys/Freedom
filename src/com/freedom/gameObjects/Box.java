@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 public class Box extends Stuff {
 	
 
@@ -28,11 +30,10 @@ public class Box extends Stuff {
 	 * 
 	 * @param - Scanner файла
 	 */
-	public void readLvlFile(Scanner sc) {
-		this.x = sc.nextInt(); // В данном случае считывает x y и color
-		this.y = sc.nextInt();
-		this.color = sc.next();
-
+	public void readLvlFile(Element obj) {
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
+		this.color=obj.getAttribute("color");
 	}
 	
 	public String getColour() {

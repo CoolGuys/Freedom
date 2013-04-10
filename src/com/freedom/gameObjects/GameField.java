@@ -22,14 +22,9 @@ public class GameField {
 
 
 	public void loadLevel(String pathToPackage, int levelID) {
-
-		try {
-			cells = Loader.readLvl(2);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		robot = new Robot(3, 3, "S", null, cells);
+		//Cell[][] cells = new C
+		cells = Loader.readLvl(2);
+		
 	}
 
 	public static void unloadLevel() {
@@ -53,8 +48,8 @@ public class GameField {
 	}
 
 	public static void draw(Graphics g) {
-		for (int x = 1; x < 10; x++) {
-			for (int y = 1; y < 10; y++) {
+		for (int x = 1; x < cells.length; x++) {
+			for (int y = 1; y < cells[1].length; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
 					if (cells[x][y].getContent()[i] != null)
 						cells[x][y].getContent()[i].draw(g);
@@ -70,6 +65,10 @@ public class GameField {
 
 	public static int getCellSize() {
 		return cellSize;
+	}
+	
+	public void setRobot(Robot robo){
+		robot=robo;
 	}
 
 	public void setCellSize(int scale) {

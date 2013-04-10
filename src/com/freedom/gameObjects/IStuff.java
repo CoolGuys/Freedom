@@ -1,6 +1,8 @@
 package com.freedom.gameObjects;
 
 import java.util.Scanner;
+
+import org.w3c.dom.Element;
 /**
  * Это интерфей для класса Stuff
  * Мне он нужен, т.к. я хочу чтобы объекты сами читали информацию о себе из файла
@@ -9,5 +11,5 @@ import java.util.Scanner;
  * 
  */
 public interface IStuff {
-	void readLvlFile(Scanner sc);//название функции говорит само за себя
+	void readLvlFile(Element obj);//название функции говорит само за себя
 }

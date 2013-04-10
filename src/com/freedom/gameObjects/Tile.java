@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 /**
  * 
  * @author IvTakm
@@ -39,9 +41,9 @@ public class Tile extends Stuff {
 		}
 	}
 	
-	public void readLvlFile(Scanner sc){
-		this.x = sc.nextInt(); 
-		this.y = sc.nextInt();		
+	public void readLvlFile(Element obj) {
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
 	}
 
 	public void draw(Graphics g) {
