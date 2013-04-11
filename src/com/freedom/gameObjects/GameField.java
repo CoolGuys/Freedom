@@ -22,13 +22,12 @@ public class GameField {
 
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		//Cell[][] cells = new C
-		cells = Loader.readLvl(2);
-		
+		cells = Loader.readLvl(2,"Level1.lvl");
+		Loader.lvlToFile(1, "Save1.lvl", cells);
 	}
 
 	public static void unloadLevel() {
-
+		
 	}
 
 	public static int getXsize() {

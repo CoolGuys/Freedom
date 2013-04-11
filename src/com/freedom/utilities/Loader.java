@@ -8,9 +8,6 @@ import java.util.logging.Logger;
 
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
-/*import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;*/
 
 
 
@@ -46,22 +43,49 @@ import com.freedom.gameObjects.*;
 
 
 public class Loader {
-	public static Cell[][] readLvl(int Number){
+	
+	public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
+		File fXml=new File(lvlfile);
+		logger.info("Oppening file "+fXml.getPath());
+		if(fXml.exists()){
+			logger.info("Deliting file "+fXml.getPath());
+			fXml.delete();			
+		}
+		try {
+			logger.info("Creating file "+fXml.getPath());
+			fXml.createNewFile();
+		} catch (IOException e) {
+			// TODO Автоматически созданный блок catch
+			e.printStackTrace();
+		}
+        try
+        {
+        	logger.info("Writing document");
+        	DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+	        DocumentBuilder db=dbf.newDocumentBuilder();
+	        Document doc=db.newDocument();
+	        logger.info("createElement levels");
+	        doc.createElement("levels");
+	        Element lvls = doc.getDocumentElement();	       
+        }catch(Exception ei){
+        	ei.printStackTrace();
+        }
+	}
+	
+	public static Cell[][] readLvl(int Number, String lvlfile){
 		
 		logger.setLevel(Level.OFF);
 		Cell[][] cells = null;
-
-        File fXml=new File("Level1.lvl");
-        
+        File fXml=new File(lvlfile);
         try
         {
             DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
             DocumentBuilder db=dbf.newDocumentBuilder();
             Document doc=db.parse(fXml);
-            
             doc.getDocumentElement().normalize();
-            //System.out.println("doc["+doc.getDocumentElement().getNodeName()+"]");
+            logger.info("Open <"+doc.getDocumentElement().getTagName()+"> in "+fXml.getPath());
             NodeList lvllist=doc.getElementsByTagName("level");           
+            logger.info("Getting level N="+Number);
 			for (int lvli = 0; lvli < lvllist.getLength(); lvli++) {
 				Node lvlTag = lvllist.item(lvli);
 				Element lvl = (Element) lvlTag;
@@ -69,6 +93,7 @@ public class Loader {
 			    	int width=Integer.parseInt(lvl.getAttribute("width"));
 			    	int height=Integer.parseInt(lvl.getAttribute("height"));
 			        cells = new Cell[width+1][height+1];
+			        logger.info("Creating cells array w="+width+" h="+height);
 					for(int x=1;x<=width;x++){
 						for(int y=1;y<=height;y++){
 							cells[x][y]=new Cell(x, y);
