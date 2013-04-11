@@ -20,15 +20,16 @@ import com.freedom.utilities.Loader;
 
 public class GameField {
 
-
 	public void loadLevel(String pathToPackage, int levelID) {
-		//Cell[][] cells = new C
-		cells = Loader.readLvl(2);
-		
+		cells = Loader.readLvl(2, "Save1.lvl");
 	}
 
 	public  void unloadLevel() {
 
+	}
+	
+	public void saveLevel(String pathToPackage, int levelID) {
+		Loader.lvlToFile(2, "Save2.lvl", cells);
 	}
 
 	public int getXsize() {
@@ -60,21 +61,26 @@ public class GameField {
 	}
 
 	public static GameField getInstance() {
-		return INSTANCE;
+		if (INSTANCE != null)
+			return INSTANCE;
+		else {
+			INSTANCE = new GameField();
+			return INSTANCE;
+		}
 	}
 
 	public int getCellSize() {
 		return cellSize;
 	}
-	
-	public void setRobot(Robot robo){
-		robot=robo;
+
+	public void setRobot(Robot robo) {
+		robot = robo;
 	}
 
 	public void setCellSize(int scale) {
-		this.cellSize = scale;	
+		cellSize = scale;
 	}
-	
+
 	private Robot robot;
 	private Cell[][] cells;
 	private int xSize;
@@ -82,7 +88,6 @@ public class GameField {
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 
-	private static final GameField INSTANCE = new GameField();
-
+	private static GameField INSTANCE;
 
 }
