@@ -12,6 +12,7 @@ import java.util.logging.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.GAction;
 import com.freedom.utilities.SoundEngine;
 import com.freedom.utilities.SoundEngine.SoundPlayer;
@@ -84,7 +85,9 @@ public class StartScreen extends JLayeredPane {
 	public static class StartGameAction extends GAction {
 		public void performAction() {
 			deactivateModel();
+			GameField.getInstance().loadLevel("TEST", 1);
 			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
+
 		}
 	}
 	public static class ExitGameAction extends GAction {

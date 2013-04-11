@@ -24,7 +24,7 @@ public class GameScreen extends JLayeredPane {
 		this.createInputMap();
 		this.createMovementController();
 		GameField.getInstance().setCellSize(scale);
-		GameField.getInstance().loadLevel("TEST", 1);
+
 		logger.setLevel(Level.OFF);
 
 	}
@@ -102,7 +102,7 @@ public class GameScreen extends JLayeredPane {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		GameField.draw(g);
+		GameField.getInstance().draw(g);
 	}
 
 	public void activate() {
@@ -156,7 +156,7 @@ public class GameScreen extends JLayeredPane {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GameField.getRobot().moveCoarse((String) getValue(Action.NAME));
+			GameField.getInstance().getRobot().moveCoarse((String) getValue(Action.NAME));
 		}
 	}
 
@@ -177,10 +177,10 @@ public class GameScreen extends JLayeredPane {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (GameField.getRobot().getIfEmpty())
-				GameField.getRobot().take();
+			if (GameField.getInstance().getRobot().getIfEmpty())
+				GameField.getInstance().getRobot().take();
 			else
-				GameField.getRobot().put();
+				GameField.getInstance().getRobot().put();
 		}
 	}
 
@@ -192,7 +192,7 @@ public class GameScreen extends JLayeredPane {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GameField.getRobot().moveFine((String) getValue(Action.NAME));
+			GameField.getInstance().getRobot().moveFine((String) getValue(Action.NAME));
 		}
 	}
 	

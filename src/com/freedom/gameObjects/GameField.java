@@ -27,27 +27,27 @@ public class GameField {
 		
 	}
 
-	public static void unloadLevel() {
+	public  void unloadLevel() {
 
 	}
 
-	public static int getXsize() {
+	public int getXsize() {
 		return (xSize);
 	}
 
-	public static int getYsize() {
+	public int getYsize() {
 		return (ySize);
 	}
 
-	public static Cell[][] getCells() {
+	public Cell[][] getCells() {
 		return cells;
 	}
 
-	public static Robot getRobot() {
+	public Robot getRobot() {
 		return robot;
 	}
 
-	public static void draw(Graphics g) {
+	public void draw(Graphics g) {
 		for (int x = 1; x < cells.length; x++) {
 			for (int y = 1; y < cells[1].length; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
@@ -63,7 +63,7 @@ public class GameField {
 		return INSTANCE;
 	}
 
-	public static int getCellSize() {
+	public int getCellSize() {
 		return cellSize;
 	}
 	
@@ -72,15 +72,15 @@ public class GameField {
 	}
 
 	public void setCellSize(int scale) {
-		GameField.cellSize = scale;	
+		this.cellSize = scale;	
 	}
 	
-	private static Robot robot;
-	private static Cell[][] cells;
-	private static int xSize;
-	private static int ySize;
-	private static Logger logger = Logger.getLogger("Core.GameField");
-	private static int cellSize;
+	private Robot robot;
+	private Cell[][] cells;
+	private int xSize;
+	private int ySize;
+	private Logger logger = Logger.getLogger("Core.GameField");
+	private int cellSize;
 
 	private static final GameField INSTANCE = new GameField();
 

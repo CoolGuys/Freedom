@@ -30,9 +30,11 @@ public class ScreensHolder extends JPanel {
 	}
 
 	public void createScreens() {
-		startScreen = StartScreen.getInstance();
+		// Убеждаюсь, что статические поля-представители инициализованы 
+		GameScreen.getInstance(); 
+		StartScreen.getInstance();
+		
 		StartScreenModel.getInstance().addButtons();
-		gameScreen = GameScreen.getInstance();
 		addScreen(StartScreen.getInstance());
 		StartScreen.activateModel();
 	}
@@ -60,17 +62,9 @@ public class ScreensHolder extends JPanel {
 	}
 	
 	public static void setDimensions(int dimensionX, int dimensionY) {
-		INSTANCE.dimensionX = dimensionX;
-		INSTANCE.dimensionY = dimensionY;
 		INSTANCE.setSize(new Dimension(dimensionX, dimensionY));
 	}
 	
-	
-	private StartScreen startScreen;
-	private GameScreen gameScreen;
-	
-	private int dimensionX;
-	private int dimensionY;
 	private Logger logger = Logger.getLogger("ScreensHolder");
 	
 	private static final ScreensHolder INSTANCE = new ScreensHolder(); 
