@@ -88,4 +88,10 @@ public class StartScreen extends AbstractScreen {
 			System.exit(0);
 		}
 	}
+	
+	public static class SaveLevelAction extends GAction {
+		public void performAction() {
+			GameField.getInstance().saveLevel("Levels/LevelSaveTest.lvl", 1);	
+		}
+	}
 }

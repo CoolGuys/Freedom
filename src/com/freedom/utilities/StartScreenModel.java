@@ -33,6 +33,8 @@ public class StartScreenModel {
 				"com.freedom.view.StartScreen$StartGameAction");
 		buttons[1] = new GButton("EXIT", 1, 6,
 				"com.freedom.view.StartScreen$ExitGameAction");
+		buttons[2] = new GButton("SAVE", 4, 4,
+				"com.freedom.view.StartScreen$SaveLevelAction");
 	}
 
 	public void activate() {
@@ -62,8 +64,9 @@ public class StartScreenModel {
 				this.calculateWallpaperPosition().y, StartScreen.getInstance()
 						.getWidth(),
 				StartScreen.getInstance().getWidth() * 761 / 1516, null);
-		buttons[0].draw(g);
-		buttons[1].draw(g);
+
+		for (GButton b : buttons)
+			b.draw(g);
 	}
 
 	private double[] calculateWallpaperParameters() {
@@ -87,7 +90,7 @@ public class StartScreenModel {
 		return p;
 	}
 
-	private GButton[] buttons = new GButton[2];
+	private GButton[] buttons = new GButton[3];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -137,7 +140,6 @@ public class StartScreenModel {
 			return "WasNotPressed";
 		}
 
-
 		public void draw(Graphics g) {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
 					null);
@@ -147,15 +149,20 @@ public class StartScreenModel {
 			if (buttonFont == null) {
 				Font tF = new Font("Monospaced", Font.PLAIN, 100);
 				bounds = tF.getStringBounds("A", context);
-				buttonFont = new Font("Monospaced", Font.PLAIN, (int) (dimensionX
-						* -bounds.getY() / bounds.getWidth()/4));
+				buttonFont = new Font(
+						"Monospaced",
+						Font.PLAIN,
+						(int) (dimensionX * -bounds.getY() / bounds.getWidth() / 4));
 			}
 
 			bounds = buttonFont.getStringBounds(text, context);
 			logger.info(bounds.toString());
 			g2.setFont(buttonFont);
 			g2.setColor(Color.WHITE);
-			g2.drawString(text, (int)(positionX+1.0/2.0*(dimensionX-bounds.getWidth())), (int)(positionY+dimensionY*1/2-0.5*bounds.getY()));
+			g2.drawString(text,
+					(int) (positionX + 1.0 / 2.0 * (dimensionX - bounds
+							.getWidth())), (int) (positionY + dimensionY * 1
+							/ 2 - 0.5 * bounds.getY()));
 		}
 
 		private int positionX, positionY;

@@ -28,7 +28,7 @@ public class GameField {
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToFile(2, "Save2.lvl", cells);
+		Loader.lvlToFile(levelID, pathToPackage, cells);
 	}
 
 	public int getXsize() {
