@@ -23,8 +23,8 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 
 				theOneToRepaint.repaint((theOneToMove.getX() - 1) * 50,
 						(theOneToMove.getY() - 1) * 50,
-						GameField.getCellSize() * 3,
-						GameField.getCellSize() * 3);
+						GameField.getInstance().getCellSize() * 3,
+						GameField.getInstance().getCellSize() * 3);
 				Thread.sleep(10);
 			}
 		} catch (InterruptedException e) {

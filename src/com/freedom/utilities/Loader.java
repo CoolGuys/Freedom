@@ -106,8 +106,8 @@ public class Loader {
 	    		}
 	    	}
 	    	Element robo=doc.createElement("robot");//writing robot
-	    	robo.setAttribute("x", String.valueOf(GameField.getRobot().getX()));
-	    	robo.setAttribute("y", String.valueOf(GameField.getRobot().getY()));
+	    	robo.setAttribute("x", String.valueOf(GameField.getInstance().getRobot().getX()));
+	    	robo.setAttribute("y", String.valueOf(GameField.getInstance().getRobot().getY()));
 	    	lvl.appendChild(robo);
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();

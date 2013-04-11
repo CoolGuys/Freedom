@@ -20,33 +20,35 @@ import com.freedom.utilities.Loader;
 
 public class GameField {
 
-
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2,"Save1.lvl");
-		//Loader.lvlToFile(2, "Save2.lvl", cells);
+		cells = Loader.readLvl(2, "Save1.lvl");
 	}
 
 	public static void unloadLevel() {
-		
+
+	}
+	
+	public void saveLevel(String pathToPackage, int levelID) {
+		Loader.lvlToFile(2, "Save2.lvl", cells);
 	}
 
-	public static int getXsize() {
+	public int getXsize() {
 		return (xSize);
 	}
 
-	public static int getYsize() {
+	public int getYsize() {
 		return (ySize);
 	}
 
-	public static Cell[][] getCells() {
+	public Cell[][] getCells() {
 		return cells;
 	}
 
-	public static Robot getRobot() {
+	public Robot getRobot() {
 		return robot;
 	}
 
-	public static void draw(Graphics g) {
+	public void draw(Graphics g) {
 		for (int x = 1; x < cells.length; x++) {
 			for (int y = 1; y < cells[1].length; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
@@ -59,29 +61,33 @@ public class GameField {
 	}
 
 	public static GameField getInstance() {
-		return INSTANCE;
+		if (INSTANCE != null)
+			return INSTANCE;
+		else {
+			INSTANCE = new GameField();
+			return INSTANCE;
+		}
 	}
 
-	public static int getCellSize() {
+	public int getCellSize() {
 		return cellSize;
 	}
-	
-	public void setRobot(Robot robo){
-		robot=robo;
+
+	public void setRobot(Robot robo) {
+		robot = robo;
 	}
 
 	public void setCellSize(int scale) {
-		GameField.cellSize = scale;	
+		cellSize = scale;
 	}
-	
-	private static Robot robot;
-	private static Cell[][] cells;
-	private static int xSize;
-	private static int ySize;
-	private static Logger logger = Logger.getLogger("Core.GameField");
-	private static int cellSize;
 
-	private static final GameField INSTANCE = new GameField();
+	private Robot robot;
+	private Cell[][] cells;
+	private int xSize;
+	private int ySize;
+	private Logger logger = Logger.getLogger("Core.GameField");
+	private int cellSize;
 
+	private static GameField INSTANCE;
 
 }
