@@ -43,6 +43,17 @@ public class Tile2 extends Stuff {
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 	}
 
+	/**
+	 * Метод, который добавляет инфу в файл
+	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * @author UshAle
+	 */
+	public void loadToFile(Element obj) {
+		obj.setAttribute("x", String.valueOf((int)this.x));
+		obj.setAttribute("y", String.valueOf((int)this.y));
+		obj.setAttribute("class","com.freedom.gameObjects.Tile2");
+	} 
+	
 	public void draw(Graphics g) {
 		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
 	}

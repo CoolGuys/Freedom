@@ -36,6 +36,18 @@ public class Box extends Stuff {
 		this.color=obj.getAttribute("color");
 	}
 	
+	/**
+	 * Метод, который добавляет инфу в файл
+	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * @author UshAle
+	 */
+	public void loadToFile(Element obj) {
+		obj.setAttribute("x", String.valueOf((int)this.x));
+		obj.setAttribute("y", String.valueOf((int)this.y));
+		obj.setAttribute("color", String.valueOf(this.color));
+		obj.setAttribute("class","com.freedom.gameObjects.Box");
+	} 
+	
 	public String getColour() {
 		return this.color;
 	}

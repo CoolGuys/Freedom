@@ -25,6 +25,16 @@ public class Stuff implements IStuff{
 //			this.x=sc.nextInt();
 //			this.y=sc.nextInt();
 	}
+	/**
+	 * Метод, который добавляет инфу в файл
+	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * @author UshAle
+	 */
+	public void loadToFile(Element obj) {
+		obj.setAttribute("x", String.valueOf((int)this.x));
+		obj.setAttribute("y", String.valueOf((int)this.y));
+		obj.setAttribute("class","com.freedom.gameObjects.Stuff");
+	} 
 
 	public Stuff(){
 		this.pickable = true;

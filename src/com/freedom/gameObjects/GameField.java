@@ -22,8 +22,8 @@ public class GameField {
 
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2,"Level1.lvl");
-		Loader.lvlToFile(1, "Save1.lvl", cells);
+		cells = Loader.readLvl(2,"Save1.lvl");
+		//Loader.lvlToFile(2, "Save2.lvl", cells);
 	}
 
 	public static void unloadLevel() {
