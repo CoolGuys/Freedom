@@ -3,16 +3,15 @@ package com.freedom.view;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import com.freedom.gameObjects.*;
+import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
-public class GameScreen extends JLayeredPane {
+public class GameScreen extends AbstractScreen {
 	
 	
 	private GameScreen()

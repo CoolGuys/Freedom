@@ -2,24 +2,17 @@ package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
 import com.freedom.gameObjects.GameField;
+import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.GAction;
-import com.freedom.utilities.SoundEngine;
-import com.freedom.utilities.SoundEngine.SoundPlayer;
 import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
-public class StartScreen extends JLayeredPane {
+public class StartScreen extends AbstractScreen {
 	private StartScreen()
 	{
 		logger.setLevel(Level.OFF);
@@ -37,11 +30,11 @@ public class StartScreen extends JLayeredPane {
 		startScreenModel.draw(g);
 	}
 
-	public static void activateModel() {
+	public void activateModel() {
 		startScreenModel.activate();
 	}
 	
-	public static void deactivateModel() {
+	public void deactivateModel() {
 		startScreenModel.deactivate();
 	}
 	
@@ -51,7 +44,7 @@ public class StartScreen extends JLayeredPane {
 
 	private static StartScreenModel startScreenModel = StartScreenModel.getInstance();
 
-	private static final StartScreen INSTANCE = new StartScreen();
+	private static StartScreen INSTANCE = new StartScreen();
 	Logger logger = Logger.getLogger("StartScreen");
 
 	
@@ -84,7 +77,7 @@ public class StartScreen extends JLayeredPane {
 	
 	public static class StartGameAction extends GAction {
 		public void performAction() {
-			deactivateModel();
+			StartScreen.getInstance().deactivateModel();
 			GameField.getInstance().loadLevel("TEST", 1);
 			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
 

@@ -36,7 +36,7 @@ public class ScreensHolder extends JPanel {
 		
 		StartScreenModel.getInstance().addButtons();
 		addScreen(StartScreen.getInstance());
-		StartScreen.activateModel();
+		StartScreen.getInstance().activateModel();
 	}
 	
 	public void addScreen(JLayeredPane toAdd) {
