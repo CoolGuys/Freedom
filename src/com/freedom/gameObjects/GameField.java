@@ -1,7 +1,6 @@
 package com.freedom.gameObjects;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 import com.freedom.utilities.Loader;

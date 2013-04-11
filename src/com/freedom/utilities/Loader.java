@@ -59,9 +59,9 @@ public class Loader {
 	
 	public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
 		File fXml=new File(lvlfile);
-		logger.info("Oppening file "+fXml.getPath());
+		logger.info("Opening file "+fXml.getPath());
 		if(fXml.exists()){
-			logger.info("Deliting file "+fXml.getPath());
+			logger.info("Deleting file "+fXml.getPath());
 			fXml.delete();			
 		}
 		try {
@@ -179,4 +179,7 @@ public class Loader {
 	}
 	
 	private static Logger logger = Logger.getLogger("Loader");
+	static {
+		logger.setLevel(Level.OFF);
+	}
 }
