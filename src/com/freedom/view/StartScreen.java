@@ -22,6 +22,7 @@ public class StartScreen extends AbstractScreen {
 		this.setBackground(Color.BLACK);
 		this.setOpaque(true);
 		this.addMouseListener(new MouseHandler());
+		this.addMouseMotionListener(new MouseHandler());
 	}
 
 	@Override
@@ -78,6 +79,10 @@ public class StartScreen extends AbstractScreen {
 					e1.printStackTrace();
 				}
 			}
+		}
+		
+		public void mouseMoved(MouseEvent e) {
+			startScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 

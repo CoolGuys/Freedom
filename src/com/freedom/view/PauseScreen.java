@@ -4,15 +4,14 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
-
 import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.GAction;
@@ -27,6 +26,7 @@ public class PauseScreen extends AbstractScreen {
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
 		this.addMouseListener(new MouseHandler());
+		this.addMouseMotionListener(new MouseHandler());
 		
 
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -88,6 +88,9 @@ public class PauseScreen extends AbstractScreen {
 					e1.printStackTrace();
 				}
 			}
+		}
+		public void mouseMoved(MouseEvent e) {
+			pauseScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 	

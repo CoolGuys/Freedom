@@ -31,7 +31,7 @@ public class StartScreenModel {
 	public void addButtons() {
 		buttons[0] = new GButton("GAME", 2, 4,
 				"com.freedom.view.StartScreen$StartGameAction");
-		buttons[1] = new GButton("EXIT", 1, 6,
+		buttons[1] = new GButton("EXIT", 12, 6,
 				"com.freedom.view.StartScreen$ExitGameAction");
 //		buttons[3] = new GButton("LOAD", 4, 5,
 //				"com.freedom.view.StartScreen$SaveLevelAction");
@@ -92,7 +92,16 @@ public class StartScreenModel {
 		return p;
 	}
 
-	private GButton[] buttons = new GButton[40];
+	public void reactToRollOver(Point point) {
+		for (GButton b : buttons) {
+			if (b != null)
+				if(b.checkRollOver(point)) 
+					StartScreen.getInstance().repaint();
+					
+		}
+	}
+	
+	private GButton[] buttons = new GButton[5];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -119,6 +128,7 @@ public class StartScreenModel {
 			calculateMyParameters(cellX, cellY);
 		}
 
+
 		public void calculateMyParameters(int cellX, int cellY) {
 			double[] parameters = calculateBackgroundParameters();
 
@@ -142,6 +152,20 @@ public class StartScreenModel {
 			return "WasNotPressed";
 		}
 
+		public boolean checkRollOver(Point p) {
+			if ((p.getX() >= this.positionX
+					&& p.getX() <= this.positionX + dimensionX
+					&& p.getY() >= this.positionY && p.getY() <= this.positionY
+					+ dimensionY)) {
+				textColor = Color.WHITE;
+				return true;
+			} else if (textColor.equals(Color.WHITE)) {
+				textColor = Color.GRAY;
+				return true;
+			}
+			return false;
+		}
+		
 		public void draw(Graphics g) {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
 					null);
@@ -163,7 +187,7 @@ public class StartScreenModel {
 			bounds = buttonFont.getStringBounds(text, context);
 			logger.info(bounds.toString());
 			g2.setFont(buttonFont);
-			g2.setColor(Color.WHITE);
+			g2.setColor(textColor);
 			g2.drawString(text,
 					(int) (positionX + 1.0 / 2.0 * (dimensionX - bounds
 							.getWidth())), (int) (positionY + dimensionY * 1
@@ -174,10 +198,13 @@ public class StartScreenModel {
 		private int dimensionX, dimensionY;
 		private String text;
 		private Image texture;
+		private Color textColor=Color.GRAY;
 		private File buttonClickedSound;
 		private Font buttonFont;
 		public final String actionName;
 
 	}
+
+	
 
 }

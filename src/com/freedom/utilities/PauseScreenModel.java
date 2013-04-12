@@ -14,7 +14,7 @@ public class PauseScreenModel {
 
 	private PauseScreenModel()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 
 		try {
 			background = ImageIO.read(new File(
@@ -27,7 +27,8 @@ public class PauseScreenModel {
 	public void addButtons() {
 		buttons[0] = new GButtonLite("QUIT", 2,
 				"com.freedom.view.PauseScreen$QuitAction");
-		buttons[1] = new GButtonLite("SAVE", 1, "com.freedom.view.PauseScreen$SaveLevelAction");
+		buttons[1] = new GButtonLite("SAVE", 1,
+				"com.freedom.view.PauseScreen$SaveLevelAction");
 	}
 
 	public static PauseScreenModel getInstance() {
@@ -55,12 +56,21 @@ public class PauseScreenModel {
 	}
 
 	public String reactToClick(Point p) {
+		logger.info(p.toString());
 		for (GButtonLite b : buttons) {
 			if (b != null)
 				if (!b.checkIfPressed(p).equals("WasNotPressed"))
 					return b.actionName;
 		}
 		return "NothingHappened";
+	}
+
+	public void reactToRollOver(Point point) {
+		for (GButtonLite b : buttons) {
+			if (b != null)
+				if (b.checkRollOver(point))
+					PauseScreen.getInstance().repaint();
+		}
 	}
 
 	private GButtonLite[] buttons = new GButtonLite[5];
@@ -81,8 +91,22 @@ public class PauseScreenModel {
 			clickedSound = new File("Resource/Sound/ButtonClicked.wav");
 		}
 
+		public boolean checkRollOver(Point p) {
+			if ((p.getX() >= this.positionX
+					&& p.getX() <= this.positionX + dimensionX
+					&& p.getY() >= this.positionY && p.getY() <= this.positionY
+					+ dimensionY)) {
+				textColor = Color.WHITE;
+				return true;
+			} else if (textColor.equals(Color.WHITE)) {
+				textColor = Color.GRAY;
+				return true;
+			}
+			return false;
+		}
+
 		private int calculateYPosition() {
-			return line * (dimensionY + space) + offsetY;
+			return line * (dimensionY + gap) + offsetY;
 		}
 
 		public String checkIfPressed(Point p) {
@@ -97,7 +121,6 @@ public class PauseScreenModel {
 			return "WasNotPressed";
 		}
 
-		
 		/*
 		 * Омерзительное место, но ничего не могу поделать @gleb
 		 */
@@ -111,15 +134,15 @@ public class PauseScreenModel {
 			Rectangle2D bounds = buttonFont.getStringBounds(text, context);
 
 			dimensionX = (int) bounds.getWidth();
-			dimensionY = (int) bounds.getHeight();
-			logger.info(bounds.toString());
+			dimensionY = -(int) bounds.getY();
+			// logger.info(bounds.toString());
 
 			g2.setFont(buttonFont);
-			g2.setColor(Color.WHITE);
+			g2.setColor(textColor);
 
 			positionX = (int) (PauseScreen.getInstance().getWidth() / 2 - bounds
 					.getWidth() / 2);
-			logger.info("PositionY:" + positionY);
+			// logger.info("PositionY:" + positionY);
 
 			g2.drawString(text, positionX, positionY + dimensionY);
 		}
@@ -129,11 +152,12 @@ public class PauseScreenModel {
 		private int dimensionY;
 		private int positionX, positionY;
 		private String text;
+		private Color textColor = Color.GRAY;
 		private File clickedSound;
 		private Font buttonFont;
 		public final String actionName;
 		private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
-		private final int space = PauseScreen.getInstance().getHeight() / 15;
+		private final int gap = PauseScreen.getInstance().getHeight() / 12;
 
 	}
 
