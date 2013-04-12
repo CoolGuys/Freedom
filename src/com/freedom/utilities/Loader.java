@@ -58,6 +58,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 	
 	public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
+		logger.setLevel(Level.OFF);
 		File fXml=new File(lvlfile);
 		logger.info("Oppening file "+fXml.getPath());
 		if(fXml.exists()){
@@ -121,7 +122,7 @@ public class Loader {
 	
 	public static Cell[][] readLvl(int Number, String lvlfile){
 		
-		//logger.setLevel(Level.OFF);
+		logger.setLevel(Level.OFF);
 		Cell[][] cells = null;
         File fXml=new File(lvlfile);
         try
