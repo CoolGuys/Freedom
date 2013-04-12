@@ -33,8 +33,8 @@ public class StartScreenModel {
 				"com.freedom.view.StartScreen$StartGameAction");
 		buttons[1] = new GButton("EXIT", 1, 6,
 				"com.freedom.view.StartScreen$ExitGameAction");
-		buttons[2] = new GButton("SAVE", 4, 4,
-				"com.freedom.view.StartScreen$SaveLevelAction");
+//		buttons[3] = new GButton("LOAD", 4, 5,
+//				"com.freedom.view.StartScreen$SaveLevelAction");
 	}
 
 	public void activate() {
@@ -52,24 +52,26 @@ public class StartScreenModel {
 
 	public String reactToClick(Point p) {
 		for (GButton b : buttons) {
-			if (!b.checkIfPressed(p).equals("WasNotPressed"))
-				return b.actionName;
+			if (b != null)
+				if (!b.checkIfPressed(p).equals("WasNotPressed"))
+					return b.actionName;
 		}
 		return "NothingHappened";
 	}
 
 	public void draw(Graphics g) {
 
-		g.drawImage(backgroundPicture, this.calculateWallpaperPosition().x,
-				this.calculateWallpaperPosition().y, StartScreen.getInstance()
+		g.drawImage(backgroundPicture, this.calculateBackgroundPosition().x,
+				this.calculateBackgroundPosition().y, StartScreen.getInstance()
 						.getWidth(),
 				StartScreen.getInstance().getWidth() * 761 / 1516, null);
 
 		for (GButton b : buttons)
-			b.draw(g);
+			if (b != null)
+				b.draw(g);
 	}
 
-	private double[] calculateWallpaperParameters() {
+	private double[] calculateBackgroundParameters() {
 		double[] parameters = new double[2];
 
 		double aspect = 761.0 / 1516.0;
@@ -81,7 +83,7 @@ public class StartScreenModel {
 		return parameters;
 	}
 
-	private Point calculateWallpaperPosition() {
+	private Point calculateBackgroundPosition() {
 		Point p = new Point();
 
 		p.x = 0;
@@ -90,7 +92,7 @@ public class StartScreenModel {
 		return p;
 	}
 
-	private GButton[] buttons = new GButton[3];
+	private GButton[] buttons = new GButton[40];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -118,12 +120,12 @@ public class StartScreenModel {
 		}
 
 		public void calculateMyParameters(int cellX, int cellY) {
-			double[] parameters = calculateWallpaperParameters();
+			double[] parameters = calculateBackgroundParameters();
 
 			dimensionX = dimensionY = (int) parameters[1];
 			positionX = (int) ((cellX) * parameters[0] + (cellX - 1)
 					* parameters[1]);
-			positionY = (int) (calculateWallpaperPosition().y + (cellY)
+			positionY = (int) (calculateBackgroundPosition().y + (cellY)
 					* parameters[0] + (cellY - 1) * parameters[1]);
 
 		}
@@ -144,6 +146,8 @@ public class StartScreenModel {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
 					null);
 			Graphics2D g2 = (Graphics2D) g;
+			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			FontRenderContext context = g2.getFontRenderContext();
 			Rectangle2D bounds;
 			if (buttonFont == null) {
@@ -152,7 +156,8 @@ public class StartScreenModel {
 				buttonFont = new Font(
 						"Monospaced",
 						Font.PLAIN,
-						(int) (dimensionX * -bounds.getY() / bounds.getWidth() / 4));
+						(int) (dimensionX * -bounds.getY() / bounds.getWidth() / text
+								.length()));
 			}
 
 			bounds = buttonFont.getStringBounds(text, context);

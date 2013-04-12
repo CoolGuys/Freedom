@@ -6,19 +6,20 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.StartScreenModel;
 
 
 /**
  * GraphicsController - контролирующий интерфейс класс. Здесь будет
- * осуществляться хранение и размещения всех частей графического интерфея
+ * осуществляться хранение и размещение всех частей графического интерфея
  * программы 
  * 
  * @author gleb
  * 
  */
 @SuppressWarnings("serial")
-public class ScreensHolder extends JPanel {
+public class ScreensHolder extends JLayeredPane {
 	private ScreensHolder()
 	{
 		super();
@@ -30,29 +31,30 @@ public class ScreensHolder extends JPanel {
 	}
 
 	public void createScreens() {
-		// Убеждаюсь, что статические поля-представители инициализованы 
-		GameScreen.getInstance(); 
-		StartScreen.getInstance();
+		GameScreen.getInstance().prepareModel(); 
+		StartScreen.getInstance().prepareModel();
+		PauseScreen.getInstance().prepareModel();
 		
-		StartScreenModel.getInstance().addButtons();
 		addScreen(StartScreen.getInstance());
-		StartScreen.getInstance().activateModel();
 	}
 	
-	public void addScreen(JLayeredPane toAdd) {
+	public void addScreen(AbstractScreen toAdd) {
 		INSTANCE.add(toAdd);
 		toAdd.requestFocusInWindow();
+		toAdd.activateModel();
+		INSTANCE.moveToFront(toAdd);
 		INSTANCE.revalidate();
 		INSTANCE.repaint();
 	}
 	
-	public void removeScreen(JLayeredPane toRemove) {
+	public void removeScreen(AbstractScreen toRemove) {
 		INSTANCE.remove(toRemove);
+		toRemove.deactivateModel();
 		INSTANCE.revalidate();
 		INSTANCE.repaint();
 	}
 	
-	public static void swapScreens(JLayeredPane toAdd, JLayeredPane toRemove) {
+	public static void swapScreens(AbstractScreen toAdd, AbstractScreen toRemove) {
 		INSTANCE.removeScreen(toRemove);
 		INSTANCE.addScreen(toAdd);
 	}

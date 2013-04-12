@@ -12,8 +12,7 @@ import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
-	
-	
+
 	private GameScreen()
 	{
 		this.setBackground(Color.BLACK);
@@ -22,10 +21,13 @@ public class GameScreen extends AbstractScreen {
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		GameField.getInstance().setCellSize(scale);
 
 		logger.setLevel(Level.OFF);
 
+	}
+	
+	public void prepareModel () {
+		GameField.getInstance().setCellSize(scale);
 	}
 
 	public void createInputMap() {
@@ -48,9 +50,7 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift L"), "fineOffset.right");
 		imap.put(KeyStroke.getKeyStroke("shift J"), "fineOffset.left");
 		imap.put(KeyStroke.getKeyStroke("shift K"), "fineOffset.down");
-		
-		
-		
+
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 
 	}
@@ -74,7 +74,7 @@ public class GameScreen extends AbstractScreen {
 		FieldFineOffsetAction fineOffsetDown = new FieldFineOffsetAction("S");
 		FieldFineOffsetAction fineOffsetLeft = new FieldFineOffsetAction("W");
 		FieldFineOffsetAction fineOffsetRight = new FieldFineOffsetAction("E");
-		
+
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
 		amap.put("move.down", moveDown);
@@ -86,7 +86,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("turn.left", turnLeft);
 		amap.put("turn.right", turnRight);
 		amap.put("turn.down", turnDown);
-		
+
 		amap.put("offset.up", offsetUp);
 		amap.put("offset.left", offsetLeft);
 		amap.put("offset.right", offsetRight);
@@ -95,7 +95,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		
+
 	}
 
 	@Override
@@ -108,44 +108,50 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public static GameScreen getInstance() {
-		return INSTANCE;
+		if (INSTANCE == null)
+			return INSTANCE = new GameScreen();
+		else
+			return INSTANCE;
 	}
 
-	
 	public void changeOffsetCoarse(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
-			setLocation(this.getLocation().x, this.getLocation().y-coarseOffset);
+			setLocation(this.getLocation().x, this.getLocation().y
+					- coarseOffset);
 		if (direction.equals("W"))
-			setLocation(this.getLocation().x-coarseOffset, this.getLocation().y);
+			setLocation(this.getLocation().x - coarseOffset,
+					this.getLocation().y);
 		if (direction.equals("E"))
-			setLocation(this.getLocation().x+coarseOffset, this.getLocation().y);
+			setLocation(this.getLocation().x + coarseOffset,
+					this.getLocation().y);
 		if (direction.equals("S"))
-			setLocation(this.getLocation().x, this.getLocation().y+scale+coarseOffset);
+			setLocation(this.getLocation().x, this.getLocation().y + scale
+					+ coarseOffset);
 		revalidate();
 		repaint();
 	}
-	
+
 	public void changeOffsetFine(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
-			setLocation(this.getLocation().x, this.getLocation().y-fineOffset);
+			setLocation(this.getLocation().x, this.getLocation().y - fineOffset);
 		if (direction.equals("W"))
-			setLocation(this.getLocation().x-fineOffset, this.getLocation().y);
+			setLocation(this.getLocation().x - fineOffset, this.getLocation().y);
 		if (direction.equals("E"))
-			setLocation(this.getLocation().x+fineOffset, this.getLocation().y);
+			setLocation(this.getLocation().x + fineOffset, this.getLocation().y);
 		if (direction.equals("S"))
-			setLocation(this.getLocation().x, this.getLocation().y+fineOffset);
+			setLocation(this.getLocation().x, this.getLocation().y + fineOffset);
 		revalidate();
 		repaint();
 	}
-	
+
 	private int scale = 50;
-	private final int fineOffset = scale/2;
-	private final int coarseOffset = (scale*3)/2;
-	
+	private final int fineOffset = scale / 2;
+	private final int coarseOffset = (scale * 3) / 2;
+
 	Logger logger = Logger.getLogger("GameScreen");
-	private static final GameScreen INSTANCE = new GameScreen();
+	private static GameScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
 		public CoarseMovementAction(String name)
@@ -155,25 +161,25 @@ public class GameScreen extends AbstractScreen {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().getRobot().moveCoarse((String) getValue(Action.NAME));
+			GameField.getInstance().getRobot()
+					.moveCoarse((String) getValue(Action.NAME));
 		}
 	}
 
 	private class PauseAction extends AbstractAction {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			logger.entering("PauseAction", "actionPerformed");
-			ScreensHolder.swapScreens(StartScreen.getInstance(),
-					GameScreen.getInstance());
-			StartScreenModel.getInstance().activate();
+			INSTANCE.deactivateModel();
+			ScreensHolder.getInstance().addScreen(PauseScreen.getInstance());
+			PauseScreen.getInstance().activateModel();
+			
 			logger.info("Paused");
-			logger.exiting("PauseAction", "actionPerformed");
 		}
 	}
 
 	private class InteractAction extends AbstractAction {
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (GameField.getInstance().getRobot().getIfEmpty())
@@ -188,13 +194,14 @@ public class GameScreen extends AbstractScreen {
 		{
 			putValue(Action.NAME, name);
 		}
-		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().getRobot().moveFine((String) getValue(Action.NAME));
+			GameField.getInstance().getRobot()
+					.moveFine((String) getValue(Action.NAME));
 		}
 	}
-	
+
 	private class FieldCoarseOffsetAction extends AbstractAction {
 		public FieldCoarseOffsetAction(String name)
 		{
@@ -207,7 +214,7 @@ public class GameScreen extends AbstractScreen {
 			changeOffsetCoarse((String) getValue(Action.NAME));
 		}
 	}
-	
+
 	private class FieldFineOffsetAction extends AbstractAction {
 		public FieldFineOffsetAction(String name)
 		{

@@ -29,26 +29,33 @@ public class StartScreen extends AbstractScreen {
 		super.paintComponent(g);
 		startScreenModel.draw(g);
 	}
+	
+	public void prepareModel () {
+		StartScreenModel.getInstance().addButtons();
+	}
 
 	public void activateModel() {
 		startScreenModel.activate();
 	}
-	
+
 	public void deactivateModel() {
 		startScreenModel.deactivate();
 	}
-	
+
 	public static StartScreen getInstance() {
-		return INSTANCE;
+		if (INSTANCE == null) {
+			INSTANCE = new StartScreen();
+			return INSTANCE;
+		} else
+			return INSTANCE;
 	}
 
-	private static StartScreenModel startScreenModel = StartScreenModel.getInstance();
+	private static StartScreenModel startScreenModel = StartScreenModel
+			.getInstance();
 
-	private static StartScreen INSTANCE = new StartScreen();
+	private static StartScreen INSTANCE;
 	Logger logger = Logger.getLogger("StartScreen");
 
-	
-	
 	private class MouseHandler extends MouseAdapter {
 
 		@Override
@@ -73,25 +80,20 @@ public class StartScreen extends AbstractScreen {
 			}
 		}
 	}
-	
-	
+
 	public static class StartGameAction extends GAction {
 		public void performAction() {
 			StartScreen.getInstance().deactivateModel();
 			GameField.getInstance().loadLevel("TEST", 1);
-			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
+			ScreensHolder.swapScreens(GameScreen.getInstance(),
+					StartScreen.getInstance());
 
 		}
 	}
+
 	public static class ExitGameAction extends GAction {
 		public void performAction() {
 			System.exit(0);
-		}
-	}
-	
-	public static class SaveLevelAction extends GAction {
-		public void performAction() {
-			GameField.getInstance().saveLevel("Levels/LevelSaveTest.lvl", 1);	
 		}
 	}
 }
