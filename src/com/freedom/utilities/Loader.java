@@ -42,7 +42,7 @@ import com.freedom.gameObjects.*;
  *   </level>  
  * </levels>
  * 
- * @author ushale
+ * @author UshAle
  *
  */
 
@@ -50,7 +50,7 @@ import com.freedom.gameObjects.*;
  * Также добавлена возможность сохранять лвл в файл функцией lvlToFile(int num, String lvlfile, Cell[][] cells)
  * Все параметры аналогичны параметрам readlvl 
  * Пример использования в комменте к GameField.loadLevel();
- * @author ushale
+ * @author UshAle
  *
  */
 
