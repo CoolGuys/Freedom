@@ -44,6 +44,10 @@ public class StartScreenModel {
 
 	public void deactivate() {
 		backgroundMusicPlayer.stopPlaying();
+
+		for (GButton b : buttons) 
+			if (b != null)
+				b.reset();
 	}
 
 	public static StartScreenModel getInstance() {
@@ -160,11 +164,17 @@ public class StartScreenModel {
 				textColor = Color.WHITE;
 				return true;
 			} else if (textColor.equals(Color.WHITE)) {
-				textColor = Color.GRAY;
+				textColor = Color.LIGHT_GRAY;
 				return true;
 			}
 			return false;
 		}
+		
+
+		public void reset() {
+			this.textColor = Color.LIGHT_GRAY;
+		}
+
 		
 		public void draw(Graphics g) {
 			g.drawImage(texture, positionX, positionY, dimensionX, dimensionY,
@@ -198,7 +208,7 @@ public class StartScreenModel {
 		private int dimensionX, dimensionY;
 		private String text;
 		private Image texture;
-		private Color textColor=Color.GRAY;
+		private Color textColor=Color.LIGHT_GRAY;
 		private File buttonClickedSound;
 		private Font buttonFont;
 		public final String actionName;

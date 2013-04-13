@@ -2,7 +2,9 @@ package com.freedom.utilities;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -43,7 +45,9 @@ public class PauseScreenModel {
 	}
 
 	public void deactivate() {
-
+		for (GButtonLite b : buttons)
+			if (b != null)
+				b.reset();
 	}
 
 	public void draw(Graphics g) {
@@ -89,6 +93,7 @@ public class PauseScreenModel {
 			positionY = calculateYPosition();
 
 			clickedSound = new File("Resource/Sound/ButtonClicked.wav");
+
 		}
 
 		public boolean checkRollOver(Point p) {
@@ -99,7 +104,7 @@ public class PauseScreenModel {
 				textColor = Color.WHITE;
 				return true;
 			} else if (textColor.equals(Color.WHITE)) {
-				textColor = Color.GRAY;
+				textColor = Color.LIGHT_GRAY;
 				return true;
 			}
 			return false;
@@ -107,6 +112,10 @@ public class PauseScreenModel {
 
 		private int calculateYPosition() {
 			return line * (dimensionY + gap) + offsetY;
+		}
+
+		public void reset() {
+			this.textColor = Color.LIGHT_GRAY;
 		}
 
 		public String checkIfPressed(Point p) {
@@ -121,38 +130,37 @@ public class PauseScreenModel {
 			return "WasNotPressed";
 		}
 
-		/*
-		 * Омерзительное место, но ничего не могу поделать @gleb
-		 */
 		public void draw(Graphics g) {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			FontRenderContext context = g2.getFontRenderContext();
-			buttonFont = new Font("Monospaced", Font.PLAIN, PauseScreen
+			if(buttonFont==null)
+				buttonFont = new Font("Monospaced", Font.PLAIN, PauseScreen
 					.getInstance().getHeight() / 15);
 			Rectangle2D bounds = buttonFont.getStringBounds(text, context);
 
-			dimensionX = (int) bounds.getWidth();
-			dimensionY = -(int) bounds.getY();
-			// logger.info(bounds.toString());
+			if (dimensionX == 0) {
+				dimensionX = (int) bounds.getWidth();
+				dimensionY = (int) bounds.getHeight();
+				positionX = (int) (PauseScreen.getInstance().getWidth() / 2 - bounds
+						.getWidth() / 2);
+				metrics = buttonFont.getLineMetrics(text, context);
 
+			}
 			g2.setFont(buttonFont);
 			g2.setColor(textColor);
-
-			positionX = (int) (PauseScreen.getInstance().getWidth() / 2 - bounds
-					.getWidth() / 2);
-			// logger.info("PositionY:" + positionY);
-
-			g2.drawString(text, positionX, positionY + dimensionY);
+			g2.drawString(text, positionX,
+					positionY + dimensionY - metrics.getDescent());
 		}
 
 		private int line;
-		private int dimensionX;
+		private int dimensionX=0;
 		private int dimensionY;
 		private int positionX, positionY;
 		private String text;
-		private Color textColor = Color.GRAY;
+		private Color textColor = Color.LIGHT_GRAY;
+		private LineMetrics metrics;
 		private File clickedSound;
 		private Font buttonFont;
 		public final String actionName;

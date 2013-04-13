@@ -49,7 +49,7 @@ public class PauseScreen extends AbstractScreen {
 
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+//		super.paintComponent(g);
 		pauseScreenModel.draw(g);
 	}
 
