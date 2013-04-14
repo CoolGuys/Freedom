@@ -13,13 +13,14 @@ import org.w3c.dom.Element;
 
 public class Wall extends Stuff {
 
-	protected static Map<String, Image> images = new HashMap<String, Image>();
+	private static Map<String, Image> images = new HashMap<String, Image>();
 
 	// здесь ключ: B stands for Boarder ; с ним - контакт с границей,
 	// "N","W","NW" ясны и так
 
-	public void getImages() {
+	public static void getImages() {
 		try {
+			images.put("Free",ImageIO.read(new File("Resource/Textures/WallFree.png")));
 			images.put("BN",ImageIO.read(new File("Resource/Textures/WallBN.png")));
 			images.put("BE",ImageIO.read(new File("Resource/Textures/WallBE.png")));
 			images.put("BS",ImageIO.read(new File("Resource/Textures/WallBS.png")));
@@ -67,5 +68,7 @@ public class Wall extends Stuff {
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
-
+	static{
+		getImages();
+	}
 }
