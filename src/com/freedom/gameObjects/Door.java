@@ -32,6 +32,7 @@ public class Door extends Stuff {
 				e.printStackTrace();
 			}
 			this.ifOpen = false;
+			super.passable = false;
 		} else {
 			try {
 				texture = ImageIO.read(new File(
@@ -41,6 +42,7 @@ public class Door extends Stuff {
 				e.printStackTrace();
 			}
 			this.ifOpen = true;
+			super.passable = true;
 		}
 	}
 
