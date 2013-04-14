@@ -58,6 +58,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 	
 	public static void lvlToSv(int num, String lvlfile, Cell[][] cells){
+		logger.setLevel(Level.OFF);
 		File fXml=new File(lvlfile);
 		if(fXml.exists()){
 			try
@@ -185,7 +186,7 @@ public class Loader {
 	
 	public static Cell[][] readLvl(int Number, String lvlfile){
 		
-		//logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		Cell[][] cells = null;
         File fXml=new File(lvlfile);
         try
@@ -213,7 +214,7 @@ public class Loader {
 					}
 					logger.info("Creating cells array-ok");
 					NodeList objTag=lvl.getElementsByTagName("obj");
-					logger.info("amount"+objTag.getLength());
+					logger.info("amount "+objTag.getLength());
 					for(int obji=0;obji<objTag.getLength();obji++){
 						Element obj=(Element)objTag.item(obji);
 						logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
@@ -228,7 +229,7 @@ public class Loader {
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
-				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells));
+				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells, 10));
 				    	//System.out.println(robot.toString());
 				    	//logger.info("2Dump=|" + StrDump + "|");
 				    }

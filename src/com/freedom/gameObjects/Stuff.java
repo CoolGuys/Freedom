@@ -11,10 +11,12 @@ public class Stuff implements IStuff{
 	protected double y; 
 	protected Image texture;
 	private boolean pickable; 
-	private boolean passable;
+	protected boolean passable;
 	private int size = GameField.getInstance().getCellSize();
 	
 	private int damage; //number of lives you loose
+	private boolean ifDestroyable;
+	protected int lives;
 	
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
@@ -39,17 +41,36 @@ public class Stuff implements IStuff{
 		this.damage = 0;
 	}
 	
-
-	public Stuff(boolean pickable, boolean passable, int damage){
+	
+	//if lives==0 , we cannot destroy this stuff
+	public Stuff(boolean pickable, boolean passable, int damage, int lives){ 
 		this.pickable = pickable;
 		this.passable = passable;
 		this.damage = damage;
+		
+		if(lives==0){
+			this.lives = 1;
+			this.ifDestroyable = false;
+		}
+		else {
+			this.lives = lives;
+			this.ifDestroyable = true;
+		}
 	}
 	
-	public Stuff(boolean pickable, boolean passable){
+	protected  void buttonPressed(){
+		return;
+	}
+	
+	
+	// конструктор для совсем убогих объектов, которые
+	// безвредны и которые не уничтожишь.
+	public Stuff(boolean pickable, boolean passable){  
 		this.pickable = pickable;
 		this.passable = passable;
 		this.damage = 0;
+		this.ifDestroyable = false;
+		this.lives = 1;
 	}
 	
 	
@@ -81,9 +102,18 @@ public class Stuff implements IStuff{
 	public Image getTexture() {
 		return this.texture;
 	}
+	
+	public int getLives(){
+		return this.lives;
+	}
+	
+	public boolean ifCanDestroy(){
+		return this.ifDestroyable;
+	}
 
 	public void draw(Graphics g) {
-		
+		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
+				getSize(), getSize(), null);
 	}
 	
 }

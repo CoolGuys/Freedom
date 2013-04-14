@@ -1,26 +1,15 @@
 package com.freedom.gameObjects;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 public class Cell {
 
 	private int x;
 	private int y;
-	private Image texture;
 
-	/*
-	 * Нужно изменить, думаю, потребуется ArrayList
-	 * 
-	 * @gleb
-	 */
 	private Stuff[] content;
 	private int contentAmount;
 
-	public Cell(int a, int b) {
+	public Cell(int a, int b)
+	{
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
@@ -30,15 +19,34 @@ public class Cell {
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 4)
 			return false;
-		
-		for(int i = 0; i< this.contentAmount; i++){ //с этим местом аккуратнее при работе
-			if(!this.content[i].getIfPassable())
+
+		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
+														// аккуратнее при работе
+			if (!this.content[i].getIfPassable())
 				return false;
 		}
+
+		if (this.x == 12 && this.y == 9 && element instanceof Tile) {
+			System.out.print(false);
+		}
+
+		// теперь положить явно можем. кладем и изменяем состояние некот.
+		// объектов
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
+
+		// акцент на кнопку - подумать потом, какие объекты ее нажимают.
+		// пока не нажимает только лаз. луч
+		if (element instanceof LaserBeam)
+			return true;
+
+		if (this.contentAmount != 1)
+			if (this.content[this.contentAmount - 2] instanceof Button) {
+				Button buf = (Button) this.content[this.contentAmount - 2];
+				buf.touch();
+			}
 		return true;
 	}
 
@@ -60,6 +68,12 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
+
+			if (this.content[this.contentAmount - 1] instanceof Button) {
+				Button buttbuf = (Button) this.content[this.contentAmount - 1];
+				buttbuf.touch();
+
+			}
 		}
 		return buf;
 	}
@@ -77,7 +91,7 @@ public class Cell {
 		return (this.y);
 	}
 
-	public Stuff[] getContent() { // валидно ли без размера?
+	public Stuff[] getContent() { // валидно ли без размера? валидно.
 		return this.content;
 	}
 
@@ -85,8 +99,7 @@ public class Cell {
 
 	// Everything for robot:
 
-	
-	//выдаем роботу объект;
+	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
 		if (this.contentAmount == 1)
@@ -110,12 +123,25 @@ public class Cell {
 		return true;
 	}
 
+	// считаем, что если есть элемент, "экранирующий" урон, остальные не
+	// действуют
+	// щито
 	public int getDamage() {
 		int buf = 0;
-		for (int i = 0; i < this.contentAmount; i++)
+		for (int i = this.contentAmount - 1; i >= 0; i--) {
+			if (this.content[i].getDamage() == 0)
+				break;
+
 			buf = buf + this.content[i].getDamage();
+		}
 
 		return buf;
+	}
+
+	protected void buttonPressed() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			this.content[i].buttonPressed();
+		}
 	}
 
 }

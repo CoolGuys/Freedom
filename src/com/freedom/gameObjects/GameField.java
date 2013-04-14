@@ -17,7 +17,7 @@ import com.freedom.utilities.Loader;
 public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(1, "Save1.lvl");
+		cells = Loader.readLvl(2, "Save1.lvl");
 	}
 	
 	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
@@ -31,7 +31,7 @@ public class GameField {
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToSv(1,"Save1.lvl",cells);
+		Loader.lvlToSv(2,"Save1.lvl",cells);
 	}
 
 	public int getXsize() {
