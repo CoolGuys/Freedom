@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><levels>
 
-<level height="10" num="1" width="15">
+
+
+
+
+<level height="10" num="2" width="15">
 <obj class="com.freedom.gameObjects.Tile" x="1" y="1">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="1" y="1">
 </obj><obj class="com.freedom.gameObjects.Tile" x="1" y="2">
@@ -196,5 +200,36 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="10">
-</obj><robot x="9" y="7">
+</obj><robot x="8" y="8">
+</robot></level><level height="1" num="1" width="29">
+<obj class="com.freedom.gameObjects.Tile" x="1" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="2" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="3" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="4" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="5" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="6" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="7" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="8" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="9" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="10" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="11" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="12" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="13" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="14" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="15" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="16" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="17" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="18" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="19" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="20" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="21" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="22" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="23" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="24" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="25" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="26" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="27" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="28" y="1">
+</obj><obj class="com.freedom.gameObjects.Tile" x="29" y="1">
+</obj><robot x="18" y="1">
 </robot></level></levels>

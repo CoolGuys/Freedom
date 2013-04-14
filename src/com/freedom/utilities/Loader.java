@@ -224,7 +224,7 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
-				    NodeList robotlist=doc.getElementsByTagName("robot");
+				    NodeList robotlist=lvl.getElementsByTagName("robot");
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));

@@ -17,9 +17,15 @@ import com.freedom.utilities.Loader;
 public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2, "Level1.lvl");
+		cells = Loader.readLvl(1, "Save1.lvl");
 	}
-
+	
+	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
+		Loader.lvlToSv(thislvl,"Save1.lvl",cells);
+		cells = Loader.readLvl(nextlvl, "Save1.lvl");
+		Loader.lvlToSv(nextlvl,"Save1.lvl",cells);
+	}
+	
 	public  void unloadLevel() {
 		
 	}
