@@ -107,7 +107,8 @@ public class Stuff implements IStuff{
 	}
 
 	public void draw(Graphics g) {
-		
+		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
+				getSize(), getSize(), null);
 	}
 	
 }
