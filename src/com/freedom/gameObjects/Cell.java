@@ -15,7 +15,8 @@ public class Cell {
 	private Stuff[] content;
 	private int contentAmount;
 
-	public Cell(int a, int b) {
+	public Cell(int a, int b)
+	{
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
@@ -31,24 +32,24 @@ public class Cell {
 			if (!this.content[i].getIfPassable())
 				return false;
 		}
-		
-		
-		//теперь положить явно можем. кладем и изменяем состояние некот. объектов
+
+		// теперь положить явно можем. кладем и изменяем состояние некот.
+		// объектов
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
-		
-		//акцент на кнопку - подумать потом, какие объекты ее нажимают.
-		//пока не нажимает только лаз. луч
-		if(element instanceof LaserBeam)
+
+		// акцент на кнопку - подумать потом, какие объекты ее нажимают.
+		// пока не нажимает только лаз. луч
+		if (element instanceof LaserBeam)
 			return true;
-		
-			if(this.content[this.contentAmount - 2] instanceof Button){
-				Button buf = (Button) this.content[this.contentAmount - 2];
-				buf.touch();
-			}
-		
+
+		if (this.content[this.contentAmount - 1] instanceof Button) {
+			Button buf = (Button) this.content[this.contentAmount - 1];
+			buf.touch();
+		}
+
 		return true;
 	}
 
@@ -70,11 +71,11 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
-			
-			if(this.content[this.contentAmount - 2] instanceof Button){
+
+			if (this.content[this.contentAmount - 2] instanceof Button) {
 				Button buttbuf = (Button) this.content[this.contentAmount - 2];
 				buttbuf.touch();
-				
+
 			}
 		}
 		return buf;
@@ -135,12 +136,12 @@ public class Cell {
 
 			buf = buf + this.content[i].getDamage();
 		}
-		
+
 		return buf;
 	}
-	
-	protected void buttonPressed(){
-		for(int i = 1; i<this.contentAmount; i++){
+
+	protected void buttonPressed() {
+		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].buttonPressed();
 		}
 	}

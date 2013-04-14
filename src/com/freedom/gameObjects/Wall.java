@@ -70,7 +70,7 @@ public class Wall extends Stuff {
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
-	static{
+	/*static{
 		getImages();
-	}
+	}*/
 }
