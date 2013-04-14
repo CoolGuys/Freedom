@@ -44,7 +44,11 @@ public class Wall extends Stuff {
 
 	public Wall() {
 		super(false, false);
-		
+		try {
+			texture = ImageIO.read(new File("Resource/Textures/Wall.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void readLvlFile(Element obj) {
@@ -68,7 +72,7 @@ public class Wall extends Stuff {
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
-	static{
+	/*static{
 		getImages();
-	}
+	}*/
 }
