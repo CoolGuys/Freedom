@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 
 public class Door extends Stuff {
 
-	protected boolean ifOpen;
+	//открытость двери проверяем по passable
 	
 	private Image textureOpen;
 	private Image textureClosed;
@@ -18,12 +18,13 @@ public class Door extends Stuff {
 	public Door(){
 		super(false, false,0,0);
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			textureClosed = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			textureOpen = ImageIO.read(new File("Resource/Textures/Tile.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.ifOpen=false;
+		texture = textureClosed;
 	}
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
@@ -33,7 +34,6 @@ public class Door extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
-		System.out.print("Двеееерьь мне запили!!!");
 	}
 	
 	/**
@@ -47,28 +47,13 @@ public class Door extends Stuff {
 		obj.setAttribute("class","com.freedom.gameObjects.Door");
 	} 
 	
-	public Door(int x, int y, boolean ifOpen){
-		super(false,false);
-		super.x = x;
-		super.y = y;
-		this.ifOpen = ifOpen;
-		try {
-			textureClosed = ImageIO.read(new File("Resource/Textures/DoorClosed.png"));
-			textureOpen = ImageIO.read(new File("Resource/Textures/DoorOpen.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	protected void buttonPressed() {
-		if (this.ifOpen) {
+		if (super.passable) {
 				texture = textureClosed;
-			this.ifOpen = false;
 			super.passable = false;
 		} else {
 			texture = textureOpen;
-			this.ifOpen = true;
 			super.passable = true;
 		}
 	}

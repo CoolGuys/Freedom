@@ -87,6 +87,8 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
+	
+	//модифицирована. выдает null если пойти нельзя
 	public boolean canGo() {
 		int x = (int) this.x;
 		int y = (int) this.y;

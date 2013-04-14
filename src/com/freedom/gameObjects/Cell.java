@@ -15,8 +15,7 @@ public class Cell {
 	private Stuff[] content;
 	private int contentAmount;
 
-	public Cell(int a, int b)
-	{
+	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
@@ -45,11 +44,12 @@ public class Cell {
 		if (element instanceof LaserBeam)
 			return true;
 
-		
-			if(this.content[this.contentAmount - 2] instanceof Button){
+		if (this.contentAmount >= 2) {
+			if (this.content[this.contentAmount - 2] instanceof Button) {
 				Button buf = (Button) this.content[this.contentAmount - 2];
 				buf.touch();
 			}
+		}
 		return true;
 	}
 
@@ -72,8 +72,7 @@ public class Cell {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
 
-			
-			if(this.content[this.contentAmount - 1] instanceof Button){
+			if (this.content[this.contentAmount - 1] instanceof Button) {
 				Button buttbuf = (Button) this.content[this.contentAmount - 1];
 				buttbuf.touch();
 
@@ -95,8 +94,12 @@ public class Cell {
 		return (this.y);
 	}
 
-	public Stuff[] getContent() { // валидно ли без размера?
+	public Stuff[] getContent() {
 		return this.content;
+	}
+
+	public Stuff getTop() {
+		return this.content[this.contentAmount - 1];
 	}
 
 	// /конец блока
