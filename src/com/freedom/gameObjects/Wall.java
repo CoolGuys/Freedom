@@ -11,7 +11,9 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+
 public class Wall extends Stuff {
+
 
 	private static Map<String, Image> images = new HashMap<String, Image>();
 

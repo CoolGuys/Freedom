@@ -50,6 +50,7 @@ public class Button extends Stuff {
 		ifPressed = false;
 	}
 
+
 	protected void touch() {
 		Cell buf;
 		for (int i = 0; i < this.leadTo.size() - 1; i++) {
