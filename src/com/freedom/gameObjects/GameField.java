@@ -21,7 +21,7 @@ import com.freedom.utilities.Loader;
 public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2, "Save1.lvl");
+		cells = Loader.readLvl(2, "Level1.lvl");
 	}
 
 	public static void unloadLevel() {

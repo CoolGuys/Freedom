@@ -3,6 +3,7 @@
     <level num="1" width="10" height="10">
     </level>
     <level num="2" width="15" height="10">
+    	<obj class="com.freedom.gameObjects.Door" x="14" y="9"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="1"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="2"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="3"></obj>
