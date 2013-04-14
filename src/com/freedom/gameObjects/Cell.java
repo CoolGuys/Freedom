@@ -46,7 +46,7 @@ public class Cell {
 			return true;
 
 		
-			if(this.content[this.contentAmount - 1] instanceof Button){
+			if(this.content[this.contentAmount - 2] instanceof Button){
 				Button buf = (Button) this.content[this.contentAmount - 2];
 				buf.touch();
 			}

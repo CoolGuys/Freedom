@@ -16,7 +16,7 @@ public class Door extends Stuff {
 	private Image textureClosed;
 	
 	public Door(){
-		super(false, false,0,10);
+		super(false, false,0,0);
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
