@@ -138,5 +138,11 @@ public class Cell {
 		
 		return buf;
 	}
+	
+	protected void buttonPressed(){
+		for(int i = 1; i<this.contentAmount; i++){
+			this.content[i].buttonPressed();
+		}
+	}
 
 }
