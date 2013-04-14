@@ -165,7 +165,7 @@ public class Loader {
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
-				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells));
+				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells, 10));
 				    	//System.out.println(robot.toString());
 				    	//logger.info("2Dump=|" + StrDump + "|");
 				    }

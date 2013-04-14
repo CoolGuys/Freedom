@@ -14,14 +14,12 @@ public class Robot extends Stuff implements Moveable {
 
 	private String direction;
 	private Stuff container;
-	private boolean isEmpty; // пуст ли контейнер
 	private Cell[][] environment;
 
 	private boolean isMoving;
 	private double step = 0.1;
 
-	private int lives;
-	protected static int maxLives = 1;
+	protected static int maxLives = 100;
 
 	Image textureN;
 	Image textureS;
@@ -42,15 +40,14 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 	
-	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles)
+	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles, int lives)
 	{
-		super(false, false, 0);
+		super(false, false, 0, lives);
 		super.x = posX;
 		super.y = posY;
 		this.direction = direction;
 		this.container = c;
 		this.environment = tiles;
-		this.isEmpty = true;
 
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
@@ -60,8 +57,6 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		lives = 1;
 		
 		logger.setLevel(Level.OFF);
 	}
@@ -74,17 +69,17 @@ public class Robot extends Stuff implements Moveable {
 		return this.direction;
 	}
 
-	public boolean getIfEmpty() {
-		return (this.isEmpty);
-	}
 
 	public Stuff getContent() {
 		return (this.container);
 	}
-
-	public int getLives() {
-		return this.lives;
+	
+	public boolean getIfEmpty(){
+		if(this.container == null)
+			return true;
+		return false;
 	}
+
 
 	public void recalibrate() {
 		x = (int) Math.round(x);
@@ -167,21 +162,14 @@ public class Robot extends Stuff implements Moveable {
 		int x = (int) this.x;
 		int y = (int) this.y;
 
-		// TODO Спросить у Вани, что тут происходит
-		if (!this.isEmpty)
+		if (this.container != null)
 			return;
-
-		if (this.container != null) {
-			this.isEmpty = false;
-			return;
-		}
 		//
 
 		if (this.direction.equals("N")) {
 			this.container = environment[x][y - 1].takeObject();
 			if (this.container == null)
 				return;
-			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -190,7 +178,6 @@ public class Robot extends Stuff implements Moveable {
 			this.container = environment[x][y + 1].takeObject();
 			if (this.container == null)
 				return;
-			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -199,7 +186,6 @@ public class Robot extends Stuff implements Moveable {
 			this.container = environment[x - 1][y].takeObject();
 			if (this.container == null)
 				return;
-			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -208,7 +194,6 @@ public class Robot extends Stuff implements Moveable {
 			this.container = environment[x + 1][y].takeObject();
 			if (this.container == null)
 				return;
-			this.isEmpty = false;
 			ScreensHolder.getInstance().repaint();
 		}
 	}
@@ -217,14 +202,13 @@ public class Robot extends Stuff implements Moveable {
 
 		int x = (int) this.x;
 		int y = (int) this.y;
-		if (this.isEmpty)
+		if (this.container == null)
 			return;
 
 		if (this.direction.equals("N")) {
 			if (!environment[x][y - 1].add(this.container))
 				return;
 			this.container = null;
-			this.isEmpty = true;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -233,7 +217,6 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x][y + 1].add(this.container))
 				return;
 			this.container = null;
-			this.isEmpty = true;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -242,7 +225,6 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x - 1][y].add(this.container))
 				return;
 			this.container = null;
-			this.isEmpty = true;
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -251,7 +233,6 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x + 1][y].add(this.container))
 				return;
 			this.container = null;
-			this.isEmpty = true;
 			ScreensHolder.getInstance().repaint();
 		}
 

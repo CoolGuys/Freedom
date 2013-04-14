@@ -15,7 +15,7 @@ public class Box extends Stuff {
 
 	public Box()
 	{
-		super(true, false,0);
+		super(true, false,0,10);
 	
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));

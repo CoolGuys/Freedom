@@ -10,13 +10,8 @@ public class Cell {
 
 	private int x;
 	private int y;
-	private Image texture;
+	private Image texture; // а оно нам здесь надо?? @ivan
 
-	/*
-	 * Нужно изменить, думаю, потребуется ArrayList
-	 * 
-	 * @gleb
-	 */
 	private Stuff[] content;
 	private int contentAmount;
 
@@ -30,15 +25,30 @@ public class Cell {
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 4)
 			return false;
-		
-		for(int i = 0; i< this.contentAmount; i++){ //с этим местом аккуратнее при работе
-			if(!this.content[i].getIfPassable())
+
+		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
+														// аккуратнее при работе
+			if (!this.content[i].getIfPassable())
 				return false;
 		}
+		
+		
+		//теперь положить явно можем. кладем и изменяем состояние некот. объектов
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
+		
+		//акцент на кнопку - подумать потом, какие объекты ее нажимают.
+		//пока не нажимает только лаз. луч
+		if(element instanceof LaserBeam)
+			return true;
+		
+			if(this.content[this.contentAmount - 2] instanceof Button){
+				Button buf = (Button) this.content[this.contentAmount - 2];
+				buf.ifPressed = true;
+			}
+		
 		return true;
 	}
 
@@ -60,6 +70,11 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
+			
+			if(this.content[this.contentAmount - 2] instanceof Button){
+				Button buttbuf = (Button) this.content[this.contentAmount - 2];
+				buttbuf.ifPressed = false;
+			}
 		}
 		return buf;
 	}
@@ -85,8 +100,7 @@ public class Cell {
 
 	// Everything for robot:
 
-	
-	//выдаем роботу объект;
+	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
 		if (this.contentAmount == 1)
@@ -110,11 +124,17 @@ public class Cell {
 		return true;
 	}
 
+	// считаем, что если есть элемент, "экранирующий" урон, остальные не
+	// действуют
 	public int getDamage() {
 		int buf = 0;
-		for (int i = 0; i < this.contentAmount; i++)
-			buf = buf + this.content[i].getDamage();
+		for (int i = this.contentAmount - 1; i >= 0; i--) {
+			if (this.content[i].getDamage() == 0)
+				break;
 
+			buf = buf + this.content[i].getDamage();
+		}
+		
 		return buf;
 	}
 

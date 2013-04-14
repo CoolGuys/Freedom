@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 public class Wall extends Stuff{
 	
 	public Wall(){
-		super(false,false,0);
+		super(false,false);
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Wall.png"));
 		} catch (IOException e) {
