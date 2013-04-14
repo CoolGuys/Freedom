@@ -6,10 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 public class Door extends Stuff {
 
 	protected boolean ifOpen;
-	private Button controller;
 	
 	private Image textureOpen;
 	private Image textureClosed;
@@ -38,6 +39,12 @@ public class Door extends Stuff {
 			this.ifOpen = true;
 			super.passable = true;
 		}
+	}
+	
+	
+	
+	public void draw(Graphics g) {
+		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
 	}
 	
 	
