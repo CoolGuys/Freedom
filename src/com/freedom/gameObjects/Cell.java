@@ -1,16 +1,9 @@
 package com.freedom.gameObjects;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 public class Cell {
 
 	private int x;
 	private int y;
-	private Image texture; // а оно нам здесь надо?? @ivan
 
 	private Stuff[] content;
 	private int contentAmount;
@@ -33,6 +26,10 @@ public class Cell {
 				return false;
 		}
 
+		if (this.x == 12 && this.y == 9 && element instanceof Tile) {
+			System.out.print(false);
+		}
+
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
 		this.content[this.contentAmount] = element;
@@ -45,8 +42,8 @@ public class Cell {
 		if (element instanceof LaserBeam)
 			return true;
 
-		
-			if(this.content[this.contentAmount - 2] instanceof Button){
+		if (this.contentAmount != 1)
+			if (this.content[this.contentAmount - 2] instanceof Button) {
 				Button buf = (Button) this.content[this.contentAmount - 2];
 				buf.touch();
 			}
@@ -72,8 +69,7 @@ public class Cell {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
 
-			
-			if(this.content[this.contentAmount - 1] instanceof Button){
+			if (this.content[this.contentAmount - 1] instanceof Button) {
 				Button buttbuf = (Button) this.content[this.contentAmount - 1];
 				buttbuf.touch();
 
@@ -95,7 +91,7 @@ public class Cell {
 		return (this.y);
 	}
 
-	public Stuff[] getContent() { // валидно ли без размера?
+	public Stuff[] getContent() { // валидно ли без размера? валидно.
 		return this.content;
 	}
 
@@ -129,6 +125,7 @@ public class Cell {
 
 	// считаем, что если есть элемент, "экранирующий" урон, остальные не
 	// действуют
+	// щито
 	public int getDamage() {
 		int buf = 0;
 		for (int i = this.contentAmount - 1; i >= 0; i--) {
