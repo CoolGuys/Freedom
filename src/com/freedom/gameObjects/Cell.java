@@ -45,11 +45,11 @@ public class Cell {
 		if (element instanceof LaserBeam)
 			return true;
 
-		if (this.content[this.contentAmount - 1] instanceof Button) {
-			Button buf = (Button) this.content[this.contentAmount - 1];
-			buf.touch();
-		}
-
+		
+			if(this.content[this.contentAmount - 1] instanceof Button){
+				Button buf = (Button) this.content[this.contentAmount - 2];
+				buf.touch();
+			}
 		return true;
 	}
 
@@ -72,8 +72,9 @@ public class Cell {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
 
-			if (this.content[this.contentAmount - 2] instanceof Button) {
-				Button buttbuf = (Button) this.content[this.contentAmount - 2];
+			
+			if(this.content[this.contentAmount - 1] instanceof Button){
+				Button buttbuf = (Button) this.content[this.contentAmount - 1];
 				buttbuf.touch();
 
 			}
