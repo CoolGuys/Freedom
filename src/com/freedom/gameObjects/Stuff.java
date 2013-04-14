@@ -58,6 +58,11 @@ public class Stuff implements IStuff{
 		}
 	}
 	
+	protected  void buttonPressed(){
+		return;
+	}
+	
+	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
 	public Stuff(boolean pickable, boolean passable){  

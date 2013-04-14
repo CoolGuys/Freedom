@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
-public class Door extends Stuff{
-	
+public class Door extends Stuff {
+
 	protected boolean ifOpen;
 	private Button controller;
 	
@@ -27,15 +27,15 @@ public class Door extends Stuff{
 			e.printStackTrace();
 		}
 	}
-	
-	public void tryOpen(){
-		if (!controller.ifPressed){
-			return;
+
+	protected void buttonPressed() {
+		if (this.ifOpen) {
+				texture = textureClosed;
+			this.ifOpen = false;
+		} else {
+			texture = textureOpen;
+			this.ifOpen = true;
 		}
-		
-		ifOpen = true;
-		texture = textureClosed;
-		return;
 	}
 	
 	
