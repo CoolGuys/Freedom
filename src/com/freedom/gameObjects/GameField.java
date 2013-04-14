@@ -17,15 +17,15 @@ import com.freedom.utilities.Loader;
 public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2, "Save1.lvl");
+		cells = Loader.readLvl(2, "Level1.lvl");
 	}
 
 	public  void unloadLevel() {
-
+		
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToFile(levelID, pathToPackage, cells);
+		Loader.lvlToSv(1,"Save1.lvl",cells);
 	}
 
 	public int getXsize() {
