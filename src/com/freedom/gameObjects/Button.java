@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 public class Button extends Stuff {
 
 	protected boolean ifPressed;
@@ -14,6 +16,43 @@ public class Button extends Stuff {
 
 	// при инициализации не нажата, что нормально
 	// принимаются заявки на изменение входных данных)
+	
+	public Button()
+	{
+		super(false, true);
+		super.x = x;
+		super.y = y;
+
+		try {
+			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ifPressed = false;
+	}
+
+	/**
+	 * Метод, который считывает всю инфу из файла с лвлами
+	 * 
+	 * @param - Scanner файла
+	 */
+	public void readLvlFile(Element obj) {
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
+	}
+	
+	/**
+	 * Метод, который добавляет инфу в файл
+	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * @author UshAle
+	 */
+	public void loadToFile(Element obj) {
+		obj.setAttribute("x", String.valueOf((int)this.x));
+		obj.setAttribute("y", String.valueOf((int)this.y));
+		obj.setAttribute("class","com.freedom.gameObjects.Tile2.png");
+	} 
+	
 	public Button(int x, int y, Cell[] objects) {
 		super(false, true);
 		super.x = x;
@@ -24,7 +63,7 @@ public class Button extends Stuff {
 		}
 
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Button.png"));
+			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -42,7 +81,7 @@ public class Button extends Stuff {
 		this.leadTo.add(thing);
 
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Button.png"));
+			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
