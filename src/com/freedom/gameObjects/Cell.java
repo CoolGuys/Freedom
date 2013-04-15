@@ -51,9 +51,9 @@ public class Cell {
 	 * @author Capitan
 	 */
 	public Stuff deleteStuff() {
-		if (this.contentAmount == 1)
+		/*if (this.contentAmount == 1)
 			return null;
-
+		*/
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -103,8 +103,6 @@ public class Cell {
 	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
-		if (this.contentAmount == 1)
-			return null;
 
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
 			if (!this.content[this.contentAmount - 2].getIfTakeable())
@@ -156,5 +154,4 @@ public class Cell {
 			}
 			return false;
 		}
-
 }
