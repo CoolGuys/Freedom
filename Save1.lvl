@@ -149,8 +149,7 @@
 </robot></level><level height="10" num="2" width="15">
 <obj class="com.freedom.gameObjects.Tile" x="1" y="1">
 </obj><obj class="com.freedom.gameObjects.Button" x="1" y="1">
-<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Box" color="B" x="1" y="1">
-</obj><obj class="com.freedom.gameObjects.Tile" x="1" y="2">
+<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Tile" x="1" y="2">
 </obj><obj class="com.freedom.gameObjects.Tile" x="1" y="3">
 </obj><obj class="com.freedom.gameObjects.Tile" x="1" y="4">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="1" y="4">
@@ -341,5 +340,5 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="10">
-</obj><robot x="14" y="8">
+</obj><robot x="1" y="2">
 </robot></level></levels>

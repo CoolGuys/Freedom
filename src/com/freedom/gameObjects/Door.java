@@ -36,15 +36,7 @@ public class Door extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
-		super.passable=false;
-		if (super.passable) {
-			texture = textureClosed;
-			super.passable = false;
-		} else {
-			texture  = textureOpen;
-			super.passable = true;
 		}		
-	}
 	
 	/**
 	 * Метод, который добавляет инфу в файл
