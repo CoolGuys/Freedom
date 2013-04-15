@@ -89,20 +89,37 @@ public class Loader {
 			    	for(int x=1;x<width;x++){//writing objects
 			    		for(int y=1;y<height;y++){
 			    			Stuff[] stu = cells[x][y].getContent();
-			    			int l=stu.length;
-			    			for(int i=0;i<l;i++){
-				    			try{
-				    				Element obj=doc.createElement("obj");
-				    				stu[i].loadToFile(obj);
-				    				obj.setTextContent("\n");
-				    				//System.out.println("x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
-				    				lvl.appendChild(obj);
-				    				//obj.setAttribute("x", String.valueOf(stu[i].getX())
-				    				//System.out.println("x="+x+" y="+y+" l="+stu[i].getClass().getSimpleName());
-				    			}catch(Exception ei){
-				    				
-				    			}
-			    			}
+						int l = stu.length;
+						for (int i = 0; i < l; i++) {
+							try {
+								if (stu[i].obj()) {
+									Element obj = doc.createElement("obj");
+									stu[i].loadToFile(obj);
+									obj.setTextContent("\n");
+									lvl.appendChild(obj);
+								}
+								if (stu[i].objc()) {
+									Element obj = doc.createElement("obj");
+									stu[i].loadToFile(obj);
+									obj.setTextContent("\n");
+									int useam = stu[i].getUseAmount();
+									int useList[][] = stu[i].getUseList();
+									for (int i1 = 0; i1 < useam; i1++) {
+										Element cels = obj.getOwnerDocument()
+												.createElement("cels");
+										cels.setAttribute("x", String
+												.valueOf((int) useList[i1][0]));
+										cels.setAttribute("y", String
+												.valueOf((int) useList[i1][1]));
+										obj.appendChild(cels);
+									}
+									lvl.appendChild(obj);
+								}
+
+							} catch (Exception ei) {
+
+							}
+						}
 			    		}
 			    	}
 			    	Element robo=doc.createElement("robot");//writing robot
@@ -122,71 +139,9 @@ public class Loader {
 		}
 	}
 	
-	/*public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
-		File fXml=new File(lvlfile);
-		logger.info("Opening file "+fXml.getPath());
-		if(fXml.exists()){
-			logger.info("Deleting file "+fXml.getPath());
-			fXml.delete();			
-		}
-		try {
-			logger.info("Creating file "+fXml.getPath());
-			fXml.createNewFile();
-		} catch (IOException e) {
-			// TODO Автоматически созданный блок catch
-			e.printStackTrace();
-		}
-        try
-        {
-        	logger.info("Writing document");
-        	DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
-	        DocumentBuilder db=dbf.newDocumentBuilder();
-	        Document doc=db.newDocument();
-	        logger.info("createElement levels");
-	        Element lvls = doc.createElement("levels");
-	        doc.appendChild(lvls);
-	        Element lvl = doc.createElement("level");
-	        lvl.setAttribute("num", String.valueOf(num));
-	        lvl.setAttribute("width", String.valueOf(cells.length-1));
-	        lvl.setAttribute("height", String.valueOf(cells[0].length-1));
-	        lvls.appendChild(lvl);
-	    	int width=cells.length;
-	    	int height=cells[0].length;	
-	    	for(int x=1;x<width;x++){//writing objects
-	    		for(int y=1;y<height;y++){
-	    			Stuff[] stu = cells[x][y].getContent();
-	    			int l=stu.length;
-	    			for(int i=0;i<l;i++){
-		    			try{
-		    				Element obj=doc.createElement("obj");
-		    				stu[i].loadToFile(obj);
-		    				//System.out.println("x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
-		    				lvl.appendChild(obj);
-		    				//obj.setAttribute("x", String.valueOf(stu[i].getX())
-		    				//System.out.println("x="+x+" y="+y+" l="+stu[i].getClass().getSimpleName());
-		    			}catch(Exception ei){
-		    				
-		    			}
-	    			}
-	    		}
-	    	}
-	    	Element robo=doc.createElement("robot");//writing robot
-	    	robo.setAttribute("x", String.valueOf(GameField.getInstance().getRobot().getX()));
-	    	robo.setAttribute("y", String.valueOf(GameField.getInstance().getRobot().getY()));
-	    	lvl.appendChild(robo);
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			DOMSource source = new DOMSource(doc);
-			StreamResult result = new StreamResult(fXml);
-			transformer.transform(source, result);
-        }catch(Exception ei){
-        	ei.printStackTrace();
-        }
-	}*/
-	
 	public static Cell[][] readLvl(int Number, String lvlfile){
 		
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		Cell[][] cells = null;
         File fXml=new File(lvlfile);
         try
@@ -218,7 +173,6 @@ public class Loader {
 					for(int obji=0;obji<objTag.getLength();obji++){
 						Element obj=(Element)objTag.item(obji);
 						logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
-						//System.out.println("x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
 						Object newstuff;
 						Class<?> cla = Class.forName(obj.getAttribute("class"));
 						newstuff = cla.newInstance();
@@ -233,6 +187,17 @@ public class Loader {
 				    	//System.out.println(robot.toString());
 				    	//logger.info("2Dump=|" + StrDump + "|");
 				    }
+					objTag=lvl.getElementsByTagName("objc");
+					logger.info("amount objs "+objTag.getLength());
+					for(int obji=0;obji<objTag.getLength();obji++){
+						Element obj=(Element)objTag.item(obji);
+						logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
+						Object newstuff;
+						Class<?> cla = Class.forName(obj.getAttribute("class"));
+						newstuff = cla.newInstance();
+						((Stuff) newstuff).readLvlFile(obj);
+						cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
+					}
 			    }
 			}
 			

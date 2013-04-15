@@ -24,6 +24,15 @@ public class Stuff implements IStuff{
 //			this.x=sc.nextInt();
 //			this.y=sc.nextInt();
 	}
+	
+	public boolean obj(){
+		return true;
+	}
+	//кастыли
+	public boolean objc(){
+		return false;
+	}
+	
 	/**
 	 * Метод, который добавляет инфу в файл
 	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
@@ -114,6 +123,15 @@ public class Stuff implements IStuff{
 	public void draw(Graphics g) {
 		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
 				getSize(), getSize(), null);
+	}
+
+	public int getUseAmount() {
+		return -1;
+	}
+
+	public int[][] getUseList() {
+		// TODO Автоматически созданная заглушка метода
+		return null;
 	}
 	
 }
