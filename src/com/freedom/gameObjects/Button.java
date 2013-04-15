@@ -74,9 +74,8 @@ public class Button extends Stuff {
 	}
 	
 	/**
-	 * Метод, который добавляет инфу в файл
-	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
-	 * @author UshAle
+	 * неа, не то. надо еще сохранить её состояние как-то. иначе
+	 * при запуске всегда будет закрыта
 	 */
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int)this.x));

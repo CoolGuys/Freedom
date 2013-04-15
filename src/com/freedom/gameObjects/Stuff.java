@@ -71,6 +71,10 @@ public class Stuff implements IStuff{
 		return;
 	}
 	
+	protected void touch(){
+		return;
+	}
+	
 	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
