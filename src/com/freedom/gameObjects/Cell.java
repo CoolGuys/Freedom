@@ -42,7 +42,7 @@ public class Cell {
 		if (element instanceof LaserBeam)
 			return true;
 
-		if (this.contentAmount != 1)
+		if (this.contentAmount > 1)
 			if (this.content[this.contentAmount - 2] instanceof Button) {
 				Button buf = (Button) this.content[this.contentAmount - 2];
 				buf.touch();
@@ -53,9 +53,15 @@ public class Cell {
 	/*
 	 * теперь уникален в удалении только лазерный луч
 	 * 
+	 * 
 	 * @ivan
 	 */
-	private Stuff deleteStuff() {
+	
+	/**
+	 * эти модные коменты так пишутся
+	 * @author Capitan
+	 */
+	public Stuff deleteStuff() {
 		if (this.contentAmount == 1)
 			return null;
 
@@ -138,10 +144,15 @@ public class Cell {
 		return buf;
 	}
 
-	protected void buttonPressed() {
+	protected void use() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].buttonPressed();
+			try {
+				this.content[i].use();
+			} catch (Exception ei) {
+
+			}
 		}
+
 	}
 
 }
