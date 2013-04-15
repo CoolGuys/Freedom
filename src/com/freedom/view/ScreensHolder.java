@@ -6,51 +6,56 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 
+import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.StartScreenModel;
 
 
 /**
  * GraphicsController - контролирующий интерфейс класс. Здесь будет
- * осуществляться хранение и размещения всех частей графического интерфея
+ * осуществляться хранение и размещение всех частей графического интерфея
  * программы 
  * 
  * @author gleb
  * 
  */
 @SuppressWarnings("serial")
-public class ScreensHolder extends JPanel {
+public class ScreensHolder extends JLayeredPane {
 	private ScreensHolder()
 	{
 		super();
 
 		this.setBackground(Color.BLACK);
+		this.setOpaque(true);
 		logger.setLevel(Level.OFF);
 		logger.info("Entering the constructor...");
 		setLayout(null);
 	}
 
 	public void createScreens() {
-		startScreen = StartScreen.getInstance();
-		StartScreenModel.getInstance().addButtons();
-		gameScreen = GameScreen.getInstance();
+		GameScreen.getInstance().prepareModel(); 
+		StartScreen.getInstance().prepareModel();
+		PauseScreen.getInstance().prepareModel();
+		
 		addScreen(StartScreen.getInstance());
-		StartScreen.activateModel();
 	}
 	
-	public void addScreen(JLayeredPane toAdd) {
+	public void addScreen(AbstractScreen toAdd) {
 		INSTANCE.add(toAdd);
 		toAdd.requestFocusInWindow();
+		toAdd.activateModel();
+		INSTANCE.moveToFront(toAdd);
 		INSTANCE.revalidate();
 		INSTANCE.repaint();
 	}
 	
-	public void removeScreen(JLayeredPane toRemove) {
+	public void removeScreen(AbstractScreen toRemove) {
 		INSTANCE.remove(toRemove);
+		toRemove.deactivateModel();
 		INSTANCE.revalidate();
 		INSTANCE.repaint();
 	}
 	
-	public static void swapScreens(JLayeredPane toAdd, JLayeredPane toRemove) {
+	public static void swapScreens(AbstractScreen toAdd, AbstractScreen toRemove) {
 		INSTANCE.removeScreen(toRemove);
 		INSTANCE.addScreen(toAdd);
 	}
@@ -60,17 +65,9 @@ public class ScreensHolder extends JPanel {
 	}
 	
 	public static void setDimensions(int dimensionX, int dimensionY) {
-		INSTANCE.dimensionX = dimensionX;
-		INSTANCE.dimensionY = dimensionY;
 		INSTANCE.setSize(new Dimension(dimensionX, dimensionY));
 	}
 	
-	
-	private StartScreen startScreen;
-	private GameScreen gameScreen;
-	
-	private int dimensionX;
-	private int dimensionY;
 	private Logger logger = Logger.getLogger("ScreensHolder");
 	
 	private static final ScreensHolder INSTANCE = new ScreensHolder(); 

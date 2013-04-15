@@ -8,9 +8,10 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+
 public class Door extends Stuff {
 
-	protected boolean ifOpen;
+	//открытость двери проверяем по passable
 	
 	private Image textureOpen;
 	private Image textureClosed;
@@ -18,12 +19,14 @@ public class Door extends Stuff {
 	public Door(){
 		super(false, false,0,0);
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			textureClosed = ImageIO.read(new File("Resource/Textures/DoorClosed.png"));
+			textureOpen = ImageIO.read(new File("Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.ifOpen=false;
+		texture = textureClosed;
+
 	}
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
@@ -33,45 +36,41 @@ public class Door extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
-		System.out.print("Двеееерьь мне запили!!!");
-	}
+		}		
 	
 	/**
 	 * Метод, который добавляет инфу в файл
 	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
 	 * @author UshAle
 	 */
+	
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Door");
 	} 
 	
-	public Door(int x, int y, boolean ifOpen){
-		super(false,false);
-		super.x = x;
-		super.y = y;
-		this.ifOpen = ifOpen;
-		try {
-			textureClosed = ImageIO.read(new File("Resource/Textures/DoorClosed.png"));
-			textureOpen = ImageIO.read(new File("Resource/Textures/DoorOpen.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 
-	protected void buttonPressed() {
-		if (this.ifOpen) {
-				texture = textureClosed;
-			this.ifOpen = false;
+	protected boolean useOff() {
+		if (super.passable) {
+			texture = textureClosed;
 			super.passable = false;
-		} else {
-			texture = textureOpen;
-			this.ifOpen = true;
-			super.passable = true;
+			return true;
 		}
+		return false;
+		
 	}
+	
+	protected boolean useOn() {
+		if (!super.passable) {
+			texture  = textureOpen;
+			super.passable = true;
+			return true;
+		}
+		return false;
+	}
+	
 	
 	
 	

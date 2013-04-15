@@ -8,8 +8,7 @@ public class Cell {
 	private Stuff[] content;
 	private int contentAmount;
 
-	public Cell(int a, int b)
-	{
+	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
@@ -26,36 +25,32 @@ public class Cell {
 				return false;
 		}
 
-		if (this.x == 12 && this.y == 9 && element instanceof Tile) {
-			System.out.print(false);
-		}
-
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
+		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
 
-		// акцент на кнопку - подумать потом, какие объекты ее нажимают.
-		// пока не нажимает только лаз. луч
-		if (element instanceof LaserBeam)
-			return true;
 
-		if (this.contentAmount != 1)
-			if (this.content[this.contentAmount - 2] instanceof Button) {
-				Button buf = (Button) this.content[this.contentAmount - 2];
-				buf.touch();
-			}
+		//дописать добавление под лаз. луч
+		
 		return true;
 	}
 
 	/*
 	 * теперь уникален в удалении только лазерный луч
 	 * 
+	 * 
 	 * @ivan
 	 */
-	private Stuff deleteStuff() {
+	
+	/**
+	 * эти модные коменты так пишутся
+	 * @author Capitan
+	 */
+	public Stuff deleteStuff() {
 		if (this.contentAmount == 1)
 			return null;
 
@@ -68,13 +63,8 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
-
-			if (this.content[this.contentAmount - 1] instanceof Button) {
-				Button buttbuf = (Button) this.content[this.contentAmount - 1];
-				buttbuf.touch();
-
-			}
 		}
+		this.touch();
 		return buf;
 	}
 
@@ -91,14 +81,25 @@ public class Cell {
 		return (this.y);
 	}
 
+
 	public Stuff[] getContent() { // валидно ли без размера? валидно.
 		return this.content;
+	}
+
+	public Stuff getTop() {
+		return this.content[this.contentAmount - 1];
 	}
 
 	// /конец блока
 
 	// Everything for robot:
 
+	protected void touch(){
+		for(int i = 0; i<this.contentAmount; i++){
+			this.content[i].touch();
+		}
+	}
+	
 	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
@@ -138,10 +139,22 @@ public class Cell {
 		return buf;
 	}
 
-	protected void buttonPressed() {
+	protected boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].buttonPressed();
+			if(this.content[i].useOn())
+				return true;
+			}
+			return false;
 		}
-	}
+
+	
+	
+	protected boolean useOff() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			if(this.content[i].useOff())
+				return true;
+			}
+			return false;
+		}
 
 }
