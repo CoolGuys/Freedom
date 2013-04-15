@@ -25,10 +25,6 @@ public class Cell {
 				return false;
 		}
 
-		if (this.x == 12 && this.y == 9 && element instanceof Tile) {
-			System.out.print(false);
-		}
-
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
 		this.content[this.contentAmount] = element;
@@ -36,18 +32,11 @@ public class Cell {
 		element.x = this.x;
 		element.y = this.y;
 
-		// акцент на кнопку - подумать потом, какие объекты ее нажимают.
-		// пока не нажимает только лаз. луч
-		if (element instanceof LaserBeam)
-			return true;
 
-
-		if (this.contentAmount > 1 ) {
-			if (this.content[this.contentAmount - 2] instanceof Button) {
-				Button buf = (Button) this.content[this.contentAmount - 2];
-				buf.touch();
-			}
-		}
+		//дописать добавление под лаз. луч
+		
+		this.touch();
+		
 		return true;
 	}
 
@@ -111,6 +100,12 @@ public class Cell {
 
 	// Everything for robot:
 
+	protected void touch(){
+		for(int i = 0; i<this.contentAmount; i++){
+			this.content[i].touch();
+		}
+	}
+	
 	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {

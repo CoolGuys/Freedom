@@ -8,13 +8,6 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-/**
- * 
- * Ты зачем ко мне в код пришёл? Дверь мне быстро сделал! Дверь мне запилил!
- * 
- * @author ИнтереснаяЛичность
- * 
- */
 
 public class Door extends Stuff {
 
