@@ -89,7 +89,7 @@ public class StartScreen extends AbstractScreen {
 	public static class StartGameAction extends GAction {
 		public void performAction() {
 			StartScreen.getInstance().deactivateModel();
-			GameField.getInstance().loadLevel("TEST", 1);
+			GameScreen.getInstance().activateModel();
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
 					StartScreen.getInstance());
 
