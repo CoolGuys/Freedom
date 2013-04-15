@@ -12,11 +12,11 @@ public class Button extends Stuff {
 
 	protected boolean ifPressed;
 
-	ArrayList<Cell> leadTo = new ArrayList<Cell>();
+	protected ArrayList<Cell> leadTo = new ArrayList<Cell>();
 
 	// при инициализации не нажата, что нормально
 	// принимаются заявки на изменение входных данных)
-	
+
 	public Button()
 	{
 		super(false, true);
@@ -38,22 +38,26 @@ public class Button extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
+		this.x = Integer.parseInt(obj.getAttribute("x"));
+		this.y = Integer.parseInt(obj.getAttribute("y"));
+		this.leadTo.add(GameField.getInstance().getCells()[Integer.parseInt(obj
+				.getAttribute("subordinate1PosX"))][Integer.parseInt(obj.getAttribute("subordinate1PosY"))]);
 	}
-	
+
 	/**
-	 * Метод, который добавляет инфу в файл
-	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
+	 * пихайте такие методы везде где стафф!
+	 * 
 	 * @author UshAle
 	 */
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int)this.x));
-		obj.setAttribute("y", String.valueOf((int)this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.Tile2.png");
-	} 
-	
-	public Button(int x, int y, Cell[] objects) {
+		obj.setAttribute("x", String.valueOf((int) this.x));
+		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("class", "com.freedom.gameObjects.Tile2.png");
+	}
+
+	public Button(int x, int y, Cell[] objects)
+	{
 		super(false, true);
 		super.x = x;
 		super.y = y;
@@ -73,7 +77,8 @@ public class Button extends Stuff {
 
 	// конструктор для кнопки, которая будет ссылаться на 1 элем
 	// , неудобно ведь толкать в массив
-	public Button(int x, int y, Cell thing) {
+	public Button(int x, int y, Cell thing)
+	{
 		super(false, true);
 		super.x = x;
 		super.y = y;
@@ -88,7 +93,6 @@ public class Button extends Stuff {
 		}
 		ifPressed = false;
 	}
-
 
 	protected void touch() {
 		Cell buf;
