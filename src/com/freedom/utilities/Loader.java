@@ -42,7 +42,7 @@ import com.freedom.gameObjects.*;
  *   </level>  
  * </levels>
  * 
- * @author ushale
+ * @author UshAle
  *
  */
 
@@ -50,19 +50,83 @@ import com.freedom.gameObjects.*;
  * Также добавлена возможность сохранять лвл в файл функцией lvlToFile(int num, String lvlfile, Cell[][] cells)
  * Все параметры аналогичны параметрам readlvl 
  * Пример использования в комменте к GameField.loadLevel();
- * @author ushale
+ * @author UshAle
  *
  */
 
 
 public class Loader {
 	
-	public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
-		logger.setLevel(Level.ALL);
+	public static void lvlToSv(int num, String lvlfile, Cell[][] cells){
+		logger.setLevel(Level.OFF);
 		File fXml=new File(lvlfile);
-		logger.info("Oppening file "+fXml.getPath());
 		if(fXml.exists()){
-			logger.info("Deliting file "+fXml.getPath());
+			try
+	        {
+	            DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
+	            DocumentBuilder db=dbf.newDocumentBuilder();
+	            Document doc=db.parse(fXml);
+	            doc.getDocumentElement().normalize();
+	            logger.info("Open <"+doc.getDocumentElement().getTagName()+"> in "+fXml.getPath());
+	            NodeList lvllist=doc.getElementsByTagName("level");           
+	            logger.info("Getting level N="+num);
+				for (int lvli = 0; lvli < lvllist.getLength(); lvli++) {
+					logger.info("lvli="+lvli+" length="+lvllist.getLength());
+					Node lvlTag = lvllist.item(lvli);
+					Element lvl = (Element) lvlTag;
+				    if(Integer.parseInt(lvl.getAttribute("num"))==num){
+				    	lvlTag.getParentNode().removeChild(lvlTag);				    	
+				    }
+				    }
+				  	Element lvl = doc.createElement("level");
+			        lvl.setAttribute("num", String.valueOf(num));
+			        lvl.setAttribute("width", String.valueOf(cells.length-1));
+			        lvl.setAttribute("height", String.valueOf(cells[0].length-1));
+			        lvl.setTextContent("\n");
+			        doc.getDocumentElement().appendChild(lvl);
+			    	int width=cells.length;
+			    	int height=cells[0].length;	
+			    	for(int x=1;x<width;x++){//writing objects
+			    		for(int y=1;y<height;y++){
+			    			Stuff[] stu = cells[x][y].getContent();
+			    			int l=stu.length;
+			    			for(int i=0;i<l;i++){
+				    			try{
+				    				Element obj=doc.createElement("obj");
+				    				stu[i].loadToFile(obj);
+				    				obj.setTextContent("\n");
+				    				//System.out.println("x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
+				    				lvl.appendChild(obj);
+				    				//obj.setAttribute("x", String.valueOf(stu[i].getX())
+				    				//System.out.println("x="+x+" y="+y+" l="+stu[i].getClass().getSimpleName());
+				    			}catch(Exception ei){
+				    				
+				    			}
+			    			}
+			    		}
+			    	}
+			    	Element robo=doc.createElement("robot");//writing robot
+			    	robo.setAttribute("x", String.valueOf(GameField.getInstance().getRobot().getX()));
+			    	robo.setAttribute("y", String.valueOf(GameField.getInstance().getRobot().getY()));
+			    	robo.setTextContent("\n");
+			    	lvl.appendChild(robo);
+					TransformerFactory transformerFactory = TransformerFactory.newInstance();
+					Transformer transformer = transformerFactory.newTransformer();
+					DOMSource source = new DOMSource(doc);
+					StreamResult result = new StreamResult(fXml);
+					transformer.transform(source, result);	    				
+	        }
+	        catch(Exception ei){
+	        	ei.printStackTrace();
+	        }		
+		}
+	}
+	
+	/*public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
+		File fXml=new File(lvlfile);
+		logger.info("Opening file "+fXml.getPath());
+		if(fXml.exists()){
+			logger.info("Deleting file "+fXml.getPath());
 			fXml.delete();			
 		}
 		try {
@@ -118,7 +182,7 @@ public class Loader {
         }catch(Exception ei){
         	ei.printStackTrace();
         }
-	}
+	}*/
 	
 	public static Cell[][] readLvl(int Number, String lvlfile){
 		
@@ -161,7 +225,7 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
-				    NodeList robotlist=doc.getElementsByTagName("robot");
+				    NodeList robotlist=lvl.getElementsByTagName("robot");
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
@@ -180,4 +244,7 @@ public class Loader {
 	}
 	
 	private static Logger logger = Logger.getLogger("Loader");
+	static {
+		logger.setLevel(Level.OFF);
+	}
 }

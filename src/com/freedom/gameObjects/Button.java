@@ -7,22 +7,22 @@ import java.util.*;
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 public class Button extends Stuff {
 
-	protected boolean ifPressed;
+	private boolean ifPressed;
 
-	ArrayList<Cell> leadTo = new ArrayList<Cell>();
+	private int[][] useList;//массив с координатами селлов на которые действует батон
+	private int useAmount;//количество целлов на которые действует батон
 
-	// при инициализации не нажата, что нормально
-	// принимаются заявки на изменение входных данных)
-	
-	public Button()
-	{
+
+
+	public Button() {
 		super(false, true);
 		super.x = x;
 		super.y = y;
-
+		useList = new int[10][2];
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
@@ -40,6 +40,14 @@ public class Button extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
+		NodeList list=obj.getElementsByTagName("cels");
+		int length=list.getLength();
+		for(int i=0;i<length;i++){
+			Element buf = (Element)list.item(i);
+			useList[i][0]=Integer.parseInt(buf.getAttribute("x"));
+			useList[i][1]=Integer.parseInt(buf.getAttribute("y"));
+		}
+		this.useAmount=length;
 	}
 	
 	/**
@@ -52,49 +60,10 @@ public class Button extends Stuff {
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Tile2.png");
 	} 
-	
-	public Button(int x, int y, Cell[] objects) {
-		super(false, true);
-		super.x = x;
-		super.y = y;
-
-		for (int i = 0; i < objects.length; i++) {
-			this.leadTo.add(objects[i]);
-		}
-
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ifPressed = false;
-	}
-
-	// конструктор для кнопки, которая будет ссылаться на 1 элем
-	// , неудобно ведь толкать в массив
-	public Button(int x, int y, Cell thing) {
-		super(false, true);
-		super.x = x;
-		super.y = y;
-
-		this.leadTo.add(thing);
-
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ifPressed = false;
-	}
-
 
 	protected void touch() {
-		Cell buf;
-		for (int i = 0; i < this.leadTo.size() - 1; i++) {
-			buf = this.leadTo.get(i);
-			buf.buttonPressed();
+		for (int i = 0; i < useAmount; i++) {
+			GameField.getInstance().getCells()[useList[i][0]][useList[i][1]].use();
 		}
 		this.ifPressed = !this.ifPressed;
 	}

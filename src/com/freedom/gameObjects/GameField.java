@@ -1,35 +1,37 @@
 package com.freedom.gameObjects;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
 import java.util.logging.Logger;
 
 import com.freedom.utilities.Loader;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
- * операции с ними под контролем объекта класса GameScreen Поэтому имеено сюда
+ * операции с ними под контролем объекта класса GameScreen Поэтому сюда
  * должен быть добавлен процесс загрузки уровня, то есть метод, считывающий из
- * файла уровень, удаляющий его из памяти при прохождении, и еще что-нибудь. Сам
- * знаешь, кто, тебе надо будет над этим поработать *****отредактируй это
- * описание после того, как добавишь***
+ * файла уровень, удаляющий его из памяти при прохождении, и еще что-нибудь.
  * 
  * @author gleb
- * 
  */
 
 public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		cells = Loader.readLvl(2, "Level1.lvl");
+		cells = Loader.readLvl(2, "Save1.lvl");
 	}
-
-	public static void unloadLevel() {
-
+	
+	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
+		Loader.lvlToSv(thislvl,"Save1.lvl",cells);
+		cells = Loader.readLvl(nextlvl, "Save1.lvl");
+		Loader.lvlToSv(nextlvl,"Save1.lvl",cells);
+	}
+	
+	public  void unloadLevel() {
+		
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToFile(2, "Save2.lvl", cells);
+		Loader.lvlToSv(2,"Save1.lvl",cells);
 	}
 
 	public int getXsize() {
@@ -58,6 +60,7 @@ public class GameField {
 			}
 		}
 		robot.draw(g);
+		g.dispose();
 	}
 
 	public static GameField getInstance() {

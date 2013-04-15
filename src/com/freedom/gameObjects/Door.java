@@ -8,6 +8,14 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+/**
+ * 
+ * Ты зачем ко мне в код пришёл? Дверь мне быстро сделал! Дверь мне запилил!
+ * 
+ * @author ИнтереснаяЛичность
+ * 
+ */
+
 public class Door extends Stuff {
 
 	//открытость двери проверяем по passable
@@ -18,13 +26,14 @@ public class Door extends Stuff {
 	public Door(){
 		super(false, false,0,0);
 		try {
-			textureClosed = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-			textureOpen = ImageIO.read(new File("Resource/Textures/Tile.png"));
+			textureClosed = ImageIO.read(new File("Resource/Textures/DoorClosed.png"));
+			textureOpen = ImageIO.read(new File("Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		texture = textureClosed;
+
 	}
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
@@ -47,13 +56,14 @@ public class Door extends Stuff {
 		obj.setAttribute("class","com.freedom.gameObjects.Door");
 	} 
 	
+	
 
-	protected void buttonPressed() {
+	protected void use() {
 		if (super.passable) {
-				texture = textureClosed;
+			texture = textureClosed;
 			super.passable = false;
 		} else {
-			texture = textureOpen;
+			texture  = textureOpen;
 			super.passable = true;
 		}
 	}

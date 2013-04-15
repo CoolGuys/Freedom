@@ -58,7 +58,7 @@ public class Stuff implements IStuff{
 		}
 	}
 	
-	protected  void buttonPressed(){
+	protected  void use(){
 		return;
 	}
 	

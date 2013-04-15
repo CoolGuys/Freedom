@@ -2,23 +2,17 @@ package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.*;
-import javax.imageio.ImageIO;
 import javax.swing.*;
-
+import com.freedom.gameObjects.GameField;
+import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.GAction;
-import com.freedom.utilities.SoundEngine;
-import com.freedom.utilities.SoundEngine.SoundPlayer;
 import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
-public class StartScreen extends JLayeredPane {
+public class StartScreen extends AbstractScreen {
 	private StartScreen()
 	{
 		logger.setLevel(Level.OFF);
@@ -28,6 +22,7 @@ public class StartScreen extends JLayeredPane {
 		this.setBackground(Color.BLACK);
 		this.setOpaque(true);
 		this.addMouseListener(new MouseHandler());
+		this.addMouseMotionListener(new MouseHandler());
 	}
 
 	@Override
@@ -35,26 +30,33 @@ public class StartScreen extends JLayeredPane {
 		super.paintComponent(g);
 		startScreenModel.draw(g);
 	}
+	
+	public void prepareModel () {
+		StartScreenModel.getInstance().addButtons();
+	}
 
-	public static void activateModel() {
+	public void activateModel() {
 		startScreenModel.activate();
 	}
-	
-	public static void deactivateModel() {
+
+	public void deactivateModel() {
 		startScreenModel.deactivate();
 	}
-	
+
 	public static StartScreen getInstance() {
-		return INSTANCE;
+		if (INSTANCE == null) {
+			INSTANCE = new StartScreen();
+			return INSTANCE;
+		} else
+			return INSTANCE;
 	}
 
-	private static StartScreenModel startScreenModel = StartScreenModel.getInstance();
+	private static StartScreenModel startScreenModel = StartScreenModel
+			.getInstance();
 
-	private static final StartScreen INSTANCE = new StartScreen();
+	private static StartScreen INSTANCE;
 	Logger logger = Logger.getLogger("StartScreen");
 
-	
-	
 	private class MouseHandler extends MouseAdapter {
 
 		@Override
@@ -78,15 +80,22 @@ public class StartScreen extends JLayeredPane {
 				}
 			}
 		}
-	}
-	
-	
-	public static class StartGameAction extends GAction {
-		public void performAction() {
-			deactivateModel();
-			ScreensHolder.swapScreens(GameScreen.getInstance(), StartScreen.getInstance());
+		
+		public void mouseMoved(MouseEvent e) {
+			startScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
+
+	public static class StartGameAction extends GAction {
+		public void performAction() {
+			StartScreen.getInstance().deactivateModel();
+			GameField.getInstance().loadLevel("TEST", 1);
+			ScreensHolder.swapScreens(GameScreen.getInstance(),
+					StartScreen.getInstance());
+
+		}
+	}
+
 	public static class ExitGameAction extends GAction {
 		public void performAction() {
 			System.exit(0);
