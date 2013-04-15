@@ -223,7 +223,6 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="6" y="9">
 </obj><obj class="com.freedom.gameObjects.Wall" x="6" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile" x="6" y="10">
-</obj><obj class="com.freedom.gameObjects.Wall" x="6" y="10">
 </obj><obj class="com.freedom.gameObjects.Tile" x="7" y="1">
 </obj><obj class="com.freedom.gameObjects.Tile" x="7" y="2">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="7" y="2">
@@ -233,9 +232,8 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="7" y="5">
 </obj><obj class="com.freedom.gameObjects.Wall" x="7" y="5">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="6">
-</obj><obj Press="true" class="com.freedom.gameObjects.Button" x="7" y="6">
-<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Box" color="B" x="7" y="6">
-</obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="7">
+</obj><obj Press="false" class="com.freedom.gameObjects.Button" x="7" y="6">
+<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="7">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="7" y="10">
@@ -259,7 +257,7 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="9" y="3">
 </obj><obj class="com.freedom.gameObjects.Tile" x="9" y="4">
 </obj><obj class="com.freedom.gameObjects.Tile" x="9" y="5">
-</obj><obj class="com.freedom.gameObjects.Door" closed="false" x="9" y="5">
+</obj><obj class="com.freedom.gameObjects.Door" closed="true" x="9" y="5">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="9" y="6">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="9" y="7">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="9" y="8">
@@ -299,7 +297,6 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="12" y="3">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="12" y="3">
 </obj><obj class="com.freedom.gameObjects.Tile" x="12" y="4">
-</obj><obj class="com.freedom.gameObjects.Box" color="B" x="12" y="4">
 </obj><obj class="com.freedom.gameObjects.Tile" x="12" y="5">
 </obj><obj class="com.freedom.gameObjects.Tile" x="12" y="6">
 </obj><obj class="com.freedom.gameObjects.Tile" x="12" y="7">
@@ -329,8 +326,9 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="7">
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="9">
-</obj><obj Press="true" class="com.freedom.gameObjects.Button" x="14" y="9">
-<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Tile" x="14" y="10">
+</obj><obj Press="false" class="com.freedom.gameObjects.Button" x="14" y="9">
+<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Box" color="B" x="14" y="9">
+</obj><obj class="com.freedom.gameObjects.Tile" x="14" y="10">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="1">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="15" y="1">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="2">

@@ -27,6 +27,8 @@ public class Cell {
 
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
+
+		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
@@ -35,7 +37,6 @@ public class Cell {
 
 		//дописать добавление под лаз. луч
 		
-		this.touch();
 		
 		return true;
 	}
@@ -64,13 +65,9 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
-
-			if (this.content[this.contentAmount - 1] instanceof Button) {
-				Button buttbuf = (Button) this.content[this.contentAmount - 1];
-				buttbuf.touch();
-
 			}
-		}
+			
+		this.touch();
 		return buf;
 	}
 
@@ -145,15 +142,22 @@ public class Cell {
 		return buf;
 	}
 
-	protected void use() {
+	protected boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			try {
-				this.content[i].use();
-			} catch (Exception ei) {
-
+			if(this.content[i].useOn())
+				return true;
 			}
+			return false;
 		}
 
-	}
+	
+	
+	protected boolean useOff() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			if(this.content[i].useOff())
+				return true;
+			}
+			return false;
+		}
 
 }
