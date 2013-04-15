@@ -65,14 +65,16 @@ public class Button extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-		NodeList list = obj.getElementsByTagName("cels");
-		this.ifPressed = Boolean.parseBoolean(obj.getAttribute("Press"));
-		if (this.ifPressed) {
-			texture = texturePressed;
-		} else {
-			texture = textureDepressed;
+		this.x=Integer.parseInt(obj.getAttribute("x"));
+		this.y=Integer.parseInt(obj.getAttribute("y"));
+		NodeList list=obj.getElementsByTagName("cels");
+		this.ifPressed=false;
+		//this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
+		//System.out.println("KNOPKA");
+		if(this.ifPressed){
+			texture=texturePressed;
+		}else {
+			texture=textureDepressed;
 		}
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
@@ -91,7 +93,7 @@ public class Button extends Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.Button");
-		obj.setAttribute("Press", String.valueOf(this.ifPressed));
+		//obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
 	protected void touch() {

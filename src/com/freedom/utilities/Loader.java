@@ -178,17 +178,10 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
-				    NodeList robotlist=lvl.getElementsByTagName("robot");
-				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
-				    	Element obj=(Element)robotlist.item(rbti);			    	
-				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
-				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,GameField.getInstance().cells, 10));
-				    	//System.out.println(robot.toString());
-				    	//logger.info("2Dump=|" + StrDump + "|");
-				    }
 					objTag=lvl.getElementsByTagName("objc");
 					logger.info("amount objs "+objTag.getLength());
 					for(int obji=0;obji<objTag.getLength();obji++){
+						System.out.println("ololo");
 						Element obj=(Element)objTag.item(obji);
 						logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
 						Object newstuff;
@@ -197,6 +190,15 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
+				    NodeList robotlist=lvl.getElementsByTagName("robot");
+				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
+				    	Element obj=(Element)robotlist.item(rbti);			    	
+				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
+				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,GameField.getInstance().cells, 10));
+				    	//System.out.println(robot.toString());
+				    	//logger.info("2Dump=|" + StrDump + "|");
+				    }
+
 			    }
 			}
 			

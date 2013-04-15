@@ -27,7 +27,6 @@ public class Cell {
 
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
-
 		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
@@ -36,7 +35,6 @@ public class Cell {
 
 
 		//дописать добавление под лаз. луч
-		
 		
 		return true;
 	}
@@ -65,8 +63,7 @@ public class Cell {
 		} else {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
-			}
-			
+		}
 		this.touch();
 		return buf;
 	}
