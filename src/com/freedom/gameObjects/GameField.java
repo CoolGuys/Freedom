@@ -18,6 +18,7 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 		Loader.readLvl(2, "Save1.lvl");
+		logger.info("LOL");
 	}
 	
 	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
