@@ -37,6 +37,13 @@ public class Door extends Stuff {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		super.passable = Boolean.parseBoolean(obj.getAttribute("closed"));
+		if (super.passable) {
+			texture = textureClosed;
+			super.passable = false;
+		} else {
+			texture  = textureOpen;
+			super.passable = true;
+		}		
 	}
 	
 	/**
