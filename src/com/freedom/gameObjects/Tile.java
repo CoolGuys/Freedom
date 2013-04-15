@@ -22,7 +22,7 @@ public class Tile extends Stuff {
 	// we also don't need coordinates - it'll get them while pulling to cell
 
 	public Tile() { 
-		super(false, true,0);
+		super(false, true);
 			try {
 				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
 			} catch (IOException e) {
@@ -32,7 +32,7 @@ public class Tile extends Stuff {
 	}
 	
 	public Tile(boolean ifPit){ 
-		super(false, true, Robot.maxLives);
+		super(false, true, Robot.maxLives, 0);
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
 		} catch (IOException e) {

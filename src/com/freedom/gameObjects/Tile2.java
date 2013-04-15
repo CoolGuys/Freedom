@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 public class Tile2 extends Stuff {
 
 	public Tile2() { 
-		super(false, true,0);
+		super(false, true);
 			try {
 				texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 			} catch (IOException e) {
@@ -29,7 +29,7 @@ public class Tile2 extends Stuff {
 	}
 	
 	public Tile2(boolean ifPit){ 
-		super(false, true, Robot.maxLives);
+		super(false, true, Robot.maxLives,0);
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
 		} catch (IOException e) {

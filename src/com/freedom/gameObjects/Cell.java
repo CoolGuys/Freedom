@@ -1,22 +1,10 @@
 package com.freedom.gameObjects;
 
-import java.awt.Graphics;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-
 public class Cell {
 
 	private int x;
 	private int y;
-	private Image texture;
 
-	/*
-	 * Нужно изменить, думаю, потребуется ArrayList
-	 * 
-	 * @gleb
-	 */
 	private Stuff[] content;
 	private int contentAmount;
 
@@ -30,24 +18,39 @@ public class Cell {
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 4)
 			return false;
-		
-		for(int i = 0; i< this.contentAmount; i++){ //с этим местом аккуратнее при работе
-			if(!this.content[i].getIfPassable())
+
+		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
+														// аккуратнее при работе
+			if (!this.content[i].getIfPassable())
 				return false;
 		}
+
+		// теперь положить явно можем. кладем и изменяем состояние некот.
+		// объектов
+		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
+
+
+		//дописать добавление под лаз. луч
+		
 		return true;
 	}
 
 	/*
 	 * теперь уникален в удалении только лазерный луч
 	 * 
+	 * 
 	 * @ivan
 	 */
-	private Stuff deleteStuff() {
+	
+	/**
+	 * эти модные коменты так пишутся
+	 * @author Capitan
+	 */
+	public Stuff deleteStuff() {
 		if (this.contentAmount == 1)
 			return null;
 
@@ -61,6 +64,7 @@ public class Cell {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
 		}
+		this.touch();
 		return buf;
 	}
 
@@ -77,16 +81,26 @@ public class Cell {
 		return (this.y);
 	}
 
-	public Stuff[] getContent() { // валидно ли без размера?
+
+	public Stuff[] getContent() { // валидно ли без размера? валидно.
 		return this.content;
+	}
+
+	public Stuff getTop() {
+		return this.content[this.contentAmount - 1];
 	}
 
 	// /конец блока
 
 	// Everything for robot:
 
+	protected void touch(){
+		for(int i = 0; i<this.contentAmount; i++){
+			this.content[i].touch();
+		}
+	}
 	
-	//выдаем роботу объект;
+	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
 		if (this.contentAmount == 1)
@@ -110,12 +124,37 @@ public class Cell {
 		return true;
 	}
 
+	// считаем, что если есть элемент, "экранирующий" урон, остальные не
+	// действуют
+	// щито
 	public int getDamage() {
 		int buf = 0;
-		for (int i = 0; i < this.contentAmount; i++)
+		for (int i = this.contentAmount - 1; i >= 0; i--) {
+			if (this.content[i].getDamage() == 0)
+				break;
+
 			buf = buf + this.content[i].getDamage();
+		}
 
 		return buf;
 	}
+
+	protected boolean useOn() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			if(this.content[i].useOn())
+				return true;
+			}
+			return false;
+		}
+
+	
+	
+	protected boolean useOff() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			if(this.content[i].useOff())
+				return true;
+			}
+			return false;
+		}
 
 }
