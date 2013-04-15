@@ -47,7 +47,7 @@ import com.freedom.gameObjects.*;
  */
 
 /**
- * Также добавлена возможность сохранять лвл в файл функцией lvlToFile(int num, String lvlfile, Cell[][] cells)
+ * Также добавлена возможность сохранять лвл в файл функцией lvlToFile(int num, String lvlfile, Cell[][] GameField.getInstance().cells)
  * Все параметры аналогичны параметрам readlvl 
  * Пример использования в комменте к GameField.loadLevel();
  * @author UshAle
@@ -57,7 +57,7 @@ import com.freedom.gameObjects.*;
 
 public class Loader {
 	
-	public static void lvlToSv(int num, String lvlfile, Cell[][] cells){
+	public static void lvlToSv(int num, String lvlfile){
 		logger.setLevel(Level.OFF);
 		File fXml=new File(lvlfile);
 		if(fXml.exists()){
@@ -80,15 +80,15 @@ public class Loader {
 				    }
 				  	Element lvl = doc.createElement("level");
 			        lvl.setAttribute("num", String.valueOf(num));
-			        lvl.setAttribute("width", String.valueOf(cells.length-1));
-			        lvl.setAttribute("height", String.valueOf(cells[0].length-1));
+			        lvl.setAttribute("width", String.valueOf(GameField.getInstance().cells.length-1));
+			        lvl.setAttribute("height", String.valueOf(GameField.getInstance().cells[0].length-1));
 			        lvl.setTextContent("\n");
 			        doc.getDocumentElement().appendChild(lvl);
-			    	int width=cells.length;
-			    	int height=cells[0].length;	
+			    	int width=GameField.getInstance().cells.length;
+			    	int height=GameField.getInstance().cells[0].length;	
 			    	for(int x=1;x<width;x++){//writing objects
 			    		for(int y=1;y<height;y++){
-			    			Stuff[] stu = cells[x][y].getContent();
+			    			Stuff[] stu = GameField.getInstance().cells[x][y].getContent();
 						int l = stu.length;
 						for (int i = 0; i < l; i++) {
 							try {
@@ -139,10 +139,10 @@ public class Loader {
 		}
 	}
 	
-	public static Cell[][] readLvl(int Number, String lvlfile){
+	public static void readLvl(int Number, String lvlfile){
 		
 		logger.setLevel(Level.OFF);
-		Cell[][] cells = null;
+		GameField.getInstance().cells = null;
         File fXml=new File(lvlfile);
         try
         {
@@ -160,14 +160,14 @@ public class Loader {
 			    if(Integer.parseInt(lvl.getAttribute("num"))==Number){
 			    	int width=Integer.parseInt(lvl.getAttribute("width"));
 			    	int height=Integer.parseInt(lvl.getAttribute("height"));
-			        cells = new Cell[width+1][height+1];
-			        logger.info("Creating cells array w="+width+" h="+height);
+			        GameField.getInstance().cells = new Cell[width+1][height+1];
+			        logger.info("Creating GameField.getInstance().cells array w="+width+" h="+height);
 					for(int x=1;x<=width;x++){
 						for(int y=1;y<=height;y++){
-							cells[x][y]=new Cell(x, y);
+							GameField.getInstance().cells[x][y]=new Cell(x, y);
 						}
 					}
-					logger.info("Creating cells array-ok");
+					logger.info("Creating GameField.getInstance().cells array-ok");
 					NodeList objTag=lvl.getElementsByTagName("obj");
 					logger.info("amount "+objTag.getLength());
 					for(int obji=0;obji<objTag.getLength();obji++){
@@ -177,13 +177,13 @@ public class Loader {
 						Class<?> cla = Class.forName(obj.getAttribute("class"));
 						newstuff = cla.newInstance();
 						((Stuff) newstuff).readLvlFile(obj);
-						cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
+						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
 				    NodeList robotlist=lvl.getElementsByTagName("robot");
 				    for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 				    	Element obj=(Element)robotlist.item(rbti);			    	
 				    	//System.out.println(obj.getAttribute("x")+"|"+obj.getAttribute("y"));
-				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,cells, 10));
+				    	GameField.getInstance().setRobot(new Robot(Integer.parseInt(obj.getAttribute("x")),Integer.parseInt(obj.getAttribute("y")),"N",null,GameField.getInstance().cells, 10));
 				    	//System.out.println(robot.toString());
 				    	//logger.info("2Dump=|" + StrDump + "|");
 				    }
@@ -196,7 +196,7 @@ public class Loader {
 						Class<?> cla = Class.forName(obj.getAttribute("class"));
 						newstuff = cla.newInstance();
 						((Stuff) newstuff).readLvlFile(obj);
-						cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
+						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff) newstuff));
 					}
 			    }
 			}
@@ -205,7 +205,6 @@ public class Loader {
         catch(Exception ei){
         	ei.printStackTrace();
         }
-        return cells;
 	}
 	
 	private static Logger logger = Logger.getLogger("Loader");
