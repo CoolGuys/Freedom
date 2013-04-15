@@ -67,8 +67,12 @@ public class Stuff implements IStuff{
 		}
 	}
 	
-	protected  void use(){
-		return;
+	protected  boolean useOn(){
+		return false;
+	}
+	
+	protected boolean useOff(){
+		return false;
 	}
 	
 	protected void touch(){

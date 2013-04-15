@@ -142,7 +142,6 @@ public class Loader {
 	public static void readLvl(int Number, String lvlfile){
 		
 		logger.setLevel(Level.OFF);
-		GameField.getInstance().cells = null;
         File fXml=new File(lvlfile);
         try
         {

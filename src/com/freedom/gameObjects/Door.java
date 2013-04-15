@@ -60,15 +60,25 @@ public class Door extends Stuff {
 	
 	
 
-	protected void use() {
+	protected boolean useOff() {
 		if (super.passable) {
 			texture = textureClosed;
 			super.passable = false;
-		} else {
+			return true;
+		}
+		return false;
+		
+	}
+	
+	protected boolean useOn() {
+		if (!super.passable) {
 			texture  = textureOpen;
 			super.passable = true;
+			return true;
 		}
+		return false;
 	}
+	
 	
 	
 	

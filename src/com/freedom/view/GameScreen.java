@@ -43,12 +43,12 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("K"), "turn.down");
 
 		imap.put(KeyStroke.getKeyStroke("shift W"), "offset.up");
-		imap.put(KeyStroke.getKeyStroke("shift D"), "offset.right");
-		imap.put(KeyStroke.getKeyStroke("shift A"), "offset.left");
+		imap.put(KeyStroke.getKeyStroke("shift A"), "offset.right");
+		imap.put(KeyStroke.getKeyStroke("shift D"), "offset.left");
 		imap.put(KeyStroke.getKeyStroke("shift S"), "offset.down");
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.up");
-		imap.put(KeyStroke.getKeyStroke("shift L"), "fineOffset.right");
-		imap.put(KeyStroke.getKeyStroke("shift J"), "fineOffset.left");
+		imap.put(KeyStroke.getKeyStroke("shift J"), "fineOffset.right");
+		imap.put(KeyStroke.getKeyStroke("shift L"), "fineOffset.left");
 		imap.put(KeyStroke.getKeyStroke("shift K"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
