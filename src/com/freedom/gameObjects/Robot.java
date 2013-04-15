@@ -69,7 +69,6 @@ public class Robot extends Stuff implements Moveable {
 		return this.direction;
 	}
 
-
 	public Stuff getContent() {
 		return (this.container);
 	}

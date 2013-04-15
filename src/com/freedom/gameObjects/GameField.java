@@ -81,6 +81,10 @@ public class GameField {
 		return cellSize;
 	}
 
+	public void setRobot(Robot robo, Stuff con) {
+		robot = robo;
+	}
+	
 	public void setRobot(Robot robo) {
 		robot = robo;
 	}
