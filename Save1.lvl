@@ -249,7 +249,6 @@
 </obj><obj class="com.freedom.gameObjects.Tile2" x="8" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="8" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile2" x="8" y="10">
-</obj><obj class="com.freedom.gameObjects.Box" color="B" x="8" y="10">
 </obj><obj class="com.freedom.gameObjects.Tile" x="9" y="1">
 </obj><obj class="com.freedom.gameObjects.Tile" x="9" y="2">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="9" y="2">
@@ -329,10 +328,8 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="7">
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="9">
-</obj><obj class="com.freedom.gameObjects.Button" Press="False" x="14" y="9">
-<cels x="9" y="5"/>
-</obj><obj class="com.freedom.gameObjects.Button" Press="False" x="7" y="6">
-<cels x="9" y="5"/>
+</obj><obj Press="false" class="com.freedom.gameObjects.Button" x="14" y="9">
+<cels x="9" y="5"/></obj><obj class="com.freedom.gameObjects.Box" color="B" x="14" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile" x="14" y="10">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="1">
 </obj><obj class="com.freedom.gameObjects.Box" color="B" x="15" y="1">
@@ -346,5 +343,5 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="9">
 </obj><obj class="com.freedom.gameObjects.Tile" x="15" y="10">
-</obj><robot x="13" y="8">
+</obj><robot x="13" y="9">
 </robot></level></levels>

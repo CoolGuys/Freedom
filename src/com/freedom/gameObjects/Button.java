@@ -59,6 +59,7 @@ public class Button extends Stuff {
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		NodeList list=obj.getElementsByTagName("cels");
 		this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
+		//System.out.println("KNOPKA");
 		if(this.ifPressed){
 			texture=texturePressed;
 		}else {

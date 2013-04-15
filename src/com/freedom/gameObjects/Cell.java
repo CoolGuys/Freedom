@@ -27,6 +27,7 @@ public class Cell {
 
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
+		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
@@ -35,7 +36,7 @@ public class Cell {
 
 		//дописать добавление под лаз. луч
 		
-		this.touch();
+		
 		
 		return true;
 	}
@@ -68,7 +69,6 @@ public class Cell {
 			if (this.content[this.contentAmount - 1] instanceof Button) {
 				Button buttbuf = (Button) this.content[this.contentAmount - 1];
 				buttbuf.touch();
-
 			}
 		}
 		return buf;

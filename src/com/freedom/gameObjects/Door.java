@@ -56,7 +56,7 @@ public class Door extends Stuff {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Door");
-		obj.setAttribute("closed", String.valueOf(super.passable));
+		obj.setAttribute("closed", String.valueOf(!super.passable));
 	} 
 	
 	
