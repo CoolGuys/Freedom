@@ -58,7 +58,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 	
 	public static void lvlToFile(int num, String lvlfile, Cell[][] cells){
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml=new File(lvlfile);
 		logger.info("Oppening file "+fXml.getPath());
 		if(fXml.exists()){
@@ -122,7 +122,7 @@ public class Loader {
 	
 	public static Cell[][] readLvl(int Number, String lvlfile){
 		
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		Cell[][] cells = null;
         File fXml=new File(lvlfile);
         try
@@ -150,7 +150,7 @@ public class Loader {
 					}
 					logger.info("Creating cells array-ok");
 					NodeList objTag=lvl.getElementsByTagName("obj");
-					logger.info("amount"+objTag.getLength());
+					logger.info("amount "+objTag.getLength());
 					for(int obji=0;obji<objTag.getLength();obji++){
 						Element obj=(Element)objTag.item(obji);
 						logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));

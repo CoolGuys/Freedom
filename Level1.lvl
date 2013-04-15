@@ -3,7 +3,6 @@
     <level num="1" width="10" height="10">
     </level>
     <level num="2" width="15" height="10">
-    	<obj class="com.freedom.gameObjects.Button" x="12" y="9"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="1"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="2"></obj>
      	<obj class="com.freedom.gameObjects.Tile" x="1" y="3"></obj>
@@ -202,7 +201,7 @@
      	<obj class="com.freedom.gameObjects.Wall" x="7" y="5" color="B"></obj>
         <obj class="com.freedom.gameObjects.Wall" x="8" y="5" color="B"></obj>
         <obj class="com.freedom.gameObjects.Door" x="14" y="9"></obj>
-        <obj class="com.freedom.gameObjects.Button" x="12" y="9"></obj>
+    	<obj class="com.freedom.gameObjects.Button" x="12" y="9"></obj>
      	<robot x="1" y="1"></robot>
     </level>
     <level num="3" width="10" height="10">
