@@ -124,7 +124,6 @@ public class Button extends Stuff {
 									getSize());
 				}
 			}
-			System.out.print("L\n");
 		}
 	}
 	
