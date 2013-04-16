@@ -138,7 +138,7 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
-			this.environment[getFrontCellCoordinates(direction).x][getFrontCellCoordinates(direction).y].robotOn();
+			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -155,7 +155,7 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
-			this.environment[getFrontCellCoordinates(direction).x][getFrontCellCoordinates(direction).y].robotOn();
+			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -163,7 +163,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 	}
 	
-	public Point getFrontCellCoordinates(String direction) {
+	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")){
 			point.x=(int)this.x;
