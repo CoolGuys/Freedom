@@ -58,6 +58,9 @@ public class Tile2 extends Stuff {
 		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
 	}
 
-	private static Image texture;
+	public Image getTexture() { 
+		return this.texture;
+	}
+	
 
 }

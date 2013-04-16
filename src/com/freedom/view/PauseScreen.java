@@ -96,10 +96,10 @@ public class PauseScreen extends AbstractScreen {
 	
 	public static class QuitAction extends GAction {
 		public void performAction() {
-			GameScreen.getInstance().deactivateModel();
 			ScreensHolder.swapScreens(StartScreen.getInstance(),
 					INSTANCE);
 			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
+			GameField.getInstance().stopModel();
 		}
 	}
 	
@@ -113,7 +113,7 @@ public class PauseScreen extends AbstractScreen {
 
 	public static class SaveLevelAction extends GAction {
 		public void performAction() {
-			GameField.getInstance().saveLevel("Levels/LevelSaveTest.lvl", 1);
+			GameField.getInstance().saveLevel("Save1.lvl", 1);
 		}
 	}
 }

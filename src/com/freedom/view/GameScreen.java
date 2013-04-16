@@ -148,6 +148,10 @@ public class GameScreen extends AbstractScreen {
 		repaint();
 	}
 
+	public void deactivateModel() {
+		GameField.getInstance().deactivate();
+	}
+	
 	private int scale = 50;
 	private final int fineOffset = scale / 2;
 	private final int coarseOffset = (scale * 3) / 2;
