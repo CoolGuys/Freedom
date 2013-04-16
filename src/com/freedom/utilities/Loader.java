@@ -177,7 +177,7 @@ public class Loader {
 				if (Integer.parseInt(lvl.getAttribute("num")) == Number) {
 					int width = Integer.parseInt(lvl.getAttribute("width"));
 					int height = Integer.parseInt(lvl.getAttribute("height"));
-					GameField.getInstance().cells = new Cell[width + 1][height + 1];
+					GameField.getInstance().cells = new Cell[width + 2][height + 2];
 					logger.info("Creating GameField.getInstance().cells array w="
 							+ width + " h=" + height);
 					for (int x = 1; x <= width; x++) {

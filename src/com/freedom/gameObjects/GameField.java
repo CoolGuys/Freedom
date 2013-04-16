@@ -31,7 +31,7 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 		Loader.readLvl(2, "Save1.lvl");
-		GameScreen.getInstance().setSize(cells.length*cellSize, cells[1].length*cellSize);
+		GameScreen.getInstance().setSize((cells.length-1)*cellSize, (cells[1].length-1)*cellSize);
 	}
 	
 	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
@@ -65,8 +65,8 @@ public class GameField {
 	}
 
 	public void draw(Graphics g) {
-		for (int x = 1; x < cells.length; x++) {
-			for (int y = 1; y < cells[1].length; y++) {
+		for (int x = 1; x < cells.length-1; x++) {
+			for (int y = 1; y < cells[1].length-1; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
 					if (cells[x][y].getContent()[i] != null)
 						cells[x][y].getContent()[i].draw(g);
