@@ -105,8 +105,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void activateModel() {
-		int[] f = GameField.getInstance().loadLevel("TEST", 1);
-		setSize(f[0] * scale, f[1] * scale);
+		GameField.getInstance().activate();
 
 	}
 

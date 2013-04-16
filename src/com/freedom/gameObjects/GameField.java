@@ -3,7 +3,11 @@ package com.freedom.gameObjects;
 import java.awt.*;
 import java.util.logging.Logger;
 
+import javax.swing.Timer;
+
 import com.freedom.utilities.Loader;
+import com.freedom.view.GameScreen;
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
@@ -15,14 +19,19 @@ import com.freedom.utilities.Loader;
  */
 
 public class GameField {
+	
+	
+	public void activate() {
+		ticker.start();
+	}
+	
+	public void deactivate() {
+		ticker.stop();
+	}
 
-	public int[] loadLevel(String pathToPackage, int levelID) {
-		Loader.readLvl(1, "Save1.lvl");
-		int[] f =new int [2];
-		f[0]=cells.length;
-		f[1]=cells[1].length;
-		return f;
-		//logger.info("LOL");
+	public void loadLevel(String pathToPackage, int levelID) {
+		Loader.readLvl(2, "Save1.lvl");
+		GameScreen.getInstance().setSize(cells.length*cellSize, cells[1].length*cellSize);
 	}
 	
 	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
@@ -92,6 +101,10 @@ public class GameField {
 	public void setCellSize(int scale) {
 		cellSize = scale;
 	}
+	
+	public Timer getTicker() {
+		return ticker;
+	}
 
 	private Robot robot;
 	public Cell[][] cells;
@@ -99,6 +112,7 @@ public class GameField {
 	private int ySize;
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
+	public Timer ticker = new Timer(2, null);
 
 	private static GameField INSTANCE;
 
