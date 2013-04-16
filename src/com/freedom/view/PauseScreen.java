@@ -113,7 +113,7 @@ public class PauseScreen extends AbstractScreen {
 
 	public static class SaveLevelAction extends GAction {
 		public void performAction() {
-			GameField.getInstance().saveLevel("Levels/LevelSaveTest.lvl", 1);
+			GameField.getInstance().saveLevel("Save1.lvl", 1);
 		}
 	}
 }

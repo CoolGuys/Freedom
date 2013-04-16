@@ -19,7 +19,26 @@ import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
  */
 
 public class GameField {
+
+	private int thislvl;
+	private String pathToSave;
 	
+	public void setPath(String path){
+		this.pathToSave=path;
+	}
+	
+	public String getPath(){
+		return this.pathToSave;
+	}
+	
+	
+	public void setlvl(int lvl){
+		this.thislvl=lvl;
+	}
+	
+	public int getlvl(){
+		return this.thislvl;
+	}
 	
 	public void activate() {
 		ticker.start();
@@ -30,22 +49,28 @@ public class GameField {
 	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		Loader.readLvl(2, "Save1.lvl");
-		GameScreen.getInstance().setSize(cells.length*cellSize, cells[1].length*cellSize);
+		Loader.readLvl(levelID, pathToPackage);
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
 	}
-	
-	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
-		Loader.lvlToSv(thislvl,"Save1.lvl");
-		Loader.readLvl(nextlvl, "Save1.lvl");
-		Loader.lvlToSv(nextlvl,"Save1.lvl");
+
+	public void nextlvl(int thislvl, int nextlvl) {// это метод для перехода на
+													// СЛЕДУЮЩИЙ УРОВНЬ
+		this.thislvl = nextlvl;
+		Stuff buf = robot.getContent();
+		robot.emptyContainer();
+		Loader.lvlToSv(thislvl, this.pathToSave);
+		Loader.readLvl(nextlvl, this.pathToSave);
+		robot.setContainer(buf);
+		Loader.lvlToSv(nextlvl, this.pathToSave);
 	}
-	
-	public  void unloadLevel() {
-		
+
+	public void unloadLevel() {
+		//WTF?
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToSv(2,"Save1.lvl");
+		Loader.lvlToSv(this.thislvl,this.pathToSave);
 	}
 
 	public int getXsize() {

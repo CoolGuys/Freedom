@@ -64,6 +64,13 @@ public class Robot extends Stuff implements Moveable {
 	public double getStep() {
 		return step;
 	}
+	
+	public void setContainer(Stuff buf){
+		this.container = buf;
+	}
+	public void emptyContainer(){
+		this.container = null;
+	}
 
 	public String getDirection() {
 		return this.direction;
