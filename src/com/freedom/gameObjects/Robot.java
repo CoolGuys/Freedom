@@ -147,8 +147,8 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		}
 		if ((!isMoving) & (this.canGo())) {
-			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
+			isMoving = true;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			this.environment[(int)this.x][(int)this.y].robotOn();

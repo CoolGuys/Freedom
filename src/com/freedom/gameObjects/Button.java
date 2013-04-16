@@ -94,12 +94,12 @@ public class Button extends Stuff {
 	protected void touch() {
 
 		this.ifPressed = !this.ifPressed;
-		if (this.ifPressed) {
-			texture = texturePressed;
+		if (!this.ifPressed) {
+			texture = textureDepressed;
 			sender = new SignalOnSender();
 			GameField.getInstance().getTicker().addActionListener(sender);
 		} else {
-			texture = textureDepressed;
+			texture = texturePressed;
 			GameField.getInstance().getTicker().removeActionListener(sender);
 			for (int i = 0; i < useAmount; i++) {
 				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
@@ -113,7 +113,7 @@ public class Button extends Stuff {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < useAmount; i++) {
 				if (GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
-						.useOn()) {
+						.useOff()) {
 					GameScreen
 							.getInstance()
 							.repaint(
