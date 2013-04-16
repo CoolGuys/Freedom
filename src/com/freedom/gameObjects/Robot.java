@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -137,9 +138,9 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
+			this.environment[getFrontCellCoordinates(direction).x][getFrontCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
-			this.environment[(int)this.x][(int)this.y].robotOn();
 			t.start();
 		} else
 			return;
@@ -154,12 +155,33 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
+			this.environment[getFrontCellCoordinates(direction).x][getFrontCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
-			this.environment[(int)this.x][(int)this.y].robotOn();
 			t.start();
 		} else
 			return;
+	}
+	
+	public Point getFrontCellCoordinates(String direction) {
+		Point point = new Point();
+		if (direction.equals("N")){
+			point.x=(int)this.x;
+			point.y =(int)this.y-1;
+		}
+		else if (direction.equals("S")) {
+			point.x=(int)this.x;
+			point.y =(int)this.y+1;
+		}
+		else if (direction.equals("E")) {
+			point.x=(int)this.x+1;
+			point.y =(int)this.y;
+		}
+		else {
+			point.x=(int)this.x-1;
+			point.y =(int)this.y;
+		}
+		return point;
 	}
 
 	public void move(String direction) {
