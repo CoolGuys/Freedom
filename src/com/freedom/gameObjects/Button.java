@@ -127,6 +127,7 @@ public class Button extends Stuff {
 		}
 	}
 	
+	
 	//костылики
 	protected void robotOn(){
 		if(!this.ifPressed)
