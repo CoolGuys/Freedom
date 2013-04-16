@@ -44,9 +44,11 @@ public class LevelExit extends Stuff{
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.LevelExit");
+		obj.setAttribute("next", String.valueOf((int)this.nextLevelID));
 	} 
 	
 	public void robotOn(){
+		GameField.getInstance().getRobot().SetXY(super.getX()-1, super.getY());
 		GameField.getInstance().nextlvl(GameField.getInstance().getlvl(), nextLevelID);
 	}
 }

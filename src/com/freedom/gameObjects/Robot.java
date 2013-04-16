@@ -75,6 +75,11 @@ public class Robot extends Stuff implements Moveable {
 	public String getDirection() {
 		return this.direction;
 	}
+	
+	public void SetXY(int xr, int yr){
+		this.x=xr;
+		this.y=yr;
+	}
 
 	public Stuff getContent() {
 		return (this.container);

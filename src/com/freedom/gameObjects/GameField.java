@@ -62,6 +62,7 @@ public class GameField {
 		Loader.readLvl(nextlvl, this.pathToSave);
 		robot.setContainer(buf);
 		Loader.lvlToSv(nextlvl, this.pathToSave);
+		GameScreen.getInstance().repaint();
 	}
 
 	public void unloadLevel() {
