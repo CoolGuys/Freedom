@@ -30,7 +30,7 @@ public class GameField {
 	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
-		Loader.readLvl(2, "Save1.lvl");
+		Loader.readLvl(1, "Save1.lvl");
 		GameScreen.getInstance().setSize((cells.length-1)*cellSize, (cells[1].length-1)*cellSize);
 	}
 	
