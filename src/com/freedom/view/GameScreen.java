@@ -176,7 +176,7 @@ public class GameScreen extends AbstractScreen {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			INSTANCE.deactivateModel();
+			deactivateModel();
 			ScreensHolder.getInstance().addScreen(PauseScreen.getInstance());
 			PauseScreen.getInstance().activateModel();
 			

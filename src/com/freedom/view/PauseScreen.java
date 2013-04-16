@@ -99,7 +99,7 @@ public class PauseScreen extends AbstractScreen {
 			ScreensHolder.swapScreens(StartScreen.getInstance(),
 					INSTANCE);
 			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
-			GameField.getInstance().stopModel();
+			GameField.getInstance().resetTickerListeners();
 		}
 	}
 	

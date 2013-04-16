@@ -1,6 +1,7 @@
 package com.freedom.gameObjects;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
 import javax.swing.Timer;
@@ -41,11 +42,7 @@ public class GameField {
 	}
 	
 	public void activate() {
-		if(ticker!=null)
-			ticker.start();
-		else
-			ticker = new Timer(2, null);
-		
+		ticker.start();
 	}
 	
 	public void deactivate() {
@@ -57,8 +54,11 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 	}
-	public void nextlvl(int thislvl, int nextlvl) {// это метод для перехода на
-													// СЛЕДУЮЩИЙ УРОВНЬ
+	
+	// это метод для перехода на
+	// СЛЕДУЮЩИЙ УРОВНЬ
+	public void nextlvl(int thislvl, int nextlvl) {
+		resetTickerListeners();
 		this.thislvl = nextlvl;
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
@@ -66,11 +66,15 @@ public class GameField {
 		Loader.readLvl(nextlvl, this.pathToSave);
 		robot.setContainer(buf);
 		Loader.lvlToSv(nextlvl, this.pathToSave);
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
 		GameScreen.getInstance().repaint();
 	}
 
-	public void stopModel() {
-		ticker = null;
+	public void resetTickerListeners() {
+		ActionListener[] listeners = ticker.getActionListeners();
+		for(ActionListener l : listeners)
+			ticker.removeActionListener(l);
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
