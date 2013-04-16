@@ -79,6 +79,13 @@ public class Stuff implements IStuff{
 		return;
 	}
 	
+	protected void robotOn(){
+		return;
+	}
+	protected void robotOff(){
+		return;
+	}
+	
 	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.

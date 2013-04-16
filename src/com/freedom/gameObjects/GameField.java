@@ -53,7 +53,6 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 	}
-
 	public void nextlvl(int thislvl, int nextlvl) {// это метод для перехода на
 													// СЛЕДУЮЩИЙ УРОВНЬ
 		this.thislvl = nextlvl;
@@ -138,7 +137,6 @@ public class GameField {
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-
 	private static GameField INSTANCE;
 
 }
