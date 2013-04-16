@@ -1,14 +1,11 @@
 package com.freedom.gameObjects;
 
-import java.awt.Event;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
-import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
 
@@ -109,8 +106,9 @@ public class Button extends Stuff {
 			GameField.getInstance().getTicker().removeActionListener(sender);
 			for (int i = 0; i < useAmount; i++) {
 				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
-						.useOff();
+						.useOff();	
 			}
+			GameScreen.getInstance().repaint();
 		}
 
 	}
