@@ -90,7 +90,9 @@ public class StartScreen extends AbstractScreen {
 		public void performAction() {
 			StartScreen.getInstance().deactivateModel();
 			GameScreen.getInstance().activateModel();
-			GameField.getInstance().loadLevel("LOL", 100500);
+			GameField.getInstance().setlvl(2);			 //установка начального лвла
+			GameField.getInstance().setPath("Save1.lvl");//установка путя
+			GameField.getInstance().loadLevel(GameField.getInstance().getPath(), GameField.getInstance().getlvl());			
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
 					StartScreen.getInstance());
 

@@ -3,6 +3,7 @@ package com.freedom.gameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -81,9 +82,21 @@ public class Robot extends Stuff implements Moveable {
 	public double getStep() {
 		return step;
 	}
+	
+	public void setContainer(Stuff buf){
+		this.container = buf;
+	}
+	public void emptyContainer(){
+		this.container = null;
+	}
 
 	public String getDirection() {
 		return this.direction;
+	}
+	
+	public void SetXY(int xr, int yr){
+		this.x=xr;
+		this.y=yr;
 	}
 
 	public Stuff getContent() {
@@ -141,6 +154,8 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -156,11 +171,34 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
 		} else
 			return;
+	}
+	
+	public Point getTargetCellCoordinates(String direction) {
+		Point point = new Point();
+		if (direction.equals("N")){
+			point.x=(int)this.x;
+			point.y =(int)this.y-1;
+		}
+		else if (direction.equals("S")) {
+			point.x=(int)this.x;
+			point.y =(int)this.y+1;
+		}
+		else if (direction.equals("E")) {
+			point.x=(int)this.x+1;
+			point.y =(int)this.y;
+		}
+		else {
+			point.x=(int)this.x-1;
+			point.y =(int)this.y;
+		}
+		return point;
 	}
 
 	public void move(String direction) {
@@ -212,7 +250,8 @@ public class Robot extends Stuff implements Moveable {
 			this.container = GameField.getInstance().cells[x + 1][y].takeObject();
 			if (this.container == null)
 				return;
-			ScreensHolder.getInstance().repaint();
+
+			GameScreen.getInstance().repaint();
 		}
 	}
 
