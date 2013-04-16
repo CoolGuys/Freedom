@@ -22,7 +22,8 @@ public class Button extends Stuff {
 	private int[][] useList;// массив с координатами селлов на которые действует
 							// батон
 	private int useAmount; // количество целлов на которые действует батон
-	Timer t;
+
+	private ActionListener sender;
 
 	public int getUseAmount() {
 		return useAmount;
@@ -83,10 +84,6 @@ public class Button extends Stuff {
 		this.useAmount = length;
 	}
 
-	/**
-	 * неа, не то. надо еще сохранить её состояние как-то. иначе при запуске
-	 * всегда будет закрыта
-	 */
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
@@ -99,11 +96,11 @@ public class Button extends Stuff {
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
 			texture = texturePressed;
-			ActionListener sender = new SignalOnSender();
-			t = new Timer(1, sender);
-			t.start();
+			sender = new SignalOnSender();
+			GameField.getInstance().getTicker().addActionListener(sender);
 		} else {
 			texture = textureDepressed;
+			GameField.getInstance().getTicker().removeActionListener(sender);
 			for (int i = 0; i < useAmount; i++) {
 				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
 						.useOff();
@@ -125,10 +122,21 @@ public class Button extends Stuff {
 									GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
 											.getY() * getSize(), getSize(),
 									getSize());
-					t.stop();
 				}
 			}
 		}
+	}
+	
+	//костылики
+	protected void robotOn(){
+		if(!this.ifPressed)
+			this.touch();
+		return;
+	}
+	protected void robotOff(){
+		if(this.ifPressed)
+			this.touch();
+		return;
 	}
 
 }

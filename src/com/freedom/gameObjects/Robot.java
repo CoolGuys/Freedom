@@ -69,7 +69,6 @@ public class Robot extends Stuff implements Moveable {
 		return this.direction;
 	}
 
-
 	public Stuff getContent() {
 		return (this.container);
 	}
@@ -125,8 +124,10 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			this.environment[(int)this.x][(int)this.y].robotOff();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
+			this.environment[(int)this.x][(int)this.y].robotOn();
 			t.start();
 		} else
 			return;
@@ -140,8 +141,10 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			this.environment[(int)this.x][(int)this.y].robotOff();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
+			this.environment[(int)this.x][(int)this.y].robotOn();
 			t.start();
 		} else
 			return;

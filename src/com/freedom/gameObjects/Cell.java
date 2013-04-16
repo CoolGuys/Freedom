@@ -33,9 +33,8 @@ public class Cell {
 		element.x = this.x;
 		element.y = this.y;
 
+		// дописать добавление под лаз. луч
 
-		//дописать добавление под лаз. луч
-		
 		return true;
 	}
 
@@ -45,15 +44,16 @@ public class Cell {
 	 * 
 	 * @ivan
 	 */
-	
+
 	/**
 	 * эти модные коменты так пишутся
+	 * 
 	 * @author Capitan
 	 */
 	public Stuff deleteStuff() {
-		/*if (this.contentAmount == 1)
-			return null;
-		*/
+		/*
+		 * if (this.contentAmount == 1) return null;
+		 */
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -81,7 +81,6 @@ public class Cell {
 		return (this.y);
 	}
 
-
 	public Stuff[] getContent() { // валидно ли без размера? валидно.
 		return this.content;
 	}
@@ -94,12 +93,12 @@ public class Cell {
 
 	// Everything for robot:
 
-	protected void touch(){
-		for(int i = 0; i<this.contentAmount; i++){
+	protected void touch() {
+		for (int i = 0; i < this.contentAmount; i++) {
 			this.content[i].touch();
 		}
 	}
-	
+
 	// выдаем роботу объект;
 	// из-под лаз. луча его можно взять
 	public Stuff takeObject() {
@@ -139,19 +138,29 @@ public class Cell {
 
 	protected boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			if(this.content[i].useOn())
+			if (this.content[i].useOn())
 				return true;
-			}
-			return false;
 		}
+		return false;
+	}
 
-	
-	
 	protected boolean useOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			if(this.content[i].useOff())
+			if (this.content[i].useOff())
 				return true;
-			}
-			return false;
 		}
+		return false;
+	}
+
+	protected void robotOn() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			this.content[i].robotOn();
+		}
+	}
+	
+	protected void robotOff() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			this.content[i].robotOff();
+		}
+	}
 }
