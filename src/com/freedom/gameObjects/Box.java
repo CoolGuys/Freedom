@@ -12,17 +12,21 @@ import org.w3c.dom.Element;
 
 public class Box extends Stuff {
 	
-
-	public Box()
-	{
-		super(true, false,0,10);
 	
+	private static Image texture1;
+	static {
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public Box()
+	{
+		super(true, false,0,10);
+		texture = texture1;
 	}
 
 	/**
@@ -52,9 +56,7 @@ public class Box extends Stuff {
 		return this.color;
 	}
 	
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
-	}
-	
 	private String color; 
+	
+	
 }

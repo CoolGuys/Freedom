@@ -87,8 +87,8 @@ public class Loader {
 				doc.getDocumentElement().appendChild(lvl);
 				int width = GameField.getInstance().cells.length;
 				int height = GameField.getInstance().cells[0].length;
-				for (int x = 1; x < width; x++) {// writing objects
-					for (int y = 1; y < height; y++) {
+				for (int x = 1; x < width-1; x++) {// writing objects
+					for (int y = 1; y < height-1; y++) {
 						Stuff[] stu = GameField.getInstance().cells[x][y]
 								.getContent();
 						int l = stu.length;

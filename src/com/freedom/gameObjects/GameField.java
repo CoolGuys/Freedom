@@ -1,6 +1,6 @@
 package com.freedom.gameObjects;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
@@ -8,7 +8,6 @@ import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
 import com.freedom.view.GameScreen;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет

@@ -24,10 +24,10 @@ public class Robot extends Stuff implements Moveable {
 
 	protected static int maxLives = 100;
 
-	Image textureN;
-	Image textureS;
-	Image textureE;
-	Image textureW;
+	private static Image textureN;
+	private static Image textureS;
+	private static Image textureE;
+	private static Image textureW;
 
 	private static Logger logger = Logger.getLogger("Robot");
 
