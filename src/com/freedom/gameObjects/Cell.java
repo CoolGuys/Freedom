@@ -123,7 +123,6 @@ public class Cell {
 
 	// считаем, что если есть элемент, "экранирующий" урон, остальные не
 	// действуют
-	// щито
 	public int getDamage() {
 		int buf = 0;
 		for (int i = this.contentAmount - 1; i >= 0; i--) {

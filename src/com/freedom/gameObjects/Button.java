@@ -6,9 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -17,14 +15,28 @@ import com.freedom.view.GameScreen;
 public class Button extends Stuff {
 
 	private boolean ifPressed;
-	private Image texturePressed;
-	private Image textureDepressed;
+	private static Image texturePressed;
+	private static Image textureDepressed;
 	private int[][] useList;// массив с координатами селлов на которые действует
 							// батон
 	private int useAmount; // количество целлов на которые действует батон
 
 	private ActionListener sender;
 
+	static {
+		try {
+			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public int getUseAmount() {
 		return useAmount;
 	}
@@ -47,17 +59,6 @@ public class Button extends Stuff {
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
-		try {
-			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
