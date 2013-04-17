@@ -1,13 +1,11 @@
 package com.freedom.gameObjects;
 
-import java.awt.Event;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
 import javax.swing.Timer;
 
 import javax.imageio.ImageIO;
@@ -25,13 +23,12 @@ public class Button extends Stuff {
 	private int[][] useList;// массив с координатами селлов на которые действует
 							// батон
 	private int useAmount; // количество целлов на которые действует батон
-	
+
 	private ActionListener sender;
 
 	public int getUseAmount() {
 		return useAmount;
 	}
-
 
 	public int[][] getUseList() {
 		return useList;
@@ -70,16 +67,16 @@ public class Button extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
-		NodeList list=obj.getElementsByTagName("cels");
-		this.ifPressed=false;
-		//this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
-		//System.out.println("KNOPKA");
-		if(this.ifPressed){
-			texture=texturePressed;
-		}else {
-			texture=textureDepressed;
+		this.x = Integer.parseInt(obj.getAttribute("x"));
+		this.y = Integer.parseInt(obj.getAttribute("y"));
+		NodeList list = obj.getElementsByTagName("cels");
+		this.ifPressed = false;
+		// this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
+		// System.out.println("KNOPKA");
+		if (this.ifPressed) {
+			texture = texturePressed;
+		} else {
+			texture = textureDepressed;
 		}
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
@@ -90,13 +87,13 @@ public class Button extends Stuff {
 		this.useAmount = length;
 	}
 
-	
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.Button");
+		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
-	
+
 	protected void touch() {
 
 		this.ifPressed = !this.ifPressed;
@@ -126,10 +123,24 @@ public class Button extends Stuff {
 									GameField.getInstance().getCells()[useList[i][0]][useList[i][1]].getX()
 											* getSize(),
 									GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
-											.getY() * getSize(), getSize(), getSize());
+											.getY() * getSize(), getSize(),
+									getSize());
 				}
 			}
 		}
+	}
+	
+	
+	//костылики
+	protected void robotOn(){
+		if(!this.ifPressed)
+			this.touch();
+		return;
+	}
+	protected void robotOff(){
+		if(this.ifPressed)
+			this.touch();
+		return;
 	}
 
 }

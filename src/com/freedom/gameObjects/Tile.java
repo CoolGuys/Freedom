@@ -23,12 +23,6 @@ public class Tile extends Stuff {
 
 	public Tile() { 
 		super(false, true);
-			try {
-				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 	}
 	
 	public Tile(boolean ifPit){ 
@@ -61,6 +55,19 @@ public class Tile extends Stuff {
 		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
 	}
 
-	private static Image texture;
 
+	public Image getTexture() { 
+		return this.texture;
+	}
+	
+	private static Image texture;
+	static {
+		try {
+			texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

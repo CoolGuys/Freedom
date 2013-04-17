@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -83,9 +84,21 @@ public class Robot extends Stuff implements Moveable {
 	public double getStep() {
 		return step;
 	}
+	
+	public void setContainer(Stuff buf){
+		this.container = buf;
+	}
+	public void emptyContainer(){
+		this.container = null;
+	}
 
 	public String getDirection() {
 		return this.direction;
+	}
+	
+	public void SetXY(int xr, int yr){
+		this.x=xr;
+		this.y=yr;
 	}
 
 	public Stuff getContent() {
@@ -143,6 +156,8 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			this.environment[(int)this.x][(int)this.y].robotOff();
+			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -158,11 +173,34 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+			this.environment[(int)this.x][(int)this.y].robotOff();
+			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
 		} else
 			return;
+	}
+	
+	public Point getTargetCellCoordinates(String direction) {
+		Point point = new Point();
+		if (direction.equals("N")){
+			point.x=(int)this.x;
+			point.y =(int)this.y-1;
+		}
+		else if (direction.equals("S")) {
+			point.x=(int)this.x;
+			point.y =(int)this.y+1;
+		}
+		else if (direction.equals("E")) {
+			point.x=(int)this.x+1;
+			point.y =(int)this.y;
+		}
+		else {
+			point.x=(int)this.x-1;
+			point.y =(int)this.y;
+		}
+		return point;
 	}
 
 	public void move(String direction) {
@@ -214,7 +252,9 @@ public class Robot extends Stuff implements Moveable {
 			this.container = environment[x + 1][y].takeObject();
 			if (this.container == null)
 				return;
-			ScreensHolder.getInstance().repaint();
+
+			GameField.getInstance().cells = environment;
+			GameScreen.getInstance().repaint();
 		}
 	}
 
@@ -253,6 +293,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x + 1][y].add(this.container))
 				return;
 			this.container = null;
+			GameField.getInstance().cells = environment;
 			ScreensHolder.getInstance().repaint();
 		}
 
