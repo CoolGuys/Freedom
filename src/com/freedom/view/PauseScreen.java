@@ -96,10 +96,10 @@ public class PauseScreen extends AbstractScreen {
 	
 	public static class QuitAction extends GAction {
 		public void performAction() {
-			GameScreen.getInstance().deactivateModel();
 			ScreensHolder.swapScreens(StartScreen.getInstance(),
 					INSTANCE);
 			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
+			GameField.getInstance().resetTickerListeners();
 		}
 	}
 	
