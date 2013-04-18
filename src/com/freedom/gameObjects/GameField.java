@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.logging.Logger;
 
 import com.freedom.utilities.Loader;
+import com.freedom.utilities.PathFinder;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
@@ -18,6 +19,7 @@ public class GameField {
 
 	public void loadLevel(String pathToPackage, int levelID) {
 		cells = Loader.readLvl(2, "Save1.lvl");
+		System.out.println(PathFinder.find(3, 5, 12, 10 ,50));
 	}
 	
 	public void nextlvl(int thislvl, int nextlvl){//это метод для перехода на СЛЕДУЮЩИЙ УРОВНЬ
