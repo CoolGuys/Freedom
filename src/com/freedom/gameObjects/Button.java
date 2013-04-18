@@ -27,7 +27,7 @@ public class Button extends Stuff {
 			texturePressed = ImageIO.read(new File(
 					"Resource/Textures/ButtonPressed.png"));
 			textureDepressed = ImageIO.read(new File(
-					"Resource/Textures/ButttonDepressed.png"));
+					"Resource/Textures/ButtonDepressed.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
