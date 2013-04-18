@@ -1,6 +1,7 @@
 package com.freedom.gameObjects;
 
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
 import javax.swing.Timer;
@@ -53,8 +54,11 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 	}
-	public void nextlvl(int thislvl, int nextlvl) {// это метод для перехода на
-													// СЛЕДУЮЩИЙ УРОВНЬ
+	
+	// это метод для перехода на
+	// СЛЕДУЮЩИЙ УРОВНЬ
+	public void nextlvl(int thislvl, int nextlvl) {
+		resetTickerListeners();
 		this.thislvl = nextlvl;
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
@@ -62,10 +66,15 @@ public class GameField {
 		Loader.readLvl(nextlvl, this.pathToSave);
 		robot.setContainer(buf);
 		Loader.lvlToSv(nextlvl, this.pathToSave);
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+		GameScreen.getInstance().repaint();
 	}
 
-	public void unloadLevel() {
-		//WTF?
+	public void resetTickerListeners() {
+		ActionListener[] listeners = ticker.getActionListeners();
+		for(ActionListener l : listeners)
+			ticker.removeActionListener(l);
 	}
 	
 	public void saveLevel(String pathToPackage, int levelID) {
@@ -78,10 +87,6 @@ public class GameField {
 
 	public int getYsize() {
 		return (ySize);
-	}
-	
-	public int getThisLevelID(){
-		return this.thisLevelId;
 	}
 
 	public Cell[][] getCells() {
@@ -141,8 +146,6 @@ public class GameField {
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-	private int thisLevelId;
-
 	private static GameField INSTANCE;
 
 }
