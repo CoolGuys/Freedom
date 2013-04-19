@@ -88,8 +88,17 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {
-			StartScreen.getInstance().deactivateModel();
-			GameScreen.getInstance().activateModel();
+			GameField.getInstance().setlvl(1);			 //установка начального лвла
+			GameField.getInstance().setPath("Level1.lvl");//установка путя
+			GameField.getInstance().loadLevel(GameField.getInstance().getPath(), GameField.getInstance().getlvl());			
+			ScreensHolder.swapScreens(GameScreen.getInstance(),
+					StartScreen.getInstance());
+
+		}
+	}
+	
+	public static class LoadGameAction extends GAction {
+		public void performAction() {
 			GameField.getInstance().setlvl(2);			 //установка начального лвла
 			GameField.getInstance().setPath("Save1.lvl");//установка путя
 			GameField.getInstance().loadLevel(GameField.getInstance().getPath(), GameField.getInstance().getlvl());			
