@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
+
+import javax.swing.JLayeredPane;
 
 import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.StartScreenModel;
 
 
 /**
@@ -35,6 +35,8 @@ public class ScreensHolder extends JLayeredPane {
 		GameScreen.getInstance().prepareModel(); 
 		StartScreen.getInstance().prepareModel();
 		PauseScreen.getInstance().prepareModel();
+		LoadingScreen.getInstance().prepareModel();
+		ChoiceScreen.getInstance().prepareModel();
 		
 		addScreen(StartScreen.getInstance());
 	}
@@ -45,14 +47,14 @@ public class ScreensHolder extends JLayeredPane {
 		toAdd.activateModel();
 		INSTANCE.moveToFront(toAdd);
 		INSTANCE.revalidate();
-		INSTANCE.repaint();
+		paintImmediately(getBounds());
 	}
 	
 	public void removeScreen(AbstractScreen toRemove) {
 		INSTANCE.remove(toRemove);
 		toRemove.deactivateModel();
 		INSTANCE.revalidate();
-		INSTANCE.repaint();
+		paintImmediately(getBounds());
 	}
 	
 	public static void swapScreens(AbstractScreen toAdd, AbstractScreen toRemove) {

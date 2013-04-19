@@ -20,8 +20,19 @@ public class Button extends Stuff {
 	private int[][] useList;// массив с координатами селлов на которые действует
 							// батон
 	private int useAmount; // количество целлов на которые действует батон
-
 	private ActionListener sender;
+	
+	static {
+		try {
+			texturePressed = ImageIO.read(new File(
+					"Resource/Textures/ButtonPressed.png"));
+			textureDepressed = ImageIO.read(new File(
+					"Resource/Textures/ButtonDepressed.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	static {
 		try {

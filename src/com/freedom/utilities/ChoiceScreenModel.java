@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
@@ -12,37 +11,48 @@ import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
-
+import com.freedom.gameObjects.GameField;
+import com.freedom.view.ChoiceScreen;
+import com.freedom.view.GameScreen;
 import com.freedom.view.PauseScreen;
+import com.freedom.view.ScreensHolder;
 
-public class PauseScreenModel {
+public class ChoiceScreenModel {
 
-	private PauseScreenModel()
+	private ChoiceScreenModel()
 	{
 		logger.setLevel(Level.ALL);
+	}
 
+	public void addEntries() {
+		logger.info("Adding Entries");
+		int counter = 0;
+		Path dir = Paths.get(listedDirectory);
+		DirectoryStream<Path> stream;
 		try {
-			background = ImageIO.read(new File(
-					"Resource/UtilityPictures/pauseScreenBackground.png"));
+			stream = Files.newDirectoryStream(dir);
+			for (Path file : stream) {
+				buttons[counter] = new GButtonLoaderLite(file.getFileName()
+						.toString(), counter, file.toString());
+				counter++;
+			}
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
-	public void addButtons() {
-		buttons[0] = new GButtonLite("QUIT", 2,
-				"com.freedom.view.PauseScreen$QuitAction");
-		buttons[1] = new GButtonLite("SAVE", 1,
-				"com.freedom.view.PauseScreen$SaveLevelAction");
-	}
-
-	public static PauseScreenModel getInstance() {
+	public static ChoiceScreenModel getInstance() {
 		if (INSTANCE == null)
-			return INSTANCE = new PauseScreenModel();
+			return INSTANCE = new ChoiceScreenModel();
 		else
 			return INSTANCE;
 	}
@@ -52,54 +62,55 @@ public class PauseScreenModel {
 	}
 
 	public void deactivate() {
-		for (GButtonLite b : buttons)
+		for (GButtonLoaderLite b : buttons)
 			if (b != null)
 				b.reset();
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(background, 0, 0, PauseScreen.getInstance().getWidth(),
-				PauseScreen.getInstance().getHeight(), null);
 
-		for (GButtonLite b : buttons)
+		for (GButtonLoaderLite b : buttons)
 			if (b != null)
 				b.draw(g);
 	}
 
 	public String reactToClick(Point p) {
 		logger.info(p.toString());
-		for (GButtonLite b : buttons) {
+		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
-				if (!b.checkIfPressed(p).equals("WasNotPressed"))
-					return b.actionName;
+				b.checkIfPressed(p);
 		}
 		return "NothingHappened";
 	}
 
+	public void setListedDirectiry(String dir) {
+		listedDirectory = dir;
+		addEntries();
+	}
+
 	public void reactToRollOver(Point point) {
-		for (GButtonLite b : buttons) {
+		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
 				if (b.checkRollOver(point))
-					PauseScreen.getInstance().repaint();
+					ChoiceScreen.getInstance().repaint();
 		}
 	}
 
-	private GButtonLite[] buttons = new GButtonLite[5];
-	private Image background;
-
-	private static PauseScreenModel INSTANCE;
+	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[5];
+	private String listedDirectory;
+	private static ChoiceScreenModel INSTANCE;
 
 	private Logger logger = Logger.getLogger("PauseScreenModel");
 
-	private class GButtonLite {
-		public GButtonLite(String text, int lineNumber, String actionName)
+	private class GButtonLoaderLite {
+		public GButtonLoaderLite(String text, int lineNumber, String file)
 		{
-			this.actionName = actionName;
 			this.text = text;
 			this.line = lineNumber;
-			positionY = calculateYPosition();
+			this.positionY = calculateYPosition();
+			this.fileToLoad = file;
 
-			clickedSound = new File("Resource/Sound/ButtonClicked.wav");
+			this.clickedSound = new File("Resource/Sound/ButtonClicked.wav");
 
 		}
 
@@ -125,16 +136,23 @@ public class PauseScreenModel {
 			this.textColor = Color.LIGHT_GRAY;
 		}
 
-		public String checkIfPressed(Point p) {
+		public void checkIfPressed(Point p) {
 			if ((p.getX() >= this.positionX
 					&& p.getX() <= this.positionX + dimensionX
 					&& p.getY() >= this.positionY && p.getY() <= this.positionY
 					+ dimensionY)) {
 
 				SoundEngine.playClip(clickedSound, -1, -10);
-				return actionName;
+				loadLevel();
 			}
-			return "WasNotPressed";
+		}
+
+		private void loadLevel() {
+			GameField.getInstance().setlvl(1);
+			GameField.getInstance().setPath(fileToLoad);
+			GameField.getInstance().loadLevel(
+					GameField.getInstance().getPath(),
+					GameField.getInstance().getlvl());
 		}
 
 		public void draw(Graphics g) {
@@ -142,9 +160,9 @@ public class PauseScreenModel {
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			FontRenderContext context = g2.getFontRenderContext();
-			if(textFont==null)
+			if (textFont == null)
 				textFont = new Font("Monospaced", Font.PLAIN, PauseScreen
-					.getInstance().getHeight() / 15);
+						.getInstance().getHeight() / 20);
 			Rectangle2D bounds = textFont.getStringBounds(text, context);
 
 			if (dimensionX == 0) {
@@ -162,18 +180,17 @@ public class PauseScreenModel {
 		}
 
 		private int line;
-		private int dimensionX=0;
+		private int dimensionX = 0;
 		private int dimensionY;
 		private int positionX, positionY;
 		private String text;
+		private String fileToLoad;
 		private Color textColor = Color.LIGHT_GRAY;
 		private LineMetrics metrics;
 		private File clickedSound;
 		private Font textFont;
-		public final String actionName;
 		private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
 		private final int gap = PauseScreen.getInstance().getHeight() / 12;
 
 	}
-
 }

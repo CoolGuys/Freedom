@@ -7,5 +7,6 @@ public class AbstractScreen extends JLayeredPane {
 
 	public void activateModel() {}
 	public void deactivateModel() {}
+			
 	
 }

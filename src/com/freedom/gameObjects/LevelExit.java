@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.view.GameScreen;
+
 public class LevelExit extends Stuff{
 	
 	private int nextLevelID;
@@ -17,7 +19,7 @@ public class LevelExit extends Stuff{
 		super(false, true,0,0);
 	
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture = ImageIO.read(new File("Resource/Textures/NextLevel.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

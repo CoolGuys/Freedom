@@ -31,8 +31,7 @@ public class Wall extends Stuff {
 			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"));
 			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"));
 			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"));
-			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));
-			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
+			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
