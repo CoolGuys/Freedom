@@ -8,6 +8,7 @@ import java.util.logging.*;
 import javax.swing.*;
 import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
+import com.freedom.utilities.ChoiceScreenModel;
 import com.freedom.utilities.GAction;
 import com.freedom.utilities.StartScreenModel;
 
@@ -88,10 +89,19 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {
-			GameField.getInstance().setlvl(2);			 //установка начального лвла
-			GameField.getInstance().setPath("Save1.lvl");//установка пути
+			GameField.getInstance().setlvl(1);			 //установка начального лвла
+			GameField.getInstance().setPath("Level1.lvl");//установка путя
 			GameField.getInstance().loadLevel(GameField.getInstance().getPath(), GameField.getInstance().getlvl());			
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
+					StartScreen.getInstance());
+
+		}
+	}
+	
+	public static class LoadGameAction extends GAction {
+		public void performAction() {
+			ChoiceScreenModel.getInstance().setListedDirectiry("Saves");
+			ScreensHolder.swapScreens(ChoiceScreen.getInstance(),
 					StartScreen.getInstance());
 
 		}

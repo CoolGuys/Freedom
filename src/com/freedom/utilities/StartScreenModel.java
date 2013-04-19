@@ -29,12 +29,12 @@ public class StartScreenModel {
 	}
 
 	public void addButtons() {
-		buttons[0] = new GButton("GAME", 2, 4,
+		buttons[0] = new GButton("NEW", 2, 4,
 				"com.freedom.view.StartScreen$StartGameAction");
 		buttons[1] = new GButton("EXIT", 12, 6,
 				"com.freedom.view.StartScreen$ExitGameAction");
-//		buttons[3] = new GButton("LOAD", 4, 5,
-//				"com.freedom.view.StartScreen$SaveLevelAction");
+		buttons[3] = new GButton("LOAD", 4, 5,
+				"com.freedom.view.StartScreen$LoadGameAction");
 	}
 
 	public void activate() {
@@ -190,8 +190,7 @@ public class StartScreenModel {
 				buttonFont = new Font(
 						"Monospaced",
 						Font.PLAIN,
-						(int) (dimensionX * -bounds.getY() / bounds.getWidth() / text
-								.length()));
+						(int) (dimensionX * -bounds.getY() / bounds.getWidth() / 4));
 			}
 
 			bounds = buttonFont.getStringBounds(text, context);

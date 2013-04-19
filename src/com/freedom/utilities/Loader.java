@@ -80,15 +80,15 @@ public class Loader {
 				Element lvl = doc.createElement("level");
 				lvl.setAttribute("num", String.valueOf(num));
 				lvl.setAttribute("width", String.valueOf(GameField
-						.getInstance().cells.length - 1));
+						.getInstance().cells.length - 2));
 				lvl.setAttribute("height", String.valueOf(GameField
-						.getInstance().cells[0].length - 1));
+						.getInstance().cells[0].length - 2));
 				lvl.setTextContent("\n");
 				doc.getDocumentElement().appendChild(lvl);
 				int width = GameField.getInstance().cells.length;
 				int height = GameField.getInstance().cells[0].length;
-				for (int x = 1; x < width; x++) {// writing objects
-					for (int y = 1; y < height; y++) {
+				for (int x = 1; x < width-1; x++) {// writing objects
+					for (int y = 1; y < height-1; y++) {
 						Stuff[] stu = GameField.getInstance().cells[x][y]
 								.getContent();
 						int l = stu.length;
@@ -177,7 +177,7 @@ public class Loader {
 				if (Integer.parseInt(lvl.getAttribute("num")) == Number) {
 					int width = Integer.parseInt(lvl.getAttribute("width"));
 					int height = Integer.parseInt(lvl.getAttribute("height"));
-					GameField.getInstance().cells = new Cell[width + 1][height + 1];
+					GameField.getInstance().cells = new Cell[width + 2][height + 2];
 					logger.info("Creating GameField.getInstance().cells array w="
 							+ width + " h=" + height);
 					for (int x = 1; x <= width; x++) {

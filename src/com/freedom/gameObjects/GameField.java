@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
+import com.freedom.view.ChoiceScreen;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
@@ -50,9 +51,13 @@ public class GameField {
 	}
 
 	public void loadLevel(String pathToPackage, int levelID) {
+		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+				ChoiceScreen.getInstance());
 		Loader.readLvl(levelID, pathToPackage);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
+		ScreensHolder.swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
 	}
 
 	// это метод для перехода на
@@ -70,8 +75,8 @@ public class GameField {
 		Loader.lvlToSv(nextlvl, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		ScreensHolder.swapScreens(GameScreen.getInstance(), LoadingScreen.getInstance());
-		GameScreen.getInstance().repaint();
+		ScreensHolder.swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
 	}
 
 	public void resetTickerListeners() {
@@ -101,8 +106,8 @@ public class GameField {
 	}
 
 	public void draw(Graphics g) {
-		for (int x = 1; x < cells.length; x++) {
-			for (int y = 1; y < cells[1].length; y++) {
+		for (int x = 1; x < cells.length - 1; x++) {
+			for (int y = 1; y < cells[1].length - 1; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
 					if (cells[x][y].getContent()[i] != null)
 						cells[x][y].getContent()[i].draw(g);

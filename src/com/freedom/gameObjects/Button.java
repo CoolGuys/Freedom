@@ -3,6 +3,7 @@ package com.freedom.gameObjects;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -26,7 +27,7 @@ public class Button extends Stuff {
 			texturePressed = ImageIO.read(new File(
 					"Resource/Textures/ButtonPressed.png"));
 			textureDepressed = ImageIO.read(new File(
-					"Resource/Textures/ButttonDepressed.png"));
+					"Resource/Textures/ButtonDepressed.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,7 +56,17 @@ public class Button extends Stuff {
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
-		
+		try {
+			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

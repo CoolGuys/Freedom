@@ -4,27 +4,30 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-public class Box extends Stuff {
+public class NotDoor extends Stuff {
 
-	static {
+	// открытость двери проверяем по passable
+
+	private Image textureOpen;
+	private Image textureClosed;
+
+	public NotDoor() {
+		super(false, true, 0, 0);
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));
+			textureClosed = ImageIO.read(new File(
+					"Resource/Textures/DoorClosed.png"));
+			textureOpen = ImageIO.read(new File(
+					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+		texture = textureOpen;
 
-	private static Image texture1;
-	public Box()
-	{
-		super(true, false ,0 ,10 );
-		texture=texture1;
 	}
 
 	/**
@@ -35,7 +38,6 @@ public class Box extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
-		this.color = obj.getAttribute("color");
 	}
 
 	/**
@@ -44,21 +46,38 @@ public class Box extends Stuff {
 	 * 
 	 * @author UshAle
 	 */
+
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("color", String.valueOf(this.color));
-		obj.setAttribute("class", "com.freedom.gameObjects.Box");
+		obj.setAttribute("class", "com.freedom.gameObjects.NotDoor");
 	}
 
-	public String getColour() {
-		return this.color;
+	protected boolean useOn() {
+		if (super.passable) {
+			texture = textureClosed;
+			super.passable = false;
+			return true;
+		}
+		return false;
+	}
+
+	protected boolean useOff() {
+		if(!super.passable) {
+			texture = textureOpen;
+			super.passable = true;
+			return true;
+		}
+		return false;
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(texture1, (int) (getX() * getSize()),
+		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
 
-	private String color;
+	public Image getTexture() {
+		return this.texture;
+	}
+
 }

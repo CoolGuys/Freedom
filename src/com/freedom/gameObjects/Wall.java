@@ -4,53 +4,44 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-
 public class Wall extends Stuff {
 
+	private static Image textureN;
+	private static Image textureE;
+	private static Image textureS;
+	private static Image textureW;
+	private static Image textureNE;
+	private static Image textureSE;
+	private static Image textureSW;
+	private static Image textureNW;
 
-	private static Map<String, Image> images = new HashMap<String, Image>();
-
-	// здесь ключ: B stands for Boarder ; с ним - контакт с границей,
-	// "N","W","NW" ясны и так
-
-	public static void getImages() {
+	
+	static {
+		getImages();
+	}
+	private static void getImages() {
 		try {
-			images.put("Free",ImageIO.read(new File("Resource/Textures/WallFree.png")));
-			images.put("BN",ImageIO.read(new File("Resource/Textures/WallBN.png")));
-			images.put("BE",ImageIO.read(new File("Resource/Textures/WallBE.png")));
-			images.put("BS",ImageIO.read(new File("Resource/Textures/WallBS.png")));
-			images.put("BW",ImageIO.read(new File("Resource/Textures/WallBW.png")));
-			images.put("BNE",ImageIO.read(new File("Resource/Textures/WallBNE.png")));
-			images.put("BNW",ImageIO.read(new File("Resource/Textures/WallBNW.png")));
-			images.put("BSE",ImageIO.read(new File("Resource/Textures/WallBSE.png")));
-			images.put("BSW",ImageIO.read(new File("Resource/Textures/WallBSW.png")));
-			images.put("N",ImageIO.read(new File("Resource/Textures/WallN.png")));
-			images.put("E",ImageIO.read(new File("Resource/Textures/WallE.png")));
-			images.put("S",ImageIO.read(new File("Resource/Textures/WallS.png")));
-			images.put("W",ImageIO.read(new File("Resource/Textures/WallW.png")));
-			images.put("NE",ImageIO.read(new File("Resource/Textures/WallNE.png")));
-			images.put("NW",ImageIO.read(new File("Resource/Textures/WallNW.png")));
-			images.put("SE",ImageIO.read(new File("Resource/Textures/WallSE.png")));
-			images.put("SW",ImageIO.read(new File("Resource/Textures/WallSW.png")));
+			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"));
+			textureE = ImageIO.read(new File("Resource/Textures/WallE.png"));
+			textureS = ImageIO.read(new File("Resource/Textures/WallS.png"));
+			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"));
+			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"));
+			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"));
+			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));
+			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Wall() {
+	public Wall()
+	{
 		super(false, false);
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Wall.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void readLvlFile(Element obj) {
@@ -71,10 +62,52 @@ public class Wall extends Stuff {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(texture, (int) (getX() * getSize()),
-				(int) (getY() * getSize()), getSize(), getSize(), null);
+		Cell[][] cells = GameField.getInstance().getCells();
+		int x = (int) this.x;
+		int y = (int) this.y;
+		boolean[] neighbourWalls = new boolean[4];
+		if (cells[x + 1][y] != null)
+			if (!(cells[x + 1][y].getContent()[0] instanceof Wall)) {
+				g.drawImage(textureE, (int) (getX() * getSize()),
+						(int) (getY() * getSize()), getSize(), getSize(), null);
+			} else
+				neighbourWalls[0] = true;
+		
+
+		if (cells[x][y + 1] != null)
+			if (!(cells[x][y + 1].getContent()[0] instanceof Wall)) {
+				g.drawImage(textureS, (int) (getX() * getSize()),
+						(int) (getY() * getSize()), getSize(), getSize(), null);
+			} else
+				neighbourWalls[1] = true;
+
+		if (cells[x - 1][y] != null)
+			if (!(cells[x - 1][y].getContent()[0] instanceof Wall)) {
+				g.drawImage(textureW, (int) (getX() * getSize()),
+						(int) (getY() * getSize()), getSize(), getSize(), null);
+			} else 
+				neighbourWalls[2] = true;
+		
+		if (cells[x][y - 1] != null)
+			if (!(cells[x][y - 1].getContent()[0] instanceof Wall)) {
+				g.drawImage(textureN, (int) (getX() * getSize()),
+						(int) (getY() * getSize()), getSize(), getSize(), null);
+			} else
+				neighbourWalls[3] = true;
+		
+		if (neighbourWalls[0] && neighbourWalls[1])
+			g.drawImage(textureSE, (int) (getX() * getSize()),
+					(int) (getY() * getSize()), getSize(), getSize(), null);
+		if (neighbourWalls[1] && neighbourWalls[2])
+			g.drawImage(textureSW, (int) (getX() * getSize()),
+					(int) (getY() * getSize()), getSize(), getSize(), null);
+		if (neighbourWalls[2] && neighbourWalls[3])
+			g.drawImage(textureNW, (int) (getX() * getSize()),
+					(int) (getY() * getSize()), getSize(), getSize(), null);
+		if (neighbourWalls[3] && neighbourWalls[0])
+			g.drawImage(textureNE, (int) (getX() * getSize()),
+					(int) (getY() * getSize()), getSize(), getSize(), null);
+
 	}
-	/*static{
-		getImages();
-	}*/
+
 }
