@@ -36,15 +36,6 @@ public class NotDoor extends Stuff {
 		super(false, true, 0, 0);
 	}
 
-	/**
-	 * Метод, который считывает всю инфу из файла с лвлами
-	 * 
-	 * @param - Scanner файла
-	 */
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-	}
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало

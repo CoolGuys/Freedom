@@ -42,10 +42,6 @@ public class Wall extends Stuff {
 		super(false, false);
 	}
 
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-	}
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало

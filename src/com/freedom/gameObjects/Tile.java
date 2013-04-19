@@ -37,22 +37,6 @@ public class Tile extends Stuff {
 		texture = texture1;
 	}
 
-	public Tile(boolean ifPit)
-	{
-		super(false, true, Robot.maxLives, 0);
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-	}
-
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
