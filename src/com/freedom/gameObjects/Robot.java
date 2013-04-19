@@ -3,9 +3,9 @@ package com.freedom.gameObjects;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -18,46 +18,20 @@ public class Robot extends Stuff implements Moveable {
 
 	private String direction;
 	private Stuff container;
-	private Cell[][] environment;
 
 	private boolean isMoving;
 	private double step = 0.1;
 
 	protected static int maxLives = 100;
 
-	Image textureN;
-	Image textureS;
-	Image textureE;
-	Image textureW;
+	private static Image textureN;
+	private static Image textureS;
+	private static Image textureE;
+	private static Image textureW;
 
 	private static Logger logger = Logger.getLogger("Robot");
-
-	public Robot()
-	{
-		super();
-		try {
-			// textureN = ImageIO.read(new
-			// File("Resource/Textures/RobotN.png"));
-			textureS = ImageIO
-					.read(new File("Resource/Textures/RobotSLOL.png"));
-			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
-			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	
-	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles, int lives)
-	{
-		super(false, false, 0, lives);
-		super.x = posX;
-		super.y = posY;
-		this.direction = direction;
-		this.container = c;
-		this.environment = tiles;
-
+	static {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
 					.getScaledInstance(getSize(), getSize(),
@@ -77,6 +51,17 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Robot(int posX, int posY, String direction, Stuff c, int lives)
+	{
+		super(false, false, 0, lives);
+		super.x = posX;
+		super.y = posY;
+		this.direction = direction;
+		this.container = c;
+
+		
 		
 		logger.setLevel(Level.OFF);
 	}
@@ -124,23 +109,23 @@ public class Robot extends Stuff implements Moveable {
 		int x = (int) this.x;
 		int y = (int) this.y;
 		if (this.direction.equals("N")) {
-			if (environment[x][y - 1].ifCanPassThrough())
+			if (GameField.getInstance().cells[x][y - 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("S")) {
 			// logger.info("Checking S direction");
-			if (environment[x][y + 1].ifCanPassThrough())
+			if (GameField.getInstance().cells[x][y + 1].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("W")) {
-			if (environment[x - 1][y].ifCanPassThrough())
+			if (GameField.getInstance().cells[x - 1][y].ifCanPassThrough())
 				return true;
 		}
 
 		if (this.direction.equals("E")) {
-			if (environment[x + 1][y].ifCanPassThrough())
+			if (GameField.getInstance().cells[x + 1][y].ifCanPassThrough())
 				return true;
 		}
 
@@ -156,8 +141,8 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			this.environment[(int)this.x][(int)this.y].robotOff();
-			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -173,8 +158,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			this.environment[(int)this.x][(int)this.y].robotOff();
-			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
 			Thread t = new Thread(r);
 			t.start();
@@ -225,7 +210,7 @@ public class Robot extends Stuff implements Moveable {
 		//
 
 		if (this.direction.equals("N")) {
-			this.container = environment[x][y - 1].takeObject();
+			this.container = GameField.getInstance().cells[x][y - 1].takeObject();
 			if (this.container == null)
 				return;
 			ScreensHolder.getInstance().repaint();
@@ -233,7 +218,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("S")) {
-			this.container = environment[x][y + 1].takeObject();
+			this.container = GameField.getInstance().cells[x][y + 1].takeObject();
 			if (this.container == null)
 				return;
 			ScreensHolder.getInstance().repaint();
@@ -241,7 +226,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("W")) {
-			this.container = environment[x - 1][y].takeObject();
+			this.container = GameField.getInstance().cells[x - 1][y].takeObject();
 			if (this.container == null)
 				return;
 			ScreensHolder.getInstance().repaint();
@@ -249,11 +234,10 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("E")) {
-			this.container = environment[x + 1][y].takeObject();
+			this.container = GameField.getInstance().cells[x + 1][y].takeObject();
 			if (this.container == null)
 				return;
 
-			GameField.getInstance().cells = environment;
 			GameScreen.getInstance().repaint();
 		}
 	}
@@ -266,7 +250,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 
 		if (this.direction.equals("N")) {
-			if (!environment[x][y - 1].add(this.container))
+			if (!GameField.getInstance().cells[x][y - 1].add(this.container))
 				return;
 			this.container = null;
 			ScreensHolder.getInstance().repaint();
@@ -274,7 +258,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("S")) {
-			if (!environment[x][y + 1].add(this.container))
+			if (!GameField.getInstance().cells[x][y + 1].add(this.container))
 				return;
 			this.container = null;
 			ScreensHolder.getInstance().repaint();
@@ -282,7 +266,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("W")) {
-			if (!environment[x - 1][y].add(this.container))
+			if (!GameField.getInstance().cells[x - 1][y].add(this.container))
 				return;
 			this.container = null;
 			ScreensHolder.getInstance().repaint();
@@ -290,10 +274,9 @@ public class Robot extends Stuff implements Moveable {
 		}
 
 		if (this.direction.equals("E")) {
-			if (!environment[x + 1][y].add(this.container))
+			if (!GameField.getInstance().cells[x + 1][y].add(this.container))
 				return;
 			this.container = null;
-			GameField.getInstance().cells = environment;
 			ScreensHolder.getInstance().repaint();
 		}
 

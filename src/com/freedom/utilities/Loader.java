@@ -226,7 +226,7 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"), null,
-											GameField.getInstance().cells, 10));
+											10));
 						} else {
 							Element roboobj = (Element) robostuff.item(0);
 							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
@@ -240,8 +240,7 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"),
-											((Stuff) newstuff), GameField
-													.getInstance().cells, 10));
+											((Stuff) newstuff), 10));
 						}
 					}
 

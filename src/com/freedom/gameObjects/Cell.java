@@ -12,11 +12,11 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[40];
+		this.content = new Stuff[4];
 	}
 
 	public boolean add(Stuff element) {
-		if (this.contentAmount == 40)
+		if (this.contentAmount == 4)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом

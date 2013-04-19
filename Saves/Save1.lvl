@@ -741,5 +741,9 @@
 </obj><obj class="com.freedom.gameObjects.Wall" x="15" y="8">
 </obj><obj class="com.freedom.gameObjects.Wall" x="15" y="9">
 </obj><obj class="com.freedom.gameObjects.Wall" x="15" y="10">
+<<<<<<< HEAD
 </obj><robot dir="E" x="13" y="2">
+=======
+</obj><robot dir="N" x="13" y="2">
+>>>>>>> refs/heads/textures&drawingImprovement
 </robot></level></levels>

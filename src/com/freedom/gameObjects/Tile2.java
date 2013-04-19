@@ -17,30 +17,22 @@ import org.w3c.dom.Element;
 
 public class Tile2 extends Stuff {
 
-	public Tile2() { 
-		super(false, true);
-			try {
-				texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	}
+	private static Image texture1;
 	
-	public Tile2(boolean ifPit){ 
-		super(false, true, Robot.maxLives,0);
+	static {
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
+	public Tile2() { 
+		super(false, true);
+		texture = texture1;
 	}
+
 
 	/**
 	 * Метод, который добавляет инфу в файл
@@ -51,15 +43,5 @@ public class Tile2 extends Stuff {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Tile2");
-	} 
-	
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
-	}
-
-	public Image getTexture() { 
-		return this.texture;
-	}
-	
-
+	} 	
 }

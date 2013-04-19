@@ -10,7 +10,8 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 public class Box extends Stuff {
-
+	
+	private static Image texture1;
 	static {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));
@@ -19,8 +20,7 @@ public class Box extends Stuff {
 			e.printStackTrace();
 		}
 	}
-
-	private static Image texture1;
+	
 	public Box()
 	{
 		super(true, false ,0 ,10 );
@@ -53,11 +53,6 @@ public class Box extends Stuff {
 
 	public String getColour() {
 		return this.color;
-	}
-
-	public void draw(Graphics g) {
-		g.drawImage(texture1, (int) (getX() * getSize()),
-				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
 
 	private String color;

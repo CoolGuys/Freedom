@@ -34,6 +34,20 @@ public class Button extends Stuff {
 		}
 	}
 
+	static {
+		try {
+			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public int getUseAmount() {
 		return useAmount;
 	}
@@ -56,17 +70,6 @@ public class Button extends Stuff {
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
-		try {
-			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**
@@ -114,8 +117,9 @@ public class Button extends Stuff {
 			GameField.getInstance().getTicker().removeActionListener(sender);
 			for (int i = 0; i < useAmount; i++) {
 				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
-						.useOff();
+						.useOff();	
 			}
+			GameScreen.getInstance().repaint();
 		}
 
 	}
@@ -135,6 +139,7 @@ public class Button extends Stuff {
 									getSize());
 				}
 			}
+			//System.out.print("L\n");
 		}
 	}
 	
