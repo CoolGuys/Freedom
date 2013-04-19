@@ -17,10 +17,11 @@ import org.w3c.dom.Element;
 
 public class Tile extends Stuff {
 
+	private static Image texture1;
 	static {
 
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -33,6 +34,7 @@ public class Tile extends Stuff {
 	public Tile()
 	{
 		super(false, true);
+		texture = texture1;
 	}
 
 	public Tile(boolean ifPit)
@@ -62,16 +64,5 @@ public class Tile extends Stuff {
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.Tile");
 	}
-
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int) (getX() * getSize()),
-				(int) (getY() * getSize()), getSize(), getSize(), null);
-	}
-
-	public Image getTexture() {
-		return texture;
-	}
-
-	private static Image texture;
 
 }
