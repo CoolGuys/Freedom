@@ -94,7 +94,7 @@ public class NotDoor extends Stuff {
 			else
 				textureClosed = textureClosedHorisontal;
 			textureSet = true;
-			texture = textureClosed;
+			texture = textureOpen;
 		}
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
