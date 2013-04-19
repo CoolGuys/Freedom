@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
-import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 

@@ -1,6 +1,6 @@
 package com.freedom.gameObjects;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
 import java.util.logging.Logger;
 
@@ -8,13 +8,14 @@ import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
 import com.freedom.view.GameScreen;
-import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
+import com.freedom.view.LoadingScreen;
+import com.freedom.view.ScreensHolder;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
- * операции с ними под контролем объекта класса GameScreen Поэтому сюда
- * должен быть добавлен процесс загрузки уровня, то есть метод, считывающий из
- * файла уровень, удаляющий его из памяти при прохождении, и еще что-нибудь.
+ * операции с ними под контролем объекта класса GameScreen Поэтому сюда должен
+ * быть добавлен процесс загрузки уровня, то есть метод, считывающий из файла
+ * уровень, удаляющий его из памяти при прохождении, и еще что-нибудь.
  * 
  * @author gleb
  */
@@ -23,28 +24,27 @@ public class GameField {
 
 	private int thislvl;
 	private String pathToSave;
-	
-	public void setPath(String path){
-		this.pathToSave=path;
+
+	public void setPath(String path) {
+		this.pathToSave = path;
 	}
-	
-	public String getPath(){
+
+	public String getPath() {
 		return this.pathToSave;
 	}
-	
-	
-	public void setlvl(int lvl){
-		this.thislvl=lvl;
+
+	public void setlvl(int lvl) {
+		this.thislvl = lvl;
 	}
-	
-	public int getlvl(){
+
+	public int getlvl() {
 		return this.thislvl;
 	}
-	
+
 	public void activate() {
 		ticker.start();
 	}
-	
+
 	public void deactivate() {
 		ticker.stop();
 	}
@@ -54,10 +54,12 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 	}
-	
+
 	// это метод для перехода на
 	// СЛЕДУЮЩИЙ УРОВНЬ
 	public void nextlvl(int thislvl, int nextlvl) {
+		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+				GameScreen.getInstance());
 		resetTickerListeners();
 		this.thislvl = nextlvl;
 		Stuff buf = robot.getContent();
@@ -68,17 +70,18 @@ public class GameField {
 		Loader.lvlToSv(nextlvl, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
+		ScreensHolder.swapScreens(GameScreen.getInstance(), LoadingScreen.getInstance());
 		GameScreen.getInstance().repaint();
 	}
 
 	public void resetTickerListeners() {
 		ActionListener[] listeners = ticker.getActionListeners();
-		for(ActionListener l : listeners)
+		for (ActionListener l : listeners)
 			ticker.removeActionListener(l);
 	}
-	
+
 	public void saveLevel(String pathToPackage, int levelID) {
-		Loader.lvlToSv(this.thislvl,this.pathToSave);
+		Loader.lvlToSv(this.thislvl, this.pathToSave);
 	}
 
 	public int getXsize() {
@@ -126,7 +129,7 @@ public class GameField {
 	public void setRobot(Robot robo, Stuff con) {
 		robot = robo;
 	}
-	
+
 	public void setRobot(Robot robo) {
 		robot = robo;
 	}
@@ -134,7 +137,7 @@ public class GameField {
 	public void setCellSize(int scale) {
 		cellSize = scale;
 	}
-	
+
 	public Timer getTicker() {
 		return ticker;
 	}
@@ -143,6 +146,7 @@ public class GameField {
 	public Cell[][] cells;
 	private int xSize;
 	private int ySize;
+	@SuppressWarnings("unused")
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);

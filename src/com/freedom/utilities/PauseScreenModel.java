@@ -1,15 +1,22 @@
 package com.freedom.utilities;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
+
 import com.freedom.view.PauseScreen;
 
 public class PauseScreenModel {
@@ -135,20 +142,20 @@ public class PauseScreenModel {
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			FontRenderContext context = g2.getFontRenderContext();
-			if(buttonFont==null)
-				buttonFont = new Font("Monospaced", Font.PLAIN, PauseScreen
+			if(textFont==null)
+				textFont = new Font("Monospaced", Font.PLAIN, PauseScreen
 					.getInstance().getHeight() / 15);
-			Rectangle2D bounds = buttonFont.getStringBounds(text, context);
+			Rectangle2D bounds = textFont.getStringBounds(text, context);
 
 			if (dimensionX == 0) {
 				dimensionX = (int) bounds.getWidth();
 				dimensionY = (int) bounds.getHeight();
 				positionX = (int) (PauseScreen.getInstance().getWidth() / 2 - bounds
 						.getWidth() / 2);
-				metrics = buttonFont.getLineMetrics(text, context);
+				metrics = textFont.getLineMetrics(text, context);
 
 			}
-			g2.setFont(buttonFont);
+			g2.setFont(textFont);
 			g2.setColor(textColor);
 			g2.drawString(text, positionX,
 					positionY + dimensionY - metrics.getDescent());
@@ -162,7 +169,7 @@ public class PauseScreenModel {
 		private Color textColor = Color.LIGHT_GRAY;
 		private LineMetrics metrics;
 		private File clickedSound;
-		private Font buttonFont;
+		private Font textFont;
 		public final String actionName;
 		private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
 		private final int gap = PauseScreen.getInstance().getHeight() / 12;

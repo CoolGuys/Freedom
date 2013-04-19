@@ -94,8 +94,8 @@ public class Robot extends Stuff implements Moveable {
 
 
 	public void recalibrate() {
-		x = (int) Math.round(x);
-		y = (int) Math.round(y);
+		x = Math.round(x);
+		y = Math.round(y);
 
 	}
 

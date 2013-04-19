@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
+
+import javax.swing.JLayeredPane;
 
 import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.StartScreenModel;
 
 
 /**
@@ -35,6 +35,7 @@ public class ScreensHolder extends JLayeredPane {
 		GameScreen.getInstance().prepareModel(); 
 		StartScreen.getInstance().prepareModel();
 		PauseScreen.getInstance().prepareModel();
+		LoadingScreen.getInstance().prepareModel();
 		
 		addScreen(StartScreen.getInstance());
 	}
