@@ -12,11 +12,10 @@ public class Door extends Stuff {
 
 	// открытость двери проверяем по passable
 
-	private Image textureOpen;
-	private Image textureClosed;
-
-	public Door() {
-		super(false, false, 0, 0);
+	private static Image textureOpen;
+	private static Image textureClosed;
+	
+	static {
 		try {
 			textureClosed = ImageIO.read(new File(
 					"Resource/Textures/DoorClosed.png"));
@@ -26,6 +25,10 @@ public class Door extends Stuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public Door() {
+		super(false, false, 0, 0);
 		texture = textureClosed;
 
 	}

@@ -11,16 +11,19 @@ import org.w3c.dom.Element;
 
 public class Wall extends Stuff {
 
-	private Image textureN;
-	private Image textureE;
-	private Image textureS;
-	private Image textureW;
-	private Image textureNE;
-	private Image textureSE;
-	private Image textureSW;
-	private Image textureNW;
+	private static Image textureN;
+	private static Image textureE;
+	private static Image textureS;
+	private static Image textureW;
+	private static Image textureNE;
+	private static Image textureSE;
+	private static Image textureSW;
+	private static Image textureNW;
+	static {
+		getImages();
+	}
 
-	private void getImages() {
+	private static void getImages() {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"));
 			textureE = ImageIO.read(new File("Resource/Textures/WallE.png"));
@@ -38,8 +41,6 @@ public class Wall extends Stuff {
 	public Wall()
 	{
 		super(false, false);
-		getImages();
-
 	}
 
 	public void readLvlFile(Element obj) {

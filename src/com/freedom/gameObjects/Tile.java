@@ -21,6 +21,12 @@ public class Tile extends Stuff {
 
 	public Tile() { 
 		super(false, true);
+			try {
+				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	}
 	
 	
@@ -45,13 +51,5 @@ public class Tile extends Stuff {
 	}
 	
 	private static Image texture;
-	static {
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+
 }
