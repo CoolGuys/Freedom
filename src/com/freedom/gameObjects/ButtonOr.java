@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 import com.freedom.view.GameScreen;
 
-public class Button extends Stuff {
+public class ButtonOr extends Stuff {
 
 	private boolean ifPressed;
 	private static Image texturePressed;
@@ -34,20 +34,6 @@ public class Button extends Stuff {
 		}
 	}
 
-	static {
-		try {
-			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public int getUseAmount() {
 		return useAmount;
 	}
@@ -65,11 +51,23 @@ public class Button extends Stuff {
 		return true;
 	}
 
-	public Button() {
+	public ButtonOr() {
 		super(false, true);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
+		
+		try {
+			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -110,16 +108,15 @@ public class Button extends Stuff {
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
 			texture = texturePressed;
-			sender = new SignalOnSender();
+			sender = new SignalOnSender();	
 			GameField.getInstance().getTicker().addActionListener(sender);
 		} else {
 			texture = textureDepressed;
 			GameField.getInstance().getTicker().removeActionListener(sender);
 			for (int i = 0; i < useAmount; i++) {
 				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
-						.useOff();	
+						.useOff();
 			}
-			GameScreen.getInstance().repaint();
 		}
 
 	}
@@ -127,6 +124,7 @@ public class Button extends Stuff {
 	private class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < useAmount; i++) {
+				
 				if (GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
 						.useOn()) {
 					GameScreen
@@ -139,10 +137,8 @@ public class Button extends Stuff {
 									getSize());
 				}
 			}
-			//System.out.print("L\n");
 		}
 	}
-	
 	
 	//костылики
 	protected void robotOn(){

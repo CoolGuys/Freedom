@@ -104,6 +104,10 @@ public class GameField {
 	public Robot getRobot() {
 		return robot;
 	}
+	
+	void damageRobot(int damage){
+		this.robot.lives = this.robot.lives - damage;
+	}
 
 	public void draw(Graphics g) {
 		for (int x = 1; x < cells.length - 1; x++) {
@@ -146,6 +150,10 @@ public class GameField {
 	public Timer getTicker() {
 		return ticker;
 	}
+	
+	public Timer getDeathTicker(){
+		return this.deathTicker;
+	}
 
 	private Robot robot;
 	public Cell[][] cells;
@@ -155,6 +163,7 @@ public class GameField {
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
+	public Timer deathTicker = new Timer(2, null);
 	private static GameField INSTANCE;
 
 }
