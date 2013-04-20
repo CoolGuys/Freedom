@@ -1,7 +1,10 @@
 package com.freedom.gameObjects;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
@@ -17,7 +20,7 @@ public class Robot extends Stuff implements Moveable {
 	private Stuff container;
 	private Cell[][] environment;
 
-	private boolean isMoving;
+	boolean isMoving;
 	private double step = 0.1;
 
 	protected static int maxLives = 100;
@@ -29,17 +32,23 @@ public class Robot extends Stuff implements Moveable {
 
 	private static Logger logger = Logger.getLogger("Robot");
 
-	public Robot(){
+	public Robot()
+	{
 		super();
 		try {
-			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
-			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
+			// textureN = ImageIO.read(new
+			// File("Resource/Textures/RobotN.png"));
+			textureS = ImageIO
+					.read(new File("Resource/Textures/RobotSLOL.png"));
 			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
 			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
+			super.lives = 100;
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
 	
 	public Robot(int posX, int posY, String direction, Stuff c, Cell[][] tiles, int lives)
 	{
@@ -51,10 +60,21 @@ public class Robot extends Stuff implements Moveable {
 		this.environment = tiles;
 
 		try {
-			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"));
-			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"));
-			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
-			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
+			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+
+			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+
+			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+
+			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -139,9 +159,13 @@ public class Robot extends Stuff implements Moveable {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
 			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			if(!isMoving)
+				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+			
 			Thread t = new Thread(r);
 			t.start();
+			
 		} else
 			return;
 	}
@@ -156,7 +180,10 @@ public class Robot extends Stuff implements Moveable {
 			isMoving = true;
 			this.environment[(int)this.x][(int)this.y].robotOff();
 			this.environment[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			if(!isMoving)
+				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+
 			Thread t = new Thread(r);
 			t.start();
 		}
@@ -239,7 +266,8 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void put() {
-
+		if(isMoving)
+			return;
 		int x = (int) this.x;
 		int y = (int) this.y;
 		if (this.container == null)
@@ -249,6 +277,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x][y - 1].add(this.container))
 				return;
 			this.container = null;
+			environment[x][y - 1].getContent()[environment[x][y - 1].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -257,6 +286,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x][y + 1].add(this.container))
 				return;
 			this.container = null;
+			environment[x][y + 1].getContent()[environment[x][y + 1].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -265,6 +295,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x - 1][y].add(this.container))
 				return;
 			this.container = null;
+			environment[x - 1][y].getContent()[environment[x - 1][y].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -273,6 +304,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!environment[x + 1][y].add(this.container))
 				return;
 			this.container = null;
+			environment[x + 1][y].getContent()[environment[x + 1][y].getContentAmount() - 2].teleportate();
 			GameField.getInstance().cells = environment;
 			ScreensHolder.getInstance().repaint();
 		}
@@ -282,25 +314,28 @@ public class Robot extends Stuff implements Moveable {
 	public void draw(Graphics g) {
 		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
 				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
-		
-		
-		if (direction.equals("N"))
-			g.drawImage(textureN, (int) (x * getSize()), (int) (y * getSize()),
-					getSize(), getSize(), null);
-		else if (direction.equals("S"))
-			g.drawImage(textureS, (int) (x * getSize()), (int) (y * getSize()),
-					getSize(), getSize(), null);
-		else if (direction.equals("E"))
-			g.drawImage(textureE, (int) (x * getSize()), (int) (y * getSize()),
-					getSize(), getSize(), null);
-		else
-			g.drawImage(textureW, (int) (x * getSize()), (int) (y * getSize()),
-					getSize(), getSize(), null);
-		
-		
-		if(container!=null) {
-			g.drawImage(container.getTexture(), (int) (x * getSize()), (int) (y * getSize()),
-				getSize(), getSize(), null);
+
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
+				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+
+		if (direction.equals("N")) {
+			g2.drawImage(textureN, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+		} else if (direction.equals("S")) {
+			g2.drawImage(textureS, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+		} else if (direction.equals("E")) {
+			g2.drawImage(textureE, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+		} else {
+			g2.drawImage(textureW, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+		}
+
+		if (container != null) {
+			g.drawImage(container.getTexture(), (int) (x * getSize()),
+					(int) (y * getSize()), getSize(), getSize(), null);
 			logger.info(container.toString());
 		}
 	}

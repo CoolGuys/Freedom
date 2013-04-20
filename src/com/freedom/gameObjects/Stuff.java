@@ -17,6 +17,8 @@ public class Stuff implements IStuff{
 	private int damage; //number of lives you loose
 	private boolean ifDestroyable;
 	protected int lives;
+	private boolean ifAbsorb;
+	private boolean ifReflect;
 	
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
@@ -86,6 +88,14 @@ public class Stuff implements IStuff{
 		return;
 	}
 	
+	boolean teleportate(){
+		return false;
+	}
+	
+	boolean getIfAbsorb(){
+		return this.ifAbsorb;
+	}
+	
 	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
@@ -106,9 +116,12 @@ public class Stuff implements IStuff{
 	public int getY() {
 		return((int)this.y);
 	}
-	
 	public int getSize() {
 		return size;
+	}
+	
+	void raiseDamage(int extraDamage){
+		this.damage = this.damage + extraDamage;
 	}
 	
 	public boolean getIfTakeable(){
@@ -133,6 +146,10 @@ public class Stuff implements IStuff{
 	
 	public boolean ifCanDestroy(){
 		return this.ifDestroyable;
+	}
+	
+	boolean getIfReflect(){
+		return this.ifReflect;
 	}
 
 	public void draw(Graphics g) {

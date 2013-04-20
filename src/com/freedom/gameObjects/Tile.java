@@ -18,33 +18,17 @@ import org.w3c.dom.Element;
 
 public class Tile extends Stuff {
 
-	// if you want tile to be pit, just put damage = maxDamage
-	// we also don't need coordinates - it'll get them while pulling to cell
 
 	public Tile() { 
 		super(false, true);
 	}
 	
-	public Tile(boolean ifPit){ 
-		super(false, true, Robot.maxLives, 0);
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 	}
 	
-	/**
-	 * Метод, который добавляет инфу в файл
-	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
-	 * @author UshAle
-	 */
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
