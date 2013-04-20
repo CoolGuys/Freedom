@@ -35,9 +35,8 @@ public class Box extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
-		this.color=obj.getAttribute("color");
+		super.readLvlFile(obj);
+		this.color = obj.getAttribute("color");
 	}
 	
 	/**
@@ -55,8 +54,5 @@ public class Box extends Stuff {
 	public String getColour() {
 		return this.color;
 	}
-	
-	private String color; 
-	
-	
+	private String color;
 }
