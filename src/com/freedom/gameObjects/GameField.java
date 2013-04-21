@@ -92,8 +92,8 @@ public class GameField {
 	 * @param levelID апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),ChoiceScreen.getInstance());
-		ChoiceScreen.getInstanc
+		// ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+		// ChoiceScreen.getInstance());
 		Loader.loadSave(pathToPackage);
 		previouscells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -170,6 +170,10 @@ public class GameField {
 
 	public Robot getRobot() {
 		return robot;
+	}
+	
+	void damageRobot(int damage){
+		this.robot.lives = this.robot.lives - damage;
 	}
 
 	public void draw(Graphics g) {
