@@ -99,7 +99,7 @@ public class ButtonOr extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Button");
+		obj.setAttribute("class", "com.freedom.gameObjects.ButtonOr");
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 

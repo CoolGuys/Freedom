@@ -56,18 +56,7 @@ public class ButtonAnd extends Stuff {
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
-		
-		try {
-			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		this.texture = textureDepressed;
 	}
 
 	/**
@@ -100,8 +89,7 @@ public class ButtonAnd extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Button");
-		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
+		obj.setAttribute("class", "com.freedom.gameObjects.ButtonAnd");
 	}
 
 	protected void touch() {
