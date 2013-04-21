@@ -29,12 +29,15 @@ public class StartScreenModel {
 	}
 
 	public void addButtons() {
-		buttons[0] = new GButton("NEW", 2, 4,
+		buttons[0] = new GButton("GAME", 2, 4,
 				"com.freedom.view.StartScreen$StartGameAction");
 		buttons[1] = new GButton("EXIT", 12, 6,
 				"com.freedom.view.StartScreen$ExitGameAction");
 		buttons[3] = new GButton("LOAD", 4, 5,
 				"com.freedom.view.StartScreen$LoadGameAction");
+
+		buttons[4] = new GButton("NEW", 4, 3,
+				"com.freedom.view.StartScreen$NewGameAction");
 	}
 
 	public void activate() {

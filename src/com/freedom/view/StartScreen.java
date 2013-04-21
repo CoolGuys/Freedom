@@ -98,6 +98,15 @@ public class StartScreen extends AbstractScreen {
 		}
 	}
 	
+	public static class NewGameAction extends GAction {
+		public void performAction() {
+			ChoiceScreenModel.getInstance().setListedDirectiry("Levels");
+			ScreensHolder.swapScreens(ChoiceScreen.getInstance(),
+					StartScreen.getInstance());
+
+		}
+	}
+	
 	public static class LoadGameAction extends GAction {
 		public void performAction() {
 			ChoiceScreenModel.getInstance().setListedDirectiry("Saves");
