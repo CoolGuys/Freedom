@@ -63,7 +63,7 @@ public class ButtonOr extends Stuff {
 							BufferedImage.SCALE_SMOOTH);
 			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
