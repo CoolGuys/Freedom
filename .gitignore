@@ -3,3 +3,5 @@
 .metadata
 /bin
 *.lvl
+/.settings
+/Levels
