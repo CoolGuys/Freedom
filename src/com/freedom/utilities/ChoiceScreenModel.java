@@ -58,13 +58,11 @@ public class ChoiceScreenModel {
 	}
 
 	public void activate() {
-
+		addEntries();
 	}
 
 	public void deactivate() {
-		for (GButtonLoaderLite b : buttons)
-			if (b != null)
-				b.reset();
+		buttons=new GButtonLoaderLite[5];
 	}
 
 	public void draw(Graphics g) {
@@ -83,7 +81,7 @@ public class ChoiceScreenModel {
 		return "NothingHappened";
 	}
 
-	public void setListedDirectiry(String dir) {
+	public void setListedDirectory(String dir) {
 		listedDirectory = dir;
 		addEntries();
 	}
