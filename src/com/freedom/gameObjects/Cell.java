@@ -190,7 +190,7 @@ public class Cell {
 	// дописать обратботку смерти
 	private class DamageSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().damageRobot(damage);
+			//GameField.getInstance().damageRobot(damage);
 			if (GameField.getInstance().getRobot().lives <= 0) {
 				System.out.println("You are dead, idiot!");
 				System.exit(10);
