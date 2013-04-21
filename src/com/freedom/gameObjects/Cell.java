@@ -184,7 +184,7 @@ public class Cell {
 			return;
 
 		DamageSender damager = new DamageSender();
-		GameField.getInstance().getDeathTicker().addActionListener(damager);
+		GameField.getInstance().getTicker().addActionListener(damager);
 	}
 
 	// дописать обратботку смерти

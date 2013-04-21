@@ -149,8 +149,7 @@ public class ChoiceScreenModel {
 			GameField.getInstance().setlvl(1);
 			GameField.getInstance().setPath(fileToLoad);
 			GameField.getInstance().loadLevel(
-					GameField.getInstance().getPath(),
-					GameField.getInstance().getlvl());
+					GameField.getInstance().getPath());
 		}
 
 		public void draw(Graphics g) {

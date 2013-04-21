@@ -64,6 +64,7 @@ public class Loader {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				Document doc = db.parse(fXml);
 				doc.getDocumentElement().normalize();
+				doc.getDocumentElement().setAttribute("startLvl", String.valueOf(num));
 				logger.info("Open <" + doc.getDocumentElement().getTagName()
 						+ "> in " + fXml.getPath());
 				NodeList lvllist = doc.getElementsByTagName("level");
@@ -157,8 +158,25 @@ public class Loader {
 		}
 	}
 
-	public static void readLvl(int Number, String lvlfile) {
+	public static void loadSave(String lvlfile) {
+		File fXml = new File(lvlfile);
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(fXml);
+			doc.getDocumentElement().normalize();
+			int tl=1;
+			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
+			GameField.getInstance().setlvl(tl);			
+			GameField.getInstance().setPlvl(tl);
+			System.out.println("1");
+			Loader.readLvl(tl, lvlfile);
+		} catch (Exception ei) {
+			ei.printStackTrace();
+		}
+	}
 
+	public static void readLvl(int Number, String lvlfile) {
 		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		try {
