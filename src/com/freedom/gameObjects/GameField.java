@@ -23,19 +23,46 @@ import com.freedom.view.ScreensHolder;
 
 public class GameField {
 
-	private int thislvl;
+	private int thislvl; 
 	private String pathToSave;
-
+	private int previousLevel;
+	public Cell[][] previouscells;
+	private Robot robot;
+	public Cell[][] cells;
+	private int xSize;
+	private int ySize;
+	@SuppressWarnings("unused")
+	private Logger logger = Logger.getLogger("Core.GameField");
+	private int cellSize;
+	public Timer ticker = new Timer(2, null);
+	private static GameField INSTANCE;
+	/**
+	 *  
+	 * @param path set path to the save file
+	 */
 	public void setPath(String path) {
 		this.pathToSave = path;
 	}
-
+	/**
+	 * 
+	 * @return get a path to the save file
+	 */
 	public String getPath() {
 		return this.pathToSave;
 	}
-
+	/**
+	 * 
+	 * @param lvl set This lvl param
+	 */
 	public void setlvl(int lvl) {
 		this.thislvl = lvl;
+	}
+	/**
+	 * 
+	 * @param lvl set previous lvl param
+	 */
+	public void setPlvl(int lvl) {
+		this.previousLevel = lvl;
 	}
 
 	public int getlvl() {
@@ -50,33 +77,73 @@ public class GameField {
 		ticker.stop();
 	}
 
-	public void loadLevel(String pathToPackage, int levelID) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-				ChoiceScreen.getInstance());
-		Loader.readLvl(levelID, pathToPackage);
+	/*
+	 * public void loadSave(String pathToPackage){
+	 * Loader.loadSave(pathToPackage);
+	 * GameScreen.getInstance().setSize(cells.length * cellSize, cells[0].length
+	 * * cellSize); }
+	 */
+	/**
+	 * метод для старта игры. Подходит как для старта так и для загрузки.
+	 * Обязательно нужно сделать так, чтобы при новой игре загружался один файл,
+	 * а при загрузке другой
+	 * 
+	 * @param pathToPackage путь к файлу
+	 * @param levelID апендикс, который сейчас не нужен
+	 */
+	public void loadLevel(String pathToPackage) {
+		// ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+		// ChoiceScreen.getInstance());
+		Loader.loadSave(pathToPackage);
+		previouscells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
+
+		// ScreensHolder.swapScreens(GameScreen.getInstance(),
+		// LoadingScreen.getInstance());
 	}
 
-	// это метод для перехода на
-	// СЛЕДУЮЩИЙ УРОВНЬ
-	public void nextlvl(int thislvl, int nextlvl) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-				GameScreen.getInstance());
+	/**
+	 * метод для переключения уровней
+	 * @param nextlvl слеудующий лвл.
+	 */
+	public void nextlvl(int nextlvl) {
+		// ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+		// GameScreen.getInstance());
 		resetTickerListeners();
-		this.thislvl = nextlvl;
-		Stuff buf = robot.getContent();
-		robot.emptyContainer();
-		Loader.lvlToSv(thislvl, this.pathToSave);
-		Loader.readLvl(nextlvl, this.pathToSave);
-		robot.setContainer(buf);
-		Loader.lvlToSv(nextlvl, this.pathToSave);
-		GameScreen.getInstance().setSize(cells.length * cellSize,
-				cells[1].length * cellSize);
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
+		//System.out.println("This="+this.thislvl+" next="+nextlvl);
+	//	if (previousLevel != nextlvl) {
+			this.previousLevel = this.thislvl;
+			this.thislvl = nextlvl;
+			previouscells = cells;
+			Stuff buf = robot.getContent();
+			robot.emptyContainer();
+			Loader.lvlToSv(this.previousLevel, this.pathToSave);
+			Loader.readLvl(nextlvl, this.pathToSave);
+			robot.setContainer(buf);
+			Loader.lvlToSv(nextlvl, this.pathToSave);
+			GameScreen.getInstance().setSize(cells.length * cellSize,
+					cells[1].length * cellSize);
+		/*}else{
+			this.previousLevel = this.thislvl;
+			this.thislvl = nextlvl;
+			previouscells = cells;
+			Stuff buf = robot.getContent();
+			robot.emptyContainer();
+			Loader.lvlToSv(this.previousLevel, this.pathToSave);
+			//Loader.readLvl(nextlvl, this.pathToSave);
+			Cell[][] bufCells;
+			bufCells=previouscells;
+			previouscells=cells;
+			cells=bufCells;
+			robot.setContainer(buf);
+			Loader.lvlToSv(nextlvl, this.pathToSave);
+			GameScreen.getInstance().setSize(cells.length * cellSize,
+					cells[1].length * cellSize);
+		}*/
+		// ScreensHolder.swapScreens(GameScreen.getInstance(),
+		// LoadingScreen.getInstance());
+
 	}
 
 	public void resetTickerListeners() {
@@ -146,15 +213,4 @@ public class GameField {
 	public Timer getTicker() {
 		return ticker;
 	}
-
-	private Robot robot;
-	public Cell[][] cells;
-	private int xSize;
-	private int ySize;
-	@SuppressWarnings("unused")
-	private Logger logger = Logger.getLogger("Core.GameField");
-	private int cellSize;
-	public Timer ticker = new Timer(2, null);
-	private static GameField INSTANCE;
-
 }
