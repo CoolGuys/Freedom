@@ -19,10 +19,11 @@ public class Wall extends Stuff {
 	private static Image textureSE;
 	private static Image textureSW;
 	private static Image textureNW;
+	
 	static {
 		getImages();
 	}
-
+	
 	private static void getImages() {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"));

@@ -19,7 +19,7 @@ public class Robot extends Stuff implements Moveable {
 	private String direction;
 	private Stuff container;
 
-	private boolean isMoving;
+	boolean isMoving;
 	private double step = 0.1;
 
 	protected static int maxLives = 100;
@@ -30,7 +30,8 @@ public class Robot extends Stuff implements Moveable {
 	private static Image textureW;
 
 	private static Logger logger = Logger.getLogger("Robot");
-	
+
+
 	static {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
@@ -141,11 +142,15 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			if(!isMoving)
+				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+			
 			Thread t = new Thread(r);
 			t.start();
+			
 		} else
 			return;
 	}
@@ -158,13 +163,15 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			GameField.getInstance().cells[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().cells[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
+			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			if(!isMoving)
+				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+
 			Thread t = new Thread(r);
 			t.start();
-		} else
-			return;
+		}
 	}
 	
 	public Point getTargetCellCoordinates(String direction) {
@@ -243,7 +250,8 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void put() {
-
+		if(isMoving)
+			return;
 		int x = (int) this.x;
 		int y = (int) this.y;
 		if (this.container == null)
@@ -253,6 +261,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!GameField.getInstance().cells[x][y - 1].add(this.container))
 				return;
 			this.container = null;
+			GameField.getInstance().getCells()[x][y - 1].getContent()[GameField.getInstance().getCells()[x][y - 1].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -261,6 +270,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!GameField.getInstance().cells[x][y + 1].add(this.container))
 				return;
 			this.container = null;
+			GameField.getInstance().getCells()[x][y + 1].getContent()[GameField.getInstance().getCells()[x][y + 1].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -269,6 +279,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!GameField.getInstance().cells[x - 1][y].add(this.container))
 				return;
 			this.container = null;
+			GameField.getInstance().getCells()[x - 1][y].getContent()[GameField.getInstance().getCells()[x - 1][y].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
@@ -277,6 +288,7 @@ public class Robot extends Stuff implements Moveable {
 			if (!GameField.getInstance().cells[x + 1][y].add(this.container))
 				return;
 			this.container = null;
+			GameField.getInstance().getCells()[x + 1][y].getContent()[GameField.getInstance().getCells()[x + 1][y].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 		}
 

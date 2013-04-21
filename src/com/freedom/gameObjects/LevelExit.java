@@ -8,8 +8,6 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-import com.freedom.view.GameScreen;
-
 public class LevelExit extends Stuff{
 	
 	private int nextLevelID;

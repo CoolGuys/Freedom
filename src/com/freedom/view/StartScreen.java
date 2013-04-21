@@ -89,7 +89,7 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {
-			GameField.getInstance().setlvl(1);			 //установка начального лвла
+			GameField.getInstance().setlvl(1);	
 			GameField.getInstance().setPath("Level1.lvl");
 			GameField.getInstance().loadLevel(GameField.getInstance().getPath(), GameField.getInstance().getlvl());			
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
