@@ -27,6 +27,7 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	public void prepareModel () {
+		GameField.getInstance().setPath("Saves/Save1.lvl");
 		GameField.getInstance().setCellSize(scale);
 	}
 

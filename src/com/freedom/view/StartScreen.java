@@ -89,7 +89,6 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {	
-			GameField.getInstance().setPath("Saves/Save1.lvl");
 			GameField.getInstance().loadLevel(GameField.getInstance().getPath());			
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
 					StartScreen.getInstance());
