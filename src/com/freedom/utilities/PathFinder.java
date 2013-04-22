@@ -21,24 +21,34 @@ import com.freedom.gameObjects.GameField;
 public class PathFinder {
 
 	private static Logger logger = Logger.getLogger("PathFinder");
+	
+	public PathFinder(){
+		
+	}
 
 	private static int generateRandom(int n) {
 		Random random = new Random();
 		return Math.abs(random.nextInt()) % n;
 	}
-	
+
 	/**
 	 * 
-	 * @param xs x начала
-	 * @param ys y начала
-	 * @param xe x конца
-	 * @param ye y конца
-	 * @param width Задаёт максимальную дину пути, по которому можно дойти. 
-	 * @return Возвращает случайный путь до пункта назначения в виде строки "NWES" или 0 если нельзя дойти
+	 * @param xs
+	 *            x начала
+	 * @param ys
+	 *            y начала
+	 * @param xe
+	 *            x конца
+	 * @param ye
+	 *            y конца
+	 * @param width
+	 *            Задаёт максимальную дину пути, по которому можно дойти.
+	 * @return Возвращает случайный путь до пункта назначения в виде строки
+	 *         "NWES" или 0 если нельзя дойти
 	 */
 
-	public static String find(int xs, int ys, int xe, int ye, int width){
-		
+	public String find(int xs, int ys, int xe, int ye, int width) {
+
 		logger.setLevel(Level.OFF);	
 		logger.info("starting from ("+xs+","+ys+") to ("+xe+","+ye+")");
 		logger.info("getting cells");
