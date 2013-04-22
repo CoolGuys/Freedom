@@ -191,6 +191,7 @@ public class Cell {
 	private class DamageSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().damageRobot(damage);
+			System.out.println(GameField.getInstance().getRobot().lives);
 			if (GameField.getInstance().getRobot().lives <= 0) {
 				System.out.println("You are dead, idiot!");
 				System.exit(10);

@@ -20,7 +20,8 @@ public class Tile extends Stuff {
 
 
 	public Tile() { 
-		super(false, true);
+		super(false, true,false, false);
+		
 			try {
 				texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
 			} catch (IOException e) {

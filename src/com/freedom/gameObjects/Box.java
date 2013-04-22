@@ -25,7 +25,7 @@ public class Box extends Stuff {
 
 	public Box()
 	{
-		super(true, false,0,10);
+		super(true, false,false, true,0,10);
 		texture = texture1;
 	}
 

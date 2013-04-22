@@ -52,7 +52,7 @@ public class ButtonAnd extends Stuff {
 	}
 
 	public ButtonAnd() {
-		super(false, true);
+		super(false, true,false,false);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
@@ -100,7 +100,7 @@ public class ButtonAnd extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Button");
+		obj.setAttribute("class", "com.freedom.gameObjects.ButtonAnd");
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 

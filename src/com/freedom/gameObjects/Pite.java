@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 public class Pite extends Stuff{
 	
 	public Pite() { 
-		super(false, true);
+		super(false, true, false, false);
 	}
 	
 	

@@ -29,7 +29,7 @@ public class Teleport extends Stuff {
 
 	// телепорт - хрупкая сущность.
 	public Teleport() {
-		super(false, true, 0, 1);
+		super(false, true, false,false, 0, 1);
 		try {
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/ButtonPressed.png"));

@@ -40,7 +40,7 @@ public class Wall extends Stuff {
 
 	public Wall()
 	{
-		super(false, false);
+		super(false, false, false, true);
 	}
 
 	public void readLvlFile(Element obj) {

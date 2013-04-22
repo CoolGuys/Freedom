@@ -16,7 +16,7 @@ public class NotDoor extends Stuff {
 	private Image textureClosed;
 
 	public NotDoor() {
-		super(false, true, 0, 0);
+		super(false, true, true, false, 0, 0);
 		try {
 			textureClosed = ImageIO.read(new File(
 					"Resource/Textures/DoorClosed.png"));

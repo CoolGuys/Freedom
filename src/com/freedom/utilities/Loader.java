@@ -159,7 +159,7 @@ public class Loader {
 
 	public static void readLvl(int Number, String lvlfile) {
 
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

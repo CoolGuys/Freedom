@@ -30,7 +30,7 @@ public class Tile2 extends Stuff {
 	}
 	
 	public Tile2() { 
-		super(false, true);
+		super(false, true,false, false);
 		texture = texture1;
 	}
 	

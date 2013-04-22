@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 /*
  * признак конца - this.next.next = this.next;
+ * Найдите кто-нибудь метод для рисования прямой, пожалуйста
  */
 
 public class LaserBeam extends Stuff {
@@ -11,45 +12,52 @@ public class LaserBeam extends Stuff {
 	LaserBeam next;
 
 	public LaserBeam(double x, double y) {
-		super(false, true, 1, 0);
-		xStart = x;
-		yStart = y;
+		super(false, true,false, false, 1, 0);
+		super.x = x;
+		super.y = y;
 		next = null;
 	}
 
 	/*
+	 * Метод построения луча. Вероятность мелкого косяка огромна.
 	 * Здесь x,y - координаты "конца" 1ого куска; должны лежать на границе
 	 * целла!!!
 	 */
-	void buildBeam(double x, double y) {
+	void buildBeam(double xNext, double yNext) {
 		this.next = new LaserBeam(x, y);
-		double k;
-		double m;
 		double yBuf;
 		double xBuf;
 
-		this.next.xStart = x;
-		this.next.yStart = y;
+		this.next.x = xNext;
+		this.next.y = yNext;
 
 		if (x == this.x) {
 
-			GameField.getInstance().cells[(int) Math.floor(this.xStart)][(int) Math
-					.floor(this.yStart)].add(this);
-
-			if (GameField.getInstance().cells[(int) Math.floor(this.xStart)][(int) Math
-					.floor(this.yStart)].getTop().getIfReflect()) {
-				if (y > this.yStart)
-					this.next.buildBeam(x, y - 1);
-				else
-					this.next.buildBeam(x, y + 1);
+			// получаем коорд. "нашего" целла
+			if (yNext > this.y) {
+				yBuf = Math.floor(this.y);
+			} else {
+				yBuf = Math.floor(yNext);
 			}
-			if (GameField.getInstance().cells[(int) Math.floor(x)][(int) Math
-					.floor(y)].getTop().getIfAbsorb()) {
+
+			// проверка на поглощение
+			if (GameField.getInstance().cells[(int) xNext][(int) yBuf].getTop()
+					.getIfAbsorb()) {
 				this.next.next = this.next;
 				return;
 			}
+			GameField.getInstance().cells[(int) xNext][(int) yBuf].add(this);
 
-			if (y > this.yStart)
+			// ну и отражается или нет
+			if (GameField.getInstance().cells[(int) xNext][(int) yBuf].getTop()
+					.getIfReflect()) {
+				if (yNext > this.y)
+					this.next.buildBeam(this.x, yNext - 1);
+				else
+					this.next.buildBeam(this.x, yNext + 1);
+			}
+
+			if (yNext > this.y)
 				this.next.buildBeam(x, y + 1);
 			else
 				this.next.buildBeam(x, y - 1);
@@ -57,59 +65,105 @@ public class LaserBeam extends Stuff {
 		}
 
 		if (y == this.y) {
-			GameField.getInstance().cells[(int) Math.floor(this.xStart)][(int) Math
-					.floor(this.yStart)].add(this);
 
-			if (GameField.getInstance().cells[(int) Math.floor(this.xStart)][(int) Math
-					.floor(this.yStart)].getTop().getIfReflect()) {
-				if (x > this.xStart)
-					this.next.buildBeam(x - 1, y);
-				else
-					this.next.buildBeam(x + 1, y);
+			if (yNext > this.y) {
+				xBuf = Math.floor(this.x);
+			} else {
+				xBuf = Math.floor(xNext);
 			}
-			if (GameField.getInstance().cells[(int) Math.floor(x)][(int) Math
-					.floor(y)].getTop().getIfAbsorb()) {
+
+			if (GameField.getInstance().cells[(int) xBuf][(int) yNext].getTop()
+					.getIfAbsorb()) {
 				this.next.next = this.next;
 				return;
 			}
+			GameField.getInstance().cells[(int) xBuf][(int) yNext].add(this);
 
-			if (x > this.xStart)
-				this.next.buildBeam(x + 1, y);
-			else
-				this.next.buildBeam(x - 1, y);
-
+			if (GameField.getInstance().cells[(int) xBuf][(int) yNext].getTop()
+					.getIfReflect()) {
+				if (xNext > this.x)
+					this.next.buildBeam(xNext - 1, yNext);
+				else
+					this.next.buildBeam(xNext + 1, yNext);
+			} else {
+				if (xNext > this.x)
+					this.next.buildBeam(xNext + 1, yNext);
+				else
+					this.next.buildBeam(xNext - 1, yNext);
+			}
 		}
 
-		k = (y - this.yStart) / (x - this.xStart);
+		if ((xNext - this.x) == (yNext - this.y)) {
 
-		if (GameField.getInstance().cells[(int) Math.floor(this.xStart)][(int) Math
-				.floor(this.yStart)].getTop().getIfAbsorb()) {
-			this.next = this.next.next;
-			return;
+			if (yNext > this.y) {
+				yBuf = Math.floor(this.y);
+				xBuf = Math.floor(this.x);
+			} else {
+				yBuf = Math.floor(yNext);
+				xBuf = Math.floor(xNext);
+			}
+
+			if (GameField.getInstance().cells[(int) xBuf][(int) yBuf].getTop()
+					.getIfAbsorb()) {
+				this.next.next = this.next;
+				return;
+			}
+			GameField.getInstance().cells[(int) xBuf][(int) yBuf].add(this);
+
+			if (GameField.getInstance().cells[(int) xBuf][(int) yBuf].getTop()
+					.getIfReflect()) {
+				if (yNext > this.y)
+					this.next.buildBeam(xNext - 1, yNext - 1);
+				else
+					this.next.buildBeam(xNext + 1, yNext + 1);
+			} else {
+
+				if (yNext > this.y)
+					this.next.buildBeam(xNext - 1, yNext - 1);
+				else
+					this.next.buildBeam(xNext + 1, yNext + 1);
+			}
+
 		}
+		
+		
+		if ((this.x - xNext) == (yNext - this.y)) {
 
-		if (k>0) {
-			if (x == Math.ceil(x)) {
-				if ((y - Math.floor(y)) >= (1 - k)) { // след. точка - на у
-					yBuf = Math.ceil(y);
-					xBuf = x + (yBuf - y) / k;
-				}else{
-					yBuf = y + k;
-					xBuf = x + 1;
-				}
-			}else{
-				if ((x - Math.floor(y)) >= (1 - k)) { // след. точка - на у
-					yBuf = Math.ceil(y);
-					xBuf = x + (yBuf - y) / k;
-				}else{
-					yBuf = y + k;
-					xBuf = x + 1;
-				}
-				
+			if (yNext > this.y) {
+				yBuf = Math.floor(this.y);
+				xBuf = Math.floor(xNext);
+			} else {
+				yBuf = Math.floor(yNext);
+				xBuf = Math.floor(this.x);
+			}
+
+			if (GameField.getInstance().cells[(int) xBuf][(int) yBuf].getTop()
+					.getIfAbsorb()) {
+				this.next.next = this.next;
+				return;
 			}
 			
+			GameField.getInstance().cells[(int) xBuf][(int) yBuf].add(this);
+
+			if (GameField.getInstance().cells[(int) xBuf][(int) yBuf].getTop()
+					.getIfReflect()) {
+				if (yNext > this.y)
+					this.next.buildBeam(xNext - 1, yNext + 1);
+				else
+					this.next.buildBeam(xNext - 1, yNext + 1);
+			} else {
+
+				if (yNext > this.y)
+					this.next.buildBeam(xNext - 1, yNext + 1);
+				else
+					this.next.buildBeam(xNext + 1, yNext - 1);
+			}
+
 		}
+		
+		
 
 	}
-
+	
+	
 }

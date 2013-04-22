@@ -54,10 +54,12 @@ public class Stuff implements IStuff{
 	
 	
 	//if lives==0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable, int damage, int lives){ 
+	public Stuff(boolean pickable, boolean passable,boolean reflectable, boolean absorbable, int damage, int lives){ 
 		this.pickable = pickable;
 		this.passable = passable;
 		this.damage = damage;
+		this.ifReflect = reflectable;
+		this.ifAbsorb = absorbable;
 		
 		if(lives==0){
 			this.lives = 1;
@@ -99,9 +101,11 @@ public class Stuff implements IStuff{
 	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
-	public Stuff(boolean pickable, boolean passable){  
+	public Stuff(boolean pickable, boolean passable,boolean reflectable, boolean absorbable){  
 		this.pickable = pickable;
 		this.passable = passable;
+		this.ifReflect = reflectable;
+		this.ifAbsorb = absorbable;
 		this.damage = 0;
 		this.ifDestroyable = false;
 		this.lives = 1;

@@ -28,7 +28,7 @@ public class Door extends Stuff {
 	}
 
 	public Door() {
-		super(false, false, 0, 0);
+		super(false, false, true, false,0, 0);
 		texture = textureClosed;
 
 	}

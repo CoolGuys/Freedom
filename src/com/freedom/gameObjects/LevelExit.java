@@ -14,7 +14,7 @@ public class LevelExit extends Stuff{
 	
 	public LevelExit()
 	{
-		super(false, true,0,0);
+		super(false, true,false, true,0,0);
 	
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
