@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.*;
 import com.freedom.gameObjects.*;
+import com.freedom.gameObjects.Box;
 import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.StartScreenModel;
 
@@ -53,6 +54,8 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
+		
+		imap.put(KeyStroke.getKeyStroke("B"), "make.box");
 
 	}
 
@@ -75,6 +78,7 @@ public class GameScreen extends AbstractScreen {
 		FieldFineOffsetAction fineOffsetDown = new FieldFineOffsetAction("S");
 		FieldFineOffsetAction fineOffsetLeft = new FieldFineOffsetAction("W");
 		FieldFineOffsetAction fineOffsetRight = new FieldFineOffsetAction("E");
+		MakeBoxAction makeBox = new MakeBoxAction();
 
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
@@ -96,6 +100,8 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
+
+		//amap.put("make.box", makeBox);
 
 	}
 
@@ -232,6 +238,12 @@ public class GameScreen extends AbstractScreen {
 		public void actionPerformed(ActionEvent e) {
 			logger.info("Offset requested");
 			changeOffsetFine((String) getValue(Action.NAME));
+		}
+	}
+	
+	private class MakeBoxAction extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().setContainer(new Box());
 		}
 	}
 }
