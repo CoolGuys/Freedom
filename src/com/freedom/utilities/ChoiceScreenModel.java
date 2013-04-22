@@ -20,9 +20,7 @@ import java.util.logging.Logger;
 
 import com.freedom.gameObjects.GameField;
 import com.freedom.view.ChoiceScreen;
-import com.freedom.view.GameScreen;
 import com.freedom.view.PauseScreen;
-import com.freedom.view.ScreensHolder;
 
 public class ChoiceScreenModel {
 

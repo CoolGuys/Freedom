@@ -9,9 +9,9 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-public class Pite extends Stuff{
+public class Pit extends Stuff{
 	
-	public Pite() { 
+	public Pit() { 
 		super(false, true);
 	}
 	
@@ -34,7 +34,7 @@ public class Pite extends Stuff{
 
 
 	public Image getTexture() { 
-		return this.texture;
+		return Pit.texture;
 	}
 	
 	private static Image texture;

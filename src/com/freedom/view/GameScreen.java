@@ -5,11 +5,16 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import com.freedom.gameObjects.*;
-import com.freedom.gameObjects.Box;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
@@ -78,7 +83,7 @@ public class GameScreen extends AbstractScreen {
 		FieldFineOffsetAction fineOffsetDown = new FieldFineOffsetAction("S");
 		FieldFineOffsetAction fineOffsetLeft = new FieldFineOffsetAction("W");
 		FieldFineOffsetAction fineOffsetRight = new FieldFineOffsetAction("E");
-		MakeBoxAction makeBox = new MakeBoxAction();
+		//MakeBoxAction makeBox = new MakeBoxAction();
 
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
@@ -241,9 +246,9 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
-	private class MakeBoxAction extends AbstractAction {
+	/*private class MakeBoxAction extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().getRobot().setContainer(new Box());
 		}
-	}
+	}*/
 }

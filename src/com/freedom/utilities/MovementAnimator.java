@@ -5,7 +5,6 @@ import javax.swing.JLayeredPane;
 import com.freedom.gameObjects.GameField;
 import com.freedom.gameObjects.Moveable;
 import com.freedom.view.GameScreen;
-import com.freedom.view.ScreensHolder;
 
 public final class MovementAnimator<MovingObj extends Moveable> implements Runnable {
 

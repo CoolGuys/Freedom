@@ -1,7 +1,6 @@
 package com.freedom.gameObjects;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class Laser extends Stuff {
 	LaserBeam beamHead;
