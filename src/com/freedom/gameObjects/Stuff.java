@@ -7,16 +7,16 @@ import org.w3c.dom.Element;
 
 public class Stuff implements IStuff{
 	
-	protected double x; 
-	protected double y; 
-	protected Image texture;
+	 double x; 
+	 double y; 
+	 Image texture;
 	private boolean pickable; 
-	protected boolean passable;
+	 boolean passable;
 	private static int size = GameField.getInstance().getCellSize();
 	
 	private int damage; //number of lives you loose
 	private boolean ifDestroyable;
-	protected int lives;
+	 int lives;
 	private boolean ifAbsorb;
 	private boolean ifReflect;
 	
@@ -71,22 +71,22 @@ public class Stuff implements IStuff{
 		}
 	}
 	
-	protected  boolean useOn(){
+	  boolean useOn(){
 		return false;
 	}
 	
-	protected boolean useOff(){
+	 boolean useOff(){
 		return false;
 	}
 	
-	protected void touch(){
+	 void touch(){
 		return;
 	}
 	
-	protected void robotOn(){
+	 void robotOn(){
 		return;
 	}
-	protected void robotOff(){
+	 void robotOff(){
 		return;
 	}
 	

@@ -42,6 +42,7 @@ public class GameField {
 	
 	public void activate() {
 		ticker.start();
+		deathTicker.start();
 	}
 	
 	public void deactivate() {
@@ -153,7 +154,7 @@ public class GameField {
 	private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-	public Timer deathTicker = new Timer(2, null);
+	public Timer deathTicker = new Timer(200, null);
 	private static GameField INSTANCE;
 
 }

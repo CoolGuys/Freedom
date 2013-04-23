@@ -103,7 +103,7 @@ public class ButtonOr extends Stuff {
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	protected void touch() {
+	 void touch() {
 
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
@@ -141,12 +141,12 @@ public class ButtonOr extends Stuff {
 	}
 	
 	//костылики
-	protected void robotOn(){
+	 void robotOn(){
 		if(!this.ifPressed)
 			this.touch();
 		return;
 	}
-	protected void robotOff(){
+	 void robotOff(){
 		if(this.ifPressed)
 			this.touch();
 		return;

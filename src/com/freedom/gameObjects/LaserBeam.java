@@ -1,5 +1,9 @@
 package com.freedom.gameObjects;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+
 /*
  * признак конца - this.next.next = this.next;
  * Найдите кто-нибудь метод для рисования прямой, пожалуйста
@@ -161,8 +165,13 @@ public class LaserBeam extends Stuff {
 
 		}
 		
-		
 
+	}
+	
+	public void draw(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.RED);
+		g2.drawLine((int)(this.x*getSize()), (int)(this.y*getSize()), (int)(this.next.x*getSize()), (int)(this.next.y)*getSize());
 	}
 	
 	
