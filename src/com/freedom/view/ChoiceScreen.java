@@ -17,6 +17,8 @@ import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.ChoiceScreenModel;
 import com.freedom.utilities.GAction;
 
+
+//comment
 @SuppressWarnings("serial")
 public class ChoiceScreen extends AbstractScreen {
 	private ChoiceScreen()

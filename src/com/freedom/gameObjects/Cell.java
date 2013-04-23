@@ -170,6 +170,8 @@ public class Cell {
 		this.harm();
 	}
 
+	
+	
 	void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
