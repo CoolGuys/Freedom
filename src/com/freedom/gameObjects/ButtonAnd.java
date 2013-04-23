@@ -52,7 +52,7 @@ public class ButtonAnd extends Stuff {
 	}
 
 	public ButtonAnd() {
-		super(false, true,false,false);
+		super(false, true);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
@@ -104,7 +104,7 @@ public class ButtonAnd extends Stuff {
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	 void touch() {
+	protected void touch() {
 
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
@@ -155,12 +155,12 @@ public class ButtonAnd extends Stuff {
 	}
 	
 	//костылики
-	 void robotOn(){
+	protected void robotOn(){
 		if(!this.ifPressed)
 			this.touch();
 		return;
 	}
-	 void robotOff(){
+	protected void robotOff(){
 		if(this.ifPressed)
 			this.touch();
 		return;

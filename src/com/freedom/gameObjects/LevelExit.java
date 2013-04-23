@@ -1,5 +1,6 @@
 package com.freedom.gameObjects;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
@@ -10,18 +11,21 @@ import org.w3c.dom.Element;
 public class LevelExit extends Stuff{
 	
 	private int nextLevelID;
+	private static Image texture1;
+	
+	static {
 
-	
-	public LevelExit()
-	{
-		super(false, true,false, true,0,0);
-	
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/NextLevel.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public LevelExit()
+	{
+		super(false, true,0,0);
+		texture = texture1;
 	}
 
 	/**
@@ -49,6 +53,6 @@ public class LevelExit extends Stuff{
 	
 	public void robotOn(){
 		GameField.getInstance().getRobot().SetXY(super.getX()-1, super.getY());
-		GameField.getInstance().nextlvl(GameField.getInstance().getlvl(), nextLevelID);
+		GameField.getInstance().nextlvl(nextLevelID);
 	}
 }

@@ -5,10 +5,16 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import com.freedom.gameObjects.*;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
@@ -27,6 +33,7 @@ public class GameScreen extends AbstractScreen {
 	}
 	
 	public void prepareModel () {
+		GameField.getInstance().setPath("Saves/Save1.lvl");
 		GameField.getInstance().setCellSize(scale);
 	}
 
@@ -52,6 +59,8 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
+		
+		imap.put(KeyStroke.getKeyStroke("B"), "make.box");
 
 	}
 
@@ -74,6 +83,7 @@ public class GameScreen extends AbstractScreen {
 		FieldFineOffsetAction fineOffsetDown = new FieldFineOffsetAction("S");
 		FieldFineOffsetAction fineOffsetLeft = new FieldFineOffsetAction("W");
 		FieldFineOffsetAction fineOffsetRight = new FieldFineOffsetAction("E");
+		//MakeBoxAction makeBox = new MakeBoxAction();
 
 		ActionMap amap = this.getActionMap();
 		amap.put("move.up", moveUp);
@@ -95,6 +105,8 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
+
+		//amap.put("make.box", makeBox);
 
 	}
 
@@ -233,4 +245,10 @@ public class GameScreen extends AbstractScreen {
 			changeOffsetFine((String) getValue(Action.NAME));
 		}
 	}
+	
+	/*private class MakeBoxAction extends AbstractAction {
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().setContainer(new Box());
+		}
+	}*/
 }

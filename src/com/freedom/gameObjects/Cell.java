@@ -3,9 +3,6 @@ package com.freedom.gameObjects;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import com.freedom.gameObjects.Button.SignalOnSender;
-import com.freedom.view.GameScreen;
-
 public class Cell {
 
 	private int x;
@@ -16,8 +13,6 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
-	private DamageSender damager;
-	
 
 	public Cell(int a, int b) {
 		this.x = a;
@@ -27,7 +22,6 @@ public class Cell {
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
-		damager = new DamageSender();
 	}
 
 	public boolean add(Stuff element) {
@@ -176,25 +170,26 @@ public class Cell {
 		this.harm();
 	}
 
-	public void robotOff() {
+	
+	
+	void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
 		}
-		GameField.getInstance().getDeathTicker().removeActionListener(damager);
 	}
 
 	void harm() {
-		if (this.getDamage() == 0){
+		if (this.getDamage() == 0)
 			return;
-		}
-		GameField.getInstance().getDeathTicker().addActionListener(damager);
+
+		DamageSender damager = new DamageSender();
+		GameField.getInstance().getTicker().addActionListener(damager);
 	}
 
 	// дописать обратботку смерти
 	private class DamageSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().damageRobot(damage);
-			System.out.println(GameField.getInstance().getRobot().lives);
 			if (GameField.getInstance().getRobot().lives <= 0) {
 				System.out.println("You are dead, idiot!");
 				System.exit(10);

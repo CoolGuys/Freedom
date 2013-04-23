@@ -5,18 +5,18 @@ import java.awt.Image;
 import org.w3c.dom.Element;
 
 
-public class Stuff implements IStuff{
+public class Stuff {
 	
-	 double x; 
-	 double y; 
-	 Image texture;
+	protected double x; 
+	protected double y; 
+	protected Image texture;
 	private boolean pickable; 
-	 boolean passable;
+	protected boolean passable;
 	private static int size = GameField.getInstance().getCellSize();
 	
 	private int damage; //number of lives you loose
 	private boolean ifDestroyable;
-	 int lives;
+	protected int lives;
 	private boolean ifAbsorb;
 	private boolean ifReflect;
 	
@@ -54,12 +54,10 @@ public class Stuff implements IStuff{
 	
 	
 	//if lives==0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable,boolean reflectable, boolean absorbable, int damage, int lives){ 
+	public Stuff(boolean pickable, boolean passable, int damage, int lives){ 
 		this.pickable = pickable;
 		this.passable = passable;
 		this.damage = damage;
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
 		
 		if(lives==0){
 			this.lives = 1;
@@ -71,22 +69,22 @@ public class Stuff implements IStuff{
 		}
 	}
 	
-	  boolean useOn(){
+	protected  boolean useOn(){
 		return false;
 	}
 	
-	 boolean useOff(){
+	protected boolean useOff(){
 		return false;
 	}
 	
-	 void touch(){
+	protected void touch(){
 		return;
 	}
 	
-	 void robotOn(){
+	protected void robotOn(){
 		return;
 	}
-	 void robotOff(){
+	protected void robotOff(){
 		return;
 	}
 	
@@ -101,11 +99,9 @@ public class Stuff implements IStuff{
 	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
-	public Stuff(boolean pickable, boolean passable,boolean reflectable, boolean absorbable){  
+	public Stuff(boolean pickable, boolean passable){  
 		this.pickable = pickable;
 		this.passable = passable;
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
 		this.damage = 0;
 		this.ifDestroyable = false;
 		this.lives = 1;

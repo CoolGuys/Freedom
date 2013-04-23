@@ -13,14 +13,15 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
+import com.freedom.utilities.ChoiceScreenModel;
 import com.freedom.utilities.GAction;
-import com.freedom.utilities.PauseScreenModel;
 
+
+//comment
 @SuppressWarnings("serial")
-public class PauseScreen extends AbstractScreen {
-	private PauseScreen()
+public class ChoiceScreen extends AbstractScreen {
+	private ChoiceScreen()
 	{
 		logger.setLevel(Level.OFF);
 
@@ -31,40 +32,39 @@ public class PauseScreen extends AbstractScreen {
 		
 
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
-		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "resume");
-		ResumeAction resume = new ResumeAction();
+		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "back");
+		BackAction resume = new BackAction();
 		ActionMap amap = this.getActionMap();
-		amap.put("resume", resume);
+		amap.put("back", resume);
 	}
 	
-	public static PauseScreen getInstance() {
+	public static ChoiceScreen getInstance() {
 		if(INSTANCE==null)
-			return INSTANCE = new PauseScreen();
+			return INSTANCE = new ChoiceScreen();
 		else
 			return INSTANCE;
 	}
 	
 	public void prepareModel() {
-		pauseScreenModel.addButtons();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 //		super.paintComponent(g);
-		pauseScreenModel.draw(g);
+		choiceScreenModel.draw(g);
 	}
 
 	public void activateModel() {
-		pauseScreenModel.activate();
+		choiceScreenModel.activate();
 	}
 	
 	public void deactivateModel() {
-		pauseScreenModel.deactivate();
+		choiceScreenModel.deactivate();
 	}
 	
 	private Logger logger = Logger.getLogger("PauseScreen");
-	private PauseScreenModel pauseScreenModel = PauseScreenModel.getInstance();
-	private static PauseScreen INSTANCE;
+	private ChoiceScreenModel choiceScreenModel = ChoiceScreenModel.getInstance();
+	private static ChoiceScreen INSTANCE;
 	
 	
 	private class MouseHandler extends MouseAdapter {
@@ -72,7 +72,7 @@ public class PauseScreen extends AbstractScreen {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 
-			String s = pauseScreenModel.reactToClick(e.getPoint());
+			String s = choiceScreenModel.reactToClick(e.getPoint());
 			if (!s.equals("NothingHappened")) {
 				GAction m;
 				try {
@@ -91,30 +91,16 @@ public class PauseScreen extends AbstractScreen {
 			}
 		}
 		public void mouseMoved(MouseEvent e) {
-			pauseScreenModel.reactToRollOver(e.getPoint());
+			choiceScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 	
-	public static class QuitAction extends GAction {
-		public void performAction() {
-			ScreensHolder.swapScreens(StartScreen.getInstance(),
-					INSTANCE);
-			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
-			GameField.getInstance().resetTickerListeners();
-		}
-	}
-	
-	public static class ResumeAction extends AbstractAction {
-		public void actionPerformed(ActionEvent e) {
-			GameScreen.getInstance().activateModel();
-			GameScreen.getInstance().requestFocusInWindow();
-			ScreensHolder.getInstance().removeScreen(getInstance());
-		}
-	}
+	private class BackAction extends AbstractAction {
 
-	public static class SaveLevelAction extends GAction {
-		public void performAction() {
-			GameField.getInstance().saveLevel("Save1.lvl", 1);
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			ScreensHolder.swapScreens(StartScreen.getInstance(), INSTANCE);
 		}
+		
 	}
 }

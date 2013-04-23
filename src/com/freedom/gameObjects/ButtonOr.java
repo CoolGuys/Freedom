@@ -52,7 +52,7 @@ public class ButtonOr extends Stuff {
 	}
 
 	public ButtonOr() {
-		super(false, true,false, false);
+		super(false, true);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
@@ -63,7 +63,7 @@ public class ButtonOr extends Stuff {
 							BufferedImage.SCALE_SMOOTH);
 			textureDepressed = ImageIO.read(new File("Resource/Textures/ButtonDepressed.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -103,7 +103,7 @@ public class ButtonOr extends Stuff {
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	 void touch() {
+	protected void touch() {
 
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
@@ -141,12 +141,12 @@ public class ButtonOr extends Stuff {
 	}
 	
 	//костылики
-	 void robotOn(){
+	protected void robotOn(){
 		if(!this.ifPressed)
 			this.touch();
 		return;
 	}
-	 void robotOff(){
+	protected void robotOff(){
 		if(this.ifPressed)
 			this.touch();
 		return;
