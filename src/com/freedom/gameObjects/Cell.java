@@ -163,7 +163,7 @@ public class Cell {
 		return false;
 	}
 
-	void robotOn() {
+	public void robotOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOn();
 		}

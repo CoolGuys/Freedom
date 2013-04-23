@@ -13,6 +13,7 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 		this.theOneToRepaint = GameScreen.getInstance();
 		this.direction = direction;
 		this.theOneToMove = mover;
+		
 	}
 
 	public void run() {
@@ -32,8 +33,9 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 		theOneToRepaint.repaint();
 		theOneToMove.recalibrate();
 		theOneToMove.tellIfBeingMoved(false);
+		GameField.getInstance().cells[theOneToMove.getX()][theOneToMove.getY()].robotOn();
 	}
-
+	
 	private MovingObj theOneToMove;
 	private String direction;
 	private JLayeredPane theOneToRepaint;

@@ -143,7 +143,7 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			//GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			if(!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
@@ -164,7 +164,7 @@ public class Robot extends Stuff implements Moveable {
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
 			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			//GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			if(!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
