@@ -17,6 +17,7 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 	}
 
 	public void run() {
+		GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].robotOff();
 		try {
 			for (int i = 0; i < 1.0/theOneToMove.getStep(); i++) {
 				theOneToMove.move(direction);
@@ -33,6 +34,7 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 		theOneToRepaint.repaint();
 		theOneToMove.recalibrate();
 		theOneToMove.tellIfBeingMoved(false);
+		GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].robotOn();
 	}
 
 	private MovingObj theOneToMove;

@@ -55,7 +55,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 
 	public static void lvlToSv(int num, String lvlfile) {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		if (fXml.exists()) {
 			try {
@@ -157,9 +157,27 @@ public class Loader {
 		}
 	}
 
+	public static void loadSave(String lvlfile) {
+		File fXml = new File(lvlfile);
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(fXml);
+			doc.getDocumentElement().normalize();
+			int tl=1;
+			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
+			GameField.getInstance().setlvl(tl);			
+			GameField.getInstance().setPlvl(tl);
+			//System.out.println("1");
+			Loader.readLvl(tl, lvlfile);
+		} catch (Exception ei) {
+			ei.printStackTrace();
+		}
+	}
+
 	public static void readLvl(int Number, String lvlfile) {
 
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -226,7 +244,7 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"), null,
-											GameField.getInstance().cells, 10));
+											10));
 						} else {
 							Element roboobj = (Element) robostuff.item(0);
 							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
@@ -240,8 +258,7 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"),
-											((Stuff) newstuff), GameField
-													.getInstance().cells, 10));
+											((Stuff) newstuff), 10));
 						}
 					}
 
@@ -255,6 +272,6 @@ public class Loader {
 
 	private static Logger logger = Logger.getLogger("Loader");
 	static {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 	}
 }

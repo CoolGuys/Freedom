@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -18,56 +17,48 @@ import org.w3c.dom.Element;
 
 public class Tile extends Stuff {
 
+	private static Image texture1;
+	static {
+
+		try {
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	// if you want tile to be pit, just put damage = maxDamage
 	// we also don't need coordinates - it'll get them while pulling to cell
 
-	public Tile() { 
-		super(false, true);
+	public Tile()
+	{
+		super(false, true, false, false);
+		texture = texture1;
+		System.out.println("Gleb");
 	}
 	
-	public Tile(boolean ifPit){ 
-		super(false, true, Robot.maxLives, 0);
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Pit.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
+
 	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
+		this.x = Integer.parseInt(obj.getAttribute("x"));
+		this.y = Integer.parseInt(obj.getAttribute("y"));
 	}
-	
 	/**
-	 * Метод, который добавляет инфу в файл
-	 * если вы хотите чтоб всё работало пихайте такие методы везде где стафф!
+	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
+	 * пихайте такие методы везде где стафф!
+	 * 
 	 * @author UshAle
 	 */
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int)this.x));
-		obj.setAttribute("y", String.valueOf((int)this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.Tile");
-	} 
+		obj.setAttribute("x", String.valueOf((int) this.x));
+		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("class", "com.freedom.gameObjects.Tile");
+	}
+	
 
 	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
+		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
+				getSize(), getSize(), null);
 	}
 
-
-	public Image getTexture() { 
-		return this.texture;
-	}
-	
-	private static Image texture;
-	static {
-		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 }

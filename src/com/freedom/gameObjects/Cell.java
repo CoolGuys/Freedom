@@ -1,22 +1,37 @@
 package com.freedom.gameObjects;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+//import com.freedom.gameObjects.Button.SignalOnSender;
+import com.freedom.view.GameScreen;
+
 public class Cell {
 
 	private int x;
 	private int y;
+	private int damage;
 
 	private Stuff[] content;
 	private int contentAmount;
+	int buttonsNumber;
+	int counter;
+	private DamageSender damager;
+	
 
 	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[40];
+		this.content = new Stuff[4];
+		this.damage = 0;
+		this.counter = 0;
+		this.buttonsNumber = 0;
+		damager = new DamageSender();
 	}
 
 	public boolean add(Stuff element) {
-		if (this.contentAmount == 40)
+		if (this.contentAmount == 4)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
@@ -27,6 +42,7 @@ public class Cell {
 
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
+		this.damage = this.damage + element.getDamage();
 		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
@@ -45,15 +61,11 @@ public class Cell {
 	 * @ivan
 	 */
 
-	/**
-	 * эти модные коменты так пишутся
-	 * 
-	 * @author Capitan
-	 */
 	public Stuff deleteStuff() {
-		/*
-		 * if (this.contentAmount == 1) return null;
-		 */
+
+		if (this.contentAmount == 1)
+			return null;
+
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -64,6 +76,7 @@ public class Cell {
 			buf = this.content[this.contentAmount];
 			this.content[this.contentAmount] = null;
 		}
+		this.damage = this.damage - buf.getDamage();
 		this.touch();
 		return buf;
 	}
@@ -93,7 +106,7 @@ public class Cell {
 
 	// Everything for robot:
 
-	protected void touch() {
+	void touch() {
 		for (int i = 0; i < this.contentAmount; i++) {
 			this.content[i].touch();
 		}
@@ -135,31 +148,73 @@ public class Cell {
 		return buf;
 	}
 
-	protected boolean useOn() {
+	boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			if (this.content[i].useOn())
+			if (this.content[i].useOn()) {
+
 				return true;
+
+			}
 		}
 		return false;
 	}
 
-	protected boolean useOff() {
+	boolean useOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
-			if (this.content[i].useOff())
+			if (this.content[i].useOff()) {
 				return true;
+			}
+
 		}
 		return false;
 	}
 
-	protected void robotOn() {
+	public void robotOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOn();
 		}
+		this.harm();
 	}
-	
-	protected void robotOff() {
+
+	public void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
 		}
+		GameField.getInstance().getDeathTicker().removeActionListener(damager);
 	}
+
+	void harm() {
+		if (this.getDamage() == 0){
+			return;
+		}
+		GameField.getInstance().getDeathTicker().addActionListener(damager);
+	}
+
+	// дописать обратботку смерти
+	private class DamageSender implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().damageRobot(damage);
+			if (GameField.getInstance().getRobot().lives <= 0) {
+				System.out.println("You are dead, idiot!");
+				System.exit(10);
+			}
+		}
+	}
+
+	boolean getIfPassable() {
+		for (int i = 0; i < this.contentAmount; i++) {
+			if (!this.content[i].passable)
+				return false;
+		}
+
+		return true;
+	}
+
+	boolean ifCanBePressed() {
+		if (this.counter == this.buttonsNumber)
+			return true;
+		else
+			return false;
+	}
+
 }

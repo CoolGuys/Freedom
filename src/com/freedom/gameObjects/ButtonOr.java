@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 import com.freedom.view.GameScreen;
 
-public class Button extends Stuff {
+public class ButtonOr extends Stuff {
 
 	private boolean ifPressed;
 	private static Image texturePressed;
@@ -51,11 +51,12 @@ public class Button extends Stuff {
 		return true;
 	}
 
-	public Button() {
-		super(false, true);
+	public ButtonOr() {
+		super(false, true,true, false);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];
+		
 		try {
 			texturePressed  = ImageIO.read(new File("Resource/Textures/ButtonPressed.png"))
 					.getScaledInstance(getSize(), getSize(),
@@ -98,16 +99,16 @@ public class Button extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Button");
+		obj.setAttribute("class", "com.freedom.gameObjects.ButtonOr");
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	protected void touch() {
+	 void touch() {
 
 		this.ifPressed = !this.ifPressed;
 		if (this.ifPressed) {
 			texture = texturePressed;
-			sender = new SignalOnSender();
+			sender = new SignalOnSender();	
 			GameField.getInstance().getTicker().addActionListener(sender);
 		} else {
 			texture = textureDepressed;
@@ -123,6 +124,7 @@ public class Button extends Stuff {
 	private class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < useAmount; i++) {
+				
 				if (GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
 						.useOn()) {
 					GameScreen
@@ -138,14 +140,13 @@ public class Button extends Stuff {
 		}
 	}
 	
-	
 	//костылики
-	protected void robotOn(){
+	 void robotOn(){
 		if(!this.ifPressed)
 			this.touch();
 		return;
 	}
-	protected void robotOff(){
+	 void robotOff(){
 		if(this.ifPressed)
 			this.touch();
 		return;

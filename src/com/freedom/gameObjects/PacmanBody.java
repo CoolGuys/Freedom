@@ -197,7 +197,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public PacmanBody() {
-		super(false, false, 0, 10);
+		super(false, false, false, false);
 		this.isMoving = false;
 		texture = this.texture1;
 		this.pic = 1;
@@ -207,7 +207,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public PacmanBody(int x1, int y1, int rate1,int wid) {
-		super(false, false, 0, 10);
+		super(false, false, false, false);
 		this.isMoving = false;
 		texture = this.texture1;
 		this.pic = 1;
@@ -229,6 +229,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		this.rate=Integer.parseInt(obj.getAttribute("rate"));
+		System.out.println("ololo");
 		PacmanSoul p = new PacmanSoul(this.rate, this, this.widthF);
 		new Thread(p).start();
 	}
