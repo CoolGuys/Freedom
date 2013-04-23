@@ -44,7 +44,7 @@ public class GameField {
 	 *            set path to the save file
 	 */
 	public void setPath(String path) {
-		this.pathToSave = path;
+		this.pathToSave = "Saves/Save1.lvl";
 	}
 
 	/**
@@ -103,6 +103,7 @@ public class GameField {
 	 *            апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
+		this.pathToSave = "Saves/Save1.lvl";
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
 				ChoiceScreen.getInstance());
 		Loader.loadSave(pathToPackage);
@@ -149,6 +150,7 @@ public class GameField {
 	}
 
 	public void saveLevel(String pathToPackage, int levelID) {
+		this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.thislvl, this.pathToSave);
 	}
 

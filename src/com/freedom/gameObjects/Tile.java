@@ -17,7 +17,6 @@ import org.w3c.dom.Element;
 
 public class Tile extends Stuff {
 
-
 	private static Image texture1;
 	static {
 
@@ -34,10 +33,16 @@ public class Tile extends Stuff {
 
 	public Tile()
 	{
-		super(false, true,false, false);
+		super(false, true, false, false);
 		texture = texture1;
+		System.out.println("Gleb");
 	}
+	
 
+	public void readLvlFile(Element obj) {
+		this.x = Integer.parseInt(obj.getAttribute("x"));
+		this.y = Integer.parseInt(obj.getAttribute("y"));
+	}
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
@@ -48,6 +53,12 @@ public class Tile extends Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.Tile");
+	}
+	
+
+	public void draw(Graphics g) {
+		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
+				getSize(), getSize(), null);
 	}
 
 }

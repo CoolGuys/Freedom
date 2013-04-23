@@ -52,7 +52,7 @@ public class ButtonOr extends Stuff {
 	}
 
 	public ButtonOr() {
-		super(false, false,true, false);
+		super(false, true,true, false);
 		super.x = x;
 		super.y = y;
 		useList = new int[10][2];

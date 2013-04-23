@@ -13,6 +13,7 @@ public class Pit extends Stuff{
 	
 	public Pit() { 
 		super(false, true, false, false);
+		texture=texture1;
 	}
 	
 	
@@ -29,10 +30,10 @@ public class Pit extends Stuff{
 	} 
 	
 	
-	
+	private static Image texture1;
 	static {
 		try {
-			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture1= ImageIO.read(new File("Resource/Textures/Tile2.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

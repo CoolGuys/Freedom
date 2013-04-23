@@ -55,7 +55,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 
 	public static void lvlToSv(int num, String lvlfile) {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		if (fXml.exists()) {
 			try {
@@ -177,7 +177,7 @@ public class Loader {
 
 	public static void readLvl(int Number, String lvlfile) {
 
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -272,6 +272,6 @@ public class Loader {
 
 	private static Logger logger = Logger.getLogger("Loader");
 	static {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 	}
 }

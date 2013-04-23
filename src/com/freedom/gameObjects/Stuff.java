@@ -9,7 +9,7 @@ public class Stuff implements IStuff {
 
 	double x;
 	double y;
-	static Image texture;
+	Image texture;
 	private boolean pickable;
 	boolean passable;
 	private static int size = GameField.getInstance().getCellSize();
@@ -37,8 +37,6 @@ public class Stuff implements IStuff {
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
-		// this.x=sc.nextInt();
-		// this.y=sc.nextInt();
 	}
 
 	public boolean obj() {

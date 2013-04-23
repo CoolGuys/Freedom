@@ -33,7 +33,7 @@ public class NotDoor extends Stuff {
 
 	public NotDoor()
 	{
-		super(false, false,true, false);
+		super(false, true,true, false);
 	}
 
 
