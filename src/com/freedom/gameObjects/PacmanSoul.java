@@ -12,18 +12,28 @@ public class PacmanSoul implements Runnable{
 	private PacmanBody body;
 	private PathFinder finder;
 	private int widh=3;
+	
 	/**
 	 * 
-	 * @param rate период двигания в мс 
-	 * @param Pack тот кого нужно двигать
+	 * @param rate
+	 *            период двигания в мс
+	 * @param Pack
+	 *            тот кого нужно двигать
 	 */
-	public PacmanSoul(int rate,PacmanBody Pack,int wid){
-		this.StepRate=rate;
-		this.body=Pack;
-		this.finder=new PathFinder();
-		this.widh=wid;
-		this.dx=GameField.getInstance().getRobot().getX();
-		this.dy=GameField.getInstance().getRobot().getY();
+	public PacmanSoul(int rate, PacmanBody Pack, int wid) {
+		this.StepRate = rate;
+		this.body = Pack;
+		this.finder = new PathFinder();
+		this.widh = wid;
+
+		try {
+			this.dx = GameField.getInstance().getRobot().getX();
+			this.dy = GameField.getInstance().getRobot().getY();
+		} catch (Exception e) {
+			this.dx = body.getX();
+			this.dy = body.getY();
+		}
+
 		(new Thread(new Changer())).start();
 	}
 
@@ -31,8 +41,13 @@ public class PacmanSoul implements Runnable{
 		while (true) {
 			int x = body.getX();
 			int y = body.getY();
-			this.dx=GameField.getInstance().getRobot().getX();
-			this.dy=GameField.getInstance().getRobot().getY();
+			try {
+				this.dx = GameField.getInstance().getRobot().getX();
+				this.dy = GameField.getInstance().getRobot().getY();
+			} catch (Exception e) {
+				this.dx = body.getX();
+				this.dy = body.getY();
+			}
 			System.out.println("dx="+this.dx+"dy="+this.dy);
 			if ((x != dx) || (y != dy)) {
 				String dir = finder.find(x, y, dx, dy, widh);

@@ -23,18 +23,13 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int pic; 
 	private String dire;
 	private int direc;
+	private int widthF=6;
 
 	private static BufferedImage texture1;
 	private static BufferedImage texture2;
 	private static BufferedImage texture3;
 	private static BufferedImage texture4;
 	private static BufferedImage texture5;
-	
-	
-/*	private static Image textureN;
-	private static Image textureS;
-	private static Image textureE;
-	private static Image textureW;*/
 
 	static {
 		try {
@@ -202,10 +197,13 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public PacmanBody() {
-		super(true, false, 0, 10);
+		super(false, false, 0, 10);
 		this.isMoving = false;
-		texture = texture1;
+		texture = this.texture1;
 		this.pic = 1;
+		this.dire="N";
+		this.direc=-1;
+		this.widthF=6;
 	}
 
 	public PacmanBody(int x1, int y1, int rate1,int wid) {
@@ -219,7 +217,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.dire="N";
 		this.direc=-1;
 		PacmanSoul p = new PacmanSoul(rate1, this, wid);
-		new Thread(p).start();// IT'S ALVE!!!! MYXAXA
+		new Thread(p).start();
 	}
 
 	/**
@@ -231,7 +229,8 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		this.rate=Integer.parseInt(obj.getAttribute("rate"));
-		
+		PacmanSoul p = new PacmanSoul(this.rate, this, this.widthF);
+		new Thread(p).start();
 	}
 	
 	/**
@@ -252,10 +251,16 @@ public class PacmanBody extends Stuff implements Moveable {
 		int y = (int) this.y;
 		if (direction=='N') {
 			if (GameField.getInstance().getCells()[x][y - 1].ifCanPassThrough()){
-				GameField.getInstance().getCells()[x][y].deleteStuff();
-				this.y--;
-				this.dire="N";
-				GameField.getInstance().getCells()[x][y-1].add(this);
+				Stuff buffer = GameField.getInstance().getCells()[x][y]
+						.deleteStuff();
+				if (buffer == this) {
+					this.y--;
+					this.dire = "N";
+					GameField.getInstance().getCells()[x][y - 1].add(this);
+				} else {
+					GameField.getInstance().getCells()[x][y].add(buffer);
+				}
+
 				
 			}
 		}
@@ -263,28 +268,46 @@ public class PacmanBody extends Stuff implements Moveable {
 		if (direction==('S')) {
 			// logger.info("Checking S direction");
 			if (GameField.getInstance().getCells()[x][y + 1].ifCanPassThrough()){
-				GameField.getInstance().getCells()[x][y].deleteStuff();
-				this.y++;
-				this.dire="S";
-				GameField.getInstance().getCells()[x][y+1].add(this);
+				Stuff buffer = GameField.getInstance().getCells()[x][y]
+						.deleteStuff();
+				if (buffer == this) {
+					this.y++;
+					this.dire="S";
+					GameField.getInstance().getCells()[x][y+1].add(this);
+				} else {
+					GameField.getInstance().getCells()[x][y].add(buffer);
+				}
+				
 			}
 		}
 
 		if (direction==('W')) {
 			if (GameField.getInstance().getCells()[x - 1][y].ifCanPassThrough()){
-				GameField.getInstance().getCells()[x][y].deleteStuff();
-				this.x--;
-				this.dire="W";
-				GameField.getInstance().getCells()[x-1][y].add(this);
+				Stuff buffer = GameField.getInstance().getCells()[x][y]
+						.deleteStuff();
+				if (buffer == this) {
+					this.x--;
+					this.dire="W";
+					GameField.getInstance().getCells()[x-1][y].add(this);
+				} else {
+					GameField.getInstance().getCells()[x][y].add(buffer);
+				}
+
 			}
 		}
 
 		if (direction==('E')) {
 			if (GameField.getInstance().getCells()[x + 1][y].ifCanPassThrough()){
-				GameField.getInstance().getCells()[x][y].deleteStuff();
-				this.x++;
-				this.dire="E";
-				GameField.getInstance().getCells()[x+1][y].add(this);
+				Stuff buffer = GameField.getInstance().getCells()[x][y]
+						.deleteStuff();
+				if (buffer == this) {
+					this.x++;
+					this.dire="E";
+					GameField.getInstance().getCells()[x+1][y].add(this);
+				} else {
+					GameField.getInstance().getCells()[x][y].add(buffer);
+				}
+
 			}
 		}
 
