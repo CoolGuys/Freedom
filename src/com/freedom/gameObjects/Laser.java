@@ -18,7 +18,7 @@ public class Laser extends Stuff {
 	
 
 	public Laser() {
-		super(false, true, false, true,0, 0);
+		super(false, false,true, false);
 		ifActive = false;
 		
 		try {
@@ -32,8 +32,8 @@ public class Laser extends Stuff {
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
-		this.xShoot = Double.parseDouble(obj.getAttribute("xShoot"));
-		this.xShoot = Double.parseDouble(obj.getAttribute("yShoot"));
+		this.xShoot = Integer.parseInt(obj.getAttribute("xShoot"));
+		this.xShoot = Integer.parseInt(obj.getAttribute("yShoot"));
 		this.colour = obj.getAttribute("colour");
 		
 		

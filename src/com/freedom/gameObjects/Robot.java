@@ -48,15 +48,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
-	
-	public Robot(int posX, int posY, String direction, Stuff c, int lives)
-	{
-		super(false, false, false, true, 0, lives);
-		super.x = posX;
-		super.y = posY;
-		this.direction = direction;
-		this.container = c;
 
+	static {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
 					.getScaledInstance(getSize(), getSize(),
@@ -76,6 +69,17 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public Robot(int posX, int posY, String direction, Stuff c, int lives)
+	{
+		super(false, false, false, true, 0, lives);
+		super.x = posX;
+		super.y = posY;
+		this.direction = direction;
+		this.container = c;
+
+		
 		
 		logger.setLevel(Level.OFF);
 	}
@@ -112,8 +116,8 @@ public class Robot extends Stuff implements Moveable {
 
 
 	public void recalibrate() {
-		x = (int) Math.round(x);
-		y = (int) Math.round(y);
+		x = Math.round(x);
+		y = Math.round(y);
 
 	}
 
