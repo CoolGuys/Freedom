@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -13,35 +14,43 @@ import org.w3c.dom.Element;
  */
 public class Teleport extends Stuff {
 
-	private Image textureOpen;
-	private Image textureClosed;
-
-	private int xLeadTo;
-	private int yLeadTo;
-
-	 int getXLeadTo() {
-		return xLeadTo;
-	}
-
-	 int getYLeadTo() {
-		return yLeadTo;
-	}
-
-	// телепорт - хрупкая сущность.
-	public Teleport() {
-		super(false, true, false,false, 0, 1);
+	static {
 		try {
-			textureOpen = ImageIO.read(new File(
-					"Resource/Textures/ButtonPressed.png"));
+			textureOn = ImageIO.read(new File(
+					"Resource/Textures/TeleporterOn.png")).getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 
-			textureClosed = ImageIO.read(new File(
-					"Resource/Textures/ButtonDepressed.png"));
+			textureOff = ImageIO.read(new File(
+					"Resource/Textures/TeleporterOff.png")).getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		texture = textureClosed;
+	}
+	
+	private static Image textureOn;
+	private static Image textureOff;
+
+	private int xLeadTo;
+	private int yLeadTo;
+
+	private boolean on;
+
+	protected int getXLeadTo() {
+		return xLeadTo;
+	}
+
+	protected int getYLeadTo() {
+		return yLeadTo;
+	}
+
+	// телепорт - хрупкая сущность.
+	public Teleport()
+	{
+		super(false, true, false, false, 0, 1);
+		texture = textureOff;
 	}
 
 	public void readLvlFile(Element obj) {
@@ -66,23 +75,52 @@ public class Teleport extends Stuff {
 	}
 
 	boolean teleportate() {
-		if(!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo].getIfPassable())
+		if (!on)
 			return false;
-		
-		Stuff element = GameField.getInstance().getCells()[this.getX()][this.getY()].getTop();
-		if( GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo].add(element)){
-			GameField.getInstance().getCells()[this.getX()][this.getY()].deleteStuff();
+		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+				.getIfPassable())
+			return false;
+
+		Stuff element = GameField.getInstance().getCells()[this.getX()][this
+				.getY()].getTop();
+		if (GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+				.add(element)) {
+			GameField.getInstance().getCells()[this.getX()][this.getY()]
+					.deleteStuff();
 			return true;
 		}
-			
+
 		return false;
 	}
 
-	 void robotOn() {
+	
+	protected boolean useOff() {
+		if (this.on) {
+			texture = textureOff;
+			this.on = false;
+			return true;
+		}
+		return false;
+
+	}
+	
+	protected boolean useOn() {
+		if (!this.on) {
+			this.on = true;
+			texture = textureOn;
+			return true;
+		} else
+			return false;
+
+	}
+
+	protected void robotOn() {
+		if (!on)
+			return;
 		Robot buf = GameField.getInstance().getRobot();
 		buf.x = this.xLeadTo;
 		buf.y = this.yLeadTo;
-		if(!GameField.getInstance().getRobot().canGo())
+		if (!GameField.getInstance().getRobot().canGo())
 			GameField.getInstance().getRobot().isMoving = false;
 	}
 

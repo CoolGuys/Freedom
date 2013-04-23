@@ -19,10 +19,11 @@ public class Wall extends Stuff {
 	private static Image textureSE;
 	private static Image textureSW;
 	private static Image textureNW;
+	
 	static {
 		getImages();
 	}
-
+	
 	private static void getImages() {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"));
@@ -31,8 +32,7 @@ public class Wall extends Stuff {
 			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"));
 			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"));
 			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"));
-			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));
-			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
+			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,13 +40,9 @@ public class Wall extends Stuff {
 
 	public Wall()
 	{
-		super(false, false, false, true);
+		super(false, false,true, false);
 	}
 
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-	}
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало

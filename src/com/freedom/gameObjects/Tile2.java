@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -33,12 +32,7 @@ public class Tile2 extends Stuff {
 		super(false, true,false, false);
 		texture = texture1;
 	}
-	
-	
-	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
-	}
+
 
 	/**
 	 * Метод, который добавляет инфу в файл
@@ -49,12 +43,5 @@ public class Tile2 extends Stuff {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Tile2");
-	} 
-
-	public Image getTexture() { 
-		return texture;
-	}
-	
-	
-
+	} 	
 }

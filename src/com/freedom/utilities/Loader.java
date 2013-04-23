@@ -85,8 +85,8 @@ public class Loader {
 						.getInstance().cells[0].length - 2));
 				lvl.setTextContent("\n");
 				doc.getDocumentElement().appendChild(lvl);
-				int width = GameField.getInstance().cells.length-1;
-				int height = GameField.getInstance().cells[0].length-1;
+				int width = GameField.getInstance().cells.length;
+				int height = GameField.getInstance().cells[0].length;
 				for (int x = 1; x < width-1; x++) {// writing objects
 					for (int y = 1; y < height-1; y++) {
 						Stuff[] stu = GameField.getInstance().cells[x][y]
@@ -154,6 +154,24 @@ public class Loader {
 			} catch (Exception ei) {
 				ei.printStackTrace();
 			}
+		}
+	}
+
+	public static void loadSave(String lvlfile) {
+		File fXml = new File(lvlfile);
+		try {
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(fXml);
+			doc.getDocumentElement().normalize();
+			int tl=1;
+			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
+			GameField.getInstance().setlvl(tl);			
+			GameField.getInstance().setPlvl(tl);
+			System.out.println("1");
+			Loader.readLvl(tl, lvlfile);
+		} catch (Exception ei) {
+			ei.printStackTrace();
 		}
 	}
 
@@ -225,7 +243,8 @@ public class Loader {
 									new Robot(Integer.parseInt(obj
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
-											obj.getAttribute("dir"), null, 10));
+											obj.getAttribute("dir"), null,
+											10));
 						} else {
 							Element roboobj = (Element) robostuff.item(0);
 							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));

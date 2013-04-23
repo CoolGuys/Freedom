@@ -13,7 +13,7 @@ import com.freedom.gameObjects.GameField;
  * Anor. The dark fire will not avail you, Flame of Udun! Go back to the shadow.
  * You shall not pass!
  * А вообще это класс который позволяет искать путь по которому можно пройти.
- * 
+ * 	
  * @author Gandalf; UshAle 
  * 
  */
@@ -43,14 +43,14 @@ public class PathFinder {
 		logger.info("starting from ("+xs+","+ys+") to ("+xe+","+ye+")");
 		logger.info("getting cells");
 		Cell[][] cells = GameField.getInstance().getCells();
-		Boolean[][] passible = new Boolean[2 * width + 1][2 * width + 1];
+		Boolean[][] passable = new Boolean[2 * width + 1][2 * width + 1];
 		for (int i = 0; i < 2 * width + 1; i++) {
 			for (int j = 0; j < 2 * width + 1; j++) {
 				try {
 					//System.out.println((xs-width+i) + "," + (xs-width+j));
-					passible[i][j] = cells[xs-width+i][ys-width+j].ifCanPassThrough();
+					passable[i][j] = cells[xs-width+i][ys-width+j].ifCanPassThrough();
 				} catch (Exception e) {
-					passible[i][j]=false;
+					passable[i][j]=false;
 				}
 			}
 		}
@@ -68,7 +68,7 @@ public class PathFinder {
 		for(int i=0; i<width;i++){
 			String newpath="";
 			int newamount=0;
-			Boolean[][] newpassible = new Boolean[2*width+1][2*width+1];
+			Boolean[][] newpassable = new Boolean[2*width+1][2*width+1];
 			/*
 			for(int i1=0; i1<2*width+1;i1++){
 				for(int j1=0; j1<2*width+1;j1++){
@@ -83,10 +83,10 @@ public class PathFinder {
 				logger.info("i="+i+" j="+j+" PathAmount="+PathAmount+" buf="+buf);
 				int a[]=getPlace(buf,x,y);
 				//System.out.println(a[0]+" "+a[1]);
-				if(passible[a[0]][a[1]-1]){
+				if(passable[a[0]][a[1]-1]){
 					newpath=newpath+buf+"N";
 					newamount++;
-					newpassible[a[0]][a[1]-1]=false;
+					newpassable[a[0]][a[1]-1]=false;
 					if((a[0]==x1)&&((a[1]-1)==y1)){
 						resultpath++;
 						pathlength=i;
@@ -94,10 +94,10 @@ public class PathFinder {
 						Pathes=Pathes+buf+"N";
 					}
 				}
-				if(passible[a[0]+1][a[1]]){
+				if(passable[a[0]+1][a[1]]){
 					newpath=newpath+buf+"E";
 					newamount++;
-					newpassible[a[0]+1][a[1]]=false;
+					newpassable[a[0]+1][a[1]]=false;
 					if(((a[0]+1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
@@ -105,10 +105,10 @@ public class PathFinder {
 						Pathes=Pathes+buf+"E";
 					}
 				}
-				if(passible[a[0]][a[1]+1]){
+				if(passable[a[0]][a[1]+1]){
 					newpath=newpath+buf+"S";
 					newamount++;
-					newpassible[a[0]][a[1]+1]=false;
+					newpassable[a[0]][a[1]+1]=false;
 					if((a[0]==x1)&&((a[1]+1)==y1)){
 						resultpath++;
 						pathlength=i+1;
@@ -116,10 +116,10 @@ public class PathFinder {
 						Pathes=Pathes+buf+"S";
 					}
 				}
-				if(passible[a[0]-1][a[1]]){
+				if(passable[a[0]-1][a[1]]){
 					newpath=newpath+buf+"W";
 					newamount++;
-					newpassible[a[0]-1][a[1]]=false;
+					newpassable[a[0]-1][a[1]]=false;
 					if(((a[0]-1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
@@ -134,8 +134,8 @@ public class PathFinder {
 			logger.info("newpath=" + newpath);
 			for (int i1 = 0; i1 < 2 * width + 1; i1++) {
 				for (int j1 = 0; j1 < 2 * width + 1; j1++) {
-					if (newpassible[j1][i1]!=null) {
-						passible[j1][i1] = false;
+					if (newpassable[j1][i1]!=null) {
+						passable[j1][i1] = false;
 					}
 				}
 			}

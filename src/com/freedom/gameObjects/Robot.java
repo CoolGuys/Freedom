@@ -22,7 +22,7 @@ public class Robot extends Stuff implements Moveable {
 	boolean isMoving;
 	private double step = 0.1;
 
-	static int maxLives = 100;
+	static int maxLives = 10;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -31,32 +31,7 @@ public class Robot extends Stuff implements Moveable {
 
 	private static Logger logger = Logger.getLogger("Robot");
 
-	public Robot()
-	{
-		super();
-		try {
-			// textureN = ImageIO.read(new
-			// File("Resource/Textures/RobotN.png"));
-			textureS = ImageIO
-					.read(new File("Resource/Textures/RobotSLOL.png"));
-			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
-			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
-			super.lives = 100;
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	
-	public Robot(int posX, int posY, String direction, Stuff c, int lives)
-	{
-		super(false, false, false, true, 0, lives);
-		super.x = posX;
-		super.y = posY;
-		this.direction = direction;
-		this.container = c;
-
+	static {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
 					.getScaledInstance(getSize(), getSize(),
@@ -76,7 +51,15 @@ public class Robot extends Stuff implements Moveable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public Robot(int posX, int posY, String direction, Stuff c, int lives)
+	{
+		super(false, false, false, true, 0, lives);
+		super.x = posX;
+		super.y = posY;
+		this.direction = direction;
+		this.container = c;
 		logger.setLevel(Level.OFF);
 	}
 
@@ -112,8 +95,8 @@ public class Robot extends Stuff implements Moveable {
 
 
 	public void recalibrate() {
-		x = (int) Math.round(x);
-		y = (int) Math.round(y);
+		x = Math.round(x);
+		y = Math.round(y);
 
 	}
 
