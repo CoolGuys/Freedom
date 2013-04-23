@@ -168,7 +168,7 @@ public class Loader {
 			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
 			GameField.getInstance().setlvl(tl);			
 			GameField.getInstance().setPlvl(tl);
-			System.out.println("1");
+			//System.out.println("1");
 			Loader.readLvl(tl, lvlfile);
 		} catch (Exception ei) {
 			ei.printStackTrace();

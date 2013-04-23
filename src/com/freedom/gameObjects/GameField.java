@@ -125,10 +125,11 @@ public class GameField {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
+		int previouslvli=this.thislvl;
 		this.thislvl = nextlvl;
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
-		Loader.lvlToSv(thislvl, this.pathToSave);
+		Loader.lvlToSv(previouslvli, this.pathToSave);
 		Loader.readLvl(nextlvl, this.pathToSave);
 		robot.setContainer(buf);
 		Loader.lvlToSv(nextlvl, this.pathToSave);
