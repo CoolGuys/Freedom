@@ -22,7 +22,7 @@ public class Robot extends Stuff implements Moveable {
 	boolean isMoving;
 	private double step = 0.1;
 
-	static int maxLives = 100;
+	static int maxLives = 10;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -30,24 +30,6 @@ public class Robot extends Stuff implements Moveable {
 	private static Image textureW;
 
 	private static Logger logger = Logger.getLogger("Robot");
-
-	public Robot()
-	{
-		super();
-		try {
-			// textureN = ImageIO.read(new
-			// File("Resource/Textures/RobotN.png"));
-			textureS = ImageIO
-					.read(new File("Resource/Textures/RobotSLOL.png"));
-			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"));
-			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"));
-			super.lives = 100;
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 
 	static {
 		try {
@@ -78,9 +60,6 @@ public class Robot extends Stuff implements Moveable {
 		super.y = posY;
 		this.direction = direction;
 		this.container = c;
-
-		
-		
 		logger.setLevel(Level.OFF);
 	}
 

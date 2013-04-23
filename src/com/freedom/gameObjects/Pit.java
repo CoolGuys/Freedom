@@ -19,25 +19,17 @@ public class Pit extends Stuff{
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
-		super.raiseDamage(1);
+		super.raiseDamage(Robot.maxLives);
 	}
 	
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.Tile2.png");
+		obj.setAttribute("class","com.freedom.gameObjects.Pit");
 	} 
-
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
-	}
-
-
-	public Image getTexture() { 
-		return this.texture;
-	}
 	
-	private static Image texture;
+	
+	
 	static {
 		try {
 			texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
