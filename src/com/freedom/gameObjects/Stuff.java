@@ -12,7 +12,7 @@ public class Stuff {
 	protected Image texture;
 	private boolean pickable; 
 	protected boolean passable;
-	private int size = GameField.getInstance().getCellSize();
+	private static int size = GameField.getInstance().getCellSize();
 	
 	private int damage; //number of lives you loose
 	private boolean ifDestroyable;
@@ -107,7 +107,7 @@ public class Stuff {
 		return((int)this.y);
 	}
 	
-	public int getSize() {
+	public static int getSize() {
 		return size;
 	}
 	

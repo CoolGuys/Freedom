@@ -65,7 +65,7 @@ public class PathFinder {
 			}
 		}
 		String pathlist="";
-		int PathAmount=1;
+		int pathAmount=1;
 		int x=width;
 		int y=width;
 		
@@ -73,8 +73,9 @@ public class PathFinder {
 		int y1=width+ye-ys;
 		//System.out.println(x1+" "+y1);
 		int resultpath=0;
-		int pathlength=0;
-		String Pathes="";
+		int pathlength;
+		pathlength=0;
+		String pathes="";
 		for(int i=0; i<width;i++){
 			String newpath="";
 			int newamount=0;
@@ -88,9 +89,9 @@ public class PathFinder {
 			}
 			
 			*/
-			for(int j=0;j<PathAmount;j++){
+			for(int j=0;j<pathAmount;j++){
 				String buf=pathlist.substring(j*(i), (j+1)*i);
-				logger.info("i="+i+" j="+j+" PathAmount="+PathAmount+" buf="+buf);
+				logger.info("i="+i+" j="+j+" PathAmount="+pathAmount+" buf="+buf);
 				int a[]=getPlace(buf,x,y);
 				//System.out.println(a[0]+" "+a[1]);
 				if(passible[a[0]][a[1]-1]){
@@ -99,9 +100,9 @@ public class PathFinder {
 					newpassible[a[0]][a[1]-1]=false;
 					if((a[0]==x1)&&((a[1]-1)==y1)){
 						resultpath++;
-						pathlength=i;
-						//System.out.println(buf+"N");
-						Pathes=Pathes+buf+"N";
+						pathlength=i+1;
+						//System.out.println(buf+"N"+"pl="+pathlength);
+						pathes=pathes+buf+"N";
 					}
 				}
 				if(passible[a[0]+1][a[1]]){
@@ -111,8 +112,8 @@ public class PathFinder {
 					if(((a[0]+1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"E");
-						Pathes=Pathes+buf+"E";
+						//System.out.println(buf+"E"+"pl="+pathlength);
+						pathes=pathes+buf+"E";
 					}
 				}
 				if(passible[a[0]][a[1]+1]){
@@ -122,8 +123,8 @@ public class PathFinder {
 					if((a[0]==x1)&&((a[1]+1)==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"S");
-						Pathes=Pathes+buf+"S";
+						//System.out.println(buf+"S"+"pl="+pathlength);
+						pathes=pathes+buf+"S";
 					}
 				}
 				if(passible[a[0]-1][a[1]]){
@@ -133,8 +134,8 @@ public class PathFinder {
 					if(((a[0]-1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"W");
-						Pathes=Pathes+buf+"W";
+						//System.out.println(buf+"W"+"pl="+pathlength);
+						pathes=pathes+buf+"W";
 					}
 				}
 			}	
@@ -151,7 +152,7 @@ public class PathFinder {
 			}
 
 			pathlist = newpath;
-			PathAmount = newamount;
+			pathAmount = newamount;
 						
 		}
 		/*
@@ -165,7 +166,8 @@ public class PathFinder {
 		
 		if(resultpath!=0){
 			int r = generateRandom(resultpath);
-			return Pathes.substring(r*pathlength, (r+1)*pathlength);
+			//System.out.println("r="+pathlength+" inside="+Pathes.substring(r*pathlength, (r+1)*pathlength));
+			return pathes.substring(r*pathlength, (r+1)*pathlength);
 		}else {
 			return "0";
 		}

@@ -53,8 +53,7 @@ public class GameField {
 		Loader.readLvl(levelID, pathToPackage);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		Pacman p = new Pacman(1000);
-	    new Thread(p).start();
+		cells[7][7].add(new PacmanBody(7, 7, 300, 10));
 	}
 	
 	// это метод для перехода на
