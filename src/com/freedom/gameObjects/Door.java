@@ -56,7 +56,7 @@ public class Door extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Door");
 	}
 
-	protected boolean useOff() {
+	 boolean useOff() {
 		if (super.passable) {
 			texture = textureClosed;
 			super.passable = false;
@@ -66,7 +66,7 @@ public class Door extends Stuff {
 
 	}
 
-	protected boolean useOn() {
+	 boolean useOn() {
 		if (!super.passable) {
 			texture = textureOpen;
 			super.passable = true;

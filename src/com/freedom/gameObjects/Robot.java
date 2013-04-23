@@ -22,7 +22,7 @@ public class Robot extends Stuff implements Moveable {
 	boolean isMoving;
 	private double step = 0.1;
 
-	protected static int maxLives = 100;
+	static int maxLives = 100;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -142,6 +142,9 @@ public class Robot extends Stuff implements Moveable {
 			if (GameField.getInstance().cells[x + 1][y].ifCanPassThrough())
 				return true;
 		}
+		
+		if (!GameField.getInstance().cells[x][y].ifCanPassThrough())
+				return false;
 
 		return false;
 
@@ -155,8 +158,8 @@ public class Robot extends Stuff implements Moveable {
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			//GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
+			//GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			if(!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
@@ -176,8 +179,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			//GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
+			//GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
 			if(!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);

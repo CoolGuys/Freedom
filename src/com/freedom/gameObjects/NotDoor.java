@@ -53,7 +53,7 @@ public class NotDoor extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.NotDoor");
 	}
 
-	protected boolean useOn() {
+	 boolean useOn() {
 		if (super.passable) {
 			texture = textureClosed;
 			super.passable = false;
@@ -62,7 +62,7 @@ public class NotDoor extends Stuff {
 		return false;
 	}
 
-	protected boolean useOff() {
+	 boolean useOff() {
 		if(!super.passable) {
 			texture = textureOpen;
 			super.passable = true;

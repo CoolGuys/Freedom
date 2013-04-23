@@ -19,11 +19,11 @@ public class Teleport extends Stuff {
 	private int xLeadTo;
 	private int yLeadTo;
 
-	protected int getXLeadTo() {
+	 int getXLeadTo() {
 		return xLeadTo;
 	}
 
-	protected int getYLeadTo() {
+	 int getYLeadTo() {
 		return yLeadTo;
 	}
 
@@ -78,7 +78,7 @@ public class Teleport extends Stuff {
 		return false;
 	}
 
-	protected void robotOn() {
+	 void robotOn() {
 		Robot buf = GameField.getInstance().getRobot();
 		buf.x = this.xLeadTo;
 		buf.y = this.yLeadTo;

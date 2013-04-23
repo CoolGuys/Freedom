@@ -16,6 +16,8 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
+	private DamageSender damager;
+	
 
 	public Cell(int a, int b) {
 		this.x = a;
@@ -25,6 +27,7 @@ public class Cell {
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
+		damager = new DamageSender();
 	}
 
 	public boolean add(Stuff element) {
@@ -166,24 +169,24 @@ public class Cell {
 		return false;
 	}
 
-	void robotOn() {
+	public void robotOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOn();
 		}
 		this.harm();
 	}
 
-	void robotOff() {
+	public void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
 		}
+		GameField.getInstance().getDeathTicker().removeActionListener(damager);
 	}
 
 	void harm() {
-		if (this.getDamage() == 0)
+		if (this.getDamage() == 0){
 			return;
-
-		DamageSender damager = new DamageSender();
+		}
 		GameField.getInstance().getDeathTicker().addActionListener(damager);
 	}
 
