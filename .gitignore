@@ -2,3 +2,6 @@
 *.class
 .metadata
 /bin
+/.settings
+/.classpath
+/.project
