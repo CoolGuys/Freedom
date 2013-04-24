@@ -61,6 +61,10 @@ public class ChoiceScreenModel {
 
 	public void deactivate() {
 		buttons=new GButtonLoaderLite[5];
+		for (GButtonLoaderLite b : buttons) {
+			if (b != null)
+				b.reset();
+		}
 	}
 
 	public void draw(Graphics g) {
@@ -144,7 +148,7 @@ public class ChoiceScreenModel {
 		}
 
 		private void loadLevel() {
-			GameField.getInstance().setlvl(1);
+			GameField.getInstance().setCurrentLevel(1);
 			GameField.getInstance().loadLevel(fileToLoad);
 		}
 

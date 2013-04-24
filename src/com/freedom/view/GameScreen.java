@@ -5,10 +5,16 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
-import com.freedom.gameObjects.*;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+
+import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {

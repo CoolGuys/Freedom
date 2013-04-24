@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.*;
-import javax.swing.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.ChoiceScreenModel;
@@ -89,7 +90,7 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {	
-			GameField.getInstance().loadLevel(GameField.getInstance().getPath());			
+			GameField.getInstance().loadLevel(GameField.getInstance().getPathToSave());			
 			ScreensHolder.swapScreens(GameScreen.getInstance(),
 					StartScreen.getInstance());
 
