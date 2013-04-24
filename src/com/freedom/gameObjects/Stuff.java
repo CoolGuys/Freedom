@@ -5,7 +5,7 @@ import java.awt.Image;
 
 import org.w3c.dom.Element;
 
-public class Stuff implements IStuff {
+public class Stuff {
 
 	double x;
 	double y;
