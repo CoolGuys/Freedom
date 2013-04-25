@@ -19,14 +19,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.view.ChoiceScreen;
+import com.freedom.view.LevelChoiceScreen;
 import com.freedom.view.PauseScreen;
+import com.freedom.view.ScreensHolder;
+import com.freedom.view.TextFieldScreen;
 
-public class ChoiceScreenModel {
+public class LevelChoiceScreenModel {
 
-	private ChoiceScreenModel()
+	private LevelChoiceScreenModel()
 	{
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 	}
 
 	public void addEntries() {
@@ -48,9 +50,9 @@ public class ChoiceScreenModel {
 
 	}
 
-	public static ChoiceScreenModel getInstance() {
+	public static LevelChoiceScreenModel getInstance() {
 		if (INSTANCE == null)
-			return INSTANCE = new ChoiceScreenModel();
+			return INSTANCE = new LevelChoiceScreenModel();
 		else
 			return INSTANCE;
 	}
@@ -92,13 +94,14 @@ public class ChoiceScreenModel {
 		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
 				if (b.checkRollOver(point))
-					ChoiceScreen.getInstance().repaint();
+					LevelChoiceScreen.getInstance().repaint();
 		}
 	}
 
 	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[5];
 	private String listedDirectory;
-	private static ChoiceScreenModel INSTANCE;
+	private static LevelChoiceScreenModel INSTANCE;
+	public boolean newLevel;
 
 	private Logger logger = Logger.getLogger("PauseScreenModel");
 
@@ -148,8 +151,13 @@ public class ChoiceScreenModel {
 		}
 
 		private void loadLevel() {
-			GameField.getInstance().setCurrentLevel(1);
-			GameField.getInstance().loadLevel(fileToLoad);
+			if(newLevel) {
+				TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
+				TextFieldScreenModel.getInstance().setSourcePack(fileToLoad);
+				TextFieldScreenModel.getInstance().addEntries();	
+				ScreensHolder.swapScreens(TextFieldScreen.getInstance(), LevelChoiceScreen.getInstance());
+			} else 
+				GameField.getInstance().loadSavedLevel(fileToLoad);
 		}
 
 		public void draw(Graphics g) {

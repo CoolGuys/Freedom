@@ -1,4 +1,4 @@
-package com.freedom.utilities;
+package com.freedom.view;
 
 import javax.swing.JLayeredPane;
 
@@ -7,6 +7,7 @@ public class AbstractScreen extends JLayeredPane {
 
 	public void activateModel() {}
 	public void deactivateModel() {}
+	public void prepareModel() {}
 			
 	
 }

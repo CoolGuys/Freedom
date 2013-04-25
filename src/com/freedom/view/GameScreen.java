@@ -14,7 +14,6 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.utilities.AbstractScreen;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {

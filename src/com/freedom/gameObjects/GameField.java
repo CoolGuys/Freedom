@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
-import com.freedom.view.ChoiceScreen;
+import com.freedom.utilities.TextFieldScreenModel.TextFieldListener;
+import com.freedom.view.LevelChoiceScreen;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
+import com.freedom.view.TextFieldScreen;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
@@ -76,10 +78,9 @@ public class GameField {
 	 * @param levelID
 	 *            Апендикс, который сейчас не нужен
 	 */
-	public void loadLevel(String pathToPackage) {
-		this.pathToSave = "Saves/Save1.lvl";
+	public void loadNewLevel(String pathToPackage) {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-				ChoiceScreen.getInstance());
+				TextFieldScreen.getInstance());
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -89,6 +90,17 @@ public class GameField {
 				LoadingScreen.getInstance());
 	}
 
+	public void loadSavedLevel(String pathToPackage) {
+		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+			LevelChoiceScreen.getInstance());
+		Loader.loadSave(pathToPackage);
+		previousCells = cells;
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+
+		ScreensHolder.swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
+	}
 
 	public void switchToNextLevel(int nextLevelId) {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),

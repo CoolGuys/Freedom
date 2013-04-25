@@ -13,22 +13,20 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.ChoiceScreenModel;
+import com.freedom.utilities.LevelChoiceScreenModel;
 import com.freedom.utilities.GAction;
 
 
 //comment
 @SuppressWarnings("serial")
-public class ChoiceScreen extends AbstractScreen {
-	private ChoiceScreen()
+public class LevelChoiceScreen extends AbstractScreen {
+	private LevelChoiceScreen()
 	{
 		logger.setLevel(Level.OFF);
 
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
-		this.addMouseListener(new MouseHandler());
-		this.addMouseMotionListener(new MouseHandler());
+		
 		
 
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -38,60 +36,47 @@ public class ChoiceScreen extends AbstractScreen {
 		amap.put("back", resume);
 	}
 	
-	public static ChoiceScreen getInstance() {
+	public static LevelChoiceScreen getInstance() {
 		if(INSTANCE==null)
-			return INSTANCE = new ChoiceScreen();
+			return INSTANCE = new LevelChoiceScreen();
 		else
 			return INSTANCE;
 	}
 	
-	public void prepareModel() {
-	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 //		super.paintComponent(g);
-		choiceScreenModel.draw(g);
+		levelChoiceScreenModel.draw(g);
 	}
 
 	public void activateModel() {
-		choiceScreenModel.activate();
+		levelChoiceScreenModel.activate();
+		this.addMouseListener(l);
+		this.addMouseMotionListener(l);
 	}
 	
 	public void deactivateModel() {
-		choiceScreenModel.deactivate();
+		levelChoiceScreenModel.deactivate();
+		this.removeMouseListener(l);
+		this.addMouseMotionListener(l);
 	}
 	
 	private Logger logger = Logger.getLogger("PauseScreen");
-	private ChoiceScreenModel choiceScreenModel = ChoiceScreenModel.getInstance();
-	private static ChoiceScreen INSTANCE;
+	private LevelChoiceScreenModel levelChoiceScreenModel = LevelChoiceScreenModel.getInstance();
+	private static LevelChoiceScreen INSTANCE;
+	
+	private MouseHandler l = new MouseHandler();
 	
 	
 	private class MouseHandler extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
-			String s = choiceScreenModel.reactToClick(e.getPoint());
-			if (!s.equals("NothingHappened")) {
-				GAction m;
-				try {
-					m = (GAction) Class.forName(s).newInstance();
-					m.performAction();
-				} catch (InstantiationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+			levelChoiceScreenModel.reactToClick(e.getPoint());
 		}
 		public void mouseMoved(MouseEvent e) {
-			choiceScreenModel.reactToRollOver(e.getPoint());
+			levelChoiceScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 	
