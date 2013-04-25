@@ -30,6 +30,7 @@ public class LaserBeam extends Stuff {
 		double k;
 		// double m;
 		double yBuf;
+		@SuppressWarnings("unused")
 		double xBuf;
 
 		this.next.xStart = x;
