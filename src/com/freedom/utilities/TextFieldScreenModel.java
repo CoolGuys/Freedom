@@ -46,22 +46,22 @@ public class TextFieldScreenModel {
 
 	public void addEntries() {
 		descriptionLabel = new GLabel(descriptor, 1, "center");
-		tf = new JTextField();
-		TextFieldScreen.getInstance().add(tf);
-
 		tf.setSize(400, (int) (TextFieldScreen.getInstance().getHeight() / 13f));
 		tf.setLocation(
-				TextFieldScreen.getInstance().getWidth() / 2 - tf.getWidth()
-						/ 2, descriptionLabel.positionY + 2
-						* descriptionLabel.textSize);
-		tf.setFont(descriptionLabel.textFont);
-		tf.addActionListener(l);
+				TextFieldScreen.getInstance().getWidth() / 2
+						- tf.getWidth() / 2, descriptionLabel.positionY + 2
+						* textSize);
+		if (!ready) {
+			TextFieldScreen.getInstance().add(tf);
+			tf.setFont(textFont);
+			tf.addActionListener(l);
+			ready=true;
+		}
 	}
 
 	public void draw(Graphics g) {
 		descriptionLabel.draw(g);
 		tf.requestFocusInWindow();
-
 	}
 
 	public void deactivate() {
@@ -73,13 +73,16 @@ public class TextFieldScreenModel {
 	}
 
 	private GLabel descriptionLabel;
-	private JTextField tf;
+	private JTextField tf = new JTextField();
 	private String descriptor;
 	private String sourcePack;
 
 	private TextFieldListener l = new TextFieldListener();
 	private static TextFieldScreenModel INSTANCE;
 	private Logger logger = Logger.getLogger("LoadingScreenModel");
+	public int textSize = LoadingScreen.getInstance().getHeight() / 20;
+	private Font textFont = new Font("Monospaced", Font.PLAIN, textSize);
+	private boolean ready;
 
 	private class GLabel {
 		/**
@@ -125,9 +128,7 @@ public class TextFieldScreenModel {
 			g2.drawString(text, positionX, positionY);
 		}
 
-		public int textSize = LoadingScreen.getInstance().getHeight() / 20;
 		private String text;
-		private Font textFont = new Font("Monospaced", Font.PLAIN, textSize);
 		public int positionX, positionY;
 	}
 
@@ -138,9 +139,16 @@ public class TextFieldScreenModel {
 			Path dir = Paths.get("Saves");
 			DirectoryStream<Path> stream;
 			try {
-				if(tf.getText().equals("") || tf.getText().equals("Not Valid") || (lastName==null && tf.getText().equals(
-						"File exists. Press Enter to overwrite."))) {
+				if (tf.getText().equals("")
+						|| tf.getText().equals("Not Valid")
+						|| (lastName == null && tf.getText().equals(
+								"File exists. Press Enter to overwrite."))) {
 					tf.setText("Not Valid");
+					tf.setSize(400, (int) (TextFieldScreen.getInstance().getHeight() / 13f));
+					tf.setLocation(
+							TextFieldScreen.getInstance().getWidth() / 2
+									- tf.getWidth() / 2, descriptionLabel.positionY + 2
+									* textSize);
 					return;
 				}
 				if (tf.getText().equals(
@@ -157,35 +165,45 @@ public class TextFieldScreenModel {
 				} else {
 					stream = Files.newDirectoryStream(dir);
 					for (Path file : stream) {
-						logger.info(file.getFileName().toString());
+						logger.info(stream.toString());
 
 						if (file.getFileName().toString()
 								.equals(tf.getText() + ".lvl")) {
 
 							lastName = tf.getText();
-							tf.setSize(900, tf.getHeight());
+							tf.setSize(
+									calculateTextSize("File exists. Press Enter to overwrite."),
+									tf.getHeight());
 							tf.setLocation(TextFieldScreen.getInstance()
 									.getWidth() / 2 - tf.getWidth() / 2,
-									descriptionLabel.positionY + 2
-											* descriptionLabel.textSize);
+									descriptionLabel.positionY + 2 * textSize);
 							tf.setText("File exists. Press Enter to overwrite.");
 							return;
 						}
-						File src = new File(sourcePack);
-						File dst = new File("Saves/" + tf.getText() + ".lvl");
-						Files.copy(src.toPath(), dst.toPath());
-						GameField.getInstance().setPathToSave(
-								"Saves/" + tf.getText() + ".lvl");
-						GameField.getInstance().loadNewLevel(
-								"Saves/" + tf.getText() + ".lvl");
-						return;
 					}
+					File src = new File(sourcePack);
+					File dst = new File("Saves/" + tf.getText() + ".lvl");
+					Files.copy(src.toPath(), dst.toPath());
+					GameField.getInstance().setPathToSave(
+							"Saves/" + tf.getText() + ".lvl");
+					GameField.getInstance().loadNewLevel(
+							"Saves/" + tf.getText() + ".lvl");
+					return;
 				}
 
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+		}
+
+		private int calculateTextSize(String text) {
+			Graphics2D g2 = (Graphics2D) TextFieldScreen.getInstance()
+					.getGraphics();
+			FontRenderContext context = g2.getFontRenderContext();
+			Rectangle2D bounds = textFont.getStringBounds(text, context);
+			return (int) bounds.getWidth();
+
 		}
 
 		private String lastName;
