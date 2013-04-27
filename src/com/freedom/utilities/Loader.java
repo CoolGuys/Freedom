@@ -1,19 +1,25 @@
 package com.freedom.utilities;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import com.freedom.gameObjects.*;
+import com.freedom.gameObjects.Cell;
+import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.Robot;
+import com.freedom.gameObjects.Stuff;
 
 /**
  * !!!!!!!!!!!!!!!!!!!Attention please!!!!!!!!!!!
@@ -55,7 +61,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 
 	public static void lvlToSv(int num, String lvlfile) {
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		if (fXml.exists()) {
 			try {
@@ -64,6 +70,7 @@ public class Loader {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				Document doc = db.parse(fXml);
 				doc.getDocumentElement().normalize();
+				doc.getDocumentElement().setAttribute("startLvl", String.valueOf(num));
 				logger.info("Open <" + doc.getDocumentElement().getTagName()
 						+ "> in " + fXml.getPath());
 				NodeList lvllist = doc.getElementsByTagName("level");
@@ -166,9 +173,9 @@ public class Loader {
 			doc.getDocumentElement().normalize();
 			int tl=1;
 			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
-			GameField.getInstance().setlvl(tl);			
-			GameField.getInstance().setPlvl(tl);
-			System.out.println("1");
+			GameField.getInstance().setCurrentLevel(tl);			
+			GameField.getInstance().setPreviousLevel(tl);
+			//System.out.println("1");
 			Loader.readLvl(tl, lvlfile);
 		} catch (Exception ei) {
 			ei.printStackTrace();
@@ -176,8 +183,7 @@ public class Loader {
 	}
 
 	public static void readLvl(int Number, String lvlfile) {
-
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -272,6 +278,6 @@ public class Loader {
 
 	private static Logger logger = Logger.getLogger("Loader");
 	static {
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 	}
 }

@@ -60,6 +60,7 @@ public class Robot extends Stuff implements Moveable {
 		super.y = posY;
 		this.direction = direction;
 		this.container = c;
+		GameField.getInstance().cells[(int)this.x][(int)this.y].add(this);
 		logger.setLevel(Level.OFF);
 	}
 
@@ -162,8 +163,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
-			//GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			//GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+			
 			if(!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
@@ -253,6 +253,13 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		int x = (int) this.x;
 		int y = (int) this.y;
+		
+		if(this.container instanceof TNT){
+			TNT buf = (TNT) this.container;
+			GameField.getInstance().cells[this.getTargetCellCoordinates(direction).x][this.getTargetCellCoordinates(direction).y].tryToDestroy(buf.expDamage);
+		}
+		
+		
 		if (this.container == null)
 			return;
 
@@ -290,6 +297,8 @@ public class Robot extends Stuff implements Moveable {
 			GameField.getInstance().getCells()[x + 1][y].getContent()[GameField.getInstance().getCells()[x + 1][y].getContentAmount() - 2].teleportate();
 			ScreensHolder.getInstance().repaint();
 		}
+		
+		
 
 	}
 

@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.LoadingScreenModel;
 
 @SuppressWarnings("serial")

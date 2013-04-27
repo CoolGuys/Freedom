@@ -8,4 +8,5 @@ public interface Moveable {
 	public int getX();
 	public int getY();
 	public double getStep();
+	public void activate();
 }

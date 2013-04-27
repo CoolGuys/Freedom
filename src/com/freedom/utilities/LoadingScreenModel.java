@@ -30,7 +30,7 @@ public class LoadingScreenModel {
 	}
 
 	public void draw(Graphics g) {
-		logger.info("LOL");
+		//logger.info("LOL");
 		for (GLabel l : labels) {
 			if (l != null)
 				l.draw(g);
@@ -62,7 +62,7 @@ public class LoadingScreenModel {
 
 		public void draw(Graphics g) {
 
-			logger.info("LOLinner");
+			//logger.info("LOLinner");
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

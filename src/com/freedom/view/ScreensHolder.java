@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JLayeredPane;
 
-import com.freedom.utilities.AbstractScreen;
 
 
 /**
@@ -36,7 +35,8 @@ public class ScreensHolder extends JLayeredPane {
 		StartScreen.getInstance().prepareModel();
 		PauseScreen.getInstance().prepareModel();
 		LoadingScreen.getInstance().prepareModel();
-		ChoiceScreen.getInstance().prepareModel();
+		LevelChoiceScreen.getInstance().prepareModel();
+		TextFieldScreen.getInstance().prepareModel();
 		
 		addScreen(StartScreen.getInstance());
 	}

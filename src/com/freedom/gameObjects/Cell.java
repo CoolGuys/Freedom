@@ -3,9 +3,6 @@ package com.freedom.gameObjects;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import com.freedom.gameObjects.Button.SignalOnSender;
-import com.freedom.view.GameScreen;
-
 public class Cell {
 
 	private int x;
@@ -23,7 +20,7 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[4];
+		this.content = new Stuff[6];
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
@@ -31,7 +28,7 @@ public class Cell {
 	}
 
 	public boolean add(Stuff element) {
-		if (this.contentAmount == 4)
+		if (this.contentAmount == 6)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
@@ -106,7 +103,7 @@ public class Cell {
 
 	// Everything for robot:
 
-	void touch() {
+	public void touch() {
 		for (int i = 0; i < this.contentAmount; i++) {
 			this.content[i].touch();
 		}
@@ -200,6 +197,39 @@ public class Cell {
 			}
 		}
 	}
+	
+	
+	//здесь наносим урон предметам с задержкой
+	public void tryToDestroy(int damage){
+		if(this.contentAmount == 0 )
+			return;
+		
+		try {
+			wait(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		for(int i = 0; i<this.contentAmount; i++){
+			if(!this.content[i].ifCanDestroy())
+				continue;
+			this.content[i].lives = this.content[i].lives - damage;
+			
+			//let's destroy object in case of it's death
+			if(this.content[i].lives <=0){
+				for(int j = i; j<this.contentAmount-1; j++){
+					this.content[j] = this.content[j+1];
+				}
+				i--;
+				this.contentAmount--;
+			}
+		}
+	}
+	
+	
+	
+	
 
 	boolean getIfPassable() {
 		for (int i = 0; i < this.contentAmount; i++) {

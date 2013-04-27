@@ -1,6 +1,5 @@
 package com.freedom.gameObjects;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,6 @@ public class Tile extends Stuff {
 	{
 		super(false, true, false, false);
 		texture = texture1;
-		System.out.println("Gleb");
 	}
 	
 
@@ -55,10 +53,5 @@ public class Tile extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Tile");
 	}
 	
-
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
-				getSize(), getSize(), null);
-	}
 
 }

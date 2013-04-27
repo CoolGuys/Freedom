@@ -1,6 +1,5 @@
 package com.freedom.gameObjects;
 
-import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -10,8 +9,9 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 /**
- * захотелось создать ещо объектик
- * @author ushale
+ * 
+ * Эта плитка может быть уничтожена
+ * После уничтожения - провал
  *
  */
 
@@ -29,7 +29,7 @@ public class Tile2 extends Stuff {
 	}
 	
 	public Tile2() { 
-		super(false, true,false, false);
+		super(false, true,false, false,0,10);
 		texture = texture1;
 	}
 

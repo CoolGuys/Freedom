@@ -5,7 +5,7 @@ import java.awt.Image;
 
 import org.w3c.dom.Element;
 
-public class Stuff implements IStuff {
+public class Stuff {
 
 	double x;
 	double y;
@@ -85,6 +85,8 @@ public class Stuff implements IStuff {
 			this.ifDestroyable = true;
 		}
 	}
+	
+	//Action methods
 
 	boolean useOn() {
 		return false;
@@ -109,6 +111,13 @@ public class Stuff implements IStuff {
 	boolean teleportate() {
 		return false;
 	}
+	
+	public void activate(){
+		return;
+	}
+	
+	
+	////getters
 
 	boolean getIfAbsorb() {
 		return this.ifAbsorb;

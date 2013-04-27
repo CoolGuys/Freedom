@@ -1,13 +1,11 @@
 package com.freedom.gameObjects;
 
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 public class Laser extends Stuff {
 	LaserBeam beamHead;

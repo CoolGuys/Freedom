@@ -2,15 +2,16 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
-import com.freedom.view.ChoiceScreen;
+import com.freedom.utilities.TextFieldScreenModel.TextFieldListener;
+import com.freedom.view.LevelChoiceScreen;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
+import com.freedom.view.TextFieldScreen;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
@@ -23,58 +24,40 @@ import com.freedom.view.ScreensHolder;
 
 public class GameField {
 
-	private int thislvl;
+	private int currentLevelId;
 	private String pathToSave;
-	private int previousLevel;
-	public Cell[][] previouscells;
+	private int previousLevelId;
+	public Cell[][] previousCells;
 	private Robot robot;
 	public Cell[][] cells;
 	private int xSize;
 	private int ySize;
-	@SuppressWarnings("unused")
-	private Logger logger = Logger.getLogger("Core.GameField");
+	// private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
 
-	/**
-	 * 
-	 * @param path
-	 *            set path to the save file
-	 */
-	public void setPath(String path) {
-		this.pathToSave = "Saves/Save1.lvl";
+
+	public void setPathToSave(String pathToSaveFile) {
+		this.pathToSave = pathToSaveFile;
 	}
 
-	/**
-	 * 
-	 * @return get a path to the save file
-	 */
-	public String getPath() {
+	public String getPathToSave() {
 		return this.pathToSave;
 	}
 
-	/**
-	 * 
-	 * @param lvl
-	 *            set This lvl param
-	 */
-	public void setlvl(int lvl) {
-		this.thislvl = lvl;
+	public void setCurrentLevel(int currentLevelIdToSet) {
+		this.currentLevelId = currentLevelIdToSet;
 	}
 
-	/**
-	 * 
-	 * @param lvl
-	 *            set previous lvl param
-	 */
-	public void setPlvl(int lvl) {
-		this.previousLevel = lvl;
+	
+	public void setPreviousLevel(int prevoiusLevelIdToSet) {
+		this.previousLevelId = prevoiusLevelIdToSet;
 	}
 
-	public int getlvl() {
-		return this.thislvl;
+	public int getLevelId() {
+		return this.currentLevelId;
 	}
 
 	public void activate() {
@@ -84,30 +67,22 @@ public class GameField {
 
 	public void deactivate() {
 		ticker.stop();
+		deathTicker.stop();
 	}
 
-	/*
-	 * public void loadSave(String pathToPackage){
-	 * Loader.loadSave(pathToPackage);
-	 * GameScreen.getInstance().setSize(cells.length * cellSize, cells[0].length
-	 * * cellSize); }
-	 */
 	/**
-	 * метод для старта игры. Подходит как для старта так и для загрузки.
-	 * Обязательно нужно сделать так, чтобы при новой игре загружался один файл,
-	 * а при загрузке другой
+	 * Метод как для старта так и для загрузки уровня.
 	 * 
 	 * @param pathToPackage
 	 *            путь к файлу
 	 * @param levelID
-	 *            апендикс, который сейчас не нужен
+	 *            Апендикс, который сейчас не нужен
 	 */
-	public void loadLevel(String pathToPackage) {
-		this.pathToSave = "Saves/Save1.lvl";
+	public void loadNewLevel(String pathToPackage) {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-				ChoiceScreen.getInstance());
+				TextFieldScreen.getInstance());
 		Loader.loadSave(pathToPackage);
-		previouscells = cells;
+		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
@@ -115,43 +90,42 @@ public class GameField {
 				LoadingScreen.getInstance());
 	}
 
-	/**
-	 * метод для переключения уровней
-	 * 
-	 * @param nextlvl
-	 *            слеудующий лвл.
-	 */
-	public void nextlvl(int nextlvl) {
+	public void loadSavedLevel(String pathToPackage) {
+		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+			LevelChoiceScreen.getInstance());
+		Loader.loadSave(pathToPackage);
+		previousCells = cells;
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+
+		ScreensHolder.swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
+	}
+
+	public void switchToNextLevel(int nextLevelId) {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
-		this.thislvl = nextlvl;
+		
+		previousLevelId = currentLevelId;
+		currentLevelId = nextLevelId;
+
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
-		Loader.lvlToSv(thislvl, this.pathToSave);
-		Loader.readLvl(nextlvl, this.pathToSave);
+		Loader.lvlToSv(previousLevelId, this.pathToSave);
+		Loader.readLvl(nextLevelId, this.pathToSave);
 		robot.setContainer(buf);
-		Loader.lvlToSv(nextlvl, this.pathToSave);
+		Loader.lvlToSv(nextLevelId, this.pathToSave);
+
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-
-		/*
-		 * }else{ this.previousLevel = this.thislvl; this.thislvl = nextlvl;
-		 * previouscells = cells; Stuff buf = robot.getContent();
-		 * robot.emptyContainer(); Loader.lvlToSv(this.previousLevel,
-		 * this.pathToSave); //Loader.readLvl(nextlvl, this.pathToSave);
-		 * Cell[][] bufCells; bufCells=previouscells; previouscells=cells;
-		 * cells=bufCells; robot.setContainer(buf); Loader.lvlToSv(nextlvl,
-		 * this.pathToSave); GameScreen.getInstance().setSize(cells.length *
-		 * cellSize, cells[1].length * cellSize); }
-		 */
 		ScreensHolder.swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
 
-	public void saveLevel(String pathToPackage, int levelID) {
-		this.pathToSave = "Saves/Save1.lvl";
-		Loader.lvlToSv(this.thislvl, this.pathToSave);
+	public void saveLevelToPackage(int levelID) {
+		//this.pathToSave = "Saves/Save1.lvl";
+		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
 	}
 
 	public void resetTickerListeners() {
@@ -204,10 +178,6 @@ public class GameField {
 
 	public int getCellSize() {
 		return cellSize;
-	}
-
-	public void setRobot(Robot robo, Stuff con) {
-		robot = robo;
 	}
 
 	public void setRobot(Robot robo) {
