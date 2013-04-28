@@ -12,10 +12,11 @@ import com.freedom.view.LoadingScreen;
 
 public class LoadingScreenModel {
 
-	private LoadingScreenModel() {
+	private LoadingScreenModel()
+	{
 		logger.setLevel(Level.OFF);
 	}
-	
+
 	public static LoadingScreenModel getInstance() {
 
 		if (INSTANCE == null)
@@ -25,16 +26,29 @@ public class LoadingScreenModel {
 	}
 
 	public void addButtons() {
-		labels[0] = new GLabel("Loading", 1);
-		labels[1] = new GLabel("Percentage", 2);
+		labels[0] = new GLabel("", 1);
+		labels[1] = new GLabel("", 2);
 	}
 
 	public void draw(Graphics g) {
-		//logger.info("LOL");
+		// logger.info("LOL");
 		for (GLabel l : labels) {
 			if (l != null)
 				l.draw(g);
 		}
+	}
+
+	public void setProgressPercent(int percent) {
+		labels[1].setText(percent + "%");
+		LoadingScreen.getInstance().paintImmediately(
+				LoadingScreen.getInstance().getBounds());
+
+	}
+
+	public void setLoadingObjectName(String name) {
+		labels[0].setText(name);
+		LoadingScreen.getInstance().paintImmediately(
+				LoadingScreen.getInstance().getBounds());
 	}
 
 	private GLabel[] labels = new GLabel[2];
@@ -60,9 +74,13 @@ public class LoadingScreenModel {
 					* (12 + line) / 15;
 		}
 
+		public void setText(String text) {
+			this.text = text;
+		}
+
 		public void draw(Graphics g) {
 
-			//logger.info("LOLinner");
+			// logger.info("LOLinner");
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
