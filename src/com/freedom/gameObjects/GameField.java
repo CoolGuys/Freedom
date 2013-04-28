@@ -84,7 +84,6 @@ public class GameField {
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}

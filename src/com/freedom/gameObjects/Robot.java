@@ -155,6 +155,15 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
+	/**
+	 * Штука, которая выдает пару чисел - координаты целла в массиве, лежащего
+	 * роботом в некотором направлении от робота
+	 * 
+	 * @param direction
+	 *            направление, в котором берется целл
+	 * 
+	 * @return пара координат нужного целла
+	 */
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")) {
@@ -224,18 +233,16 @@ public class Robot extends Stuff implements Moveable {
 				.getTargetCellCoordinates(getDirection()).y];
 		if (!cell.isExamined) {
 			for (Stuff s : cell.getContent())
-				if(s!=null)
+				if (s != null)
 					s.giveInfo();
-			cell.isExamined=true;
-		}
-		else {
+			cell.isExamined = true;
+		} else {
 			for (Stuff s : cell.getContent())
-				if(s!=null)
+				if (s != null)
 					s.removeInfo();
-			cell.isExamined=false;
+			cell.isExamined = false;
 		}
 		GameScreen.getInstance().repaint();
-			
 
 	}
 
@@ -264,7 +271,7 @@ public class Robot extends Stuff implements Moveable {
 		if (container != null) {
 			g.drawImage(container.getTexture(), (int) (x * getSize()),
 					(int) (y * getSize()), getSize(), getSize(), null);
-			//logger.info(container.toString());
+			// logger.info(container.toString());
 		}
 	}
 
