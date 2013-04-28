@@ -121,7 +121,7 @@ public class Stuff {
 	public int getY() {
 		return ((int) this.y);
 	}
-
+	
 	public static int getSize() {
 		return size;
 	}

@@ -172,7 +172,11 @@ public class Robot extends Stuff implements Moveable {
 			t.start();
 		}
 	}
-	
+	/**
+	 * что за хуйня? где комментарии?
+	 * @param direction
+	 * @return
+	 */
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")){
@@ -329,6 +333,7 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	@Override
+	
 	public void tellIfBeingMoved(boolean isMoved) {
 		// TODO Auto-generated method stub
 		isMoving = isMoved;
