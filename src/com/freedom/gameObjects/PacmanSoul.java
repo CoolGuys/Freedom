@@ -1,9 +1,7 @@
 package com.freedom.gameObjects;
 
-import com.freedom.utilities.MovementAnimator;
 import com.freedom.utilities.PathFinder;
 import com.freedom.view.GameScreen;
-import com.freedom.view.ScreensHolder;
 
 public class PacmanSoul implements Runnable{
 	private int StepRate;

@@ -4,15 +4,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
-import com.freedom.view.*;
-import com.freedom.utilities.*;
+
+import com.freedom.utilities.MovementAnimator;
+import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class Robot extends Stuff implements Moveable {
 
@@ -251,8 +253,6 @@ public class Robot extends Stuff implements Moveable {
 				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
-				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
 		if (direction.equals("N")) {
 			g2.drawImage(textureN, (int) (x * getSize()),
