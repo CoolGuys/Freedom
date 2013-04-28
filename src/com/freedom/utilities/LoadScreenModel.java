@@ -19,14 +19,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.view.ChoiceScreen;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.PauseScreen;
+import com.freedom.view.ScreensHolder;
+import com.freedom.view.SaveScreen;
 
-public class ChoiceScreenModel {
+public class LoadScreenModel {
 
-	private ChoiceScreenModel()
+	private LoadScreenModel()
 	{
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 	}
 
 	public void addEntries() {
@@ -41,6 +43,12 @@ public class ChoiceScreenModel {
 						.toString(), counter, file.toString());
 				counter++;
 			}
+			if (counter > 10)
+				LoadScreen
+						.getInstance()
+						.setSize(
+								LoadScreen.getInstance().getWidth(),
+								(int) (ScreensHolder.getInstance().getHeight() * (1 + 1f / 6f * counter)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,9 +56,9 @@ public class ChoiceScreenModel {
 
 	}
 
-	public static ChoiceScreenModel getInstance() {
+	public static LoadScreenModel getInstance() {
 		if (INSTANCE == null)
-			return INSTANCE = new ChoiceScreenModel();
+			return INSTANCE = new LoadScreenModel();
 		else
 			return INSTANCE;
 	}
@@ -60,7 +68,8 @@ public class ChoiceScreenModel {
 	}
 
 	public void deactivate() {
-		buttons=new GButtonLoaderLite[5];
+		buttons = new GButtonLoaderLite[100];
+		LoadScreen.getInstance().setLocation(0, 0);
 	}
 
 	public void draw(Graphics g) {
@@ -81,20 +90,20 @@ public class ChoiceScreenModel {
 
 	public void setListedDirectory(String dir) {
 		listedDirectory = dir;
-		addEntries();
 	}
 
 	public void reactToRollOver(Point point) {
 		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
 				if (b.checkRollOver(point))
-					ChoiceScreen.getInstance().repaint();
+					LoadScreen.getInstance().repaint();
 		}
 	}
 
-	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[5];
+	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[100];
 	private String listedDirectory;
-	private static ChoiceScreenModel INSTANCE;
+	private static LoadScreenModel INSTANCE;
+	public boolean newLevel;
 
 	private Logger logger = Logger.getLogger("PauseScreenModel");
 
@@ -130,6 +139,7 @@ public class ChoiceScreenModel {
 
 		public void reset() {
 			this.textColor = Color.LIGHT_GRAY;
+			this.text = null;
 		}
 
 		public void checkIfPressed(Point p) {
@@ -144,8 +154,18 @@ public class ChoiceScreenModel {
 		}
 
 		private void loadLevel() {
-			GameField.getInstance().setlvl(1);
-			GameField.getInstance().loadLevel(fileToLoad);
+			if (newLevel) {
+				SaveScreenModel.getInstance().setDescriptor(
+						"Choose Initial Save File");
+				SaveScreenModel.getInstance().setSourcePack(fileToLoad);
+				SaveScreenModel.getInstance().addEntries();
+				ScreensHolder.getInstance().swapScreens(
+						SaveScreen.getInstance(), LoadScreen.getInstance());
+			} else {
+				GameField.getInstance().setPathToSave(fileToLoad);
+
+				GameField.getInstance().loadSavedLevel(fileToLoad);
+			}
 		}
 
 		public void draw(Graphics g) {
@@ -154,14 +174,14 @@ public class ChoiceScreenModel {
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 			FontRenderContext context = g2.getFontRenderContext();
 			if (textFont == null)
-				textFont = new Font("Monospaced", Font.PLAIN, PauseScreen
+				textFont = new Font("Monospaced", Font.PLAIN, ScreensHolder
 						.getInstance().getHeight() / 20);
 			Rectangle2D bounds = textFont.getStringBounds(text, context);
 
 			if (dimensionX == 0) {
 				dimensionX = (int) bounds.getWidth();
 				dimensionY = (int) bounds.getHeight();
-				positionX = (int) (PauseScreen.getInstance().getWidth() / 2 - bounds
+				positionX = (int) (ScreensHolder.getInstance().getWidth() / 2 - bounds
 						.getWidth() / 2);
 				metrics = textFont.getLineMetrics(text, context);
 
@@ -182,8 +202,8 @@ public class ChoiceScreenModel {
 		private LineMetrics metrics;
 		private File clickedSound;
 		private Font textFont;
-		private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
-		private final int gap = PauseScreen.getInstance().getHeight() / 12;
+		private final int offsetY = ScreensHolder.getInstance().getHeight() / 3;
+		private final int gap = ScreensHolder.getInstance().getHeight() / 12;
 
 	}
 }

@@ -3,9 +3,6 @@ package com.freedom.gameObjects;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//import com.freedom.gameObjects.Button.SignalOnSender;
-import com.freedom.view.GameScreen;
-
 public class Cell {
 
 	private int x;

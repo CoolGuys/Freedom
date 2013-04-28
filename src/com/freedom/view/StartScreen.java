@@ -4,12 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.logging.*;
-import javax.swing.*;
-import com.freedom.gameObjects.GameField;
-import com.freedom.utilities.AbstractScreen;
-import com.freedom.utilities.ChoiceScreenModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.freedom.utilities.GAction;
+import com.freedom.utilities.LoadScreenModel;
 import com.freedom.utilities.StartScreenModel;
 
 @SuppressWarnings("serial")
@@ -89,17 +88,23 @@ public class StartScreen extends AbstractScreen {
 
 	public static class StartGameAction extends GAction {
 		public void performAction() {	
-			GameField.getInstance().loadLevel(GameField.getInstance().getPath());			
-			ScreensHolder.swapScreens(GameScreen.getInstance(),
-					StartScreen.getInstance());
+			//GameField.getInstance().loadLevel(GameField.getInstance().getPathToSave());	
+
+			/*TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
+			TextFieldScreenModel.getInstance().addEntries();	
+			ScreensHolder.getInstance().swapScreens(TextFieldScreen.getInstance(),
+					StartScreen.getInstance());*/
 
 		}
 	}
 	
 	public static class NewGameAction extends GAction {
 		public void performAction() {
-			ChoiceScreenModel.getInstance().setListedDirectory("Levels");
-			ScreensHolder.swapScreens(ChoiceScreen.getInstance(),
+			LoadScreenModel.getInstance().setListedDirectory("Levels");
+
+			//LoadScreenModel.getInstance().addEntries();
+			LoadScreenModel.getInstance().newLevel=true;
+			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
 					StartScreen.getInstance());
 
 		}
@@ -107,8 +112,10 @@ public class StartScreen extends AbstractScreen {
 	
 	public static class LoadGameAction extends GAction {
 		public void performAction() {
-			ChoiceScreenModel.getInstance().setListedDirectory("Saves");
-			ScreensHolder.swapScreens(ChoiceScreen.getInstance(),
+			LoadScreenModel.getInstance().setListedDirectory("Saves");
+			LoadScreenModel.getInstance().newLevel=false;
+			LoadScreenModel.getInstance().addEntries();
+			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
 					StartScreen.getInstance());
 
 		}

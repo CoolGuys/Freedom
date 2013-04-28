@@ -28,8 +28,9 @@ public class LaserBeam extends Stuff {
 	void buildBeam(double x, double y) {
 		this.next = new LaserBeam(x, y);
 		double k;
-		double m;
+		// double m;
 		double yBuf;
+		@SuppressWarnings("unused")
 		double xBuf;
 
 		this.next.xStart = x;

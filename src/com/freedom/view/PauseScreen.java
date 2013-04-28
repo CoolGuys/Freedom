@@ -4,18 +4,19 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
+
 import com.freedom.gameObjects.GameField;
-import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.GAction;
 import com.freedom.utilities.PauseScreenModel;
+import com.freedom.utilities.SaveScreenModel;
 
 @SuppressWarnings("serial")
 public class PauseScreen extends AbstractScreen {
@@ -96,7 +97,7 @@ public class PauseScreen extends AbstractScreen {
 	
 	public static class QuitAction extends GAction {
 		public void performAction() {
-			ScreensHolder.swapScreens(StartScreen.getInstance(),
+			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
 					INSTANCE);
 			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
 			GameField.getInstance().resetTickerListeners();
@@ -113,7 +114,10 @@ public class PauseScreen extends AbstractScreen {
 
 	public static class SaveLevelAction extends GAction {
 		public void performAction() {
-			GameField.getInstance().saveLevel("Save1.lvl", 1);
+			SaveScreenModel.getInstance().setSourcePack(GameField.getInstance().getPathToSave());
+			SaveScreenModel.getInstance().setDescriptor("Enter Save Name");
+			SaveScreenModel.getInstance().addEntries();
+			ScreensHolder.getInstance().swapScreens(SaveScreen.getInstance(), INSTANCE);
 		}
 	}
 }

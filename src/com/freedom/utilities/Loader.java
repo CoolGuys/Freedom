@@ -1,19 +1,25 @@
 package com.freedom.utilities;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import com.freedom.gameObjects.*;
+import com.freedom.gameObjects.Cell;
+import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.Robot;
+import com.freedom.gameObjects.Stuff;
 
 /**
  * !!!!!!!!!!!!!!!!!!!Attention please!!!!!!!!!!!
@@ -55,7 +61,7 @@ import com.freedom.gameObjects.*;
 public class Loader {
 
 	public static void lvlToSv(int num, String lvlfile) {
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		if (fXml.exists()) {
 			try {
@@ -64,6 +70,7 @@ public class Loader {
 				DocumentBuilder db = dbf.newDocumentBuilder();
 				Document doc = db.parse(fXml);
 				doc.getDocumentElement().normalize();
+				doc.getDocumentElement().setAttribute("startLvl", String.valueOf(num));
 				logger.info("Open <" + doc.getDocumentElement().getTagName()
 						+ "> in " + fXml.getPath());
 				NodeList lvllist = doc.getElementsByTagName("level");
@@ -166,8 +173,8 @@ public class Loader {
 			doc.getDocumentElement().normalize();
 			int tl=1;
 			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
-			GameField.getInstance().setlvl(tl);			
-			GameField.getInstance().setPlvl(tl);
+			GameField.getInstance().setCurrentLevel(tl);			
+			GameField.getInstance().setPreviousLevel(tl);
 			//System.out.println("1");
 			Loader.readLvl(tl, lvlfile);
 		} catch (Exception ei) {
@@ -176,9 +183,11 @@ public class Loader {
 	}
 
 	public static void readLvl(int Number, String lvlfile) {
-
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
+		LoadingScreenModel lsm=LoadingScreenModel.getInstance();
+		lsm.setLoadingObjectName("Starting");
+		lsm.setProgressPercent(0);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -186,13 +195,18 @@ public class Loader {
 			doc.getDocumentElement().normalize();
 			logger.info("Open <" + doc.getDocumentElement().getTagName()
 					+ "> in " + fXml.getPath());
+			lsm.setLoadingObjectName("Importing file "+fXml.getName());
+			lsm.setProgressPercent(100);
 			NodeList lvllist = doc.getElementsByTagName("level");
 			logger.info("Getting level N=" + Number);
 			for (int lvli = 0; lvli < lvllist.getLength(); lvli++) {
 				logger.info("lvli=" + lvli + " length=" + lvllist.getLength());
 				Node lvlTag = lvllist.item(lvli);
 				Element lvl = (Element) lvlTag;
+				lsm.setProgressPercent(0);
+				lsm.setLoadingObjectName("Searching level №"+Number);
 				if (Integer.parseInt(lvl.getAttribute("num")) == Number) {
+					LoadingScreenModel.getInstance().setProgressPercent(100);
 					int width = Integer.parseInt(lvl.getAttribute("width"));
 					int height = Integer.parseInt(lvl.getAttribute("height"));
 					GameField.getInstance().cells = new Cell[width + 2][height + 2];
@@ -205,8 +219,12 @@ public class Loader {
 					}
 					logger.info("Creating GameField.getInstance().cells array-ok");
 					NodeList objTag = lvl.getElementsByTagName("obj");
-					logger.info("amount " + objTag.getLength());
-					for (int obji = 0; obji < objTag.getLength(); obji++) {
+					logger.info("amount " + objTag.getLength());		
+					lsm.setLoadingObjectName("Creating obj");
+					lsm.setProgressPercent(0);
+					int objTagLeng=objTag.getLength();
+					
+					for (int obji = 0; obji < objTagLeng; obji++) {
 						Element obj = (Element) objTag.item(obji);
 						logger.info("reading x=" + obj.getAttribute("x")
 								+ " y=" + obj.getAttribute("y") + " class="
@@ -217,6 +235,7 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff)
 								.getY()].add(((Stuff) newstuff));
+						lsm.setProgressPercent(obji*100/objTagLeng);
 					}
 					/*
 					 * objTag=lvl.getElementsByTagName("objc");
@@ -234,6 +253,8 @@ public class Loader {
 					 * newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff)
 					 * newstuff)); }
 					 */
+					lsm.setLoadingObjectName("Robot creating");
+					lsm.setProgressPercent(0);
 					NodeList robotlist = lvl.getElementsByTagName("robot");
 					for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 						Element obj = (Element) robotlist.item(rbti);
@@ -261,6 +282,7 @@ public class Loader {
 											((Stuff) newstuff), 10));
 						}
 					}
+					lsm.setProgressPercent(100);
 
 				}
 			}
@@ -272,6 +294,6 @@ public class Loader {
 
 	private static Logger logger = Logger.getLogger("Loader");
 	static {
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 	}
 }

@@ -3,7 +3,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.freedom.utilities.AbstractScreen;
 import com.freedom.utilities.LoadingScreenModel;
 
 @SuppressWarnings("serial")
@@ -21,7 +20,7 @@ public class LoadingScreen extends AbstractScreen {
 	
 	public static LoadingScreen getInstance() {
 
-		logger.info("Giving INSTANCE");
+		//logger.info("Giving INSTANCE");
 		if(INSTANCE==null)
 			return INSTANCE = new LoadingScreen();
 		else
@@ -36,7 +35,7 @@ public class LoadingScreen extends AbstractScreen {
 	
 	public void prepareModel() {
 
-		logger.info("Preparing");
+		//logger.info("Preparing");
 		loadingScreenModel.addButtons();
 
 	}
