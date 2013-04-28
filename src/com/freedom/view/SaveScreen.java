@@ -15,26 +15,16 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.utilities.TextFieldScreenModel;
+import com.freedom.utilities.SaveScreenModel;
 
 @SuppressWarnings("serial")
-public class TextFieldScreen extends AbstractScreen {
+public class SaveScreen extends AbstractScreen {
 	
 
-private static Image background;
 
-static {
-	try {
-		background = ImageIO.read(new File(
-				"Resource/UtilityPictures/pauseScreenBackground.png"));
-	} catch (IOException e) {
-		e.printStackTrace();
-	}
-}
-
-	private TextFieldScreen()
+	private SaveScreen()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
@@ -46,22 +36,19 @@ static {
 		amap.put("back", resume);
 	}
 	
-	public static TextFieldScreen getInstance() {
+	public static SaveScreen getInstance() {
 
 		//logger.info("Giving INSTANCE");
 		if(INSTANCE==null)
-			return INSTANCE = new TextFieldScreen();
+			return INSTANCE = new SaveScreen();
 		else
 			return INSTANCE;
 	}
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		logger.info(""+this.getWidth());
-		g.drawImage(background, 0, 0, this.getHeight(), this.getWidth(), null);
-		g.drawImage(background, 0, 0, this.getHeight(), this.getWidth(), null);
 
-		textFieldScreenModel.draw(g);
+		saveScreenModel.draw(g);
 	}
 	
 	public void prepareModel() {
@@ -72,18 +59,18 @@ static {
 	}
 	
 	public void deactivateModel() {
-		textFieldScreenModel.deactivate();
+		saveScreenModel.deactivate();
 	}
 	
-	private TextFieldScreenModel textFieldScreenModel = TextFieldScreenModel.getInstance();
-	private static TextFieldScreen INSTANCE;
+	private SaveScreenModel saveScreenModel = SaveScreenModel.getInstance();
+	private static SaveScreen INSTANCE;
 	private static Logger logger = Logger.getLogger("TextFieldScreen");
 	
 	private class BackAction extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ScreensHolder.swapScreens(LevelChoiceScreen.getInstance(), INSTANCE);
+				ScreensHolder.getInstance().swapScreens(ScreensHolder.getInstance().getLastScreen(), INSTANCE);
 			}
 		
 	} 

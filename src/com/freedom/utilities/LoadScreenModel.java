@@ -19,14 +19,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.view.LevelChoiceScreen;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.PauseScreen;
 import com.freedom.view.ScreensHolder;
-import com.freedom.view.TextFieldScreen;
+import com.freedom.view.SaveScreen;
 
-public class LevelChoiceScreenModel {
+public class LoadScreenModel {
 
-	private LevelChoiceScreenModel()
+	private LoadScreenModel()
 	{
 		logger.setLevel(Level.OFF);
 	}
@@ -50,9 +50,9 @@ public class LevelChoiceScreenModel {
 
 	}
 
-	public static LevelChoiceScreenModel getInstance() {
+	public static LoadScreenModel getInstance() {
 		if (INSTANCE == null)
-			return INSTANCE = new LevelChoiceScreenModel();
+			return INSTANCE = new LoadScreenModel();
 		else
 			return INSTANCE;
 	}
@@ -62,7 +62,6 @@ public class LevelChoiceScreenModel {
 	}
 
 	public void deactivate() {
-		buttons=new GButtonLoaderLite[5];
 		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
 				b.reset();
@@ -94,13 +93,13 @@ public class LevelChoiceScreenModel {
 		for (GButtonLoaderLite b : buttons) {
 			if (b != null)
 				if (b.checkRollOver(point))
-					LevelChoiceScreen.getInstance().repaint();
+					LoadScreen.getInstance().repaint();
 		}
 	}
 
-	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[5];
+	private GButtonLoaderLite[] buttons = new GButtonLoaderLite[10];
 	private String listedDirectory;
-	private static LevelChoiceScreenModel INSTANCE;
+	private static LoadScreenModel INSTANCE;
 	public boolean newLevel;
 
 	private Logger logger = Logger.getLogger("PauseScreenModel");
@@ -137,6 +136,7 @@ public class LevelChoiceScreenModel {
 
 		public void reset() {
 			this.textColor = Color.LIGHT_GRAY;
+			this.text=null;
 		}
 
 		public void checkIfPressed(Point p) {
@@ -152,11 +152,12 @@ public class LevelChoiceScreenModel {
 
 		private void loadLevel() {
 			if(newLevel) {
-				TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
-				TextFieldScreenModel.getInstance().setSourcePack(fileToLoad);
-				TextFieldScreenModel.getInstance().addEntries();	
-				ScreensHolder.swapScreens(TextFieldScreen.getInstance(), LevelChoiceScreen.getInstance());
+				SaveScreenModel.getInstance().setDescriptor("Choose Initial Save File");
+				SaveScreenModel.getInstance().setSourcePack(fileToLoad);
+				SaveScreenModel.getInstance().addEntries();	
+				ScreensHolder.getInstance().swapScreens(SaveScreen.getInstance(), LoadScreen.getInstance());
 			} else 
+				GameField.getInstance().setPathToSave(fileToLoad);
 				GameField.getInstance().loadSavedLevel(fileToLoad);
 		}
 

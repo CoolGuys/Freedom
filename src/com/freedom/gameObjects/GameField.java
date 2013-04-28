@@ -6,12 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
-import com.freedom.utilities.TextFieldScreenModel.TextFieldListener;
-import com.freedom.view.LevelChoiceScreen;
+import com.freedom.utilities.SaveScreenModel.TextFieldListener;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
-import com.freedom.view.TextFieldScreen;
+import com.freedom.view.SaveScreen;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
@@ -79,31 +79,31 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadNewLevel(String pathToPackage) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-				TextFieldScreen.getInstance());
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				SaveScreen.getInstance());
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
 
 	public void loadSavedLevel(String pathToPackage) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
-			LevelChoiceScreen.getInstance());
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+			LoadScreen.getInstance());
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
 
 	public void switchToNextLevel(int nextLevelId) {
-		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
 		
@@ -119,11 +119,11 @@ public class GameField {
 
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
 
-	public void saveLevelToPackage(int levelID) {
+	public void saveCurrentLevelToPackage() {
 		//this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
 	}

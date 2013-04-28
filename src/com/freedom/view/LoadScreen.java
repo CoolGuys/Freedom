@@ -13,14 +13,14 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.utilities.LevelChoiceScreenModel;
+import com.freedom.utilities.LoadScreenModel;
 import com.freedom.utilities.GAction;
 
 
 //comment
 @SuppressWarnings("serial")
-public class LevelChoiceScreen extends AbstractScreen {
-	private LevelChoiceScreen()
+public class LoadScreen extends AbstractScreen {
+	private LoadScreen()
 	{
 		logger.setLevel(Level.OFF);
 
@@ -36,9 +36,9 @@ public class LevelChoiceScreen extends AbstractScreen {
 		amap.put("back", resume);
 	}
 	
-	public static LevelChoiceScreen getInstance() {
+	public static LoadScreen getInstance() {
 		if(INSTANCE==null)
-			return INSTANCE = new LevelChoiceScreen();
+			return INSTANCE = new LoadScreen();
 		else
 			return INSTANCE;
 	}
@@ -47,24 +47,24 @@ public class LevelChoiceScreen extends AbstractScreen {
 	@Override
 	public void paintComponent(Graphics g) {
 //		super.paintComponent(g);
-		levelChoiceScreenModel.draw(g);
+		loadScreenModel.draw(g);
 	}
 
 	public void activateModel() {
-		levelChoiceScreenModel.activate();
+		loadScreenModel.activate();
 		this.addMouseListener(l);
 		this.addMouseMotionListener(l);
 	}
 	
 	public void deactivateModel() {
-		levelChoiceScreenModel.deactivate();
+		loadScreenModel.deactivate();
 		this.removeMouseListener(l);
 		this.addMouseMotionListener(l);
 	}
 	
 	private Logger logger = Logger.getLogger("PauseScreen");
-	private LevelChoiceScreenModel levelChoiceScreenModel = LevelChoiceScreenModel.getInstance();
-	private static LevelChoiceScreen INSTANCE;
+	private LoadScreenModel loadScreenModel = LoadScreenModel.getInstance();
+	private static LoadScreen INSTANCE;
 	
 	private MouseHandler l = new MouseHandler();
 	
@@ -73,10 +73,10 @@ public class LevelChoiceScreen extends AbstractScreen {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			levelChoiceScreenModel.reactToClick(e.getPoint());
+			loadScreenModel.reactToClick(e.getPoint());
 		}
 		public void mouseMoved(MouseEvent e) {
-			levelChoiceScreenModel.reactToRollOver(e.getPoint());
+			loadScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 	
@@ -84,7 +84,7 @@ public class LevelChoiceScreen extends AbstractScreen {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ScreensHolder.swapScreens(StartScreen.getInstance(), INSTANCE);
+			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(), INSTANCE);
 		}
 		
 	}

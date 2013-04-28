@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,24 +19,39 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.JTextField;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.view.LevelChoiceScreen;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
-import com.freedom.view.TextFieldScreen;
+import com.freedom.view.PauseScreen;
+import com.freedom.view.ScreensHolder;
+import com.freedom.view.SaveScreen;
 
-public class TextFieldScreenModel {
+public class SaveScreenModel {
 
-	private TextFieldScreenModel()
+
+private static Image background;
+
+static {
+	try {
+		background = ImageIO.read(new File(
+				"Resource/UtilityPictures/pauseScreenBackground.png"));
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+}
+	
+	private SaveScreenModel()
 	{
 		logger.setLevel(Level.ALL);
 	}
 
-	public static TextFieldScreenModel getInstance() {
+	public static SaveScreenModel getInstance() {
 
 		if (INSTANCE == null)
-			return INSTANCE = new TextFieldScreenModel();
+			return INSTANCE = new SaveScreenModel();
 		else
 			return INSTANCE;
 	}
@@ -46,20 +62,26 @@ public class TextFieldScreenModel {
 
 	public void addEntries() {
 		descriptionLabel = new GLabel(descriptor, 1, "center");
-		tf.setSize(400, (int) (TextFieldScreen.getInstance().getHeight() / 13f));
+		tf.setSize(400, (int) (SaveScreen.getInstance().getHeight() / 13f));
 		tf.setLocation(
-				TextFieldScreen.getInstance().getWidth() / 2
-						- tf.getWidth() / 2, descriptionLabel.positionY + 2
-						* textSize);
+				SaveScreen.getInstance().getWidth() / 2 - tf.getWidth()
+						/ 2, descriptionLabel.positionY + 2 * textSize);
 		if (!ready) {
-			TextFieldScreen.getInstance().add(tf);
+			SaveScreen.getInstance().add(tf);
 			tf.setFont(textFont);
 			tf.addActionListener(l);
-			ready=true;
+			ready = true;
+		}
+		if(descriptor.equals("Enter Save Name")) {
+			File f = new File(sourcePack);
+			String s = f.toPath().getFileName().toString();
+			tf.setText(s.substring(0, s.length()-4));
 		}
 	}
 
 	public void draw(Graphics g) {
+		g.drawImage(background, 0, 0, SaveScreen.getInstance().getWidth(),
+				SaveScreen.getInstance().getHeight(), null);
 		descriptionLabel.draw(g);
 		tf.requestFocusInWindow();
 	}
@@ -78,7 +100,7 @@ public class TextFieldScreenModel {
 	private String sourcePack;
 
 	private TextFieldListener l = new TextFieldListener();
-	private static TextFieldScreenModel INSTANCE;
+	private static SaveScreenModel INSTANCE;
 	private Logger logger = Logger.getLogger("LoadingScreenModel");
 	public int textSize = LoadingScreen.getInstance().getHeight() / 20;
 	private Font textFont = new Font("Monospaced", Font.PLAIN, textSize);
@@ -106,8 +128,8 @@ public class TextFieldScreenModel {
 						* (12 + line) / 15;
 			} else {
 				this.text = text;
-				Graphics2D g2 = (Graphics2D) LevelChoiceScreen.getInstance()
-						.getGraphics();
+				Graphics2D g2 = (Graphics2D) ScreensHolder.getInstance()
+						.getCurrentScreen().getGraphics();
 
 				FontRenderContext context = g2.getFontRenderContext();
 				Rectangle2D bounds = textFont.getStringBounds(text, context);
@@ -136,6 +158,7 @@ public class TextFieldScreenModel {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			Path dir = Paths.get("Saves");
 			DirectoryStream<Path> stream;
 			try {
@@ -143,29 +166,40 @@ public class TextFieldScreenModel {
 						|| tf.getText().equals("Not Valid")
 						|| (lastName == null && tf.getText().equals(
 								"File exists. Press Enter to overwrite."))) {
-					tf.setText("Not Valid");
-					tf.setSize(400, (int) (TextFieldScreen.getInstance().getHeight() / 13f));
-					tf.setLocation(
-							TextFieldScreen.getInstance().getWidth() / 2
-									- tf.getWidth() / 2, descriptionLabel.positionY + 2
-									* textSize);
+					tf.setText("    Not Valid   ");
+					tf.setSize(calculateTextSize("####Not Valid####"), (int) (SaveScreen.getInstance()
+							.getHeight() / 13f));
+					tf.setLocation(SaveScreen.getInstance().getWidth() / 2
+							- tf.getWidth() / 2, descriptionLabel.positionY + 2
+							* textSize);
 					return;
 				}
 				if (tf.getText().equals(
 						"File exists. Press Enter to overwrite.")) {
-					File src = new File(sourcePack);
-					File dst = new File("Saves/" + lastName + ".lvl");
-					Files.delete(dst.toPath());
-					Files.copy(src.toPath(), dst.toPath());
-					GameField.getInstance().setPathToSave(
-							"Saves/" + lastName + ".lvl");
-					GameField.getInstance().loadNewLevel(
-							"Saves/" + lastName + ".lvl");
-					return;
+					if (descriptor.equals("Choose Initial Save File")) {
+						File src = new File(sourcePack);
+						File dst = new File("Saves/" + lastName + ".lvl");
+						Files.delete(dst.toPath());
+						Files.copy(src.toPath(), dst.toPath());
+						GameField.getInstance().setPathToSave(
+								"Saves/" + lastName + ".lvl");
+						GameField.getInstance().loadNewLevel(
+								"Saves/" + lastName + ".lvl");
+						return;
+					} else {
+						GameField.getInstance().setPathToSave(
+								"Saves/" + lastName + ".lvl");
+						GameField.getInstance().saveCurrentLevelToPackage();
+						tf.setText("Saved");
+						tf.setSize(calculateTextSize("Saved"), tf.getHeight());
+						tf.setLocation(SaveScreen.getInstance().getWidth()
+								/ 2 - tf.getWidth() / 2,
+								descriptionLabel.positionY + 2 * textSize);
+					}
 				} else {
 					stream = Files.newDirectoryStream(dir);
 					for (Path file : stream) {
-						logger.info(stream.toString());
+					//	logger.info(stream.toString());
 
 						if (file.getFileName().toString()
 								.equals(tf.getText() + ".lvl")) {
@@ -174,21 +208,35 @@ public class TextFieldScreenModel {
 							tf.setSize(
 									calculateTextSize("File exists. Press Enter to overwrite."),
 									tf.getHeight());
-							tf.setLocation(TextFieldScreen.getInstance()
+							tf.setLocation(SaveScreen.getInstance()
 									.getWidth() / 2 - tf.getWidth() / 2,
 									descriptionLabel.positionY + 2 * textSize);
 							tf.setText("File exists. Press Enter to overwrite.");
 							return;
 						}
 					}
-					File src = new File(sourcePack);
-					File dst = new File("Saves/" + tf.getText() + ".lvl");
-					Files.copy(src.toPath(), dst.toPath());
-					GameField.getInstance().setPathToSave(
-							"Saves/" + tf.getText() + ".lvl");
-					GameField.getInstance().loadNewLevel(
-							"Saves/" + tf.getText() + ".lvl");
-					return;
+					if (descriptor.equals("Choose Initial Save File")) {
+						File src = new File(sourcePack);
+						File dst = new File("Saves/" + tf.getText() + ".lvl");
+						Files.copy(src.toPath(), dst.toPath());
+						GameField.getInstance().setPathToSave(
+								"Saves/" + tf.getText() + ".lvl");
+						GameField.getInstance().loadNewLevel(
+								"Saves/" + tf.getText() + ".lvl");
+						return;
+					} else {
+
+						GameField.getInstance().setPathToSave(
+								"Saves/" + lastName + ".lvl");
+						GameField.getInstance().saveCurrentLevelToPackage();
+
+						tf.setText("Saved");
+						tf.setSize(calculateTextSize("Saved"), tf.getHeight());
+						tf.setLocation(SaveScreen.getInstance().getWidth()
+								/ 2 - tf.getWidth() / 2,
+								descriptionLabel.positionY + 2 * textSize);
+
+					}
 				}
 
 			} catch (IOException e1) {
@@ -198,7 +246,7 @@ public class TextFieldScreenModel {
 		}
 
 		private int calculateTextSize(String text) {
-			Graphics2D g2 = (Graphics2D) TextFieldScreen.getInstance()
+			Graphics2D g2 = (Graphics2D) SaveScreen.getInstance()
 					.getGraphics();
 			FontRenderContext context = g2.getFontRenderContext();
 			Rectangle2D bounds = textFont.getStringBounds(text, context);
