@@ -12,11 +12,6 @@ import com.freedom.view.LoadingScreen;
 
 public class LoadingScreenModel {
 
-	private LoadingScreenModel()
-	{
-		logger.setLevel(Level.OFF);
-	}
-
 	public static LoadingScreenModel getInstance() {
 
 		if (INSTANCE == null)
@@ -41,25 +36,29 @@ public class LoadingScreenModel {
 	public void setProgressPercent(int percent) {
 		labels[1].setText(percent + "%");
 		//logger.info(""+labels[1].positionX+"|"+ labels[1].positionY);
-		LoadingScreen.getInstance().paintImmediately(0,
-				labels[1].positionY-LoadingScreen.getInstance().getHeight() / 15,LoadingScreen.getInstance().getWidth(),
-				LoadingScreen.getInstance().getHeight() / 12);
+//		LoadingScreen.getInstance().paintImmediately(0,
+//				labels[1].positionY-LoadingScreen.getInstance().getHeight() / 15,LoadingScreen.getInstance().getWidth(),
+//				LoadingScreen.getInstance().getHeight() / 12);
 
 	}
 
 	public void setLoadingObjectName(String name) {
 		labels[0].setText(name);
-		logger.info(""+labels[0].positionX+labels[0].positionY);
+		//logger.info(""+labels[0].positionX+labels[0].positionY);
 		LoadingScreen.getInstance().paintImmediately(0,
 				labels[0].positionY-LoadingScreen.getInstance().getHeight() / 15,LoadingScreen.getInstance().getWidth(),
-				LoadingScreen.getInstance().getHeight() / 12);
+				LoadingScreen.getInstance().getHeight() / 5);
 	}
 
 	private GLabel[] labels = new GLabel[2];
 
 	private static LoadingScreenModel INSTANCE;
-	private Logger logger = Logger.getLogger("LoadingScreenModel");
+	private static Logger logger = Logger.getLogger("LoadingScreenModel");
 
+static {
+	logger.setLevel(Level.OFF);
+}
+	
 	private class GLabel {
 		/**
 		 * Класс неинтерактивных элементов экрана, несущих на себе текст и

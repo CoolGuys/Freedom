@@ -29,7 +29,7 @@ public class LoadingScreen extends AbstractScreen {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	//	super.paintComponent(g);
 		loadingScreenModel.draw(g);
 	}
 	

@@ -186,8 +186,8 @@ public class Loader {
 		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		LoadingScreenModel lsm=LoadingScreenModel.getInstance();
-		lsm.setLoadingObjectName("Starting");
-		lsm.setProgressPercent(0);
+		//lsm.setLoadingObjectName("Starting");
+		//lsm.setProgressPercent(0);
 		try {
 			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbf.newDocumentBuilder();
@@ -195,16 +195,16 @@ public class Loader {
 			doc.getDocumentElement().normalize();
 			logger.info("Open <" + doc.getDocumentElement().getTagName()
 					+ "> in " + fXml.getPath());
-			lsm.setLoadingObjectName("Importing file "+fXml.getName());
-			lsm.setProgressPercent(100);
+			//lsm.setLoadingObjectName("Importing file "+fXml.getName());
+			//lsm.setProgressPercent(100);
 			NodeList lvllist = doc.getElementsByTagName("level");
 			logger.info("Getting level N=" + Number);
 			for (int lvli = 0; lvli < lvllist.getLength(); lvli++) {
 				logger.info("lvli=" + lvli + " length=" + lvllist.getLength());
 				Node lvlTag = lvllist.item(lvli);
 				Element lvl = (Element) lvlTag;
-				lsm.setProgressPercent(0);
-				lsm.setLoadingObjectName("Searching level №"+Number);
+//				lsm.setProgressPercent(0);
+//				lsm.setLoadingObjectName("Searching level №"+Number);
 				if (Integer.parseInt(lvl.getAttribute("num")) == Number) {
 					LoadingScreenModel.getInstance().setProgressPercent(100);
 					int width = Integer.parseInt(lvl.getAttribute("width"));
@@ -219,8 +219,7 @@ public class Loader {
 					}
 					logger.info("Creating GameField.getInstance().cells array-ok");
 					NodeList objTag = lvl.getElementsByTagName("obj");
-					logger.info("amount " + objTag.getLength());		
-					lsm.setLoadingObjectName("Creating obj");
+					logger.info("amount " + objTag.getLength());
 					lsm.setProgressPercent(0);
 					int objTagLeng=objTag.getLength();
 					
@@ -235,6 +234,8 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff)
 								.getY()].add(((Stuff) newstuff));
+						
+						lsm.setLoadingObjectName(obj.getAttribute("class").substring(24));
 						lsm.setProgressPercent(obji*100/objTagLeng);
 					}
 					/*
