@@ -23,7 +23,8 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int pic; 
 	private String dire;
 	private int direc;
-	private int widthF=6;
+	private int widthF=7;
+	private PacmanSoul p;
 
 	private static BufferedImage texture1;
 	private static BufferedImage texture2;
@@ -203,7 +204,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.pic = 1;
 		this.dire="N";
 		this.direc=-1;
-		this.widthF=6;
+		//this.widthF=7;
 	}
 
 	public PacmanBody(int x1, int y1, int rate1,int wid) {
@@ -229,9 +230,10 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		this.rate=Integer.parseInt(obj.getAttribute("rate"));
-		System.out.println("ololo");
-		PacmanSoul p = new PacmanSoul(this.rate, this, this.widthF);
+		//System.out.println("ololo");
+		this.p = new PacmanSoul(this.rate, this, this.widthF);
 		new Thread(p).start();
+		//p.InHell();
 	}
 	
 	/**
@@ -260,6 +262,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x][y - 1].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
+					
 				}
 
 				
@@ -307,6 +310,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x+1][y].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
+					p.InHell();
 				}
 
 			}

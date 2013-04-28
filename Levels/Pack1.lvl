@@ -925,8 +925,6 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="5">
 		</obj>
-		<obj class="com.freedom.gameObjects.PacmanBody" rate="333" x="23" y="5">
-		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="7">
@@ -950,8 +948,6 @@
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="16">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="17">
-		</obj>
-		<obj class="com.freedom.gameObjects.PacmanBody" rate="333" x="23" y="17">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="23" y="18">
 		</obj>
@@ -1049,6 +1045,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="5">
 		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26" y="5">
+		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="7">
@@ -1068,6 +1066,8 @@
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="14">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="15">
+		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26" y="15">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="16">
 		</obj>

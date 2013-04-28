@@ -12,6 +12,7 @@ public class PacmanSoul implements Runnable{
 	private PacmanBody body;
 	private PathFinder finder;
 	private int widh=3;
+	boolean alive;
 	
 	/**
 	 * 
@@ -25,6 +26,7 @@ public class PacmanSoul implements Runnable{
 		this.body = Pack;
 		this.finder = new PathFinder();
 		this.widh = wid;
+		this.alive=true;
 
 		try {
 			this.dx = GameField.getInstance().getRobot().getX();
@@ -36,9 +38,11 @@ public class PacmanSoul implements Runnable{
 
 		(new Thread(new Changer())).start();
 	}
-
+	public void InHell() {
+		this.alive=false;
+	}
 	public void run() {
-		while (true) {
+		while (alive) {
 			int x = body.getX();
 			int y = body.getY();
 			try {
@@ -48,20 +52,19 @@ public class PacmanSoul implements Runnable{
 				this.dx = body.getX();
 				this.dy = body.getY();
 			}
-			System.out.println("dx="+this.dx+"dy="+this.dy);
+			//System.out.println("dx="+this.dx+"dy="+this.dy);
 			if ((x != dx) || (y != dy)) {
-				String dir = finder.find(x, y, dx, dy, widh);
-				System.out.println("dir="+dir+" x="+x+" y="+y);
+				String dir="";
+				dir = finder.find(x, y, dx, dy, widh);
+				// System.out.println("dir="+dir+" x="+x+" y="+y);
 				try {
-					/*
-					 * убогий быдло код
-					 */
 					if (!dir.equals("0")) {
-						/*Runnable r = new MovementAnimator<PacmanBody>(body,
-								(String) dir.subSequence(0, 1));
-						Thread t = new Thread(r);
-						t.start();*/
-						body.move1((String) dir.subSequence(0, 1));
+						if (dir.length() > 1) {
+							body.move1((String) dir.subSequence(0, 1));
+						} else {
+							GameField.getInstance().damageRobot(1);
+							System.out.println(GameField.getInstance().getRobot().getLives());
+						}
 						GameScreen.getInstance().repaint();
 					}
 				} catch (Exception e) {
@@ -85,7 +88,7 @@ public class PacmanSoul implements Runnable{
 			
 		}
 		public void run(){
-			while(true){
+			while(alive){
 				body.changeTexture();
 				GameScreen.getInstance().repaint();
 				try {
