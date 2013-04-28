@@ -1,7 +1,13 @@
 package com.freedom.gameObjects;
 
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class Cell {
 
@@ -15,7 +21,20 @@ public class Cell {
 	int counter;
 	private DamageSender damager;
 	
-
+	private static Image highlighted;
+	private boolean isHighlighted;
+	
+	public boolean isExamined;
+	static {
+		try {
+			highlighted= ImageIO.read(new File(
+					"Resource/Textures/Highlighter.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
@@ -213,5 +232,23 @@ public class Cell {
 		else
 			return false;
 	}
+	
+	public void draw(Graphics g) {
+		if(isHighlighted)
+			g.drawImage(highlighted, (int) (content[0].x * Stuff.getSize()), (int) (content[0].y * Stuff.getSize()),
+					Stuff.getSize(), Stuff.getSize(), null);
+		else
+			return;
+		
+	}
+
+	public void highlight() {
+		this.isHighlighted = true;
+	}
+	public void unhighlight() {
+		this.isHighlighted = false;
+	}
+
+	
 
 }
