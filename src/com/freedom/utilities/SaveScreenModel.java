@@ -185,6 +185,9 @@ static {
 								"Saves/" + lastName + ".lvl");
 						return;
 					} else {
+						File src = new File(sourcePack);
+						File dst = new File("Saves/" + lastName + ".lvl");
+						Files.copy(src.toPath(), dst.toPath());
 						GameField.getInstance().setPathToSave(
 								"Saves/" + lastName + ".lvl");
 						GameField.getInstance().saveCurrentLevelToPackage();
@@ -223,7 +226,9 @@ static {
 								"Saves/" + tf.getText() + ".lvl");
 						return;
 					} else {
-
+						File src = new File(sourcePack);
+						File dst = new File("Saves/" + tf.getText() + ".lvl");
+						Files.copy(src.toPath(), dst.toPath());
 						GameField.getInstance().setPathToSave(
 								"Saves/" + lastName + ".lvl");
 						GameField.getInstance().saveCurrentLevelToPackage();
