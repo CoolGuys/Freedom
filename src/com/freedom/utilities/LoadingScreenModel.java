@@ -40,15 +40,19 @@ public class LoadingScreenModel {
 
 	public void setProgressPercent(int percent) {
 		labels[1].setText(percent + "%");
-		LoadingScreen.getInstance().paintImmediately(
-				LoadingScreen.getInstance().getBounds());
+		//logger.info(""+labels[1].positionX+"|"+ labels[1].positionY);
+		LoadingScreen.getInstance().paintImmediately(0,
+				labels[1].positionY-LoadingScreen.getInstance().getHeight() / 15,LoadingScreen.getInstance().getWidth(),
+				LoadingScreen.getInstance().getHeight() / 12);
 
 	}
 
 	public void setLoadingObjectName(String name) {
 		labels[0].setText(name);
-		LoadingScreen.getInstance().paintImmediately(
-				LoadingScreen.getInstance().getBounds());
+		logger.info(""+labels[0].positionX+labels[0].positionY);
+		LoadingScreen.getInstance().paintImmediately(0,
+				labels[0].positionY-LoadingScreen.getInstance().getHeight() / 15,LoadingScreen.getInstance().getWidth(),
+				LoadingScreen.getInstance().getHeight() / 12);
 	}
 
 	private GLabel[] labels = new GLabel[2];
