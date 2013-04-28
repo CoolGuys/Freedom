@@ -3,5 +3,6 @@
 .metadata
 /bin
 /.settings
-/.classpath
-/.project
+/target
+!.classpath
+!.project
