@@ -23,11 +23,9 @@ import javax.imageio.ImageIO;
 import javax.swing.JTextField;
 
 import com.freedom.gameObjects.GameField;
-import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
-import com.freedom.view.PauseScreen;
-import com.freedom.view.ScreensHolder;
 import com.freedom.view.SaveScreen;
+import com.freedom.view.ScreensHolder;
 
 public class SaveScreenModel {
 

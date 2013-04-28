@@ -1,14 +1,10 @@
 package com.freedom.view;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.io.File;
-import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -24,7 +20,7 @@ public class SaveScreen extends AbstractScreen {
 
 	private SaveScreen()
 	{
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());

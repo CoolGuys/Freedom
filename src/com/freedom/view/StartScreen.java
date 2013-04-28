@@ -7,11 +7,9 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.freedom.gameObjects.GameField;
-import com.freedom.utilities.LoadScreenModel;
 import com.freedom.utilities.GAction;
+import com.freedom.utilities.LoadScreenModel;
 import com.freedom.utilities.StartScreenModel;
-import com.freedom.utilities.SaveScreenModel;
 
 @SuppressWarnings("serial")
 public class StartScreen extends AbstractScreen {
@@ -104,6 +102,7 @@ public class StartScreen extends AbstractScreen {
 		public void performAction() {
 			LoadScreenModel.getInstance().setListedDirectory("Levels");
 
+			//LoadScreenModel.getInstance().addEntries();
 			LoadScreenModel.getInstance().newLevel=true;
 			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
 					StartScreen.getInstance());
@@ -113,8 +112,9 @@ public class StartScreen extends AbstractScreen {
 	
 	public static class LoadGameAction extends GAction {
 		public void performAction() {
-			LoadScreenModel.getInstance().newLevel=false;
 			LoadScreenModel.getInstance().setListedDirectory("Saves");
+			LoadScreenModel.getInstance().newLevel=false;
+			LoadScreenModel.getInstance().addEntries();
 			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
 					StartScreen.getInstance());
 

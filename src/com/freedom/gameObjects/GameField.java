@@ -6,12 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
-import com.freedom.utilities.SaveScreenModel.TextFieldListener;
-import com.freedom.view.LoadScreen;
 import com.freedom.view.GameScreen;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
-import com.freedom.view.ScreensHolder;
 import com.freedom.view.SaveScreen;
+import com.freedom.view.ScreensHolder;
 
 /**
  * Класс GameField содержит все игровые объекты на уровне и осуществляет
