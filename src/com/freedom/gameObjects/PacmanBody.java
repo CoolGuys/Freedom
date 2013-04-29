@@ -54,8 +54,8 @@ public class PacmanBody extends Stuff{
 	}
 	
 	public void itsAlive(){
-		System.out.println("popitka");
-		itsAlive();
+		this.p = new PacmanSoul(this.rate, this, this.widthF);
+		GameField.getInstance().getThreads().execute(this.p);
 	}
 	
 	public void changeTexture() {
@@ -243,8 +243,7 @@ public class PacmanBody extends Stuff{
 		this.y=Integer.parseInt(obj.getAttribute("y"));
 		this.rate=Integer.parseInt(obj.getAttribute("rate"));
 		//System.out.println("ololo");
-		this.p = new PacmanSoul(this.rate, this, this.widthF);
-		GameField.getInstance().getThreads().execute(this.p);
+		itsAlive();
 		//p.InHell();
 	}
 	
