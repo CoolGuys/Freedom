@@ -2,6 +2,7 @@ package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.Robot;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
@@ -27,11 +29,11 @@ public class GameScreen extends AbstractScreen {
 		this.createInputMap();
 		this.createMovementController();
 
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 
 	}
-	
-	public void prepareModel () {
+
+	public void prepareModel() {
 		GameField.getInstance().setCellSize(scale);
 	}
 
@@ -142,6 +144,40 @@ public class GameScreen extends AbstractScreen {
 		repaint();
 	}
 
+	public Point рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(Robot robot) {
+		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
+				- robot.getX() * Robot.getSize();
+		int deltaY = -this.getY() + ScreensHolder.getInstance().getHeight() / 2
+				- robot.getY() * Robot.getSize();
+		return new Point(deltaX, deltaY);
+	}
+
+	public void центрироватьПоРоботуПоВертикали(Robot robot) {
+
+		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
+				.getDirection()).x, robot.getTargetCellCoordinates(robot
+				.getDirection()).y, null, null, 0);
+		setLocation(getX(), getY()
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).y);
+	}
+
+	public void центрироватьПоРоботуПоГоризонтали(Robot robot) {
+
+		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
+				.getDirection()).x, robot.getTargetCellCoordinates(robot
+				.getDirection()).y, null, null, 0);
+		setLocation(getX()
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).x, getY());
+	}
+
+	public void центрироватьПоРоботу(Robot robot) {
+
+		
+		setLocation(getX()
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).x, getY()
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
+	}
+
 	public void changeOffsetFine(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
@@ -159,7 +195,7 @@ public class GameScreen extends AbstractScreen {
 	public void deactivateModel() {
 		GameField.getInstance().deactivate();
 	}
-	
+
 	private int scale = 50;
 	private final int fineOffset = scale / 2;
 	private final int coarseOffset = (scale * 3) / 2;
@@ -187,7 +223,7 @@ public class GameScreen extends AbstractScreen {
 			deactivateModel();
 			ScreensHolder.getInstance().addScreen(PauseScreen.getInstance());
 			PauseScreen.getInstance().activateModel();
-			
+
 			logger.info("Paused");
 		}
 	}
@@ -202,7 +238,7 @@ public class GameScreen extends AbstractScreen {
 				GameField.getInstance().getRobot().put();
 		}
 	}
-	
+
 	private class ExamineAction extends AbstractAction {
 
 		@Override

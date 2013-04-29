@@ -80,33 +80,26 @@ public class GameField {
 	 * @param levelID
 	 *            Апендикс, который сейчас не нужен
 	 */
-	public void loadNewLevel(String pathToPackage) {
-		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+	public void loadLevel(String pathToPackage, boolean isNew) {
+		if(isNew)
+			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				SaveScreen.getInstance());
-		OtherThreads = Executors.newCachedThreadPool();
-		Loader.loadSave(pathToPackage);
-		previousCells = cells;
-		GameScreen.getInstance().setSize(cells.length * cellSize,
-				cells[1].length * cellSize);
-		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
-	}
-	
-	public ExecutorService getThreads() {
-		return this.OtherThreads;
-	}
-	
-	public void loadSavedLevel(String pathToPackage) {
-		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-			LoadScreen.getInstance());
+		else 
+			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				LoadScreen.getInstance());
 		OtherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
+		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
+	}
+	
+	public ExecutorService getThreads() {
+		return GameField.OtherThreads;
 	}
 
 	public void switchToNextLevel(int nextLevelId) {
@@ -127,6 +120,7 @@ public class GameField {
 
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
+		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}

@@ -164,7 +164,7 @@ public class LoadScreenModel {
 			} else {
 				GameField.getInstance().setPathToSave(fileToLoad);
 
-				GameField.getInstance().loadSavedLevel(fileToLoad);
+				GameField.getInstance().loadLevel(fileToLoad, false);
 			}
 		}
 

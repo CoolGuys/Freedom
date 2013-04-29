@@ -119,6 +119,15 @@ public class Robot extends Stuff implements Moveable {
 
 	public void moveCoarse(String direction) {
 
+		if (Math.abs(GameScreen.getInstance()
+				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder.getInstance().getWidth()/2- 4 * getSize()) 
+			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
+			
+		if(Math.abs(GameScreen.getInstance()
+					.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).y) > ScreensHolder.getInstance().getHeight()/2-4 * getSize())
+			GameScreen.getInstance().центрироватьПоРоботуПоВертикали(this);
+		
+
 		logger.info(direction);
 		this.direction = direction;
 		ScreensHolder.getInstance().repaint();
