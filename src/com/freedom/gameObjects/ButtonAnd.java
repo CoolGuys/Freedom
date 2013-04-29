@@ -18,17 +18,21 @@ public class ButtonAnd extends Stuff {
 	private boolean ifPressed;
 	private static Image texturePressed;
 	private static Image textureDepressed;
-	private int[][] useList;// массив с координатами селлов на которые действует
+	private int[][] controlledCellsList;// массив с координатами селлов на которые действует
 							// батон
-	private int useAmount; // количество целлов на которые действует батон
+	private int controlledCellsAmount; // количество целлов на которые действует батон
 	private ActionListener sender;
 	
 	static {
 		try {
-			texturePressed = ImageIO.read(new File(
-					"Resource/Textures/ButtonPressed.png"));
-			textureDepressed = ImageIO.read(new File(
-					"Resource/Textures/ButtonDepressed.png"));
+			texturePressed = ImageIO.read(
+					new File("Resource/Textures/ButtonPressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureDepressed = ImageIO.read(
+					new File("Resource/Textures/ButtonDepressed.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -36,11 +40,11 @@ public class ButtonAnd extends Stuff {
 	}
 
 	public int getUseAmount() {
-		return useAmount;
+		return controlledCellsAmount;
 	}
 
 	public int[][] getUseList() {
-		return useList;
+		return controlledCellsList;
 	}
 
 	public boolean obj() {
@@ -56,7 +60,11 @@ public class ButtonAnd extends Stuff {
 		super(false, true,true, false);
 		super.x = x;
 		super.y = y;
+<<<<<<< HEAD
 		useList = new int[10][2];
+=======
+		controlledCellsList = new int[10][2];
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	}
 
 	/**
@@ -79,11 +87,11 @@ public class ButtonAnd extends Stuff {
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
 			Element buf = (Element) list.item(i);
-			useList[i][0] = Integer.parseInt(buf.getAttribute("x"));
-			useList[i][1] = Integer.parseInt(buf.getAttribute("y"));
-			GameField.getInstance().cells[useList[i][0]][useList[i][1]].buttonsNumber++;
+			controlledCellsList[i][0] = Integer.parseInt(buf.getAttribute("x"));
+			controlledCellsList[i][1] = Integer.parseInt(buf.getAttribute("y"));
+			GameField.getInstance().cells[controlledCellsList[i][0]][controlledCellsList[i][1]].buttonsNumber++;
 		}
-		this.useAmount = length;
+		this.controlledCellsAmount = length;
 	}
 
 	public void loadToFile(Element obj) {
@@ -99,21 +107,21 @@ public class ButtonAnd extends Stuff {
 		if (this.ifPressed) {
 			texture = texturePressed;
 			sender = new SignalOnSender();
-			for (int i = 0; i < useAmount; i++) {
-				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
+			for (int i = 0; i < controlledCellsAmount; i++) {
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.counter++;
 			}
 			
 			GameField.getInstance().getTicker().addActionListener(sender);
 		} else {
 			texture = textureDepressed;
-			for (int i = 0; i < useAmount; i++) {
-				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
+			for (int i = 0; i < controlledCellsAmount; i++) {
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.counter--;
 			}
 			GameField.getInstance().getTicker().removeActionListener(sender);
-			for (int i = 0; i < useAmount; i++) {
-				GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
+			for (int i = 0; i < controlledCellsAmount; i++) {
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOff();
 			}
 		}
@@ -122,20 +130,20 @@ public class ButtonAnd extends Stuff {
 
 	private class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			for (int i = 0; i < useAmount; i++) {
+			for (int i = 0; i < controlledCellsAmount; i++) {
 				//& action
-				if (!GameField.getInstance().getCells()[useList[i][0]][useList[i][1]].ifCanBePressed())
+				if (!GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].ifCanBePressed())
 					continue;
 				//
 				
-				if (GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
+				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
 					GameScreen
 							.getInstance()
 							.repaint(
-									GameField.getInstance().getCells()[useList[i][0]][useList[i][1]].getX()
+									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
 											* getSize(),
-									GameField.getInstance().getCells()[useList[i][0]][useList[i][1]]
+									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 											.getY() * getSize(), getSize(),
 									getSize());
 				}
@@ -153,6 +161,27 @@ public class ButtonAnd extends Stuff {
 		if(this.ifPressed)
 			this.touch();
 		return;
+<<<<<<< HEAD
 	}*/
+=======
+	}
+	 
+	 public void giveInfo() {
+		 GameField.getInstance().getCells()[(int) x][(int) y].highlight();
+					
+		 for (int i = 0; i < controlledCellsAmount; i++) {
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.highlight();
+			}
+	 }
+	 public void removeInfo() {
+		 GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
+
+		 for (int i = 0; i < controlledCellsAmount; i++) {
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.unhighlight();
+			}
+	 }
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 
 }

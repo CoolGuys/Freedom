@@ -34,10 +34,13 @@ public class Door extends Stuff {
 
 	public Door()
 	{
+<<<<<<< HEAD
 		super(false, false,true, false);
 		super.expConductive = false;
+=======
+		super(false, false, true, false);
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	}
-
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
@@ -52,9 +55,10 @@ public class Door extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Door");
 	}
 
-	 boolean useOff() {
+	boolean useOff() {
+
+		texture = textureClosed;
 		if (super.passable) {
-			texture = textureClosed;
 			super.passable = false;
 			return true;
 		}
@@ -62,9 +66,10 @@ public class Door extends Stuff {
 
 	}
 
-	 boolean useOn() {
+	boolean useOn() {
+
+		texture = textureOpen;
 		if (!super.passable) {
-			texture = textureOpen;
 			super.passable = true;
 			return true;
 		}
@@ -92,16 +97,15 @@ public class Door extends Stuff {
 			if (cells[x][y - 1] != null)
 				if ((cells[x][y - 1].getContent()[0] instanceof Wall))
 					neighbourWalls[3] = true;
-			if(neighbourWalls[1]&&neighbourWalls[3])
+			if (neighbourWalls[1] && neighbourWalls[3])
 				textureClosed = textureClosedVertical;
 			else
 				textureClosed = textureClosedHorisontal;
-			textureSet=true;
+			textureSet = true;
 			texture = textureClosed;
 		}
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
-
 
 }

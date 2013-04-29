@@ -2,14 +2,24 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
+=======
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
+<<<<<<< HEAD
 import com.freedom.utilities.TextFieldScreenModel.TextFieldListener;
 import com.freedom.view.LevelChoiceScreen;
+=======
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 import com.freedom.view.GameScreen;
+import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
+import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;
 import com.freedom.view.TextFieldScreen;
 
@@ -37,6 +47,7 @@ public class GameField {
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
+	private static ExecutorService OtherThreads;
 
 
 	public void setPathToSave(String pathToSaveFile) {
@@ -79,17 +90,42 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadNewLevel(String pathToPackage) {
+<<<<<<< HEAD
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
 				TextFieldScreen.getInstance());
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
+=======
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				SaveScreen.getInstance());
+		OtherThreads = Executors.newCachedThreadPool();
+		Loader.loadSave(pathToPackage);
+		previousCells = cells;
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
+	}
+	
+	public ExecutorService getThreads() {
+		return this.OtherThreads;
+	}
+	
+	public void loadSavedLevel(String pathToPackage) {
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+			LoadScreen.getInstance());
+		OtherThreads = Executors.newCachedThreadPool();
+		Loader.loadSave(pathToPackage);
+		previousCells = cells;
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
-		ScreensHolder.swapScreens(GameScreen.getInstance(),
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
 
+<<<<<<< HEAD
 	public void loadSavedLevel(String pathToPackage) {
 		ScreensHolder.swapScreens(LoadingScreen.getInstance(),
 			LevelChoiceScreen.getInstance());
@@ -110,11 +146,22 @@ public class GameField {
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
 
+=======
+	public void switchToNextLevel(int nextLevelId) {
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				GameScreen.getInstance());
+		resetTickerListeners();
+		OtherThreads.shutdownNow();
+		OtherThreads = Executors.newCachedThreadPool();
+		previousLevelId = currentLevelId;
+		currentLevelId = nextLevelId;
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
 		robot.setContainer(buf);
+<<<<<<< HEAD
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -126,6 +173,20 @@ public class GameField {
 	public void saveLevelToPackage(int levelID) {
 		//this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+=======
+		buf.itsAlive();
+		Loader.lvlToSv(nextLevelId, this.pathToSave);
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
+	}
+
+	public void saveCurrentLevelToPackage() {
+		//this.pathToSave = "Saves/Save1.lvl";
+		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+		
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	}
 
 	public void resetTickerListeners() {
@@ -155,8 +216,9 @@ public class GameField {
 		for (int x = 1; x < cells.length - 1; x++) {
 			for (int y = 1; y < cells[1].length - 1; y++) {
 				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
-					if (cells[x][y].getContent()[i] != null)
+					if (cells[x][y].getContent()[i] != null) 
 						cells[x][y].getContent()[i].draw(g);
+					cells[x][y].draw(g);
 				}
 			}
 		}

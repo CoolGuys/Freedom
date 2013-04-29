@@ -7,9 +7,13 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+<<<<<<< HEAD
 import com.freedom.gameObjects.GameField;
 import com.freedom.utilities.LevelChoiceScreenModel;
+=======
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 import com.freedom.utilities.GAction;
+import com.freedom.utilities.LoadScreenModel;
 import com.freedom.utilities.StartScreenModel;
 import com.freedom.utilities.TextFieldScreenModel;
 
@@ -92,20 +96,35 @@ public class StartScreen extends AbstractScreen {
 		public void performAction() {	
 			//GameField.getInstance().loadLevel(GameField.getInstance().getPathToSave());	
 
+<<<<<<< HEAD
 			TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
 			TextFieldScreenModel.getInstance().addEntries();	
 			ScreensHolder.swapScreens(TextFieldScreen.getInstance(),
 					StartScreen.getInstance());
+=======
+			/*TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
+			TextFieldScreenModel.getInstance().addEntries();	
+			ScreensHolder.getInstance().swapScreens(TextFieldScreen.getInstance(),
+					StartScreen.getInstance());*/
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 
 		}
 	}
 	
 	public static class NewGameAction extends GAction {
 		public void performAction() {
+<<<<<<< HEAD
 			LevelChoiceScreenModel.getInstance().setListedDirectory("Levels");
 
 			LevelChoiceScreenModel.getInstance().newLevel=true;
 			ScreensHolder.swapScreens(LevelChoiceScreen.getInstance(),
+=======
+			LoadScreenModel.getInstance().setListedDirectory("Levels");
+
+			//LoadScreenModel.getInstance().addEntries();
+			LoadScreenModel.getInstance().newLevel=true;
+			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 					StartScreen.getInstance());
 
 		}
@@ -113,9 +132,16 @@ public class StartScreen extends AbstractScreen {
 	
 	public static class LoadGameAction extends GAction {
 		public void performAction() {
+<<<<<<< HEAD
 			LevelChoiceScreenModel.getInstance().newLevel=false;
 			LevelChoiceScreenModel.getInstance().setListedDirectory("Saves");
 			ScreensHolder.swapScreens(LevelChoiceScreen.getInstance(),
+=======
+			LoadScreenModel.getInstance().setListedDirectory("Saves");
+			LoadScreenModel.getInstance().newLevel=false;
+			LoadScreenModel.getInstance().addEntries();
+			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 					StartScreen.getInstance());
 
 		}

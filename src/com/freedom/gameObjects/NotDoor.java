@@ -52,8 +52,8 @@ public class NotDoor extends Stuff {
 	}
 
 	 boolean useOn() {
-		if (super.passable) {
 			texture = textureClosed;
+		if (super.passable) {
 			super.passable = false;
 			return true;
 		}
@@ -61,8 +61,9 @@ public class NotDoor extends Stuff {
 	}
 
 	boolean useOff() {
+
+		texture = textureOpen;
 		if (!super.passable) {
-			texture = textureOpen;
 			super.passable = true;
 			return true;
 		}

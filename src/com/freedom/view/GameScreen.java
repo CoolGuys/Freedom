@@ -42,6 +42,7 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("A"), "move.left");
 		imap.put(KeyStroke.getKeyStroke("S"), "move.down");
 		imap.put(KeyStroke.getKeyStroke("U"), "interact");
+		imap.put(KeyStroke.getKeyStroke("E"), "examine");
 		imap.put(KeyStroke.getKeyStroke("I"), "turn.up");
 		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
 		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
@@ -71,6 +72,7 @@ public class GameScreen extends AbstractScreen {
 		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
 		InteractAction interact = new InteractAction();
+		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
 		FieldCoarseOffsetAction offsetLeft = new FieldCoarseOffsetAction("W");
@@ -87,6 +89,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("move.right", moveRight);
 		amap.put("pause", pause);
 		amap.put("interact", interact);
+		amap.put("examine", examine);
 		amap.put("turn.up", turnUp);
 		amap.put("turn.left", turnLeft);
 		amap.put("turn.right", turnRight);
@@ -197,6 +200,14 @@ public class GameScreen extends AbstractScreen {
 				GameField.getInstance().getRobot().take();
 			else
 				GameField.getInstance().getRobot().put();
+		}
+	}
+	
+	private class ExamineAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().examineFrontCell();
 		}
 	}
 

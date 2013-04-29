@@ -20,24 +20,34 @@ import com.freedom.gameObjects.GameField;
 public class PathFinder {
 
 	private static Logger logger = Logger.getLogger("PathFinder");
+	
+	public PathFinder(){
+		
+	}
 
 	private static int generateRandom(int n) {
 		Random random = new Random();
 		return Math.abs(random.nextInt()) % n;
 	}
-	
+
 	/**
 	 * 
-	 * @param xs x начала
-	 * @param ys y начала
-	 * @param xe x конца
-	 * @param ye y конца
-	 * @param width Задаёт максимальную дину пути, по которому можно дойти. 
-	 * @return Возвращает случайный путь до пункта назначения в виде строки "NWES" или 0 если нельзя дойти
+	 * @param xs
+	 *            x начала
+	 * @param ys
+	 *            y начала
+	 * @param xe
+	 *            x конца
+	 * @param ye
+	 *            y конца
+	 * @param width
+	 *            Задаёт максимальную дину пути, по которому можно дойти.
+	 * @return Возвращает случайный путь до пункта назначения в виде строки
+	 *         "NWES" или 0 если нельзя дойти
 	 */
 
-	public static String find(int xs, int ys, int xe, int ye, int width){
-		
+	public String find(int xs, int ys, int xe, int ye, int width) {
+
 		logger.setLevel(Level.OFF);	
 		logger.info("starting from ("+xs+","+ys+") to ("+xe+","+ye+")");
 		logger.info("getting cells");
@@ -54,7 +64,7 @@ public class PathFinder {
 			}
 		}
 		String pathlist="";
-		int PathAmount=1;
+		int pathAmount=1;
 		int x=width;
 		int y=width;
 		
@@ -62,8 +72,9 @@ public class PathFinder {
 		int y1=width+ye-ys;
 		//System.out.println(x1+" "+y1);
 		int resultpath=0;
-		int pathlength=0;
-		String Pathes="";
+		int pathlength;
+		pathlength=0;
+		String pathes="";
 		for(int i=0; i<width;i++){
 			String newpath="";
 			int newamount=0;
@@ -77,9 +88,9 @@ public class PathFinder {
 			}
 			
 			*/
-			for(int j=0;j<PathAmount;j++){
+			for(int j=0;j<pathAmount;j++){
 				String buf=pathlist.substring(j*(i), (j+1)*i);
-				logger.info("i="+i+" j="+j+" PathAmount="+PathAmount+" buf="+buf);
+				logger.info("i="+i+" j="+j+" PathAmount="+pathAmount+" buf="+buf);
 				int a[]=getPlace(buf,x,y);
 				//System.out.println(a[0]+" "+a[1]);
 				if(passable[a[0]][a[1]-1]){
@@ -88,9 +99,9 @@ public class PathFinder {
 					newpassable[a[0]][a[1]-1]=false;
 					if((a[0]==x1)&&((a[1]-1)==y1)){
 						resultpath++;
-						pathlength=i;
-						//System.out.println(buf+"N");
-						Pathes=Pathes+buf+"N";
+						pathlength=i+1;
+						//System.out.println(buf+"N"+"pl="+pathlength);
+						pathes=pathes+buf+"N";
 					}
 				}
 				if(passable[a[0]+1][a[1]]){
@@ -100,8 +111,8 @@ public class PathFinder {
 					if(((a[0]+1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"E");
-						Pathes=Pathes+buf+"E";
+						//System.out.println(buf+"E"+"pl="+pathlength);
+						pathes=pathes+buf+"E";
 					}
 				}
 				if(passable[a[0]][a[1]+1]){
@@ -111,8 +122,8 @@ public class PathFinder {
 					if((a[0]==x1)&&((a[1]+1)==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"S");
-						Pathes=Pathes+buf+"S";
+						//System.out.println(buf+"S"+"pl="+pathlength);
+						pathes=pathes+buf+"S";
 					}
 				}
 				if(passable[a[0]-1][a[1]]){
@@ -122,8 +133,8 @@ public class PathFinder {
 					if(((a[0]-1)==x1)&&(a[1]==y1)){
 						resultpath++;
 						pathlength=i+1;
-						//System.out.println(buf+"W");
-						Pathes=Pathes+buf+"W";
+						//System.out.println(buf+"W"+"pl="+pathlength);
+						pathes=pathes+buf+"W";
 					}
 				}
 			}	
@@ -140,7 +151,7 @@ public class PathFinder {
 			}
 
 			pathlist = newpath;
-			PathAmount = newamount;
+			pathAmount = newamount;
 						
 		}
 		/*
@@ -154,7 +165,8 @@ public class PathFinder {
 		
 		if(resultpath!=0){
 			int r = generateRandom(resultpath);
-			return Pathes.substring(r*pathlength, (r+1)*pathlength);
+			//System.out.println("r="+pathlength+" inside="+Pathes.substring(r*pathlength, (r+1)*pathlength));
+			return pathes.substring(r*pathlength, (r+1)*pathlength);
 		}else {
 			return "0";
 		}

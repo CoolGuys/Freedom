@@ -20,7 +20,7 @@ public class LoadingScreen extends AbstractScreen {
 	
 	public static LoadingScreen getInstance() {
 
-		logger.info("Giving INSTANCE");
+		//logger.info("Giving INSTANCE");
 		if(INSTANCE==null)
 			return INSTANCE = new LoadingScreen();
 		else
@@ -29,13 +29,13 @@ public class LoadingScreen extends AbstractScreen {
 	
 	@Override
 	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	//	super.paintComponent(g);
 		loadingScreenModel.draw(g);
 	}
 	
 	public void prepareModel() {
 
-		logger.info("Preparing");
+		//logger.info("Preparing");
 		loadingScreenModel.addButtons();
 
 	}

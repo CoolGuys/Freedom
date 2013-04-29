@@ -32,7 +32,7 @@ public class Pit extends Stuff{
 	private static Image texture1;
 	static {
 		try {
-			texture1= ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture1= ImageIO.read(new File("Resource/Textures/p2s.gif"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

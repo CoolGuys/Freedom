@@ -4,15 +4,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
-import com.freedom.view.*;
-import com.freedom.utilities.*;
+
+import com.freedom.utilities.MovementAnimator;
+import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class Robot extends Stuff implements Moveable {
 
@@ -53,7 +55,12 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
+<<<<<<< HEAD
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
+=======
+	public Robot(int posX, int posY, String direction, Stuff c, int lives)
+	{
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		super(false, false, false, true, 0, lives);
 		super.x = posX;
 		super.y = posY;
@@ -100,32 +107,28 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
+<<<<<<< HEAD
 	// модифицирована. выдает null если пойти нельзя
+=======
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	public boolean canGo() {
-		int x = (int) this.x;
-		int y = (int) this.y;
-		if (this.direction.equals("N")) {
-			if (GameField.getInstance().cells[x][y - 1].ifCanPassThrough())
-				return true;
-		}
+		if (GameField.getInstance().cells[this
+				.getTargetCellCoordinates(getDirection()).x][this
+				.getTargetCellCoordinates(getDirection()).y].ifCanPassThrough())
+			return true;
 
-		if (this.direction.equals("S")) {
-			// logger.info("Checking S direction");
-			if (GameField.getInstance().cells[x][y + 1].ifCanPassThrough())
-				return true;
-		}
-
-		if (this.direction.equals("W")) {
-			if (GameField.getInstance().cells[x - 1][y].ifCanPassThrough())
-				return true;
-		}
-
+<<<<<<< HEAD
 		if (this.direction.equals("E")) {
 			if (GameField.getInstance().cells[x + 1][y].ifCanPassThrough())
 				return true;
 		}
 
 		if (!GameField.getInstance().cells[x][y].ifCanPassThrough())
+=======
+		if (!GameField.getInstance().cells[this
+				.getTargetCellCoordinates(getDirection()).x][this
+				.getTargetCellCoordinates(getDirection()).y].ifCanPassThrough())
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 			return false;
 
 		return false;
@@ -161,7 +164,12 @@ public class Robot extends Stuff implements Moveable {
 		}
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;
+<<<<<<< HEAD
 
+=======
+			// GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
+			// GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 			if (!isMoving)
 				return;
 			Runnable r = new MovementAnimator<Robot>(this, this.direction);
@@ -171,6 +179,18 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Штука, которая выдает пару чисел - координаты целла в массиве, лежащего
+	 * роботом в некотором направлении от робота
+	 * 
+	 * @param direction
+	 *            направление, в котором берется целл
+	 * 
+	 * @return пара координат нужного целла
+	 */
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")) {
@@ -202,14 +222,10 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void take() {
-
-		int x = (int) this.x;
-		int y = (int) this.y;
-
 		if (this.container != null)
 			return;
-		//
 
+<<<<<<< HEAD
 		if (this.direction.equals("N")) {
 			this.container = GameField.getInstance().cells[x][y - 1]
 					.takeObject();
@@ -245,11 +261,21 @@ public class Robot extends Stuff implements Moveable {
 
 			GameScreen.getInstance().repaint();
 		}
+=======
+		this.container = GameField.getInstance().cells[this
+				.getTargetCellCoordinates(getDirection()).x][this
+				.getTargetCellCoordinates(getDirection()).y].takeObject();
+		if (this.container == null)
+			return;
+		GameScreen.getInstance().repaint();
+		return;
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 	}
 
 	public void put() {
 		if (isMoving)
 			return;
+<<<<<<< HEAD
 		int x = (int) this.x;
 		int y = (int) this.y;
 
@@ -305,7 +331,41 @@ public class Robot extends Stuff implements Moveable {
 					.getInstance().getCells()[x + 1][y].getContentAmount() - 2]
 					.teleportate();
 			ScreensHolder.getInstance().repaint();
+=======
+		int targetX = this.getTargetCellCoordinates(getDirection()).x;
+		int targetY = this.getTargetCellCoordinates(getDirection()).y;
+		if (this.container == null)
+			return;
+
+		if (!GameField.getInstance().cells[targetX][targetY]
+				.add(this.container))
+			return;
+		this.container = null;
+		GameField.getInstance().getCells()[targetX][targetY].getContent()[GameField
+				.getInstance().getCells()[targetX][targetY].getContentAmount() - 2]
+				.teleportate();
+		GameScreen.getInstance().repaint();
+		return;
+
+	}
+
+	public void examineFrontCell() {
+		Cell cell = GameField.getInstance().cells[this
+				.getTargetCellCoordinates(getDirection()).x][this
+				.getTargetCellCoordinates(getDirection()).y];
+		if (!cell.isExamined) {
+			for (Stuff s : cell.getContent())
+				if (s != null)
+					s.giveInfo();
+			cell.isExamined = true;
+		} else {
+			for (Stuff s : cell.getContent())
+				if (s != null)
+					s.removeInfo();
+			cell.isExamined = false;
+>>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		}
+		GameScreen.getInstance().repaint();
 
 	}
 
@@ -314,8 +374,6 @@ public class Robot extends Stuff implements Moveable {
 				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION,
-				RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
 
 		if (direction.equals("N")) {
 			g2.drawImage(textureN, (int) (x * getSize()),
@@ -334,7 +392,7 @@ public class Robot extends Stuff implements Moveable {
 		if (container != null) {
 			g.drawImage(container.getTexture(), (int) (x * getSize()),
 					(int) (y * getSize()), getSize(), getSize(), null);
-			logger.info(container.toString());
+			// logger.info(container.toString());
 		}
 	}
 
