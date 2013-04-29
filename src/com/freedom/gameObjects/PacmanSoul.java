@@ -33,8 +33,7 @@ public class PacmanSoul implements Runnable{
 			this.dx = body.getX();
 			this.dy = body.getY();
 		}
-
-		(new Thread(new Changer())).start();
+		GameField.getInstance().getThreads().execute(new Changer());
 	}
 	public void InHell() {
 		this.alive=false;
@@ -75,8 +74,7 @@ public class PacmanSoul implements Runnable{
 			try {
 				Thread.sleep(this.StepRate);
 			} catch (InterruptedException e) {
-				// TODO Автоматически созданный блок catch
-				e.printStackTrace();
+				this.alive=false;				
 			}
 		}
 	}
@@ -93,7 +91,7 @@ public class PacmanSoul implements Runnable{
 					Thread.sleep(30);
 				} catch (InterruptedException e) {
 					// TODO Автоматически созданный блок catch
-					e.printStackTrace();
+					alive=false;
 				}
 			}
 		}

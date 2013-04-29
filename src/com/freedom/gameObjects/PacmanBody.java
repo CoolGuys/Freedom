@@ -224,8 +224,8 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.rate=rate1;
 		this.dire="N";
 		this.direc=-1;
-		PacmanSoul p = new PacmanSoul(rate1, this, wid);
-		new Thread(p).start();
+		//PacmanSoul p = new PacmanSoul(rate1, this, wid);
+		//new Thread(p).start();
 	}
 
 	/**
@@ -239,7 +239,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.rate=Integer.parseInt(obj.getAttribute("rate"));
 		//System.out.println("ololo");
 		this.p = new PacmanSoul(this.rate, this, this.widthF);
-		new Thread(p).start();
+		GameField.getInstance().getThreads().execute(this.p);
 		//p.InHell();
 	}
 	
