@@ -1,6 +1,7 @@
 package com.freedom.gameObjects;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -22,19 +23,31 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int widthF=7;
 	private PacmanSoul p;
 
-	private static BufferedImage texture1;
-	private static BufferedImage texture2;
-	private static BufferedImage texture3;
-	private static BufferedImage texture4;
-	private static BufferedImage texture5;
+	private static BufferedImage texture1 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
 
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/p1s.png"));
-			texture2 = ImageIO.read(new File("Resource/Textures/p2s.png"));
-			texture3 = ImageIO.read(new File("Resource/Textures/p3s.png"));
-			texture4 = ImageIO.read(new File("Resource/Textures/p4s.png"));
-			texture5 = ImageIO.read(new File("Resource/Textures/p5s.png"));
+			
+			Image texture1 = ImageIO.read(new File("Resource/Textures/p1s.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);
+			Image texture2 = ImageIO.read(new File("Resource/Textures/p2s.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);
+			Image texture3 = ImageIO.read(new File("Resource/Textures/p3s.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);
+			Image texture4 = ImageIO.read(new File("Resource/Textures/p4s.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);
+			Image texture5 = ImageIO.read(new File("Resource/Textures/p5s.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);
+			
+			PacmanBody.texture1.getGraphics().drawImage(texture1, 0, 0, null);
+			PacmanBody.texture2.getGraphics().drawImage(texture2, 0, 0, null);
+			PacmanBody.texture3.getGraphics().drawImage(texture3, 0, 0, null);
+			PacmanBody.texture4.getGraphics().drawImage(texture4, 0, 0, null);
+			PacmanBody.texture5.getGraphics().drawImage(texture5, 0, 0, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -256,6 +269,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x][y - 1].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
+					p.InHell();
 					
 				}
 
@@ -274,6 +288,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x][y+1].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
+					p.InHell();
 				}
 				
 			}
@@ -289,6 +304,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x-1][y].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
+					p.InHell();
 				}
 
 			}
@@ -313,6 +329,6 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 	
 	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), getSize(), getSize(), null);
+		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), null);
 	}
 }
