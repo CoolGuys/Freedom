@@ -2,6 +2,8 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.Timer;
 
@@ -36,6 +38,7 @@ public class GameField {
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
+	private static ExecutorService OtherThreads;
 
 
 	public void setPathToSave(String pathToSaveFile) {
@@ -80,6 +83,7 @@ public class GameField {
 	public void loadNewLevel(String pathToPackage) {
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				SaveScreen.getInstance());
+		OtherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -87,10 +91,15 @@ public class GameField {
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
-
+	
+	public ExecutorService getThreads() {
+		return this.OtherThreads;
+	}
+	
 	public void loadSavedLevel(String pathToPackage) {
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 			LoadScreen.getInstance());
+		OtherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -104,7 +113,8 @@ public class GameField {
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
-		
+		OtherThreads.shutdownNow();
+		OtherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
 
@@ -124,6 +134,7 @@ public class GameField {
 	public void saveCurrentLevelToPackage() {
 		//this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+		
 	}
 
 	public void resetTickerListeners() {
