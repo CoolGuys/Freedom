@@ -19,7 +19,7 @@ public abstract class Stuff {
 	int lives;
 	private boolean ifAbsorb;
 	private boolean ifReflect;
-
+	
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
@@ -47,7 +47,9 @@ public abstract class Stuff {
 	public boolean objc() {
 		return false;
 	}
-
+	public void itsAlive(){
+		
+	}
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!

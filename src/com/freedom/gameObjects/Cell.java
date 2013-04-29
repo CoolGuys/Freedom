@@ -64,9 +64,6 @@ public class Cell {
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
-
-		// дописать добавление под лаз. луч
-
 		return true;
 	}
 

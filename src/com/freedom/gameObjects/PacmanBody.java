@@ -12,7 +12,7 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-public class PacmanBody extends Stuff implements Moveable {
+public class PacmanBody extends Stuff{
 
 	private int rate;
 	boolean isMoving;
@@ -20,7 +20,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int pic; 
 	private String dire;
 	private int direc;
-	private int widthF=7;
+	private int widthF=10;
 	private PacmanSoul p;
 
 	private static BufferedImage texture1 = new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_ARGB);
@@ -53,7 +53,12 @@ public class PacmanBody extends Stuff implements Moveable {
 		}
 	}
 	
-	public void changeTexture(){			
+	public void itsAlive(){
+		System.out.println("popitka");
+		itsAlive();
+	}
+	
+	public void changeTexture() {
 		double rotationRequired = Math.toRadians(0);
 		double locationX;
 		double locationY;
@@ -205,7 +210,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public PacmanBody() {
-		super(false, false, false, false);
+		super(true, false, false, false);
 		this.isMoving = false;
 		texture = texture1;
 		this.pic = 1;
@@ -269,8 +274,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x][y - 1].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
-					p.InHell();
-					
+					//p.InHell();
 				}
 
 				
@@ -288,7 +292,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x][y+1].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
-					p.InHell();
+//					p.InHell();
 				}
 				
 			}
@@ -304,7 +308,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x-1][y].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
-					p.InHell();
+					//p.InHell();
 				}
 
 			}
@@ -320,7 +324,7 @@ public class PacmanBody extends Stuff implements Moveable {
 					GameField.getInstance().getCells()[x+1][y].add(this);
 				} else {
 					GameField.getInstance().getCells()[x][y].add(buffer);
-					p.InHell();
+					//p.InHell();
 				}
 
 			}

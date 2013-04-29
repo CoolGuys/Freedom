@@ -117,14 +117,13 @@ public class GameField {
 		OtherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
-
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
 		robot.setContainer(buf);
+		buf.itsAlive();
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
-
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
