@@ -2,10 +2,14 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import org.w3c.dom.Element;
 
-public abstract class Stuff {
+
+public class Stuff {
+
 
 	double x;
 	double y;
@@ -16,9 +20,14 @@ public abstract class Stuff {
 
 	private int damage; // number of lives you loose
 	private boolean ifDestroyable;
-	int lives;
+	private int lives;
 	private boolean ifAbsorb;
 	private boolean ifReflect;
+	
+	boolean expConductive;
+	private DamageSender damager;
+	private int toHarm; //буферное поле для передачи урона
+
 
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
@@ -31,7 +40,9 @@ public abstract class Stuff {
 		this.ifAbsorb = absorbable;
 		this.damage = 0;
 		this.ifDestroyable = false;
-		this.lives = 1;
+		this.lives = 10;
+		this.expConductive = true;
+		damager = new DamageSender();
 	}
 
 	public void readLvlFile(Element obj) {
@@ -47,7 +58,9 @@ public abstract class Stuff {
 	public boolean objc() {
 		return false;
 	}
-
+	public void itsAlive(){
+		
+	}
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
@@ -76,6 +89,8 @@ public abstract class Stuff {
 		this.damage = damage;
 		this.ifReflect = reflectable;
 		this.ifAbsorb = absorbable;
+		this.expConductive = true;
+		damager = new DamageSender();
 
 		if (lives == 0) {
 			this.lives = 1;
@@ -85,6 +100,8 @@ public abstract class Stuff {
 			this.ifDestroyable = true;
 		}
 	}
+	
+	//Action methods
 
 	boolean useOn() {
 		return false;
@@ -109,6 +126,13 @@ public abstract class Stuff {
 	boolean teleportate() {
 		return false;
 	}
+	
+	public void activate(){
+		return;
+	}
+	
+	
+	////getters
 
 	boolean getIfAbsorb() {
 		return this.ifAbsorb;
@@ -178,6 +202,62 @@ public abstract class Stuff {
 	public int[][] getUseList() {
 		// TODO Автоматически созданная заглушка метода
 		return null;
+	}
+	
+	
+	//methods for damage
+	
+	/*
+	 * здесь: вызывать метод harm нужно самостоятельно,
+	 * stopHarming включается сам в Cell.deleteStuff() (должно быть прописано в
+	 * Movement Animator)
+	 */
+	
+	
+	//"непрерывный" урон
+	boolean harm(int damage) {
+		if (damage == 0){
+			return false;
+		}
+		if(!this.ifDestroyable)
+			return false;
+		
+		this.toHarm = damage;
+		GameField.getInstance().getDeathTicker().addActionListener(damager);
+		return true;
+	}
+	
+	void stopHarming(){
+		GameField.getInstance().getDeathTicker().removeActionListener(damager);
+	}
+	
+	void die(){
+		GameField.getInstance().cells[this.getX()][this.getY()].deleteStuff(this);
+	}
+	
+	//разовый урон
+	boolean punch(int damage){
+		if (damage == 0){
+			return false;
+		}
+		if(!this.ifDestroyable)
+			return false;
+		this.lives = this.lives - damage;
+		
+		if(this.lives < 1)
+			this.die();
+		return true;
+	}
+
+	// дописать обратботку смерти
+	private class DamageSender implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Stuff.this.lives = Stuff.this.lives - Stuff.this.toHarm;
+			System.out.println(Stuff.this.lives);
+			if (Stuff.this.lives < 1) {
+				Stuff.this.die();
+			}
+		}
 	}
 
 }

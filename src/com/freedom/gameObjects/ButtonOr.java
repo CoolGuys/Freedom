@@ -64,7 +64,9 @@ public class ButtonOr extends Stuff {
 		super(false, true, true, false);
 		super.x = x;
 		super.y = y;
+
 		controlledCellsList = new int[10][2];
+
 	}
 
 	/**
@@ -137,19 +139,6 @@ public class ButtonOr extends Stuff {
 		}
 	}
 
-	// костылики
-	void robotOn() {
-		if (!this.ifPressed)
-			this.touch();
-		return;
-	}
-
-	void robotOff() {
-		if (this.ifPressed)
-			this.touch();
-		return;
-	}
-
 	public void giveInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
 
@@ -168,3 +157,4 @@ public class ButtonOr extends Stuff {
 		}
 	}
 }
+

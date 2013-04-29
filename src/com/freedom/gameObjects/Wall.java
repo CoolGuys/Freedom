@@ -41,6 +41,7 @@ public class Wall extends Stuff {
 	public Wall()
 	{
 		super(false, false,true, false);
+		super.expConductive = false;
 	}
 
 

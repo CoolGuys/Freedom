@@ -1,5 +1,7 @@
 package com.freedom.gameObjects;
 
+import java.util.logging.Logger;
+
 import com.freedom.utilities.PathFinder;
 import com.freedom.view.GameScreen;
 
@@ -35,8 +37,10 @@ public class PacmanSoul implements Runnable{
 		}
 		GameField.getInstance().getThreads().execute(new Changer());
 	}
+	Logger gleblo = Logger.getLogger("soul");
 	public void InHell() {
 		this.alive=false;
+		gleblo.info("weed");
 	}
 	public void run() {
 		while (alive) {
@@ -45,21 +49,28 @@ public class PacmanSoul implements Runnable{
 			try {
 				this.dx = GameField.getInstance().getRobot().getX();
 				this.dy = GameField.getInstance().getRobot().getY();
+				//System.out.println("вылтавы"+this.dx+" "+this.dy);
 			} catch (Exception e) {
 				this.dx = body.getX();
 				this.dy = body.getY();
+				//System.out.println("а робота то нету");
 			}
-			//System.out.println("dx="+this.dx+"dy="+this.dy);
+			// System.out.println("dx="+this.dx+"dy="+this.dy);
 			if ((x != dx) || (y != dy)) {
-				String dir="";
+				String dir = "";
 				dir = finder.find(x, y, dx, dy, widh);
+				//System.out.println("lol "+dir);
 				// System.out.println("dir="+dir+" x="+x+" y="+y);
 				try {
 					if (!dir.equals("0")) {
 						if (dir.length() > 1) {
-							body.move1((String) dir.subSequence(0, 1));
+							try {
+								body.move1((String) dir.subSequence(0, 1));
+							} catch (Exception e) {
+
+							}
 						} else {
-							GameField.getInstance().damageRobot(1);
+							GameField.getInstance().getRobot().harm(1);
 							System.out.println(GameField.getInstance().getRobot().getLives());
 						}
 						GameScreen.getInstance().repaint();

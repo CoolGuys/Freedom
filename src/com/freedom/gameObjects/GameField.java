@@ -2,12 +2,15 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
 
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
+
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
@@ -110,25 +113,42 @@ public class GameField {
 		OtherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
-
 		Stuff buf = robot.getContent();
 		robot.emptyContainer();
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
 		robot.setContainer(buf);
-		Loader.lvlToSv(nextLevelId, this.pathToSave);
+		try {
+			buf.itsAlive();
+		} catch (Exception E) {
 
+		}
+		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
+/*
+	public void saveLevelToPackage(int levelID) {
+		//this.pathToSave = "Saves/Save1.lvl";
+		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+		try {
+			buf.itsAlive();
+		} catch (Exception E) {
 
+		}
+		Loader.lvlToSv(nextLevelId, this.pathToSave);
+		GameScreen.getInstance().setSize(cells.length * cellSize,
+				cells[1].length * cellSize);
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
+	}
+*/
 	public void saveCurrentLevelToPackage() {
 		//this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
-		
 	}
 
 	public void resetTickerListeners() {
@@ -153,9 +173,6 @@ public class GameField {
 		return robot;
 	}
 
-	void damageRobot(int damage) {
-		this.robot.lives = this.robot.lives - damage;
-	}
 
 	public void draw(Graphics g) {
 		for (int x = 1; x < cells.length - 1; x++) {

@@ -1509,6 +1509,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="13" y="9">
 		</obj>
+		<obj class="com.freedom.gameObjects.TNT" x="13" y="9">
+		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="13" y="10">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="14" y="1">
@@ -1550,6 +1552,8 @@
 		<obj class="com.freedom.gameObjects.Wall" x="15" y="8">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="15" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.TNT" x="3" y="3">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="15" y="10">
 		</obj>

@@ -19,7 +19,6 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
-	private DamageSender damager;
 	
 	private static Image highlighted;
 	private boolean isHighlighted;
@@ -39,15 +38,14 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[4];
+		this.content = new Stuff[6];
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
-		damager = new DamageSender();
 	}
 
 	public boolean add(Stuff element) {
-		if (this.contentAmount == 4)
+		if (this.contentAmount == 6)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
@@ -64,9 +62,6 @@ public class Cell {
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
-
-		// дописать добавление под лаз. луч
-
 		return true;
 	}
 
@@ -94,7 +89,32 @@ public class Cell {
 		}
 		this.damage = this.damage - buf.getDamage();
 		this.touch();
+		buf.stopHarming();
 		return buf;
+	}
+	
+	public boolean deleteStuff(Stuff element) {
+
+		if (this.contentAmount == 0)
+			return false;
+		
+		int i;
+		for(i = 0; i<this.contentAmount; i++){
+			if(this.content[i].equals(element))
+				break;
+			if(i==(this.contentAmount - 1))
+				return false;
+		}
+		this.damage = this.damage - element.getDamage();
+		
+		for(int j = i; j<this.contentAmount-1; j++){
+			this.content[j] = this.content[j+1];
+		}
+		this.contentAmount--;
+		this.content[this.contentAmount] = null;
+		
+		this.touch();////под вопросом
+		return true;
 	}
 
 	// блок выдачи информации
@@ -122,7 +142,7 @@ public class Cell {
 
 	// Everything for robot:
 
-	void touch() {
+	public void touch() {
 		for (int i = 0; i < this.contentAmount; i++) {
 			this.content[i].touch();
 		}
@@ -189,33 +209,36 @@ public class Cell {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOn();
 		}
-		this.harm();
+		GameField.getInstance().getRobot().harm(this.damage); //робот должен быть уже сверху
 	}
 
 	public void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
 		}
-		GameField.getInstance().getDeathTicker().removeActionListener(damager);
 	}
-
-	void harm() {
-		if (this.getDamage() == 0){
+	
+	
+	//здесь наносим урон предметам с задержкой
+	public void tryToDestroy(int damage){
+		if(this.contentAmount == 0 )
 			return;
+		
+		try {
+			wait(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		GameField.getInstance().getDeathTicker().addActionListener(damager);
-	}
-
-	// дописать обратботку смерти
-	private class DamageSender implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().damageRobot(damage);
-			if (GameField.getInstance().getRobot().lives <= 0) {
-				System.out.println("You are dead, idiot!");
-				System.exit(10);
-			}
+		
+		for(int i = 0; i<this.contentAmount; i++){
+			this.content[i].punch(damage);
 		}
 	}
+	
+	
+	
+	
 
 	boolean getIfPassable() {
 		for (int i = 0; i < this.contentAmount; i++) {
@@ -223,6 +246,15 @@ public class Cell {
 				return false;
 		}
 
+		return true;
+	}
+	
+	boolean getIfConductsExp(){
+		for (int i = 0; i < this.contentAmount; i++) {
+			if (!this.content[i].expConductive)
+				return false;
+		}
+		
 		return true;
 	}
 
