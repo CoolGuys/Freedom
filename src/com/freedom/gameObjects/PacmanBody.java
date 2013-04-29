@@ -1,7 +1,6 @@
 package com.freedom.gameObjects;
 
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -11,9 +10,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
-
-import com.freedom.utilities.MovementAnimator;
-import com.freedom.view.ScreensHolder;
 
 public class PacmanBody extends Stuff implements Moveable {
 
@@ -171,12 +167,10 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 	
 	public boolean checkIfBeingMoved() {
-		// TODO Auto-generated method stub
 		return isMoving;
 	}
 	
 	public void tellIfBeingMoved(boolean isMoved) {
-		// TODO Auto-generated method stub
 		this.isMoving = isMoved;
 	}
 
@@ -200,7 +194,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	public PacmanBody() {
 		super(false, false, false, false);
 		this.isMoving = false;
-		texture = this.texture1;
+		texture = texture1;
 		this.pic = 1;
 		this.dire="N";
 		this.direc=-1;
@@ -210,7 +204,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	public PacmanBody(int x1, int y1, int rate1,int wid) {
 		super(false, false, false, false);
 		this.isMoving = false;
-		texture = this.texture1;
+		texture = texture1;
 		this.pic = 1;
 		this.x = x1;
 		this.y = y1;

@@ -5,7 +5,7 @@ import java.awt.Image;
 
 import org.w3c.dom.Element;
 
-public class Stuff {
+public abstract class Stuff {
 
 	double x;
 	double y;
@@ -166,7 +166,15 @@ public class Stuff {
 	public int getUseAmount() {
 		return -1;
 	}
+	
+	public void giveInfo() {
+		return;
+	}
 
+	 public void removeInfo() {
+		 
+	 }
+	
 	public int[][] getUseList() {
 		// TODO Автоматически созданная заглушка метода
 		return null;

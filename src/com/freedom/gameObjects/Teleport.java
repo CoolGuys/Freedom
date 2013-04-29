@@ -16,12 +16,14 @@ public class Teleport extends Stuff {
 
 	static {
 		try {
-			textureOn = ImageIO.read(new File(
-					"Resource/Textures/TeleporterOn.png")).getScaledInstance(getSize(), getSize(),
+			textureOn = ImageIO.read(
+					new File("Resource/Textures/TeleporterOn.png"))
+					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
 
-			textureOff = ImageIO.read(new File(
-					"Resource/Textures/TeleporterOff.png")).getScaledInstance(getSize(), getSize(),
+			textureOff = ImageIO.read(
+					new File("Resource/Textures/TeleporterOff.png"))
+					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
 
 		} catch (IOException e) {
@@ -29,7 +31,7 @@ public class Teleport extends Stuff {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static Image textureOn;
 	private static Image textureOff;
 
@@ -93,7 +95,6 @@ public class Teleport extends Stuff {
 		return false;
 	}
 
-	
 	protected boolean useOff() {
 		if (this.on) {
 			texture = textureOff;
@@ -103,7 +104,7 @@ public class Teleport extends Stuff {
 		return false;
 
 	}
-	
+
 	protected boolean useOn() {
 		if (!this.on) {
 			this.on = true;
@@ -127,6 +128,17 @@ public class Teleport extends Stuff {
 	public void draw(Graphics g) {
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
+	}
+
+	public void giveInfo() {
+		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
+		GameField.getInstance().getCells()[xLeadTo][yLeadTo].highlight();
+
+	}
+
+	public void removeInfo() {
+		GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
+		GameField.getInstance().getCells()[xLeadTo][yLeadTo].unhighlight();
 	}
 
 }
