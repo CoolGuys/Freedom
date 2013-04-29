@@ -122,7 +122,11 @@ public class GameField {
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
 		robot.setContainer(buf);
-		buf.itsAlive();
+		try {
+			buf.itsAlive();
+		} catch (Exception E) {
+
+		}
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
@@ -133,7 +137,6 @@ public class GameField {
 	public void saveCurrentLevelToPackage() {
 		//this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
-		
 	}
 
 	public void resetTickerListeners() {

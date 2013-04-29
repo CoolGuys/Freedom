@@ -108,6 +108,7 @@ public class Loader {
 									lvl.appendChild(obj);
 								}
 								if (stu[i].objc()) {
+									System.out.print(stu[i].getClass().getSimpleName());
 									Element obj = doc.createElement("obj");
 									stu[i].loadToFile(obj);
 									obj.setTextContent("\n");
