@@ -34,6 +34,7 @@ public class NotDoor extends Stuff {
 	public NotDoor()
 	{
 		super(false, true,true, false);
+		super.expConductive = false;
 	}
 
 

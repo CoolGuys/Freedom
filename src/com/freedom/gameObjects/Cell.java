@@ -13,7 +13,6 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
-	private DamageSender damager;
 	
 
 	public Cell(int a, int b) {
@@ -24,7 +23,6 @@ public class Cell {
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
-		damager = new DamageSender();
 	}
 
 	public boolean add(Stuff element) {
@@ -75,7 +73,32 @@ public class Cell {
 		}
 		this.damage = this.damage - buf.getDamage();
 		this.touch();
+		buf.stopHarming();
 		return buf;
+	}
+	
+	public boolean deleteStuff(Stuff element) {
+
+		if (this.contentAmount == 0)
+			return false;
+		
+		int i;
+		for(i = 0; i<this.contentAmount; i++){
+			if(this.content[i].equals(element))
+				break;
+			if(i==(this.contentAmount - 1))
+				return false;
+		}
+		this.damage = this.damage - element.getDamage();
+		
+		for(int j = i; j<this.contentAmount-1; j++){
+			this.content[j] = this.content[j+1];
+		}
+		this.contentAmount--;
+		this.content[this.contentAmount] = null;
+		
+		this.touch();////под вопросом
+		return true;
 	}
 
 	// блок выдачи информации
@@ -170,31 +193,12 @@ public class Cell {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOn();
 		}
-		this.harm();
+		GameField.getInstance().getRobot().harm(this.damage); //робот должен быть уже сверху
 	}
 
 	public void robotOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			this.content[i].robotOff();
-		}
-		GameField.getInstance().getDeathTicker().removeActionListener(damager);
-	}
-
-	void harm() {
-		if (this.getDamage() == 0){
-			return;
-		}
-		GameField.getInstance().getDeathTicker().addActionListener(damager);
-	}
-
-	// дописать обратботку смерти
-	private class DamageSender implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().damageRobot(damage);
-			if (GameField.getInstance().getRobot().lives <= 0) {
-				System.out.println("You are dead, idiot!");
-				System.exit(10);
-			}
 		}
 	}
 	
@@ -212,18 +216,7 @@ public class Cell {
 		}
 		
 		for(int i = 0; i<this.contentAmount; i++){
-			if(!this.content[i].ifCanDestroy())
-				continue;
-			this.content[i].lives = this.content[i].lives - damage;
-			
-			//let's destroy object in case of it's death
-			if(this.content[i].lives <=0){
-				for(int j = i; j<this.contentAmount-1; j++){
-					this.content[j] = this.content[j+1];
-				}
-				i--;
-				this.contentAmount--;
-			}
+			this.content[i].punch(damage);
 		}
 	}
 	
@@ -237,6 +230,15 @@ public class Cell {
 				return false;
 		}
 
+		return true;
+	}
+	
+	boolean getIfConductsExp(){
+		for (int i = 0; i < this.contentAmount; i++) {
+			if (!this.content[i].expConductive)
+				return false;
+		}
+		
 		return true;
 	}
 

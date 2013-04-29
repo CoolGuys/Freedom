@@ -150,9 +150,6 @@ public class GameField {
 		return robot;
 	}
 
-	void damageRobot(int damage) {
-		this.robot.lives = this.robot.lives - damage;
-	}
 
 	public void draw(Graphics g) {
 		for (int x = 1; x < cells.length - 1; x++) {

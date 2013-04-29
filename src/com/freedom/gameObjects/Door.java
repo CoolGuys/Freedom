@@ -35,6 +35,7 @@ public class Door extends Stuff {
 	public Door()
 	{
 		super(false, false,true, false);
+		super.expConductive = false;
 	}
 
 
