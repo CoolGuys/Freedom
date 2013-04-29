@@ -118,6 +118,8 @@ public class Teleport extends Stuff {
 	protected void robotOn() {
 		if (!on)
 			return;
+		if(!GameField.getInstance().cells[this.xLeadTo][this.yLeadTo].getIfPassable())
+			return;
 		Robot buf = GameField.getInstance().getRobot();
 		buf.x = this.xLeadTo;
 		buf.y = this.yLeadTo;
