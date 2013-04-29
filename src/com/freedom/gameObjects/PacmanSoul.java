@@ -49,14 +49,17 @@ public class PacmanSoul implements Runnable{
 			try {
 				this.dx = GameField.getInstance().getRobot().getX();
 				this.dy = GameField.getInstance().getRobot().getY();
+				//System.out.println("вылтавы"+this.dx+" "+this.dy);
 			} catch (Exception e) {
 				this.dx = body.getX();
 				this.dy = body.getY();
+				//System.out.println("а робота то нету");
 			}
 			// System.out.println("dx="+this.dx+"dy="+this.dy);
 			if ((x != dx) || (y != dy)) {
 				String dir = "";
 				dir = finder.find(x, y, dx, dy, widh);
+				//System.out.println("lol "+dir);
 				// System.out.println("dir="+dir+" x="+x+" y="+y);
 				try {
 					if (!dir.equals("0")) {
@@ -67,7 +70,7 @@ public class PacmanSoul implements Runnable{
 
 							}
 						} else {
-							GameField.getInstance().damageRobot(1);
+							GameField.getInstance().getRobot().harm(1);
 							System.out.println(GameField.getInstance().getRobot().getLives());
 						}
 						GameScreen.getInstance().repaint();

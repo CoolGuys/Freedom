@@ -114,14 +114,10 @@ public class PauseScreen extends AbstractScreen {
 
 	public static class SaveLevelAction extends GAction {
 		public void performAction() {
-<<<<<<< HEAD
-			GameField.getInstance().saveLevelToPackage(1);
-=======
 			SaveScreenModel.getInstance().setSourcePack(GameField.getInstance().getPathToSave());
 			SaveScreenModel.getInstance().setDescriptor("Enter Save Name");
 			SaveScreenModel.getInstance().addEntries();
 			ScreensHolder.getInstance().swapScreens(SaveScreen.getInstance(), INSTANCE);
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		}
 	}
 }

@@ -7,11 +7,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-<<<<<<< HEAD
-=======
 import javax.imageio.ImageIO;
 
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 public class Cell {
 
 	private int x;

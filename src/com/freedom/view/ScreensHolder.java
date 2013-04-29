@@ -35,13 +35,8 @@ public class ScreensHolder extends JLayeredPane {
 		StartScreen.getInstance().prepareModel();
 		PauseScreen.getInstance().prepareModel();
 		LoadingScreen.getInstance().prepareModel();
-<<<<<<< HEAD
-		LevelChoiceScreen.getInstance().prepareModel();
-		TextFieldScreen.getInstance().prepareModel();
-=======
 		LoadScreen.getInstance().prepareModel();
 		SaveScreen.getInstance().prepareModel();
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		
 		currentScreen = StartScreen.getInstance();
 		addScreen(StartScreen.getInstance());

@@ -7,11 +7,9 @@ import java.awt.event.ActionListener;
 
 import org.w3c.dom.Element;
 
-<<<<<<< HEAD
+
 public class Stuff {
-=======
-public abstract class Stuff {
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
+
 
 	double x;
 	double y;
@@ -25,14 +23,12 @@ public abstract class Stuff {
 	private int lives;
 	private boolean ifAbsorb;
 	private boolean ifReflect;
-<<<<<<< HEAD
+	
 	boolean expConductive;
 	private DamageSender damager;
 	private int toHarm; //буферное поле для передачи урона
 
-=======
-	
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
+
 	// конструктор для совсем убогих объектов, которые
 	// безвредны и которые не уничтожишь.
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,

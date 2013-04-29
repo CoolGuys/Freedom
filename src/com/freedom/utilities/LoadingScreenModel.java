@@ -26,11 +26,6 @@ public class LoadingScreenModel {
 	}
 
 	public void draw(Graphics g) {
-<<<<<<< HEAD
-		//logger.info("LOL");
-=======
-		// logger.info("LOL");
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 		for (GLabel l : labels) {
 			if (l != null)
 				l.draw(g);
@@ -86,12 +81,6 @@ static {
 		}
 
 		public void draw(Graphics g) {
-
-<<<<<<< HEAD
-			//logger.info("LOLinner");
-=======
-			// logger.info("LOLinner");
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

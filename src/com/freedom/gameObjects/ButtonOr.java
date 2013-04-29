@@ -3,6 +3,7 @@ package com.freedom.gameObjects;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -63,11 +64,9 @@ public class ButtonOr extends Stuff {
 		super(false, true, true, false);
 		super.x = x;
 		super.y = y;
-<<<<<<< HEAD
-		useList = new int[10][2];
-=======
+
 		controlledCellsList = new int[10][2];
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
+
 	}
 
 	/**
@@ -139,30 +138,7 @@ public class ButtonOr extends Stuff {
 			}
 		}
 	}
-<<<<<<< HEAD
-	
-	//костылики
-	/* void robotOn(){
-		if(!this.ifPressed)
-=======
 
-	// костылики
-	void robotOn() {
-		if (!this.ifPressed)
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
-			this.touch();
-		return;
-	}
-
-	void robotOff() {
-		if (this.ifPressed)
-			this.touch();
-		return;
-	}*/
-
-<<<<<<< HEAD
-}
-=======
 	public void giveInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
 
@@ -181,4 +157,4 @@ public class ButtonOr extends Stuff {
 		}
 	}
 }
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
+

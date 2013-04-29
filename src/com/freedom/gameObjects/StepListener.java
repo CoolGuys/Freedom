@@ -12,13 +12,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.freedom.view.GameScreen;
+
 /**
- * Это класс который прослеживает находится ли робот в какой-то области
- * и исполняет
- * robotIsOn
- * robotIsNotOn
+ * Это класс который прослеживает находится ли робот в какой-то области и
+ * исполняет robotIsOn robotIsNotOn robotGone robotCome назвения которых кагбэ
+ * намекают не то что происходит
+ * в файле данный объект прописывается так: 
+ * <obj class="com.freedom.gameObjects.StepListener" x="3" y="3">
+ * <cels x="4" y="4"/>
+ * <cels x="4" y="5"/> </obj>
+ * чтобы сделать что то своё на основe этого класса нужно создать подкласс
+ * дописать в неё функцию loadToFile, а также заоверрайдить все методы вроде
+ * robotCome, который нужны для нового класса.
+ * 
  * @author ushale
- *
+ * 
  */
 public class StepListener extends Stuff {
 	private int[][] controlledCellsList;// массив с координатами селлов на
@@ -30,58 +38,72 @@ public class StepListener extends Stuff {
 	private boolean alive;
 	private boolean robotOn;
 	private Checker p;
-	Logger gleblo = Logger.getLogger("StepListener");
+	private Logger gleblo = Logger.getLogger("StepListener");
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/EmptyTexture.png"));
+			texture1 = ImageIO.read(new File(
+					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	public StepListener()
-	{	
-		
-		super(false, false, false , false);
+
+	public StepListener() {
+
+		super(false, true, false, false,0 ,0);
 		gleblo.setLevel(Level.OFF);
-		texture=texture1;
-		lives=10000;
-		alive=true;
-		robotOn=false;
+		texture = texture1;
+		alive = true;
+		robotOn = false;
 		gleblo.info("creating");
-	
+
 	}
+
+	/**
+	 * просто так не юзать
+	 */
 	
-	public void itsAlive(){
+	public void itsAlive() {
 		this.p = new Checker();
 		GameField.getInstance().getThreads().execute(this.p);
 		gleblo.info("Aliving");
 	}
-	
-	public void robotIsOn(){
+	/**
+	 * Робот это он
+	 */
+	public void robotIsOn() {
 		gleblo.info("The robot is on");
 	}
-	
-	public void robotIsNotOn(){
+	/**
+	 * Робот это не он
+	 */
+	public void robotIsNotOn() {
 		gleblo.info("The robot is not on");
 	}
-	
-	public void robotGone(){
+	/**
+	 * Робот ушёл
+	 */
+	public void robotGone() {
 		gleblo.info("The robot had gone");
 	}
-	
-	public void robotCome(){
+	/**
+	 * Робот пришёл
+	 */
+	public void robotCome() {
 		gleblo.info("The robot had come");
 	}
-	
-	
+
+	/**
+	 * этот метод нужно заоверрайдить при наследовании
+	 */
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.StepListener");
 		gleblo.info("Saving");
 	}
+
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
 	 * 
@@ -101,7 +123,7 @@ public class StepListener extends Stuff {
 		this.controlledCellsAmount = length;
 		itsAlive();
 	}
-	
+
 	/**
 	 * Кастыльный метод
 	 * 
@@ -110,26 +132,35 @@ public class StepListener extends Stuff {
 	public boolean obj() {
 		return false;
 	}
-
-	// кастыли
+	/**
+	 * Кастыльный метод
+	 * 
+	 * @return Возвращает кастыль
+	 */
 	public boolean objc() {
 		return true;
 	}
-	
+	/**
+	 * просто так не юзать
+	 */
 	public int getUseAmount() {
 		return controlledCellsAmount;
 	}
-
+	/**
+	 * просто так не юзать
+	 */
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
-	private class Checker implements Runnable{
-		public Checker(){
-			
+
+	private class Checker implements Runnable {
+		public Checker() {
+
 		}
-		public void run(){
+
+		public void run() {
 			boolean ok;
-			while(alive){				
+			while (alive) {
 				try {
 					int x;
 					int y;
@@ -142,17 +173,18 @@ public class StepListener extends Stuff {
 						gleblo.info("Error occured");
 					}
 					Thread.sleep(30);
-					ok=false;
-					for(int i=0;i<controlledCellsAmount;i++){
-						if((controlledCellsList[i][0]==x)&&(controlledCellsList[i][1]==y)){
-							if(robotOn){
+					ok = false;
+					for (int i = 0; i < controlledCellsAmount; i++) {
+						if ((controlledCellsList[i][0] == x)
+								&& (controlledCellsList[i][1] == y)) {
+							if (robotOn) {
 								robotIsOn();
-								
-							}else{
-								robotOn=true;
+
+							} else {
+								robotOn = true;
 								robotCome();
 							}
-							ok=true;
+							ok = true;
 						}
 
 					}

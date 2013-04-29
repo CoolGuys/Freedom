@@ -34,12 +34,9 @@ public class Door extends Stuff {
 
 	public Door()
 	{
-<<<<<<< HEAD
 		super(false, false,true, false);
 		super.expConductive = false;
-=======
-		super(false, false, true, false);
->>>>>>> eea82d5996ffd291d973fef291cd68f23e18472a
+
 	}
 
 	/**
