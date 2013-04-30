@@ -24,7 +24,7 @@ public class Robot extends Stuff implements Moveable {
 	boolean isMoving;
 	private double step = 0.1;
 
-	static int maxLives = 10;
+	static int maxLives = 10000;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -57,7 +57,7 @@ public class Robot extends Stuff implements Moveable {
 
 
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
-		super(false, true, false, true, 0, lives);
+		super(false, true, false, true, 0, 10000);
 		super.x = posX;
 		super.y = posY;
 		this.direction = direction;
@@ -127,7 +127,7 @@ public class Robot extends Stuff implements Moveable {
 
 		logger.info(direction);
 		this.direction = direction;
-		ScreensHolder.getInstance().repaint();
+		//ScreensHolder.getInstance().repaint();
 
 		if ((!isMoving) & (this.canGo())) {
 			isMoving = true;

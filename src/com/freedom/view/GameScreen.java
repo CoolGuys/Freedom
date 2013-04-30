@@ -146,28 +146,22 @@ public class GameScreen extends AbstractScreen {
 
 	public Point рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(Robot robot) {
 		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
-				- robot.getX() * Robot.getSize();
+				- robot.getTargetCellCoordinates(robot.getDirection()).x * Robot.getSize();
 		int deltaY = -this.getY() + ScreensHolder.getInstance().getHeight() / 2
-				- robot.getY() * Robot.getSize();
+				- robot.getTargetCellCoordinates(robot.getDirection()).y * Robot.getSize();
 		return new Point(deltaX, deltaY);
 	}
 
 	public void центрироватьПоРоботуПоВертикали(Robot robot) {
 
-		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
-				.getDirection()).x, robot.getTargetCellCoordinates(robot
-				.getDirection()).y, null, null, 0);
 		setLocation(getX(), getY()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).y);
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
 	}
 
 	public void центрироватьПоРоботуПоГоризонтали(Robot robot) {
 
-		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
-				.getDirection()).x, robot.getTargetCellCoordinates(robot
-				.getDirection()).y, null, null, 0);
 		setLocation(getX()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).x, getY());
+				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).x, getY());
 	}
 
 	public void центрироватьПоРоботу(Robot robot) {
