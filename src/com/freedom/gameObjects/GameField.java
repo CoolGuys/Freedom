@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-
 import javax.swing.Timer;
 
 import com.freedom.utilities.Loader;
@@ -43,7 +42,6 @@ public class GameField {
 	private static GameField INSTANCE;
 	private static ExecutorService OtherThreads;
 
-
 	public void setPathToSave(String pathToSaveFile) {
 		this.pathToSave = pathToSaveFile;
 	}
@@ -56,7 +54,6 @@ public class GameField {
 		this.currentLevelId = currentLevelIdToSet;
 	}
 
-	
 	public void setPreviousLevel(int prevoiusLevelIdToSet) {
 		this.previousLevelId = prevoiusLevelIdToSet;
 	}
@@ -84,12 +81,12 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage, boolean isNew) {
-		if(isNew)
-			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-				SaveScreen.getInstance());
-		else 
-			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-				LoadScreen.getInstance());
+		if (isNew)
+			ScreensHolder.getInstance().swapScreens(
+					LoadingScreen.getInstance(), SaveScreen.getInstance());
+		else
+			ScreensHolder.getInstance().swapScreens(
+					LoadingScreen.getInstance(), LoadScreen.getInstance());
 		OtherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
@@ -100,7 +97,7 @@ public class GameField {
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
-	
+
 	public ExecutorService getThreads() {
 		return GameField.OtherThreads;
 	}
@@ -130,24 +127,20 @@ public class GameField {
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
-/*
-	public void saveLevelToPackage(int levelID) {
-		//this.pathToSave = "Saves/Save1.lvl";
-		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
-		try {
-			buf.itsAlive();
-		} catch (Exception E) {
 
-		}
-		Loader.lvlToSv(nextLevelId, this.pathToSave);
-		GameScreen.getInstance().setSize(cells.length * cellSize,
-				cells[1].length * cellSize);
-		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
-	}
-*/
+	/*
+	 * public void saveLevelToPackage(int levelID) { //this.pathToSave =
+	 * "Saves/Save1.lvl"; Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+	 * try { buf.itsAlive(); } catch (Exception E) {
+	 * 
+	 * } Loader.lvlToSv(nextLevelId, this.pathToSave);
+	 * GameScreen.getInstance().setSize(cells.length * cellSize, cells[1].length
+	 * * cellSize);
+	 * ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
+	 * LoadingScreen.getInstance()); }
+	 */
 	public void saveCurrentLevelToPackage() {
-		//this.pathToSave = "Saves/Save1.lvl";
+		// this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
 	}
 
@@ -173,18 +166,17 @@ public class GameField {
 		return robot;
 	}
 
-
 	public void draw(Graphics g) {
-		for (int x = 1; x < cells.length - 1; x++) {
-			for (int y = 1; y < cells[1].length - 1; y++) {
-				for (int i = 0; i < cells[x][y].getContentAmount(); i++) {
-					if (cells[x][y].getContent()[i] != null) 
+		for (int i = 0; i < 6; i++) {
+			for (int x = 1; x < cells.length - 1; x++) {
+				for (int y = 1; y < cells[1].length - 1; y++) {
+					if (cells[x][y].getContent()[i] != null)
 						cells[x][y].getContent()[i].draw(g);
 					cells[x][y].draw(g);
 				}
 			}
 		}
-		robot.draw(g);
+		// robot.draw(g);
 		g.dispose();
 	}
 

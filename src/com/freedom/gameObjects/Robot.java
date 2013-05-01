@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.freedom.utilities.MovementAnimator;
+import com.freedom.utilities.Mover;
 import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
@@ -21,7 +21,7 @@ public class Robot extends Stuff implements Moveable {
 	private String direction;
 	private Stuff container;
 
-	boolean isMoving;
+	volatile boolean isMoving;
 	private double step = 0.1;
 
 	static int maxLives = 10000;
@@ -55,8 +55,8 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
-
-	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
+	public Robot(int posX, int posY, String direction, Stuff c, int lives)
+	{
 		super(false, true, false, true, 0, 10000);
 		super.x = posX;
 		super.y = posY;
@@ -65,7 +65,15 @@ public class Robot extends Stuff implements Moveable {
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
 		logger.setLevel(Level.OFF);
 	}
+	
+	public int getX() {
+		return (int)Math.round(x);
+	}
 
+	public int getY() {
+		return (int)Math.round(y);
+	}
+	
 	public double getStep() {
 		return step;
 	}
@@ -103,7 +111,6 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
-
 	public boolean canGo() {
 		if (GameField.getInstance().cells[this
 				.getTargetCellCoordinates(getDirection()).x][this
@@ -115,33 +122,22 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void moveCoarse(String direction) {
+		if (Math.abs(GameScreen.getInstance()
+				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
+				.getInstance().getWidth() / 2 - 4 * getSize())
+			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
 
 		if (Math.abs(GameScreen.getInstance()
-				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder.getInstance().getWidth()/2- 4 * getSize()) 
-			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
-			
-		if(Math.abs(GameScreen.getInstance()
-					.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).y) > ScreensHolder.getInstance().getHeight()/2-4 * getSize())
+				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).y) > ScreensHolder
+				.getInstance().getHeight() / 2 - 4 * getSize())
 			GameScreen.getInstance().центрироватьПоРоботуПоВертикали(this);
-		
 
-		logger.info(direction);
 		this.direction = direction;
-		//ScreensHolder.getInstance().repaint();
 
-		if ((!isMoving) & (this.canGo())) {
-			isMoving = true;
-			// GameField.getInstance().getCells()[(int)this.x][(int)this.y].robotOff();
-			// GameField.getInstance().getCells()[getTargetCellCoordinates(direction).x][getTargetCellCoordinates(direction).y].robotOn();
-			if (!isMoving)
-				return;
-			Runnable r = new MovementAnimator<Robot>(this, this.direction);
+		Runnable r = new Mover<Robot>(this, this.direction, 1, 10);
+		Thread t = new Thread(r);
+		t.start();
 
-			Thread t = new Thread(r);
-			t.start();
-
-		} else
-			return;
 	}
 
 	public void moveFine(String direction) {
@@ -150,18 +146,11 @@ public class Robot extends Stuff implements Moveable {
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
-		if ((!isMoving) & (this.canGo())) {
-			isMoving = true;
+		Runnable r = new Mover<Robot>(this, this.direction, 1, 10);
 
-			if (!isMoving)
-				return;
-			Runnable r = new MovementAnimator<Robot>(this, this.direction);
-
-			Thread t = new Thread(r);
-			t.start();
-		}
+		Thread t = new Thread(r);
+		t.start();
 	}
-
 
 	/**
 	 * Штука, которая выдает пару чисел - координаты целла в массиве, лежащего
@@ -175,19 +164,22 @@ public class Robot extends Stuff implements Moveable {
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")) {
-			point.x = (int) this.x;
-			point.y = (int) this.y - 1;
+			point.x = (int) Math.round(this.x);
+			point.y = (int)Math.round(this.y-1);
+			return point;
 		} else if (direction.equals("S")) {
-			point.x = (int) this.x;
-			point.y = (int) this.y + 1;
+			point.x = (int)Math.round(this.x);
+			point.y = (int)Math.round(this.y+1);
+			return point;
 		} else if (direction.equals("E")) {
-			point.x = (int) this.x + 1;
-			point.y = (int) this.y;
+			point.x = (int)Math.round(this.x+1);
+			point.y = (int) Math.round(this.y);
+			return point;
 		} else {
-			point.x = (int) this.x - 1;
-			point.y = (int) this.y;
+			point.x = (int) Math.round(this.x-1);
+			point.y = (int) Math.round(this.y);
+			return point;
 		}
-		return point;
 	}
 
 	public void move(String direction) {
@@ -227,7 +219,6 @@ public class Robot extends Stuff implements Moveable {
 
 		if (this.container == null)
 			return;
-
 
 		int targetX = this.getTargetCellCoordinates(getDirection()).x;
 		int targetY = this.getTargetCellCoordinates(getDirection()).y;

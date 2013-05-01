@@ -1,6 +1,7 @@
 package com.freedom.gameObjects;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -117,5 +118,17 @@ public class TNT extends Stuff implements Moveable {
 	public double getStep() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean canGo() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Point getTargetCellCoordinates(String direction) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

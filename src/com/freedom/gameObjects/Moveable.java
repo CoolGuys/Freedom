@@ -1,5 +1,7 @@
 package com.freedom.gameObjects;
 
+import java.awt.Point;
+
 public interface Moveable {
 	public void move(String diretion);
 	public boolean checkIfBeingMoved();
@@ -9,4 +11,7 @@ public interface Moveable {
 	public int getY();
 	public double getStep();
 	public void activate();
+	public boolean canGo();
+	public Point getTargetCellCoordinates(String direction);
+	
 }

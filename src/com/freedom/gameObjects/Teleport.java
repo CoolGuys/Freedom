@@ -76,12 +76,12 @@ public class Teleport extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Teleport");
 	}
 
-	boolean teleportate() {
+	void touch() {
 		if (!on)
-			return false;
+			return;
 		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.getIfPassable())
-			return false;
+			return;
 
 		Stuff element = GameField.getInstance().getCells()[this.getX()][this
 				.getY()].getTop();
@@ -89,10 +89,8 @@ public class Teleport extends Stuff {
 				.add(element)) {
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
 					.deleteStuff();
-			return true;
+			return;
 		}
-
-		return false;
 	}
 
 	protected boolean useOff() {
@@ -123,8 +121,6 @@ public class Teleport extends Stuff {
 		Robot buf = GameField.getInstance().getRobot();
 		buf.x = this.xLeadTo;
 		buf.y = this.yLeadTo;
-		if (!GameField.getInstance().getRobot().canGo())
-			GameField.getInstance().getRobot().isMoving = false;
 	}
 
 	public void draw(Graphics g) {
