@@ -184,7 +184,7 @@ public class Loader {
 	}
 
 	public static void readLvl(int Number, String lvlfile) {
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 		File fXml = new File(lvlfile);
 		LoadingScreenModel lsm=LoadingScreenModel.getInstance();
 		//lsm.setLoadingObjectName("Starting");

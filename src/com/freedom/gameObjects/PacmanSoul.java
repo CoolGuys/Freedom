@@ -47,20 +47,29 @@ public class PacmanSoul implements Runnable {
 	}
 
 	public void run() {
+		//System.out.println("Sfe");
 		while (alive) {
+			//System.out.println("alive");
+			//System.out.println("Als");
 			int x = body.getX();
 			int y = body.getY();
-			if (GameField.getInstance().getRobot() != null) {
+			boolean b= (GameField.getInstance().getRobot() == null);
+			//System.out.println(!b);
+
+			if (!b) {
+				//System.out.println("fsd");
 				this.destinationX = GameField.getInstance().getRobot().getX();
 				this.destinationY = GameField.getInstance().getRobot().getY();
-
+				//System.out.println("fsd");
 				String dir = finder.find(x, y, destinationX, destinationY, widh);
 				if (!dir.equals("0")) {
+					//System.out.println(dir);
 					if (dir.length() > 1) {
 						try {
 							body.move1((String) dir.subSequence(0, 1));
 						} catch (Exception e) {
-
+							//e.printStackTrace();
+							//System.out.println("pacman не двигается");
 						}
 					} else {
 					//	GameField.getInstance().getRobot().punch(1);
@@ -74,6 +83,17 @@ public class PacmanSoul implements Runnable {
 						this.alive = false;
 					}
 				}
+			}else {
+				this.destinationX = y;
+				this.destinationY = x;
+				this.alive=true;
+				try {
+					Thread.sleep(this.stepRate);
+				} catch (InterruptedException e) {
+					// TODO Автоматически созданный блок catch
+					e.printStackTrace();
+				}
+				//System.out.println("Else");
 			}
 		}
 		

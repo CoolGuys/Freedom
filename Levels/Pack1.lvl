@@ -1553,8 +1553,6 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="15" y="9">
 		</obj>
-		<obj class="com.freedom.gameObjects.TNT" x="3" y="3">
-		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="15" y="10">
 		</obj>
 		<robot dir="E" x="3" y="3">

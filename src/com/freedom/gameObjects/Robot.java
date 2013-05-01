@@ -65,7 +65,14 @@ public class Robot extends Stuff implements Moveable {
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
 		logger.setLevel(Level.OFF);
 	}
-	
+	public boolean obj() {
+		return false;
+	}
+
+	// кастыли
+	public boolean objc() {
+		return false;
+	}
 	public int getX() {
 		return (int)Math.round(x);
 	}

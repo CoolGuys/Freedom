@@ -160,7 +160,7 @@ public class PacmanBody extends Stuff implements Moveable {
 //		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
 //				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 //	
-
+	//	System.out.println(direction);
 		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10);
 		Thread t = new Thread(r);
 		t.start();
