@@ -114,6 +114,10 @@ public class PacmanBody extends Stuff implements Moveable {
 		return step;
 	}
 
+	public void setDirection(String direction) {
+		this.direction=direction;
+	}
+
 	public PacmanBody()
 	{
 		super(true, false, false, false);
@@ -153,11 +157,11 @@ public class PacmanBody extends Stuff implements Moveable {
 
 	public void move1(String direction) {
 
-		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
-				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
-		this.direction = direction;
+//		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
+//				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
+//	
 
-		Runnable r = new Mover<PacmanBody>(this, this.direction, 1, 10);
+		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10);
 		Thread t = new Thread(r);
 		t.start();
 	}

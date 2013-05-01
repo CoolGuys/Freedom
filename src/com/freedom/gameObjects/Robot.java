@@ -90,6 +90,10 @@ public class Robot extends Stuff implements Moveable {
 		return this.direction;
 	}
 
+	public void setDirection(String direction) {
+		this.direction=direction;
+	}
+	
 	public void SetXY(int xr, int yr) {
 		this.x = xr;
 		this.y = yr;
@@ -132,9 +136,8 @@ public class Robot extends Stuff implements Moveable {
 				.getInstance().getHeight() / 2 - 4 * getSize())
 			GameScreen.getInstance().центрироватьПоРоботуПоВертикали(this);
 
-		this.direction = direction;
 
-		Runnable r = new Mover<Robot>(this, this.direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10);
 		Thread t = new Thread(r);
 		t.start();
 
@@ -146,7 +149,7 @@ public class Robot extends Stuff implements Moveable {
 			ScreensHolder.getInstance().repaint();
 			return;
 		}
-		Runnable r = new Mover<Robot>(this, this.direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10);
 
 		Thread t = new Thread(r);
 		t.start();

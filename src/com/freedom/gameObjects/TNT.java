@@ -24,6 +24,8 @@ public class TNT extends Stuff implements Moveable {
 		}
 	}
 
+	private String direction;
+
 	public TNT() {
 		super(true, false, false, false, 0, 1);
 		texture=texture1;
@@ -81,6 +83,10 @@ public class TNT extends Stuff implements Moveable {
 			}
 		}
 
+	}
+
+	public void setDirection(String direction) {
+		this.direction=direction;
 	}
 
 	public void move(String direction) {

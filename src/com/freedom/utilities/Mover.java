@@ -23,6 +23,7 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 	public void run() {
 		if(theOneToMove.checkIfBeingMoved())
 			return;
+		theOneToMove.setDirection(direction);
 		//logger.info(this.toString());
 		theOneToMove.tellIfBeingMoved(true);
 		try {
