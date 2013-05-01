@@ -39,6 +39,7 @@ public class StepListener extends Stuff {
 	private boolean robotOn;
 	private Checker p;
 	private Logger gleblo = Logger.getLogger("StepListener");
+	
 	static {
 		try {
 			texture1 = ImageIO.read(new File(
@@ -93,7 +94,12 @@ public class StepListener extends Stuff {
 	public void robotCome() {
 		gleblo.info("The robot had come");
 	}
-
+	/**
+	 * Используется для того чтобы остановить этот объект
+	 */
+	public void stopListening(){
+		this.alive=false;
+	}
 	/**
 	 * этот метод нужно заоверрайдить при наследовании
 	 */

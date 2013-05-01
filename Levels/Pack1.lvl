@@ -1243,6 +1243,15 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="2">
 		</obj>
+		<obj class="com.freedom.gameObjects.StepPlay" x="2" y="2">
+				<cels x="4" y="2" />
+				<cels x="4" y="8" />
+				<cels x="3" y="8" />
+				<cels x="5" y="8" />
+				<cels x="4" y="9" />
+				<cels x="3" y="9" />
+				<cels x="5" y="9" />			
+		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="3">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="4">
@@ -1370,10 +1379,11 @@
 		<obj class="com.freedom.gameObjects.Tile" x="8" y="4">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="8" y="5">
-			<obj class="com.freedom.gameObjects.ButtonOr" x="5" y="8">
-				<cels x="6" y="9" />
-				<cels x="4" y="2" />
-			</obj>
+
+		</obj>
+		<obj class="com.freedom.gameObjects.ButtonOr" x="5" y="8">
+			<cels x="6" y="9" />
+			<cels x="4" y="2" />
 		</obj>
 		<obj class="com.freedom.gameObjects.Box" color="B" x="5" y="8">
 		</obj>
