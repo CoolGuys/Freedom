@@ -39,6 +39,7 @@ public class TNT extends Stuff implements Moveable {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("class", "com.freedom.gameObjects.TNT");
 	}
 
 	/*
