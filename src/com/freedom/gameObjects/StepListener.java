@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+	package com.freedom.gameObjects;
 
 import java.awt.Image;
 import java.io.File;
@@ -29,11 +29,8 @@ import com.freedom.view.GameScreen;
  * 
  */
 public class StepListener extends Stuff {
-	private int[][] controlledCellsList;// массив с координатами селлов на
-	// которые действует
-	// батон
-	private int controlledCellsAmount; // количество целлов на которые действует
-	// батон
+	private int[][] controlledCellsList;
+	private int controlledCellsAmount; 
 	private static Image texture1;
 	private boolean alive;
 	private boolean robotOn;
@@ -167,7 +164,8 @@ public class StepListener extends Stuff {
 		public void run() {
 			boolean ok;
 			while (alive) {
-				try {
+				if(GameField.getInstance().active)
+					try {
 					int x;
 					int y;
 					try {
@@ -176,7 +174,7 @@ public class StepListener extends Stuff {
 					} catch (Exception e) {
 						x = -1;
 						y = -1;
-						gleblo.info("Error occured");
+						gleblo.info("Erro	r occured");
 					}
 					Thread.sleep(30);
 					ok = false;
