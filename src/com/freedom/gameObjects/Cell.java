@@ -57,11 +57,11 @@ public class Cell {
 		// теперь положить явно можем. кладем и изменяем состояние некот.
 		// объектов
 		this.damage = this.damage + element.getDamage();
-		this.touch();
 		this.content[this.contentAmount] = element;
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
+		this.touch();
 		return true;
 	}
 
@@ -77,6 +77,8 @@ public class Cell {
 		if (this.contentAmount == 1)
 			return null;
 
+
+		this.untouch();
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -88,7 +90,6 @@ public class Cell {
 			this.content[this.contentAmount] = null;
 		}
 		this.damage = this.damage - buf.getDamage();
-		this.touch();
 		buf.stopHarming();
 		return buf;
 	}
@@ -97,7 +98,8 @@ public class Cell {
 
 		if (this.contentAmount == 0)
 			return false;
-		
+
+		this.untouch();
 		int i;
 		for(i = 0; i<this.contentAmount; i++){
 			if(this.content[i].equals(element))
@@ -113,7 +115,6 @@ public class Cell {
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
 		
-		this.touch();////под вопросом
 		return true;
 	}
 
@@ -143,8 +144,13 @@ public class Cell {
 	// Everything for robot:
 
 	public void touch() {
-		for (int i = 0; i < this.contentAmount; i++) {
+		for (int i = 0; i < this.contentAmount-1; i++) {
 			this.content[i].touch();
+		}
+	}
+	public void untouch() {
+		for (int i = 0; i < this.contentAmount-1; i++) {
+			this.content[i].untouch();
 		}
 	}
 
@@ -205,19 +211,6 @@ public class Cell {
 		return false;
 	}
 
-	public void robotOn() {
-		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].robotOn();
-		}
-		GameField.getInstance().getRobot().harm(this.damage); //робот должен быть уже сверху
-	}
-
-	public void robotOff() {
-		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].robotOff();
-		}
-	}
-	
 	
 	//здесь наносим урон предметам с задержкой
 	public void tryToDestroy(int damage){

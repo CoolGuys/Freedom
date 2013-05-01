@@ -40,7 +40,8 @@ public class GameField {
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
-	private static ExecutorService OtherThreads;
+	public static ExecutorService otherThreads;
+	public boolean active;
 
 	public void setPathToSave(String pathToSaveFile) {
 		this.pathToSave = pathToSaveFile;
@@ -63,6 +64,7 @@ public class GameField {
 	}
 
 	public void activate() {
+		active=true;
 		ticker.start();
 		deathTicker.start();
 	}
@@ -70,6 +72,7 @@ public class GameField {
 	public void deactivate() {
 		ticker.stop();
 		deathTicker.stop();
+		active=false;
 	}
 
 	/**
@@ -87,7 +90,7 @@ public class GameField {
 		else
 			ScreensHolder.getInstance().swapScreens(
 					LoadingScreen.getInstance(), LoadScreen.getInstance());
-		OtherThreads = Executors.newCachedThreadPool();
+		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -99,15 +102,15 @@ public class GameField {
 	}
 
 	public ExecutorService getThreads() {
-		return GameField.OtherThreads;
+		return GameField.otherThreads;
 	}
 
 	public void switchToNextLevel(int nextLevelId) {
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
-		OtherThreads.shutdownNow();
-		OtherThreads = Executors.newCachedThreadPool();
+		otherThreads.shutdownNow();
+		otherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
 		Stuff buf = robot.getContent();
@@ -126,6 +129,7 @@ public class GameField {
 		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
+		ScreensHolder.getInstance().repaint();
 	}
 
 	/*

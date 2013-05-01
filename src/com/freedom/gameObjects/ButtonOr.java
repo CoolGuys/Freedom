@@ -16,7 +16,6 @@ import com.freedom.view.GameScreen;
 
 public class ButtonOr extends Stuff {
 
-	private boolean ifPressed;
 	private static Image texturePressed;
 	private static Image textureDepressed;
 	private int[][] controlledCellsList;// массив с координатами селлов на
@@ -64,7 +63,7 @@ public class ButtonOr extends Stuff {
 		super(false, true, true, false);
 		super.x = x;
 		super.y = y;
-
+		texture = textureDepressed;
 		controlledCellsList = new int[10][2];
 
 	}
@@ -78,14 +77,6 @@ public class ButtonOr extends Stuff {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		NodeList list = obj.getElementsByTagName("cels");
-		this.ifPressed = false;
-		// this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
-		// System.out.println("KNOPKA");
-		if (this.ifPressed) {
-			texture = texturePressed;
-		} else {
-			texture = textureDepressed;
-		}
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
 			Element buf = (Element) list.item(i);
@@ -99,24 +90,21 @@ public class ButtonOr extends Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.ButtonOr");
-		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
+	}
+
+	void untouch() {
+		texture = textureDepressed;
+		GameField.getInstance().getTicker().removeActionListener(sender);
+		for (int i = 0; i < controlledCellsAmount; i++) {
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+					.useOff();
+		}
 	}
 
 	void touch() {
-
-		this.ifPressed = !this.ifPressed;
-		if (this.ifPressed) {
-			texture = texturePressed;
-			sender = new SignalOnSender();
-			GameField.getInstance().getTicker().addActionListener(sender);
-		} else {
-			texture = textureDepressed;
-			GameField.getInstance().getTicker().removeActionListener(sender);
-			for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.useOff();
-			}
-		}
+		texture = texturePressed;
+		sender = new SignalOnSender();
+		GameField.getInstance().getTicker().addActionListener(sender);
 
 	}
 
@@ -157,4 +145,3 @@ public class ButtonOr extends Stuff {
 		}
 	}
 }
-

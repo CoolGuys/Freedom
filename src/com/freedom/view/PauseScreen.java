@@ -101,6 +101,7 @@ public class PauseScreen extends AbstractScreen {
 					INSTANCE);
 			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
 			GameField.getInstance().resetTickerListeners();
+			GameField.otherThreads.shutdownNow();
 		}
 	}
 	

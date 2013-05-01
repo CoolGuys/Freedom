@@ -36,7 +36,7 @@ public class PacmanSoul implements Runnable {
 			this.destinationX = body.getX();
 			this.destinationY = body.getY();
 		}
-		GameField.getInstance().getThreads().execute(new Changer());
+		GameField.otherThreads.execute(new Changer());
 	}
 
 	Logger gleblo = Logger.getLogger("soul");
@@ -47,16 +47,12 @@ public class PacmanSoul implements Runnable {
 	}
 
 	public void run() {
-		//System.out.println("Sfe");
 		while (alive) {
-			//System.out.println("alive");
-			//System.out.println("Als");
 			int x = body.getX();
 			int y = body.getY();
-			boolean b= (GameField.getInstance().getRobot() == null);
-			//System.out.println(!b);
+			boolean b = (GameField.getInstance().getRobot() == null);
 
-			if (!b) {
+			if (!b &&GameField.getInstance().active) {
 				//System.out.println("fsd");
 				this.destinationX = GameField.getInstance().getRobot().getX();
 				this.destinationY = GameField.getInstance().getRobot().getY();
@@ -72,11 +68,11 @@ public class PacmanSoul implements Runnable {
 							//System.out.println("pacman не двигается");
 						}
 					} else {
-					//	GameField.getInstance().getRobot().punch(1);
-//						System.out.println(GameField.getInstance().getRobot()
-//								.getLives());
+						GameField.getInstance().getRobot().punch(1);
+						System.out.println(GameField.getInstance().getRobot()
+								.getLives());
 					}
-					GameScreen.getInstance().repaint();
+					//GameScreen.getInstance().repaint();
 					try {
 						Thread.sleep(this.stepRate);
 					} catch (InterruptedException e) {

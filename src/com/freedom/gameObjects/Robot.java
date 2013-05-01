@@ -239,9 +239,6 @@ public class Robot extends Stuff implements Moveable {
 				.add(this.container))
 			return;
 		this.container = null;
-		GameField.getInstance().getCells()[targetX][targetY].getContent()[GameField
-				.getInstance().getCells()[targetX][targetY].getContentAmount() - 2]
-				.teleportate();
 		GameScreen.getInstance().repaint();
 		return;
 

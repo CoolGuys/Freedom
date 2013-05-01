@@ -70,7 +70,6 @@ public class Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Stuff");
 	}
 
 	public Stuff()
@@ -114,19 +113,11 @@ public class Stuff {
 	void touch() {
 		return;
 	}
-
-	void robotOn() {
-		return;
-	}
-
-	void robotOff() {
-		return;
-	}
-
-	boolean teleportate() {
-		return false;
-	}
 	
+	void untouch() {
+		
+	}
+
 	public void activate(){
 		return;
 	}

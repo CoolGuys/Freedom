@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -21,9 +22,9 @@ public class Door extends Stuff {
 	static {
 		try {
 			textureClosedVertical = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedVertical.png"));
+					"Resource/Textures/DoorClosedVertical.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
 			textureClosedHorisontal = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedHorisontal.png"));
+					"Resource/Textures/DoorClosedHorisontal.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {

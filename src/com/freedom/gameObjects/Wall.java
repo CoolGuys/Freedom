@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -11,6 +12,8 @@ import org.w3c.dom.Element;
 
 public class Wall extends Stuff {
 
+	
+	private boolean ready;
 	private static Image textureN;
 	private static Image textureE;
 	private static Image textureS;
@@ -19,20 +22,39 @@ public class Wall extends Stuff {
 	private static Image textureSE;
 	private static Image textureSW;
 	private static Image textureNW;
-	
+	private BufferedImage finalTexture = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+
 	static {
 		getImages();
 	}
-	
+
 	private static void getImages() {
 		try {
-			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"));
-			textureE = ImageIO.read(new File("Resource/Textures/WallE.png"));
-			textureS = ImageIO.read(new File("Resource/Textures/WallS.png"));
-			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"));
-			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"));
-			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"));
-			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"));			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"));
+			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureE = ImageIO.read(new File("Resource/Textures/WallE.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureS = ImageIO.read(new File("Resource/Textures/WallS.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,10 +62,9 @@ public class Wall extends Stuff {
 
 	public Wall()
 	{
-		super(false, false,true, false);
+		super(false, false, true, false);
 		super.expConductive = false;
 	}
-
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
@@ -57,53 +78,53 @@ public class Wall extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Wall");
 	}
 
-	public void draw(Graphics g) {
+	private void setTexture() {
+		Graphics g = finalTexture.getGraphics();
 		Cell[][] cells = GameField.getInstance().getCells();
 		int x = (int) this.x;
 		int y = (int) this.y;
 		boolean[] neighbourWalls = new boolean[4];
 		if (cells[x + 1][y] != null)
 			if (!(cells[x + 1][y].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureE, (int) (getX() * getSize()),
-						(int) (getY() * getSize()), getSize(), getSize(), null);
+				g.drawImage(textureE, 0, 0, null);
 			} else
 				neighbourWalls[0] = true;
-		
 
 		if (cells[x][y + 1] != null)
 			if (!(cells[x][y + 1].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureS, (int) (getX() * getSize()),
-						(int) (getY() * getSize()), getSize(), getSize(), null);
+				g.drawImage(textureS, 0, 0, null);
 			} else
 				neighbourWalls[1] = true;
 
 		if (cells[x - 1][y] != null)
 			if (!(cells[x - 1][y].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureW, (int) (getX() * getSize()),
-						(int) (getY() * getSize()), getSize(), getSize(), null);
-			} else 
+				g.drawImage(textureW, 0, 0, null);
+			} else
 				neighbourWalls[2] = true;
-		
+
 		if (cells[x][y - 1] != null)
 			if (!(cells[x][y - 1].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureN, (int) (getX() * getSize()),
-						(int) (getY() * getSize()), getSize(), getSize(), null);
+				g.drawImage(textureN, 0, 0, null);
 			} else
 				neighbourWalls[3] = true;
-		
-		if (neighbourWalls[0] && neighbourWalls[1])
-			g.drawImage(textureSE, (int) (getX() * getSize()),
-					(int) (getY() * getSize()), getSize(), getSize(), null);
-		if (neighbourWalls[1] && neighbourWalls[2])
-			g.drawImage(textureSW, (int) (getX() * getSize()),
-					(int) (getY() * getSize()), getSize(), getSize(), null);
-		if (neighbourWalls[2] && neighbourWalls[3])
-			g.drawImage(textureNW, (int) (getX() * getSize()),
-					(int) (getY() * getSize()), getSize(), getSize(), null);
-		if (neighbourWalls[3] && neighbourWalls[0])
-			g.drawImage(textureNE, (int) (getX() * getSize()),
-					(int) (getY() * getSize()), getSize(), getSize(), null);
 
+		if (neighbourWalls[0] && neighbourWalls[1])
+			g.drawImage(textureSE, 0, 0, null);
+		if (neighbourWalls[1] && neighbourWalls[2])
+			g.drawImage(textureSW, 0, 0, null);
+		if (neighbourWalls[2] && neighbourWalls[3])
+			g.drawImage(textureNW, 0, 0, null);
+		if (neighbourWalls[3] && neighbourWalls[0])
+			g.drawImage(textureNE, 0, 0, null);
+
+		texture = finalTexture;
+		ready=true;
+	}
+
+	public void draw(Graphics g) {
+		if(!ready) 
+			setTexture();
+		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
 	}
 
 }

@@ -16,14 +16,15 @@ import com.freedom.view.GameScreen;
 
 public class ButtonAnd extends Stuff {
 
-	private boolean ifPressed;
 	private static Image texturePressed;
 	private static Image textureDepressed;
-	private int[][] controlledCellsList;// массив с координатами селлов на которые действует
-							// батон
-	private int controlledCellsAmount; // количество целлов на которые действует батон
+	private int[][] controlledCellsList;// массив с координатами селлов на
+										// которые действует
+	// батон
+	private int controlledCellsAmount; // количество целлов на которые действует
+										// батон
 	private ActionListener sender;
-	
+
 	static {
 		try {
 			texturePressed = ImageIO.read(
@@ -57,11 +58,13 @@ public class ButtonAnd extends Stuff {
 		return true;
 	}
 
-	public ButtonAnd() {
-		super(false, true,true, false);
+	public ButtonAnd()
+	{
+		super(false, true, true, false);
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
+		texture = textureDepressed;
 
 	}
 
@@ -74,14 +77,7 @@ public class ButtonAnd extends Stuff {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		NodeList list = obj.getElementsByTagName("cels");
-		this.ifPressed = false;
-		// this.ifPressed=Boolean.parseBoolean(obj.getAttribute("Press"));
-		// System.out.println("KNOPKA");
-		if (this.ifPressed) {
-			texture = texturePressed;
-		} else {
-			texture = textureDepressed;
-		}
+
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
 			Element buf = (Element) list.item(i);
@@ -99,41 +95,55 @@ public class ButtonAnd extends Stuff {
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	 void touch() {
-
-		this.ifPressed = !this.ifPressed;
-		if (this.ifPressed) {
-			texture = texturePressed;
-			sender = new SignalOnSender();
-			for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.counter++;
-			}
-			
-			GameField.getInstance().getTicker().addActionListener(sender);
-		} else {
-			texture = textureDepressed;
-			for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.counter--;
-			}
-			GameField.getInstance().getTicker().removeActionListener(sender);
-			for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.useOff();
-			}
+	void untouch() {
+		texture = textureDepressed;
+		for (int i = 0; i < controlledCellsAmount; i++) {
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
 		}
+		GameField.getInstance().getTicker().removeActionListener(sender);
+		for (int i = 0; i < controlledCellsAmount; i++) 
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+					.useOff();
+	}
 
+	void touch() {
+
+		texture = texturePressed;
+		sender = new SignalOnSender();
+		for (int i = 0; i < controlledCellsAmount; i++)
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter++;
+
+		GameField.getInstance().getTicker().addActionListener(sender);
+
+	}
+
+	public void giveInfo() {
+		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
+
+		for (int i = 0; i < controlledCellsAmount; i++) {
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+					.highlight();
+		}
+	}
+
+	public void removeInfo() {
+		GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
+
+		for (int i = 0; i < controlledCellsAmount; i++) {
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+					.unhighlight();
+		}
 	}
 
 	private class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
-				//& action
-				if (!GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].ifCanBePressed())
+				// & action
+				if (!GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.ifCanBePressed())
 					continue;
 				//
-				
+
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
 					GameScreen
@@ -148,37 +158,5 @@ public class ButtonAnd extends Stuff {
 			}
 		}
 	}
-	
-	//костылики
-	 /*void robotOn(){
-		if(!this.ifPressed)
-			this.touch();
-		return;
-	}
-	 void robotOff(){
-		if(this.ifPressed)
-			this.touch();
-		return;
-<<<<<<< HEAD
-	}*/
-
-	 
-	 public void giveInfo() {
-		 GameField.getInstance().getCells()[(int) x][(int) y].highlight();
-					
-		 for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.highlight();
-			}
-	 }
-	 public void removeInfo() {
-		 GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
-
-		 for (int i = 0; i < controlledCellsAmount; i++) {
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.unhighlight();
-			}
-	 }
-
 
 }
