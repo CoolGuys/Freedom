@@ -1,7 +1,7 @@
 package com.freedom.gameObjects;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
+import java.util.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,7 +25,7 @@ public class TNT extends Stuff implements Moveable {
 
 	public TNT() {
 		super(true, false, false, false, 0, 1);
-		texture=texture1;
+		texture = texture1;
 	}
 
 	public void readLvlFile(Element obj) {
@@ -40,46 +40,96 @@ public class TNT extends Stuff implements Moveable {
 
 	/*
 	 * здесь мы его взрываем. считаем, что в начальной клетке создаем волну, она
-	 * передает ее соседям, уменьшая дамаг на 1. обработка события - в целле,
-	 * "таймер" - там же(tryToDestroy) взрыв пока инициируется, когда робот
-	 * кладет динамит на пол
+	 * передает ее соседям, уменьшая дамаг на 1.
+	 * "таймер" - здесь. взрыв инициируется, когда робот кладет динамит на
+	 * пол
 	 */
-	public void activate() {
+
+	private void activationProcess() {
 		Cell[][] buf = GameField.getInstance().getCells();
-		int[][] toGive = new int[2 * expDamage + 2][2 * expDamage + 2];
-		toGive[expDamage][expDamage] = this.expDamage;
-		int xSize = GameField.getInstance().getXsize();
-		int ySize = GameField.getInstance().getYsize();
+		Queue<Cell> que = new LinkedList<Cell>();
+		Cell toWork;
+
+		if (buf[this.getX()][this.getY()].deleteStuff(this))
+			buf[this.getX()][this.getY()].add(this);
+		else {
+			this.x = GameField.getInstance().getRobot().getX();
+			this.y = GameField.getInstance().getRobot().getY();
+			GameField.getInstance().getRobot().setContainer(null);
+		}
+
+		buf[this.getX()][this.getY()].expBuf = this.expDamage;
+		que.add(buf[this.getX()][this.getY()]);
 
 		// распределяем урон
-		for (int r = 0; r < expDamage; r++) {
-			for (int i = 0; i < expDamage; i++) {
-				for (int j = 0; j < expDamage; j++) {
 
-					if (((this.getX() + i + 1 - expDamage) < xSize)	& ((this.getY() + j - expDamage) < ySize)) {
-						if (((this.getX() + i + 1 - expDamage) >0)	& ((this.getY() + j - expDamage) >0)) {
-						if (toGive[i + expDamage][j + expDamage] != (1 + toGive[i + 1 + expDamage][j + expDamage])) {
-							toGive[i + 1 + expDamage][j + expDamage] = toGive[1 + expDamage][j	+ expDamage] - 1;
-							
-							if(!buf[getX()+i+1 - expDamage][getY()+j - expDamage].getTop().ifCanDestroy())
-								toGive[i + 1 + expDamage][j + expDamage] = 0;
-							if(toGive[i + 1 + expDamage][j + expDamage] <0)
-								toGive[i + 1 + expDamage][j + expDamage] = 0;
-						}
-						}
-					}
+		while (!que.isEmpty()) {
 
+			toWork = que.remove();
+			if (toWork.expBuf < 1)
+				continue;
+			toWork.tryToDestroy(toWork.expBuf);
+			toWork.ifExped = true;
+
+			if (!buf[toWork.getX() + 1][toWork.getY()].ifExped) {
+				if (buf[toWork.getX() + 1][toWork.getY()].getTop().expConductive) {
+					buf[toWork.getX() + 1][toWork.getY()].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX() + 1][toWork.getY()]);
 				}
 			}
+
+			if (!buf[toWork.getX() - 1][toWork.getY()].ifExped) {
+				if (buf[toWork.getX() - 1][toWork.getY()].getTop().expConductive) {
+					buf[toWork.getX() - 1][toWork.getY()].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX() - 1][toWork.getY()]);
+				}
+			}
+
+			if (!buf[toWork.getX()][toWork.getY() + 1].ifExped) {
+				if (buf[toWork.getX()][toWork.getY() + 1].getTop().expConductive) {
+					buf[toWork.getX()][toWork.getY() + 1].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX()][toWork.getY() + 1]);
+				}
+			}
+
+			if (!buf[toWork.getX()][toWork.getY() - 1].ifExped) {
+				if (buf[toWork.getX()][toWork.getY() - 1].getTop().expConductive) {
+					buf[toWork.getX()][toWork.getY() - 1].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX()][toWork.getY() - 1]);
+				}
+			}
+
+			toWork.expBuf = 0;
 		}
 
-		for (int i = 1; i < 2 * expDamage; i++) {
-			for (int j = 1; j < 2 * expDamage; j++) {
-				buf[(int) this.x + i - expDamage][(int) this.y + j - expDamage]
-						.tryToDestroy(toGive[i][j]);
+		buf[this.getX()][this.getY()].deleteStuff(this);
+		for (int i = 0; i < this.expDamage; i++) {
+			for (int j = 0; j < this.expDamage; j++) {
+				buf[this.getX() + i][this.getY() + j].ifExped = false;
+				buf[this.getX() - i][this.getY() + j].ifExped = false;
+				buf[this.getX() + i][this.getY() - j].ifExped = false;
+				buf[this.getX() - i][this.getY() - j].ifExped = false;
 			}
 		}
 
+	}
+
+	public void activate() {
+		MyThread t = new MyThread();
+		t.start();
+	}
+
+	private class MyThread extends Thread {
+		public void run() {
+			try {
+				this.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			TNT.this.activationProcess();
+
+		}
 	}
 
 	public void move(String direction) {

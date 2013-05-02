@@ -29,7 +29,7 @@ public class GameScreen extends AbstractScreen {
 		this.createInputMap();
 		this.createMovementController();
 
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 
 	}
 
@@ -144,7 +144,7 @@ public class GameScreen extends AbstractScreen {
 		repaint();
 	}
 
-	public Point рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(Robot robot) {
+	public Point calculateDistanceFromRobotToCenter(Robot robot) {
 		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
 				- robot.getX() * Robot.getSize();
 		int deltaY = -this.getY() + ScreensHolder.getInstance().getHeight() / 2
@@ -152,30 +152,34 @@ public class GameScreen extends AbstractScreen {
 		return new Point(deltaX, deltaY);
 	}
 
-	public void центрироватьПоРоботуПоВертикали(Robot robot) {
+	public void centerByRobotVertically(Robot robot) {
 
 		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
 				.getDirection()).x, robot.getTargetCellCoordinates(robot
 				.getDirection()).y, null, null, 0);
 		setLocation(getX(), getY()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).y);
+				+ calculateDistanceFromRobotToCenter(ro).y);
+
+		paintImmediately(this.getBounds());
 	}
 
-	public void центрироватьПоРоботуПоГоризонтали(Robot robot) {
+	public void centerByRobotHorizontally(Robot robot) {
 
 		Robot ro = new Robot(robot.getTargetCellCoordinates(robot
 				.getDirection()).x, robot.getTargetCellCoordinates(robot
 				.getDirection()).y, null, null, 0);
 		setLocation(getX()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(ro).x, getY());
+				+ calculateDistanceFromRobotToCenter(ro).x, getY());
+
+		paintImmediately(this.getBounds());
 	}
 
-	public void центрироватьПоРоботу(Robot robot) {
+	public void centerByRobot(Robot robot) {
 
 		
 		setLocation(getX()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).x, getY()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
+				+ calculateDistanceFromRobotToCenter(robot).x, getY()
+				+ calculateDistanceFromRobotToCenter(robot).y);
 	}
 
 	public void changeOffsetFine(String direction) {

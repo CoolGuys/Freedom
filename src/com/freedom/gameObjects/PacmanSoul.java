@@ -70,12 +70,12 @@ public class PacmanSoul implements Runnable{
 
 							}
 						} else {
-							GameField.getInstance().getRobot().harm(1);
-							System.out.println(GameField.getInstance().getRobot().getLives());
+							GameField.getInstance().getRobot().punch(1);
+//							System.out.println(GameField.getInstance().getRobot().getLives());
 						}
 						GameScreen.getInstance().repaint();
 					}
-				} catch (Exception e) {
+				}catch (Exception e) {
 					// System.out.println("Проблема у пакмана в душе. dir="+dir);
 					e.printStackTrace();
 				}

@@ -17,7 +17,11 @@ public final class MovementAnimator<MovingObj extends Moveable> implements Runna
 
 	public void run() {
 		GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].robotOff();
-		GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].deleteStuff();
+		GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].deleteStuff(GameField.getInstance().getRobot());
+//		if(!GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].ifCanPassThrough()){
+//			GameField.getInstance().cells[(int)theOneToMove.getX()][(int)theOneToMove.getY()].add(GameField.getInstance().getRobot());
+//			return;
+//		}
 		try {
 			for (int i = 0; i < 1.0/theOneToMove.getStep(); i++) {
 				theOneToMove.move(direction);

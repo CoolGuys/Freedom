@@ -92,7 +92,7 @@ public class Stuff {
 		this.expConductive = true;
 		damager = new DamageSender();
 
-		if (lives == 0) {
+		if (lives < 1) {
 			this.lives = 1;
 			this.ifDestroyable = false;
 		} else {
@@ -243,6 +243,8 @@ public class Stuff {
 		if(!this.ifDestroyable)
 			return false;
 		this.lives = this.lives - damage;
+		
+		System.out.println(Stuff.this.lives);
 		
 		if(this.lives < 1)
 			this.die();

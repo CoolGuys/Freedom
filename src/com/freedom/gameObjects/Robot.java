@@ -57,13 +57,13 @@ public class Robot extends Stuff implements Moveable {
 
 
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
-		super(false, true, false, true, 0, lives);
+		super(false, true, false, true, 0, maxLives);
 		super.x = posX;
 		super.y = posY;
 		this.direction = direction;
 		this.container = c;
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 	}
 
 	public double getStep() {
@@ -117,12 +117,12 @@ public class Robot extends Stuff implements Moveable {
 	public void moveCoarse(String direction) {
 
 		if (Math.abs(GameScreen.getInstance()
-				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder.getInstance().getWidth()/2- 4 * getSize()) 
-			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
+				.calculateDistanceFromRobotToCenter(this).x) > ScreensHolder.getInstance().getWidth()/2- 4 * getSize()) 
+			GameScreen.getInstance().centerByRobotHorizontally(this);
 			
 		if(Math.abs(GameScreen.getInstance()
-					.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).y) > ScreensHolder.getInstance().getHeight()/2-4 * getSize())
-			GameScreen.getInstance().центрироватьПоРоботуПоВертикали(this);
+					.calculateDistanceFromRobotToCenter(this).y) > ScreensHolder.getInstance().getHeight()/2-4 * getSize())
+			GameScreen.getInstance().centerByRobotVertically(this);
 		
 
 		logger.info(direction);
@@ -216,15 +216,7 @@ public class Robot extends Stuff implements Moveable {
 	public void put() {
 		if (isMoving)
 			return;
-
-		if (this.container instanceof TNT) {
-			TNT buf = (TNT) this.container;
-			buf.x = this.getTargetCellCoordinates(direction).x;
-			buf.y = this.getTargetCellCoordinates(direction).y;
-			buf.activate();
-			this.container = null;
-		}
-
+		
 		if (this.container == null)
 			return;
 
@@ -241,7 +233,10 @@ public class Robot extends Stuff implements Moveable {
 		GameField.getInstance().getCells()[targetX][targetY].getContent()[GameField
 				.getInstance().getCells()[targetX][targetY].getContentAmount() - 2]
 				.teleportate();
+		
+		GameField.getInstance().cells[targetX][targetY].activate();
 		GameScreen.getInstance().repaint();
+		
 		return;
 
 	}
@@ -270,7 +265,10 @@ public class Robot extends Stuff implements Moveable {
 				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-
+		if(direction==null) {
+			logger.info("EverythingIsBad");
+			return;
+		}
 		if (direction.equals("N")) {
 			g2.drawImage(textureN, (int) (x * getSize()),
 					(int) (y * getSize()), null);

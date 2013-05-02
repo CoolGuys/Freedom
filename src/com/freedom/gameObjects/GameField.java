@@ -33,13 +33,13 @@ public class GameField {
 	private int previousLevelId;
 	public Cell[][] previousCells;
 	private Robot robot;
-	public Cell[][] cells;
+	public 	Cell[][] cells;
 	private int xSize;
 	private int ySize;
 	// private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-	private Timer deathTicker = new Timer(100, null);
+	private Timer deathTicker = new Timer(1000, null);
 	private static GameField INSTANCE;
 	private static ExecutorService OtherThreads;
 
@@ -96,7 +96,7 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
-		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
+		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
@@ -126,7 +126,7 @@ public class GameField {
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
+		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
@@ -215,5 +215,11 @@ public class GameField {
 
 	public Timer getDeathTicker() {
 		return deathTicker;
+	}
+	
+	public boolean ifOutOfBourders(int x, int y){
+		if((x>0)&(y>0)&(x<this.xSize)&(y<this.ySize))
+			return true;
+		return false;
 	}
 }

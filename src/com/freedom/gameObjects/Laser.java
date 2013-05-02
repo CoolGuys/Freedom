@@ -47,8 +47,7 @@ public class Laser extends Stuff {
 	}
 	
 	void robotOn(){
-		beamHead = new LaserBeam(this.x + 0.5*GameField.getInstance().getCellSize(), this.y + 0.5*GameField.getInstance().getCellSize());
-		beamHead.buildBeam(xShoot, yShoot);
+	
 	}
 	
 	

@@ -330,8 +330,4 @@ public class PacmanBody extends Stuff{
 		}
 
 	}
-	
-	public void draw(Graphics g) {
-		g.drawImage(texture, (int)(getX()*getSize()), (int)(getY()*getSize()), null);
-	}
 }
