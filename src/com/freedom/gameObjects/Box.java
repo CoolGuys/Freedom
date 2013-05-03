@@ -9,7 +9,7 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 public class Box extends Stuff {
-	
+
 	private static Image texture1;
 	static {
 		try {
@@ -19,11 +19,11 @@ public class Box extends Stuff {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Box()
 	{
-		super(true, false,true, false);
-		texture=texture1;
+		super(true, false, true, false);
+		texture = texture1;
 	}
 
 	/**
@@ -52,6 +52,8 @@ public class Box extends Stuff {
 	public String getColour() {
 		return this.color;
 	}
+
+	
 
 	private String color;
 }

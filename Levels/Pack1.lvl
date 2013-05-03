@@ -1219,6 +1219,8 @@
 		</robot>
 	</level>
 	<level height="10" num="2" width="15">
+	
+		
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="1">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="2">
@@ -1251,6 +1253,9 @@
 				<cels x="4" y="9" />
 				<cels x="3" y="9" />
 				<cels x="5" y="9" />			
+		</obj>
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="2" y="2" messageToDisplay = "Hello world!!!">
+				<cels x="4" y="3" />		
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="3">
 		</obj>

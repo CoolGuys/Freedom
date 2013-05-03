@@ -1,5 +1,6 @@
 package com.freedom.utilities;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JLayeredPane;
@@ -11,6 +12,8 @@ import com.freedom.view.GameScreen;
 
 public final class Mover<MovingObj extends Moveable> implements Runnable {
 
+	
+	
 	public Mover(MovingObj mover, String direction, int distance, int delay)
 	{
 		this.theOneToRepaint = GameScreen.getInstance();
@@ -94,4 +97,7 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 	private int delay;
 	private int distance;
 	private static Logger logger = Logger.getLogger("");
+	static {
+		logger.setLevel(Level.OFF);
+	}
 }

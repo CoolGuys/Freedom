@@ -181,7 +181,7 @@ public class GameField {
 			}
 		}
 		// robot.draw(g);
-		g.dispose();
+		//g.dispose();
 	}
 
 	public static GameField getInstance() {
