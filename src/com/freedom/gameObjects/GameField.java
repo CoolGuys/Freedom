@@ -64,7 +64,7 @@ public class GameField {
 	}
 
 	public void activate() {
-		active=true;
+		active = true;
 		ticker.start();
 		deathTicker.start();
 	}
@@ -72,7 +72,7 @@ public class GameField {
 	public void deactivate() {
 		ticker.stop();
 		deathTicker.stop();
-		active=false;
+		active = false;
 	}
 
 	/**
@@ -176,11 +176,13 @@ public class GameField {
 				for (int y = 1; y < cells[1].length - 1; y++) {
 					if (cells[x][y].getContent()[i] != null)
 						cells[x][y].getContent()[i].draw(g);
+					if (cells[x][y].getMeta() != null)
+						cells[x][y].getMeta().draw(g);
 					cells[x][y].draw(g);
 				}
 			}
 		}
-		// robot.draw(g);
+
 		g.dispose();
 	}
 

@@ -11,8 +11,7 @@ import com.freedom.view.GameScreen;
 
 public final class Mover<MovingObj extends Moveable> implements Runnable {
 
-	public Mover(MovingObj mover, String direction, int distance, int delay)
-	{
+	public Mover(MovingObj mover, String direction, int distance, int delay) {
 		this.theOneToRepaint = GameScreen.getInstance();
 		this.direction = direction;
 		this.theOneToMove = mover;
@@ -21,14 +20,18 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 	}
 
 	public void run() {
-		if(theOneToMove.checkIfBeingMoved())
+		if (theOneToMove.checkIfBeingMoved())
 			return;
 		theOneToMove.setDirection(direction);
-		//logger.info(this.toString());
+		// logger.info(this.toString());
 		theOneToMove.tellIfBeingMoved(true);
 		try {
 			for (int k = 0; k < distance; k++) {
-				if (theOneToMove.canGo())
+				if (theOneToMove.canGo()) {
+					Stuff toToggle = GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove.getY()]
+							.utilityRemove((Stuff) theOneToMove);
+					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove.getY()]
+							.setMeta(toToggle);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
@@ -40,31 +43,45 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 										.getInstance().getCellSize()),
 								GameField.getInstance().getCellSize() * 3,
 								GameField.getInstance().getCellSize() * 3);
+
 						Thread.sleep(delay);
 					}
 
-				theOneToMove.recalibrate();
-//				GameField.getInstance().cells[(int) theOneToMove
-//						.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-//						.getTargetCellCoordinates(invertDirection()).y]
-//						.robotOff();
-				GameField.getInstance().cells[(int) theOneToMove
-						.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-						.getTargetCellCoordinates(invertDirection()).y]
-						.deleteStuff((Stuff) theOneToMove);
-				logger.info("prev calc: "+ theOneToMove
-						.getTargetCellCoordinates(invertDirection()).x+" "+theOneToMove
-						.getTargetCellCoordinates(invertDirection()).y);
-//				GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
-//						.getY()].robotOn();
+					theOneToMove.recalibrate();
+					GameField.getInstance().cells[(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).y]
+							.utilityAdd(toToggle);
+					GameField.getInstance().cells[(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).y]
+							.clearMeta();
+					// GameField.getInstance().cells[(int) theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).x][(int)
+					// theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).y]
+					// .robotOff();
+					GameField.getInstance().cells[(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
+							.getTargetCellCoordinates(invertDirection()).y]
+							.deleteStuff((Stuff) theOneToMove);
+//					logger.info("prev calc: "
+//							+ theOneToMove
+//									.getTargetCellCoordinates(invertDirection()).x
+//							+ " "
+//							+ theOneToMove
+//									.getTargetCellCoordinates(invertDirection()).y);
+					// GameField.getInstance().cells[(int)
+					// theOneToMove.getX()][(int) theOneToMove
+					// .getY()].robotOn();
 
-				GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
-						.getY()].add((Stuff) theOneToMove);
-				
-				
-				logger.info( "current"+theOneToMove
-						.getX()+" "+theOneToMove.getY());
+					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
+							.getY()].add((Stuff) theOneToMove);
 
+//					logger.info("current" + theOneToMove.getX() + " "
+//							+ theOneToMove.getY());
+
+				}
 				theOneToMove.recalibrate();
 				theOneToRepaint.repaint();
 			}

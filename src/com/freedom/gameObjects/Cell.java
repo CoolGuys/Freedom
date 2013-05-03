@@ -16,6 +16,7 @@ public class Cell {
 	private int damage;
 
 	private Stuff[] content;
+	private Stuff metaLevel;
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
@@ -44,6 +45,28 @@ public class Cell {
 		this.buttonsNumber = 0;
 	}
 
+	public void utilityAdd(Stuff toAdd) {
+		this.content[this.contentAmount] = toAdd;
+		this.contentAmount++;
+	}
+	
+	public Stuff utilityRemove(Stuff toRemove) {
+		int i;
+		for(i = 0; i<this.contentAmount; i++){
+			if(this.content[i].equals(toRemove))
+				break;
+			if(i==(this.contentAmount - 1))
+				return null;
+		}
+		
+		for(int j = i; j<this.contentAmount-1; j++){
+			this.content[j] = this.content[j+1];
+		}
+		this.contentAmount--;
+		this.content[this.contentAmount] = null;
+		return toRemove;
+	}
+	
 	public boolean add(Stuff element) {
 		if (this.contentAmount == 6)
 			return false;
@@ -94,10 +117,7 @@ public class Cell {
 		return buf;
 	}
 	
-	public boolean deleteStuff(Stuff element) {
-
-		if (this.contentAmount == 0)
-			return false;
+	public Stuff deleteStuff(Stuff element) {
 
 		this.untouch();
 		int i;
@@ -105,7 +125,7 @@ public class Cell {
 			if(this.content[i].equals(element))
 				break;
 			if(i==(this.contentAmount - 1))
-				return false;
+				return null;
 		}
 		this.damage = this.damage - element.getDamage();
 		
@@ -115,7 +135,7 @@ public class Cell {
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
 		
-		return true;
+		return element;
 	}
 
 	// блок выдачи информации
@@ -272,6 +292,16 @@ public class Cell {
 	}
 	public void unhighlight() {
 		this.isHighlighted = false;
+	}
+
+	public void setMeta(Stuff toToggle) {
+		this.metaLevel=toToggle;
+	}
+	public void clearMeta() {
+		this.metaLevel=null;
+	}
+	public Stuff getMeta() {
+		return this.metaLevel;
 	}
 
 	

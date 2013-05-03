@@ -264,8 +264,8 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void draw(Graphics g) {
-		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
-				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
+//		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
+//				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
 

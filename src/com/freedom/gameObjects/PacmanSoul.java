@@ -72,7 +72,7 @@ public class PacmanSoul implements Runnable {
 						System.out.println(GameField.getInstance().getRobot()
 								.getLives());
 					}
-					//GameScreen.getInstance().repaint();
+					GameScreen.getInstance().repaint();
 					try {
 						Thread.sleep(this.stepRate);
 					} catch (InterruptedException e) {
