@@ -76,8 +76,8 @@ public class PacmanSoul implements Runnable {
 						}
 					} else {
 						GameField.getInstance().getRobot().punch(1);
-						//System.out.println(GameField.getInstance().getRobot()
-								//.getLives());
+						System.out.println(GameField.getInstance().getRobot()
+								.getLives());
 					}
 				}
 			}else {

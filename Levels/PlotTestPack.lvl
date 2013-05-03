@@ -59,7 +59,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="9">
 		</obj>
-		
+
 		<obj class="com.freedom.gameObjects.Pit" x="2" y="10">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="11">
@@ -253,8 +253,6 @@
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="5">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="6">
-		</obj>
-		<obj class="com.freedom.gameObjects.LevelExit" next="2" x="7" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="7">
 		</obj>
@@ -1045,7 +1043,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="5">
 		</obj>
-		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26" y="5">
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26"
+			y="5">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="6">
 		</obj>
@@ -1067,7 +1066,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="15">
 		</obj>
-		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26" y="15">
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="26"
+			y="15">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="26" y="16">
 		</obj>
@@ -1215,12 +1215,26 @@
 
 
 		</obj>
-		<robot dir="W" x="2" y="2">
+		<robot dir="W" x="3" y="3">
 		</robot>
+			<obj class="com.freedom.gameObjects.WalkieTalkie" x="4" y="4"
+			messageToDisplay="I told you!">
+			<cels x="3" y="3" />
+		</obj>
+		
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="4"
+			y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="4"
+			y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="3"
+			y="2">
+		</obj>
 	</level>
 	<level height="10" num="2" width="15">
-	
-		
+
+
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="1">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="2">
@@ -1246,17 +1260,44 @@
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.StepPlay" x="2" y="2">
-				<cels x="4" y="2" />
-				<cels x="4" y="8" />
-				<cels x="3" y="8" />
-				<cels x="5" y="8" />
-				<cels x="4" y="9" />
-				<cels x="3" y="9" />
-				<cels x="5" y="9" />			
+			<cels x="4" y="2" />
+			<cels x="4" y="8" />
+			<cels x="3" y="8" />
+			<cels x="5" y="8" />
+			<cels x="4" y="9" />
+			<cels x="3" y="9" />
+			<cels x="5" y="9" />
 		</obj>
-		<obj class="com.freedom.gameObjects.WalkieTalkie" x="2" y="2" messageToDisplay = "Hello world!!!">
-				<cels x="4" y="3" />		
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="2" y="2"
+			messageToDisplay="Hello world! Today we are going to talk about many
+			interesting things! For example, life. And death, which is,
+			undoubtly, far more interesting... ">
+			<cels x="3" y="3" />
 		</obj>
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="3" y="3"
+			messageToDisplay="Oh wow. You've nailed it. Aren't you trying to tell me you are interested in life more than in death, are you?">
+			<cels x="4" y="8" />
+		</obj>
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="3" y="3"
+			messageToDisplay="Where are you going???">
+			<cels x="6" y="9" />
+		</obj>
+
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="3" y="3"
+			messageToDisplay="How in the hell did you.. Well, doesn't matter, there's no way out there, get back to the warm-colored tile, please">
+			<cels x="12" y="5" />
+		</obj>	
+		
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="4" y="4"
+			messageToDisplay="I insist. You are to stop. Now">
+			<cels x="13" y="5" />
+		</obj>	
+
+		<obj class="com.freedom.gameObjects.WalkieTalkie" x="4" y="4"
+			messageToDisplay="Don't go! You are going to die there! Get back!!!">
+			<cels x="13" y="3" />
+			<cels x="14" y="3" />
+		</obj>	
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="3">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="2" y="4">

@@ -48,20 +48,20 @@ public class ScreensHolder extends JLayeredPane {
 		currentScreen = toAdd;
 		INSTANCE.add(toAdd);
 		toAdd.requestFocusInWindow();
-		toAdd.activateModel();
 		INSTANCE.moveToFront(toAdd);
+		toAdd.activateModel();
 		INSTANCE.revalidate();
 		paintImmediately(getBounds());
 	}
 	
 	public void removeScreen(AbstractScreen toRemove) {
+		toRemove.deactivateModel();
+		INSTANCE.remove(toRemove);
 		lastScreen.requestFocusInWindow();
-		lastScreen.activateModel();
 		INSTANCE.moveToFront(lastScreen);
 		currentScreen=lastScreen;
 		lastScreen=toRemove;
-		INSTANCE.remove(toRemove);
-		toRemove.deactivateModel();
+		lastScreen.activateModel();
 		INSTANCE.revalidate();
 		paintImmediately(getBounds());
 	}
@@ -70,12 +70,12 @@ public class ScreensHolder extends JLayeredPane {
 		currentScreen=toAdd;
 		INSTANCE.add(toAdd);
 		toAdd.requestFocusInWindow();
-		toAdd.activateModel();
 		INSTANCE.moveToFront(toAdd);
 		lastScreen=toRemove;
 		INSTANCE.remove(toRemove);
 		toRemove.deactivateModel();
 		INSTANCE.revalidate();
+		toAdd.activateModel();
 		paintImmediately(getBounds());
 	}
 

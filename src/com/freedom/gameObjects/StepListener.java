@@ -29,8 +29,8 @@ import com.freedom.view.GameScreen;
  * 
  */
 public class StepListener extends Stuff {
-	private int[][] controlledCellsList;
-	private int controlledCellsAmount; 
+	protected int[][] controlledCellsList;
+	protected int controlledCellsAmount; 
 	private static Image texture1;
 	private boolean alive;
 	private boolean robotOn;
@@ -157,10 +157,6 @@ public class StepListener extends Stuff {
 	}
 
 	private class Checker implements Runnable {
-		public Checker() {
-
-		}
-
 		public void run() {
 			boolean ok;
 			while (alive) {

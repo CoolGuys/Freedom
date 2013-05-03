@@ -182,8 +182,6 @@ public class GameField {
 				}
 			}
 		}
-
-		g.dispose();
 	}
 
 	public static GameField getInstance() {
