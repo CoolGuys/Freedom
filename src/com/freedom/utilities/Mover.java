@@ -20,18 +20,25 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 	}
 
 	public void run() {
-		if (theOneToMove.checkIfBeingMoved())
-			return;
 		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
-		theOneToMove.tellIfBeingMoved(true);
 		try {
+			if (GameField.getInstance().cells[theOneToMove
+					.getTargetCellCoordinates(direction).x][theOneToMove
+					.getTargetCellCoordinates(direction).y].locked == true ||theOneToMove.checkIfBeingMoved())
+				return;
 			for (int k = 0; k < distance; k++) {
 				if (theOneToMove.canGo()) {
-					Stuff toToggle = GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove.getY()]
+					theOneToMove.tellIfBeingMoved(true);
+					GameField.getInstance().cells[theOneToMove
+							.getTargetCellCoordinates(direction).x][theOneToMove
+							.getTargetCellCoordinates(direction).y].locked = true;
+
+					Stuff toToggle = GameField.getInstance().cells[(int) theOneToMove
+							.getX()][(int) (int) theOneToMove.getY()]
 							.utilityRemove((Stuff) theOneToMove);
-					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove.getY()]
-							.setMeta(toToggle);
+					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
+							.getY()].setMeta(toToggle);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
@@ -65,12 +72,12 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
 							.deleteStuff((Stuff) theOneToMove);
-//					logger.info("prev calc: "
-//							+ theOneToMove
-//									.getTargetCellCoordinates(invertDirection()).x
-//							+ " "
-//							+ theOneToMove
-//									.getTargetCellCoordinates(invertDirection()).y);
+					// logger.info("prev calc: "
+					// + theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).x
+					// + " "
+					// + theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).y);
 					// GameField.getInstance().cells[(int)
 					// theOneToMove.getX()][(int) theOneToMove
 					// .getY()].robotOn();
@@ -78,8 +85,8 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
 							.getY()].add((Stuff) theOneToMove);
 
-//					logger.info("current" + theOneToMove.getX() + " "
-//							+ theOneToMove.getY());
+					// logger.info("current" + theOneToMove.getX() + " "
+					// + theOneToMove.getY());
 
 				}
 				theOneToMove.recalibrate();

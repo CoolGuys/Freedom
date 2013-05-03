@@ -49,8 +49,7 @@ public class Teleport extends Stuff {
 	}
 
 	// телепорт - хрупкая сущность.
-	public Teleport()
-	{
+	public Teleport() {
 		super(false, true, false, false, 0, 1);
 		texture = textureOff;
 	}
@@ -85,6 +84,12 @@ public class Teleport extends Stuff {
 
 		Stuff element = GameField.getInstance().getCells()[this.getX()][this
 				.getY()].getTop();
+		for (Stuff containedElement : element.container) {
+			if (containedElement != null) {
+				containedElement.x = xLeadTo;
+				containedElement.y = yLeadTo;
+			}
+		}
 		if (GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.add(element)) {
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
@@ -111,16 +116,6 @@ public class Teleport extends Stuff {
 		} else
 			return false;
 
-	}
-
-	protected void robotOn() {
-		if (!on)
-			return;
-		if(!GameField.getInstance().cells[this.xLeadTo][this.yLeadTo].getIfPassable())
-			return;
-		Robot buf = GameField.getInstance().getRobot();
-		buf.x = this.xLeadTo;
-		buf.y = this.yLeadTo;
 	}
 
 	public void draw(Graphics g) {

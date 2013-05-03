@@ -23,19 +23,49 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int picID;
 	private String direction;
 	private int direc;
-	private int trekLenght = 10;
+	private int trekLenght = 5;
 	private PacmanSoul p;
 	private static Logger logger = Logger.getLogger("");
 
-	private static BufferedImage texture1 = new BufferedImage(getSize(),
+	private static BufferedImage texture1S = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture2 = new BufferedImage(getSize(),
+	private static BufferedImage texture2S = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture3 = new BufferedImage(getSize(),
+	private static BufferedImage texture3S = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture4 = new BufferedImage(getSize(),
+	private static BufferedImage texture4S = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture5 = new BufferedImage(getSize(),
+	private static BufferedImage texture5S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5E = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
 
 	static {
@@ -62,11 +92,41 @@ public class PacmanBody extends Stuff implements Moveable {
 					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
 
-			PacmanBody.texture1.getGraphics().drawImage(texture1, 0, 0, null);
-			PacmanBody.texture2.getGraphics().drawImage(texture2, 0, 0, null);
-			PacmanBody.texture3.getGraphics().drawImage(texture3, 0, 0, null);
-			PacmanBody.texture4.getGraphics().drawImage(texture4, 0, 0, null);
-			PacmanBody.texture5.getGraphics().drawImage(texture5, 0, 0, null);
+			PacmanBody.texture1S.getGraphics().drawImage(texture1, 0, 0, null);
+			PacmanBody.texture2S.getGraphics().drawImage(texture2, 0, 0, null);
+			PacmanBody.texture3S.getGraphics().drawImage(texture3, 0, 0, null);
+			PacmanBody.texture4S.getGraphics().drawImage(texture4, 0, 0, null);
+			PacmanBody.texture5S.getGraphics().drawImage(texture5, 0, 0, null);
+
+			double rotationRequired = Math.toRadians(270);
+			int locationX = getSize() / 2;
+			int locationY = getSize() / 2;
+			AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
+					locationY);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			texture1E = op.filter(texture1S, null);
+			texture2E = op.filter(texture2S, null);
+			texture3E = op.filter(texture3S, null);
+			texture4E = op.filter(texture4S, null);
+			texture5E = op.filter(texture5S, null);
+			rotationRequired = Math.toRadians(180);
+			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
+					locationY);
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			texture1N = op.filter(texture1S, null);
+			texture2N = op.filter(texture2S, null);
+			texture3N = op.filter(texture3S, null);
+			texture4N = op.filter(texture4S, null);
+			texture5N = op.filter(texture5S, null);
+			rotationRequired = Math.toRadians(90);
+			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
+					locationY);
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			texture1W = op.filter(texture1S, null);
+			texture2W = op.filter(texture2S, null);
+			texture3W = op.filter(texture3S, null);
+			texture4W = op.filter(texture4S, null);
+			texture5W = op.filter(texture5S, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -121,11 +181,10 @@ public class PacmanBody extends Stuff implements Moveable {
 	public PacmanBody()
 	{
 		super(true, false, false, false);
-		texture = texture1;
+		texture = texture1N;
 		this.picID = 1;
 		this.direction = "N";
 		this.direc = -1;
-		// this.widthF=7;
 	}
 
 	/**
@@ -210,114 +269,82 @@ public class PacmanBody extends Stuff implements Moveable {
 		double rotationRequired = Math.toRadians(0);
 		double locationX;
 		double locationY;
-		AffineTransform tx;
-		AffineTransformOp op;
 		switch (this.picID) {
 		case 1:
 			this.direc *= -1;
 			if (this.direction.equals("S")) {
-				rotationRequired = Math.toRadians(0);
+				texture = texture1S;
 			}
 			if (this.direction.equals("N")) {
-				rotationRequired = Math.toRadians(180);
+				texture = texture1N;
 			}
 			if (this.direction.equals("W")) {
-				rotationRequired = Math.toRadians(90);
+				texture = texture1W;
 			}
 			if (this.direction.equals("E")) {
-				rotationRequired = Math.toRadians(270);
+				texture = texture1E;
 			}
-			locationX = texture2.getWidth() / 2;
-			locationY = texture2.getHeight() / 2;
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			this.texture = op.filter(texture2, null);
 			this.picID += this.direc;
 			break;
 		case 2:
 			if (this.direction.equals("S")) {
-				rotationRequired = Math.toRadians(0);
+				texture = texture2S;
 			}
 			if (this.direction.equals("N")) {
-				rotationRequired = Math.toRadians(180);
+				texture = texture2N;
 			}
 			if (this.direction.equals("W")) {
-				rotationRequired = Math.toRadians(90);
+				texture = texture2W;
 			}
 			if (this.direction.equals("E")) {
-				rotationRequired = Math.toRadians(270);
+				texture = texture2E;
 			}
-			locationX = texture3.getWidth() / 2;
-			locationY = texture3.getHeight() / 2;
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			this.texture = op.filter(texture3, null);
 			this.picID += this.direc;
 			break;
 		case 3:
 			if (this.direction.equals("S")) {
-				rotationRequired = Math.toRadians(0);
+				texture = texture3S;
 			}
 			if (this.direction.equals("N")) {
-				rotationRequired = Math.toRadians(180);
+				texture = texture3N;
 			}
 			if (this.direction.equals("W")) {
-				rotationRequired = Math.toRadians(90);
+				texture = texture3W;
 			}
 			if (this.direction.equals("E")) {
-				rotationRequired = Math.toRadians(270);
+				texture = texture3E;
 			}
-			locationX = texture4.getWidth() / 2;
-			locationY = texture4.getHeight() / 2;
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			this.texture = op.filter(texture4, null);
 			this.picID += this.direc;
 			break;
 		case 4:
 			if (this.direction.equals("S")) {
-				rotationRequired = Math.toRadians(0);
+				texture = texture4S;
 			}
 			if (this.direction.equals("N")) {
-				rotationRequired = Math.toRadians(180);
+				texture = texture4N;
 			}
 			if (this.direction.equals("W")) {
-				rotationRequired = Math.toRadians(90);
+				texture = texture4W;
 			}
 			if (this.direction.equals("E")) {
-				rotationRequired = Math.toRadians(270);
+				texture = texture4E;
 			}
-			locationX = texture5.getWidth() / 2;
-			locationY = texture5.getHeight() / 2;
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			this.texture = op.filter(texture5, null);
 			this.picID += this.direc;
 			break;
 		case 5:
 			this.direc *= -1;
 			if (this.direction.equals("S")) {
-				rotationRequired = Math.toRadians(0);
+				texture = texture5S;
 			}
 			if (this.direction.equals("N")) {
-				rotationRequired = Math.toRadians(180);
+				texture = texture5N;
 			}
 			if (this.direction.equals("W")) {
-				rotationRequired = Math.toRadians(90);
+				texture = texture5W;
 			}
 			if (this.direction.equals("E")) {
-				rotationRequired = Math.toRadians(270);
+				texture = texture5E;
 			}
-			locationX = texture5.getWidth() / 2;
-			locationY = texture5.getHeight() / 2;
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			this.texture = op.filter(texture5, null);
 			this.picID += this.direc;
 			break;
 		default:

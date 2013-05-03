@@ -2,14 +2,11 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-
+import com.freedom.utilities.PathFinder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
 import javax.swing.Timer;
-
 import com.freedom.utilities.Loader;
-
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
@@ -67,6 +64,9 @@ public class GameField {
 		active = true;
 		ticker.start();
 		deathTicker.start();
+		PathFinder finder =new PathFinder();
+		System.out.println("asd");
+		System.out.println(finder.find(2, 2, 2, 2, 4000));
 	}
 
 	public void deactivate() {

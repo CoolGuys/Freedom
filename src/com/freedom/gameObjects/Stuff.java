@@ -17,6 +17,7 @@ public class Stuff {
 	private boolean pickable;
 	boolean passable;
 	private static int size = GameField.getInstance().getCellSize();
+	public Stuff[] container = new Stuff[1];
 
 	private int damage; // number of lives you loose
 	private boolean ifDestroyable;
@@ -44,7 +45,12 @@ public class Stuff {
 		this.expConductive = true;
 		damager = new DamageSender();
 	}
-
+	
+	public void setXY(double x,double y){
+		this.x=x;
+		this.y=y;
+	}
+	
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));

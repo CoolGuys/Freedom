@@ -47,7 +47,13 @@ public class PathFinder {
 	 */
 
 	public String find(int xs, int ys, int xe, int ye, int width) {
-
+		if(xs==xe&&ye==ys){
+			return "0";
+		}
+		if((Math.abs(xs-xe)+Math.abs(ys-ye))>(width+1)){
+			//System.out.println("Takmk");
+			return "0";			
+		}
 		logger.setLevel(Level.OFF);	
 		logger.info("starting from ("+xs+","+ys+") to ("+xe+","+ye+")");
 		logger.info("getting cells");
@@ -88,6 +94,7 @@ public class PathFinder {
 			}
 			
 			*/
+			//System.out.println("i="+i);
 			for(int j=0;j<pathAmount;j++){
 				String buf=pathlist.substring(j*(i), (j+1)*i);
 				logger.info("i="+i+" j="+j+" PathAmount="+pathAmount+" buf="+buf);

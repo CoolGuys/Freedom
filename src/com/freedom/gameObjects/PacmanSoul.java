@@ -11,7 +11,7 @@ public class PacmanSoul implements Runnable {
 	private int destinationY;
 	private PacmanBody body;
 	private PathFinder finder;
-	private int widh = 3;
+	private int widh;
 	boolean alive;
 
 	/**
@@ -69,10 +69,10 @@ public class PacmanSoul implements Runnable {
 						}
 					} else {
 						GameField.getInstance().getRobot().punch(1);
-						System.out.println(GameField.getInstance().getRobot()
-								.getLives());
+						//System.out.println(GameField.getInstance().getRobot()
+								//.getLives());
 					}
-					GameScreen.getInstance().repaint();
+					//GameScreen.getInstance().repaint();
 					try {
 						Thread.sleep(this.stepRate);
 					} catch (InterruptedException e) {
@@ -87,7 +87,7 @@ public class PacmanSoul implements Runnable {
 					Thread.sleep(this.stepRate);
 				} catch (InterruptedException e) {
 					// TODO Автоматически созданный блок catch
-					e.printStackTrace();
+					
 				}
 				//System.out.println("Else");
 			}

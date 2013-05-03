@@ -184,7 +184,7 @@ public class Loader {
 	}
 
 	public static void readLvl(int Number, String lvlfile) {
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.OFF);
 		File fXml = new File(lvlfile);
 		LoadingScreenModel lsm=LoadingScreenModel.getInstance();
 		//lsm.setLoadingObjectName("Starting");
@@ -282,6 +282,7 @@ public class Loader {
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"),
 											((Stuff) newstuff), 10));
+							GameField.getInstance().getRobot().getContent().setXY(GameField.getInstance().getRobot().getX(), GameField.getInstance().getRobot().getY());
 						}
 					}
 					lsm.setProgressPercent(100);

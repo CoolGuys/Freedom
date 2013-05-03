@@ -84,6 +84,7 @@ public class Cell {
 		this.contentAmount++;
 		element.x = this.x;
 		element.y = this.y;
+		this.locked = false;
 		this.touch();
 		return true;
 	}

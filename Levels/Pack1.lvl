@@ -374,7 +374,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="10" y="1">
 		</obj>
-		<obj class="com.freedom.gameObjects.Wall" x="10" y="2">
+		<obj class="com.freedom.gameObjects.Tile" x="10" y="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="10" y="3">
 		</obj>
@@ -623,7 +623,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="16" y="1">
 		</obj>
-		<obj class="com.freedom.gameObjects.Wall" x="16" y="2">
+		<obj class="com.freedom.gameObjects.Tile" x="16" y="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="16" y="3">
 		</obj>
@@ -1519,7 +1519,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="13" y="9">
 		</obj>
-		<obj class="com.freedom.gameObjects.TNT" x="13" y="9">
+		<obj class="com.freedom.gameObjects.Box" color="b" x="13" y="9">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="13" y="10">
 		</obj>
