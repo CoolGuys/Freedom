@@ -48,6 +48,13 @@ public class PacmanSoul implements Runnable {
 
 	public void run() {
 		while (alive) {
+
+			try {
+				Thread.sleep(this.stepRate);
+			} catch (InterruptedException e) {
+				// TODO Автоматически созданный блок catch
+				
+			}
 			int x = body.getX();
 			int y = body.getY();
 			boolean b = (GameField.getInstance().getRobot() == null);
@@ -83,12 +90,6 @@ public class PacmanSoul implements Runnable {
 				this.destinationX = y;
 				this.destinationY = x;
 				this.alive=true;
-				try {
-					Thread.sleep(this.stepRate);
-				} catch (InterruptedException e) {
-					// TODO Автоматически созданный блок catch
-					
-				}
 				//System.out.println("Else");
 			}
 		}
