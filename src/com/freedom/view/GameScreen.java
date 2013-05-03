@@ -20,11 +20,11 @@ import javax.swing.Action;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.GameField;
 import com.freedom.gameObjects.Robot;
-import com.freedom.view.StartScreen.NewGameAction;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
@@ -121,11 +121,11 @@ public class GameScreen extends AbstractScreen {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		GameField.getInstance().draw(g);
-		msgDisplay.draw(g);
 	}
 
 	public void activateModel() {
 		GameField.getInstance().activate();
+		ScreensHolder.getInstance().add(guiPane);
 
 	}
 
@@ -199,10 +199,12 @@ public class GameScreen extends AbstractScreen {
 
 	public void deactivateModel() {
 		GameField.getInstance().deactivate();
+		ScreensHolder.getInstance().remove(guiPane);
 	}
 
 	public void displayMessage(String message) {
 		msgDisplay.displayMessage(message);
+		ScreensHolder.getInstance().moveToFront(guiPane);
 		ScreensHolder.getInstance().repaint();
 	}
 
@@ -212,6 +214,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private InGameMessageDisplay msgDisplay = new InGameMessageDisplay();
+	private InGameGUIPane guiPane = new InGameGUIPane();
 	private int scale = 50;
 	private final int fineOffset = scale / 2;
 	private final int coarseOffset = (scale * 3) / 2;
@@ -308,7 +311,6 @@ public class GameScreen extends AbstractScreen {
 		public void displayMessage(String message) {
 			adapt(message);
 			this.visible = true;
-			repaint();
 		}
 
 		public void removeMessage() {
@@ -335,29 +337,23 @@ public class GameScreen extends AbstractScreen {
 					buffer = buffer.concat(nextWord).concat(" ");
 				}
 			}
-			messageLines.add(buffer);
-			height = (int) (messageLines.size() * bounds.getHeight());
+			this.messageLines.add(buffer);
+			this.height = (int) (messageLines.size() * bounds.getHeight());
+			this.y = (int) (ScreensHolder.getInstance().getHeight() - height);
+			this.x = (int) (ScreensHolder.getInstance().getWidth() / 6.0);
 		}
 
 		public void draw(Graphics g) {
 			if (!visible)
 				return;
-			this.y = (int) (ScreensHolder.getInstance().getHeight() - height - getY());
-			this.x = (int) (ScreensHolder.getInstance().getWidth() / 6.0)
-					- getX();
 			String[] toDisp = messageLines.toArray(new String[1]);
 			// logger.info(toDisp[0]);
 			Graphics2D g2 = (Graphics2D) g;
-			Graphics2D g2КАСТЫЛЬ = (Graphics2D) ScreensHolder.getInstance()
-					.getGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			g2КАСТЫЛЬ.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
+			
 			FontRenderContext context = g2.getFontRenderContext();
 			g2.setFont(messageFont);
-			g2КАСТЫЛЬ.setFont(messageFont);
 			g2.setColor(new Color(0, 0, 0, 0.5f));
 			Rectangle2D rect = new Rectangle(x,
 					(int) (y
@@ -367,13 +363,9 @@ public class GameScreen extends AbstractScreen {
 			g2.fill(rect);
 
 			g2.setColor(Color.WHITE);
-			g2КАСТЫЛЬ.setColor(Color.WHITE);
 			Rectangle2D bounds = messageFont.getStringBounds("A", context);
 			int i = 0;
 			for (String line : toDisp) {
-				g2КАСТЫЛЬ.drawString(line, (int) (ScreensHolder.getInstance()
-						.getWidth() / 6.0), (int) (ScreensHolder.getInstance()
-						.getHeight() - height + bounds.getHeight() * i));
 				g2.drawString(line, this.x, (int) (this.y + bounds.getHeight()
 						* i));
 				i++;
@@ -384,8 +376,21 @@ public class GameScreen extends AbstractScreen {
 		private int width = (int) (ScreensHolder.getInstance().getWidth() * 2.0 / 3.0);
 		private int height;
 		private Font messageFont = new Font("Monospaced", Font.PLAIN,
-				LoadingScreen.getInstance().getHeight() / 25);
+				LoadingScreen.getInstance().getHeight() / 30);
 		private ArrayList<String> messageLines = new ArrayList<String>();
 		private boolean visible;
+	}
+	
+	public class InGameGUIPane extends JLayeredPane { 
+		public InGameGUIPane() {
+			this.setBounds(ScreensHolder.getInstance().getBounds());
+			this.setLocation(0, 0);
+			this.setVisible(true);
+		}
+		
+		public void paintComponent(Graphics g) {
+			msgDisplay.draw(g);
+		}
+		
 	}
 }
