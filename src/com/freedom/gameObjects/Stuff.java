@@ -2,6 +2,7 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -153,6 +154,12 @@ public class Stuff {
 	void raiseDamage(int extraDamage) {
 		this.damage = this.damage + extraDamage;
 	}
+	
+	void reduceDamage(int toReduce){
+		this.damage = this.damage - toReduce;
+		if(this.damage < 0 )
+			this.damage = 0;
+	}
 
 	public boolean getIfTakeable() {
 		return this.pickable;
@@ -261,5 +268,6 @@ public class Stuff {
 			}
 		}
 	}
+	
 
 }
