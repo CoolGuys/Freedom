@@ -61,7 +61,7 @@ public class ScreensHolder extends JLayeredPane {
 		INSTANCE.moveToFront(lastScreen);
 		currentScreen=lastScreen;
 		lastScreen=toRemove;
-		lastScreen.activateModel();
+		currentScreen.activateModel();
 		INSTANCE.revalidate();
 		paintImmediately(getBounds());
 	}

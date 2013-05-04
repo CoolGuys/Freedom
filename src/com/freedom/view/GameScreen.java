@@ -199,6 +199,7 @@ public class GameScreen extends AbstractScreen {
 
 	public void deactivateModel() {
 		ScreensHolder.getInstance().remove(guiPane);
+		msgDisplay.removeMessage();
 		GameField.getInstance().deactivate();
 	}
 
