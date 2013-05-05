@@ -15,13 +15,14 @@ import com.freedom.view.GameScreen;
  * признак конца - this.next.next = this.next;
  */
 
-
 //TODO Запилить раздвоение луча на углах и обработку прерывания луча барахлом
 
 public class LaserBeam extends Stuff {
 
 	LaserBeam next;
+	LaserBeam prev;
 	String direction;
+	private Laser source;
 	private static int absorbReduce = 5;
 
 	private static Image textureVertical;
@@ -55,13 +56,16 @@ public class LaserBeam extends Stuff {
 		}
 	}
 
-	public LaserBeam(String direction, int x, int y, int damage)
-	{
-		super(false, true, true, false, damage, 0);
+	public LaserBeam(String direction, int x, int y, int damage) {
+		super(false, true, false, false, damage, 0);
 		super.x = x;
 		super.y = y;
 		this.direction = direction;
 		next = null;
+	}
+
+	void setSource(Laser source) {
+		this.source = source;
 	}
 
 	private void setPicture(String direct) {
@@ -221,7 +225,11 @@ public class LaserBeam extends Stuff {
 				.getTargetCellCoordinates().y].getTop().getIfAbsorb()) {
 			this.next = null;
 			buf[this.getTargetCellCoordinates().x][this
-					.getTargetCellCoordinates().y].getTop().touch();
+					.getTargetCellCoordinates().y].getTop().touch(this);
+
+			buf[this.getTargetCellCoordinates().x][this
+					.getTargetCellCoordinates().y]
+					.harmContent(this.getDamage());
 			// this.next.reduceDamage(absorbReduce);
 		}
 		// если отражает
@@ -231,20 +239,25 @@ public class LaserBeam extends Stuff {
 			this.next = new LaserBeam(this.direction,
 					this.getTargetCellCoordinates().x,
 					this.getTargetCellCoordinates().y, this.getDamage());
+
+			this.next.setSource(this.source);
 			this.next.reflect();
 			if (this.next.getDamage() == 0) {
 				this.next = null;
 				return;
 			}
-
+			this.next.prev = this;
 			buf[this.next.getX()][this.next.getY()].add(this.next);
 			this.next.buildBeam();
 		} else {
 			this.next = new LaserBeam(this.direction,
 					this.getTargetCellCoordinates().x,
 					this.getTargetCellCoordinates().y, this.getDamage());
+			this.next.setSource(this.source);
 			buf[this.next.getX()][this.next.getY()].add(this.next);
+			this.next.prev = this;
 			this.next.buildBeam();
+			GameScreen.getInstance().repaint();//выплить!!!
 		}
 		GameScreen.getInstance().repaint();
 
@@ -257,7 +270,9 @@ public class LaserBeam extends Stuff {
 		LaserBeam buf = this.next;
 		Cell[][] cellBuf = GameField.getInstance().cells;
 		while (buf != null) {
+
 			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+			cellBuf[buf.getX()][buf.getY()].stopHarmingContent();
 			buf = buf.next;
 		}
 		this.next = null;
@@ -266,5 +281,24 @@ public class LaserBeam extends Stuff {
 	public void draw(Graphics g) {
 		setPicture(direction);
 		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
+	}
+
+	@Override
+	void touch(Stuff element) {
+		if(element instanceof LaserBeam)
+			return;
+		if (GameField.getInstance().cells[this.getX()][this.getY()].getTop().getIfReflect()	|| GameField.getInstance().cells[this.getX()][this.getY()]
+						.getTop().getIfAbsorb())
+			this.source.rebuidBeam();
+
+	}
+
+	@Override
+	void untouch(Stuff element) {
+		if(element instanceof LaserBeam)
+			return;
+		
+		if (element.getIfReflect() || element.getIfAbsorb())
+			this.source.rebuidBeam();
 	}
 }

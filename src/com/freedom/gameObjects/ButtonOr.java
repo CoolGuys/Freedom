@@ -95,7 +95,7 @@ public class ButtonOr extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.ButtonOr");
 	}
 
-	void untouch() {
+	void untouch(Stuff element) {
 		texture = textureDepressed;
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		for (int i = 0; i < controlledCellsAmount; i++) {
@@ -104,7 +104,7 @@ public class ButtonOr extends Stuff {
 		}
 	}
 
-	void touch() {
+	void touch(Stuff element) {
 		SoundEngine.playClip(f2, -1, -15);
 		texture = texturePressed;
 		sender = new SignalOnSender();

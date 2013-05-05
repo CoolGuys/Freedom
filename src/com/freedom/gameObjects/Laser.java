@@ -45,12 +45,19 @@ public class Laser extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Laser");
 	}
 	
+	
+	void rebuidBeam(){
+		this.beamHead.deleteBeam();
+		this.beamHead.buildBeam();
+	}
+	
 	boolean useOn(){
 		if(this.ifActive)
 			return false;
 		else{
 			this.ifActive = true;
 			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 10);
+			this.beamHead.setSource(this);
 			this.beamHead.buildBeam();
 			return true;	
 		}

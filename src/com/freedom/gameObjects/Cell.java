@@ -89,7 +89,7 @@ public class Cell {
 		element.x = this.x;
 		element.y = this.y;
 		this.locked = false;
-		this.touch();
+		this.touch(element);
 		return true;
 	}
 
@@ -106,7 +106,7 @@ public class Cell {
 			return null;
 
 
-		this.untouch();
+		this.untouch( this.content[this.contentAmount - 1]);
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -128,7 +128,7 @@ public class Cell {
 		
 		if (this.contentAmount == 0)
 			return false;
-		this.untouch();
+		this.untouch(element );
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
@@ -196,14 +196,15 @@ public class Cell {
 
 	// Everything for robot:
 
-	public void touch() {
+	public void touch(Stuff toucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			this.content[i].touch();
+			this.content[i].touch(toucher);
 		}
 	}
-	public void untouch() {
+	
+	public void untouch(Stuff untoucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			this.content[i].untouch();
+			this.content[i].untouch(untoucher);
 		}
 	}
 
@@ -293,6 +294,26 @@ public class Cell {
 		}
 		return (damage - buf);
 	}
+	
+	void harmContent(int damage){
+		if(this.contentAmount == 0 )
+			return;
+		
+		int buf = damage;
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
+			Cell.this.content[i].harm(buf);
+		}
+	}
+	
+	void stopHarmingContent(){
+		if(this.contentAmount == 0 )
+			return;
+		
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
+			Cell.this.content[i].stopHarming();
+		}
+	}
+	
 	
 	public void healContent(int heal){
 		

@@ -125,11 +125,11 @@ public class Stuff {
 		return false;
 	}
 
-	void touch() {
+	void touch(Stuff toucher) {
 		return;
 	}
 	
-	void untouch() {
+	void untouch(Stuff untouvher) {
 		
 	}
 

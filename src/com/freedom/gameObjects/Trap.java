@@ -71,7 +71,7 @@ public class Trap extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Trap");
 	}
 
-	void touch() {
+	void touch(Stuff element) {
 		GameField.getInstance().getCells()[this.getX()][this.getY()]
 				.dealDamageToContent(this.damage);
 		this.texture = textureClosed;
@@ -81,7 +81,7 @@ public class Trap extends Stuff {
 				Stuff.getSize());
 	}
 
-	void untouch() {
+	void untouch(Stuff element) {
 		this.texture = textureOpen;
 		SoundEngine.playClip(f2, -1, -15);
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),

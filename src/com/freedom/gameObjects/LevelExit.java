@@ -63,7 +63,7 @@ public class LevelExit extends Stuff {
 		obj.setAttribute("next", String.valueOf((int) this.nextLevelID));
 	}
 
-	public void touch() {
+	public void touch(Stuff element) {
 		GameField.getInstance().getRobot()
 				.SetXY(super.getX() - 1, super.getY());
 

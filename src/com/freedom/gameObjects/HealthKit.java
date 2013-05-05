@@ -38,7 +38,7 @@ public class HealthKit extends Stuff{
 		obj.setAttribute("class", "com.freedom.gameObjects.HealthKit");
 	}
 	
-	void touch() {
+	void touch(Stuff element) {
 		GameField.getInstance().getCells()[this.getX()][this.getY()]
 				.healContent(this.heals);
 		//heals=0;
