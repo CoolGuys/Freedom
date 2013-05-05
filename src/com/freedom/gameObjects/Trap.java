@@ -73,7 +73,7 @@ public class Trap extends Stuff {
 
 	void touch() {
 		GameField.getInstance().getCells()[this.getX()][this.getY()]
-				.kickAllStuff(this.damage);
+				.dealDamageToContent(this.damage);
 		this.texture = textureClosed;
 		SoundEngine.playClip(f1, -1, -15);
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
@@ -87,5 +87,6 @@ public class Trap extends Stuff {
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
 				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
 				Stuff.getSize());
+	
 	}
 }

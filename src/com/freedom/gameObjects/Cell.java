@@ -25,7 +25,6 @@ public class Cell {
 	private boolean isHighlighted;
 	
 	int expBuf; // буфер для взрыва - не трогать!
-	boolean ifExped; //ключ для взрыва - не трогать!
 
 	public boolean isExamined;
 	static {
@@ -47,7 +46,6 @@ public class Cell {
 		this.counter = 0;
 		this.buttonsNumber = 0;
 		this.expBuf = 0;
-		ifExped = false;
 	}
 
 	public void utilityAdd(Stuff toAdd) {
@@ -123,23 +121,13 @@ public class Cell {
 		return buf;
 	}
 
-	public void kickAllStuff(int painValue){
-		for (int i = 0; i < this.contentAmount; i++) {
-			try{
-				content[i].punch(painValue);
-			}catch (Exception e) {
-				e.printStackTrace();
-				// TODO: handle exception
-			}
-		}
-	}
 	
 	public boolean deleteStuff(Stuff element) {
 
-		this.untouch();
+		
 		if (this.contentAmount == 0)
 			return false;
-
+		this.untouch();
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
@@ -148,6 +136,9 @@ public class Cell {
 			if(i==(this.contentAmount - 1))
 				return false;
 		}
+		
+		
+		
 		this.damage = this.damage - element.getDamage();
 
 		for (int j = i; j < this.contentAmount - 1; j++) {
@@ -155,8 +146,8 @@ public class Cell {
 		}
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
-
-		this.touch();// //под вопросом
+		
+		
 		return true;
 	}
 	
@@ -291,11 +282,21 @@ public class Cell {
 
 	
 	//здесь наносим урон предметам 
-	public void dealDamageToContent(int damage){
+	int dealDamageToContent(int damage){
 		if(this.contentAmount == 0 )
-			return;
+			return 0;
+		
+		int buf = damage;
 		for (int i = 0; i < Cell.this.contentAmount; i++) {
-			Cell.this.content[i].punch(damage);
+			buf = buf - Cell.this.content[i].punch(buf);
+		}
+		return (damage - buf);
+	}
+	
+	public void healContent(int heal){
+		
+		for (int i = 0; i < Cell.this.contentAmount; i++) {
+			Cell.this.content[i].heal(heal);
 		}
 
 	}
