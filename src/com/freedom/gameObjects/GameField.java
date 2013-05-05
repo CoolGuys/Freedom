@@ -2,6 +2,8 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.awt.image.SinglePixelPackedSampleModel;
+
 import com.freedom.utilities.PathFinder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -166,7 +168,7 @@ public class GameField {
 		return cells;
 	}
 
-	public Robot getRobot() {
+	public synchronized  Robot getRobot() {
 		return robot;
 	}
 

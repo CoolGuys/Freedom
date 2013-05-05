@@ -159,7 +159,9 @@ public class StepListener extends Stuff {
 	private class Checker implements Runnable {
 		public void run() {
 			boolean ok;
+			//System.out.println(controlledCellsList[0][0]+"asas");
 			while (alive) {
+				
 				if(GameField.getInstance().active)
 					try {
 					int x;
@@ -172,7 +174,7 @@ public class StepListener extends Stuff {
 						y = -1;
 						gleblo.info("Erro	r occured");
 					}
-					Thread.sleep(30);
+					Thread.sleep(300);
 					ok = false;
 					for (int i = 0; i < controlledCellsAmount; i++) {
 						if ((controlledCellsList[i][0] == x)
