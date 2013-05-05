@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 public class Laser extends Stuff {
 	LaserBeam beamHead;
 	boolean ifActive;
-	String colour;
+	String color;
 	String direction;
 	
 
@@ -31,7 +31,7 @@ public class Laser extends Stuff {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.direction = obj.getAttribute("direction");
-		this.colour = obj.getAttribute("colour");
+		this.color = obj.getAttribute("color");
 		
 		
 		
@@ -41,7 +41,7 @@ public class Laser extends Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("direction",this.direction);
-		obj.setAttribute("colour",this.colour);
+		obj.setAttribute("color",this.color);
 		obj.setAttribute("class", "com.freedom.gameObjects.Laser");
 	}
 	
@@ -50,13 +50,14 @@ public class Laser extends Stuff {
 			return false;
 		else{
 			this.ifActive = true;
-			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY());
+			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 10);
 			this.beamHead.buildBeam();
 			return true;	
 		}
 	}
 	
-	boolean useOf(){
+	@Override
+	boolean useOff(){
 		if(!this.ifActive)
 			return false;
 		else{
