@@ -181,7 +181,7 @@ public class PacmanBody extends Stuff implements Moveable {
 
 	public PacmanBody()
 	{
-		super(true, false, false, false,0,1);
+		super(true, false, false, true,0,3);
 		texture = texture1N;
 		this.picID = 1;
 		this.direction = "N";

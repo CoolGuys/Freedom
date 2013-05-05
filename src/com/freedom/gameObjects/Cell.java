@@ -42,7 +42,7 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[6];
+		this.content = new Stuff[10];
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
@@ -53,6 +53,14 @@ public class Cell {
 		this.content[this.contentAmount] = toAdd;
 		this.contentAmount++;
 	}
+	
+	boolean getIfReflect(){
+			return this.content[this.contentAmount -1].getIfReflect();
+	}
+	
+	boolean getIfAbsorb(){
+		return this.content[this.contentAmount -1].getIfAbsorb();
+}
 	
 	public Stuff utilityRemove(Stuff toRemove) {
 		int i;
@@ -72,7 +80,7 @@ public class Cell {
 	}
 	
 	public boolean add(Stuff element) {
-		if (this.contentAmount == 6)
+		if (this.contentAmount == 10)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом

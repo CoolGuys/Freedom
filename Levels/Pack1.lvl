@@ -200,6 +200,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="15">
 		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="6" y="15">
+		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="6" y="16">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="7" y="1">
