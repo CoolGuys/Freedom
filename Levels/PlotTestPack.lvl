@@ -1573,7 +1573,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="2">
 		</obj>
-		<obj class="com.freedom.gameObjects.LevelExit" next="1" x="14" y="2">
+		<obj class="com.freedom.gameObjects.LevelExit" next="1" x="14" y="2"  xr="-1" yr="-1">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="3">
 		</obj>
