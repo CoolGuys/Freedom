@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<levels startLvl="1">
-	<level height="20" num="2" width="29">
+<levels startLvl="2">
+	<level height="20" num="1" width="29">
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="1">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="2">
