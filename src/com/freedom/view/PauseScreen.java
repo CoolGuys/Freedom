@@ -107,8 +107,6 @@ public class PauseScreen extends AbstractScreen {
 	
 	public static class ResumeAction extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
-			GameScreen.getInstance().activateModel();
-			GameScreen.getInstance().requestFocusInWindow();
 			ScreensHolder.getInstance().removeScreen(getInstance());
 		}
 	}
