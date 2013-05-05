@@ -1,12 +1,18 @@
 package com.freedom.gameObjects;
 
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
 
 import org.w3c.dom.Element;
+
+import com.freedom.view.GameScreen;
 
 
 public class Stuff {
@@ -248,8 +254,11 @@ public class Stuff {
 			return false;
 		this.lives = this.lives - damage;
 		
-		System.out.println(Stuff.this.lives);
-		
+		System.out.println(Stuff.this.lives+" Punched: "+this.getClass().toString());
+		Graphics2D g2 =(Graphics2D) GameScreen.getInstance().getGraphics();
+		Rectangle2D r = new Rectangle((int)this.x*getSize(), (int)this.y*getSize(), getSize(), getSize());
+		g2.setColor(Color.WHITE);
+		g2.fill(r);
 		if(this.lives < 1)
 			this.die();
 		return true;

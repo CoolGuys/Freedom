@@ -240,20 +240,7 @@ public class Robot extends Stuff implements Moveable {
 	public void put() {
 		if (isMoving || GameField.getInstance().cells[this.getTargetCellCoordinates(getDirection()).x][this.getTargetCellCoordinates(getDirection()).y].locked)
 			return;
-
-		if (this.container[0] == null)
-			return;
 		
-		if (this.container[0] instanceof TNT) {
-			TNT buf = (TNT) this.container[0];
-			buf.x = this.getTargetCellCoordinates(direction).x;
-			buf.y = this.getTargetCellCoordinates(direction).y;
-			buf.activate();
-			this.container[0] = null;
-		}
-
-		
-
 		int targetX = this.getTargetCellCoordinates(getDirection()).x;
 		int targetY = this.getTargetCellCoordinates(getDirection()).y;
 		if (this.container[0] == null)
@@ -263,6 +250,7 @@ public class Robot extends Stuff implements Moveable {
 				.add(this.container[0]))
 			return;
 
+		container[0].activate();
 		this.container[0] = null;
 		GameScreen.getInstance().repaint();
 		

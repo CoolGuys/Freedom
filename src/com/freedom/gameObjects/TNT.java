@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.view.GameScreen;
+
 public class TNT extends Stuff implements Moveable {
 
 	public static final int expDamage = 5;
@@ -69,15 +71,23 @@ public class TNT extends Stuff implements Moveable {
 
 		buf[this.getX()][this.getY()].expBuf = expDamage;
 		que.add(buf[this.getX()][this.getY()]);
+		
 
+		this.punch(1);
+		buf[this.getX()][this.getY()].deleteStuff(this);
 		// распределяем урон
 
 		while (!que.isEmpty()) {
-
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			toWork = que.remove();
 			if (toWork.expBuf < 1)
 				continue;
-			toWork.tryToDestroy(toWork.expBuf);
+			toWork.dealDamageToContent(toWork.expBuf);
 			toWork.ifExped = true;
 
 			if (!buf[toWork.getX() + 1][toWork.getY()].ifExped) {
@@ -107,32 +117,36 @@ public class TNT extends Stuff implements Moveable {
 					que.add(buf[toWork.getX()][toWork.getY() - 1]);
 				}
 			}
+			GameScreen.getInstance().repaint();
 
 			toWork.expBuf = 0;
 		}
 
-		buf[this.getX()][this.getY()].deleteStuff(this);
 		for (int i = 0; i < expDamage; i++) {
 			for (int j = 0; j < expDamage; j++) {
-				buf[this.getX() + i][this.getY() + j].ifExped = false;
-				buf[this.getX() - i][this.getY() + j].ifExped = false;
-				buf[this.getX() + i][this.getY() - j].ifExped = false;
-				buf[this.getX() - i][this.getY() - j].ifExped = false;
+				if (buf[this.getX() + i][this.getY() + j] != null)
+					buf[this.getX() + i][this.getY() + j].ifExped = false;
+				if (buf[this.getX() - i][this.getY() + j] != null)
+					buf[this.getX() - i][this.getY() + j].ifExped = false;
+				if (buf[this.getX() + i][this.getY() - j] != null)
+					buf[this.getX() + i][this.getY() - j].ifExped = false;
+				if (buf[this.getX() - i][this.getY() - j] != null)
+					buf[this.getX() - i][this.getY() - j].ifExped = false;
 			}
 		}
 
 	}
 
 	public void activate() {
-		MyThread t = new MyThread();
-		t.setName("TNT Timer");
-		t.start();
+		TNTExploder exploder = new TNTExploder();
+		GameField.otherThreads.execute(exploder);
 	}
 
-	private class MyThread extends Thread {
+	
+	private class TNTExploder implements Runnable {
 		public void run() {
 			try {
-				sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

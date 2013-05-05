@@ -67,24 +67,12 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
 							.clearMeta();
-					// GameField.getInstance().cells[(int) theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).x][(int)
-					// theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).y]
-					// .robotOff();
+				
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
 							.deleteStuff((Stuff) theOneToMove);
-					// logger.info("prev calc: "
-					// + theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).x
-					// + " "
-					// + theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).y);
-					// GameField.getInstance().cells[(int)
-					// theOneToMove.getX()][(int) theOneToMove
-					// .getY()].robotOn();
+					
 
 					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
 							.getY()].add((Stuff) theOneToMove);
