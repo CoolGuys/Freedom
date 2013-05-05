@@ -191,7 +191,7 @@ public class LaserBeam extends Stuff {
 		//если поглощает
 		if(buf[this.getTargetCellCoordinates().x][this.getTargetCellCoordinates().y].getTop().getIfAbsorb()){
 			this.next = null;
-			buf[this.getTargetCellCoordinates().x][this.getTargetCellCoordinates().y].touch();
+			buf[this.getTargetCellCoordinates().x][this.getTargetCellCoordinates().y].getTop().touch();
 			//this.next.reduceDamage(absorbReduce);
 		}
 		//если отражает
@@ -210,6 +210,7 @@ public class LaserBeam extends Stuff {
 		}
 		else{
 			this.next = new LaserBeam(this.direction, this.getTargetCellCoordinates().x,this.getTargetCellCoordinates().y);
+			buf[this.next.getX()][this.next.getY()].add(this.next);
 			this.next.buildBeam();
 		}
 

@@ -82,8 +82,7 @@ public class Trap extends Stuff{
 	 */
 	void touch(){
 		if (!this.used) {
-			GameField.getInstance().getCells()[this.getX()][this.getY()]
-					.kickAllStuff(this.damage);
+			GameField.getInstance().getCells()[this.getX()][this.getY()].dealDamageToContent(this.damage);
 			used = true;
 			this.texture = texture2;
 			SoundEngine.playClip(f1, -1, -15);

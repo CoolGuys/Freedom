@@ -25,6 +25,7 @@ public class Stuff {
 	boolean passable;
 	private static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
+	int maxLives;
 
 	private int damage; // number of lives you loose
 	private boolean ifDestroyable;
@@ -92,7 +93,7 @@ public class Stuff {
 		this.damage = 0;
 	}
 
-	// if lives==0 , we cannot destroy this stuff
+	// if lives<=0 , we cannot destroy this stuff
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
 			boolean absorbable, int damage, int lives)
 	{
@@ -103,6 +104,7 @@ public class Stuff {
 		this.ifAbsorb = absorbable;
 		this.expConductive = true;
 		damager = new DamageSender();
+		this.maxLives = this.lives;
 
 		if (lives < 1) {
 			this.lives = 1;
@@ -246,22 +248,34 @@ public class Stuff {
 	}
 	
 	//разовый урон
-	boolean punch(int damage){
-		if (damage == 0){
-			return false;
+	int punch(int damage){
+		if (damage < 1){
+			return 0;
 		}
 		if(!this.ifDestroyable)
-			return false;
-		this.lives = this.lives - damage;
+			return 0;
 		
-		System.out.println(Stuff.this.lives+" Punched: "+this.getClass().toString());
+		
 		Graphics2D g2 =(Graphics2D) GameScreen.getInstance().getGraphics();
 		Rectangle2D r = new Rectangle((int)this.x*getSize(), (int)this.y*getSize(), getSize(), getSize());
 		g2.setColor(Color.WHITE);
 		g2.fill(r);
-		if(this.lives < 1)
+		
+		
+		if(this.lives < damage){
 			this.die();
-		return true;
+			return this.lives;
+		}
+		
+		this.lives = this.lives - damage;
+		System.out.println(Stuff.this.lives+" Punched: "+this.getClass().toString());
+		return damage;
+	}
+	
+	void heal(int lives){
+		this.lives = this.lives + lives;
+		if(this.lives >this.maxLives)
+			this.lives = this.maxLives;
 	}
 
 	// дописать обратботку смерти
