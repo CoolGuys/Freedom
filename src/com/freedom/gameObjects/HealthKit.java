@@ -41,5 +41,6 @@ public class HealthKit extends Stuff{
 	void touch() {
 		GameField.getInstance().getRobot().punch(-heals);
 		heals=0;
+		GameField.getInstance().getCells()[(int) this.x][(int) this.y].deleteStuff(this);
 	}
 }
