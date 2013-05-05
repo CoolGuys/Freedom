@@ -13,6 +13,8 @@ public class LevelExit extends Stuff {
 
 	private int nextLevelID;
 	private static Image texture1;
+	private int robotx;
+	private int roboty;
 
 	static {
 
@@ -42,6 +44,8 @@ public class LevelExit extends Stuff {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.nextLevelID = Integer.parseInt(obj.getAttribute("next"));
+		this.robotx = Integer.parseInt(obj.getAttribute("xr"));
+		this.roboty = Integer.parseInt(obj.getAttribute("yr"));
 	}
 
 	/**
@@ -53,6 +57,8 @@ public class LevelExit extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("xr", String.valueOf((int) this.robotx));
+		obj.setAttribute("yr", String.valueOf((int) this.roboty));
 		obj.setAttribute("class", "com.freedom.gameObjects.LevelExit");
 		obj.setAttribute("next", String.valueOf((int) this.nextLevelID));
 	}
@@ -60,6 +66,6 @@ public class LevelExit extends Stuff {
 	public void touch() {
 		GameField.getInstance().getRobot()
 				.SetXY(super.getX() - 1, super.getY());
-		GameField.getInstance().switchToNextLevel(nextLevelID);
+		GameField.getInstance().switchToNextLevel(nextLevelID,robotx,roboty);
 	}
 }
