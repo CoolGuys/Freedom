@@ -259,6 +259,12 @@ public class Stuff {
 		Rectangle2D r = new Rectangle((int)this.x*getSize(), (int)this.y*getSize(), getSize(), getSize());
 		g2.setColor(Color.WHITE);
 		g2.fill(r);
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(this.lives < 1)
 			this.die();
 		return true;
