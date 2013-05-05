@@ -75,15 +75,13 @@ public class Teleport extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.Teleport");
 	}
 
-	void touch() {
+	void touch(Stuff element) {
 		if (!on)
 			return;
 		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.getIfPassable())
 			return;
 
-		Stuff element = GameField.getInstance().getCells()[this.getX()][this
-				.getY()].getTop();
 		for (Stuff containedElement : element.container) {
 			if (containedElement != null) {
 				containedElement.x = xLeadTo;

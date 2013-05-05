@@ -257,7 +257,6 @@ public class LaserBeam extends Stuff {
 			buf[this.next.getX()][this.next.getY()].add(this.next);
 			this.next.prev = this;
 			this.next.buildBeam();
-			GameScreen.getInstance().repaint();//выплить!!!
 		}
 		GameScreen.getInstance().repaint();
 
@@ -283,22 +282,5 @@ public class LaserBeam extends Stuff {
 		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
 	}
 
-	@Override
-	void touch(Stuff element) {
-		if(element instanceof LaserBeam)
-			return;
-		if (GameField.getInstance().cells[this.getX()][this.getY()].getTop().getIfReflect()	|| GameField.getInstance().cells[this.getX()][this.getY()]
-						.getTop().getIfAbsorb())
-			this.source.rebuidBeam();
-
-	}
-
-	@Override
-	void untouch(Stuff element) {
-		if(element instanceof LaserBeam)
-			return;
-		
-		if (element.getIfReflect() || element.getIfAbsorb())
-			this.source.rebuidBeam();
-	}
+	
 }

@@ -1,5 +1,7 @@
 package com.freedom.gameObjects;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,6 +14,7 @@ public class Laser extends Stuff {
 	boolean ifActive;
 	String color;
 	String direction;
+	private BeamSender sender;
 	
 
 	public Laser() {
@@ -25,6 +28,7 @@ public class Laser extends Stuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		sender = new BeamSender();
 	}
 	
 	public void readLvlFile(Element obj) {
@@ -58,7 +62,7 @@ public class Laser extends Stuff {
 			this.ifActive = true;
 			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 10);
 			this.beamHead.setSource(this);
-			this.beamHead.buildBeam();
+			GameField.getInstance().getDeathTicker().addActionListener(sender);
 			return true;	
 		}
 	}
@@ -69,10 +73,17 @@ public class Laser extends Stuff {
 			return false;
 		else{
 			this.ifActive = false;
+			GameField.getInstance().getDeathTicker().removeActionListener(sender);
 			this.beamHead.deleteBeam();
 			return true;
 		}
 	}
 	
+	private class BeamSender implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Laser.this.beamHead.deleteBeam();
+			Laser.this.beamHead.buildBeam();
+		}
+	}
 	
 }

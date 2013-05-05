@@ -20,6 +20,7 @@ public class Pit extends Stuff{
 		texture=texture1;
 		this.x = x;
 		this.y = y;
+		this.raiseDamage(10000);
 	}
 	
 	
@@ -44,6 +45,11 @@ public class Pit extends Stuff{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	void touch(Stuff element){
+		element.punch(this.getDamage());
 	}
 
 }
