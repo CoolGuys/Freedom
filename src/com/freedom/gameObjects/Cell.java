@@ -28,6 +28,7 @@ public class Cell {
 
 	public boolean isExamined;
 	static {
+		
 		try {
 			highlighted = ImageIO.read(new File(
 					"Resource/Textures/Highlighter.png"));
@@ -287,7 +288,7 @@ public class Cell {
 			return 0;
 		
 		int buf = damage;
-		for (int i = 0; i < Cell.this.contentAmount; i++) {
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
 			buf = buf - Cell.this.content[i].punch(buf);
 		}
 		return (damage - buf);
