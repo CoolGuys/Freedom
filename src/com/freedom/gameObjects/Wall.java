@@ -12,7 +12,6 @@ import org.w3c.dom.Element;
 
 public class Wall extends Stuff {
 
-	
 	private boolean ready;
 	private static Image textureN;
 	private static Image textureE;
@@ -84,45 +83,64 @@ public class Wall extends Stuff {
 		int x = (int) this.x;
 		int y = (int) this.y;
 		boolean[] neighbourWalls = new boolean[4];
+
+		if (x == 10 && y == 9)
+			System.gc();
+
 		if (cells[x + 1][y] != null)
-			if (!(cells[x + 1][y].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureE, 0, 0, null);
-			} else
-				neighbourWalls[0] = true;
+			if (cells[x + 1][y].getContentAmount() != 0)
+				if (!(cells[x + 1][y].getContent()[0] instanceof Wall)) {
+					g.drawImage(textureE, 0, 0, null);
+				} else
+					neighbourWalls[0] = true;
 
 		if (cells[x][y + 1] != null)
-			if (!(cells[x][y + 1].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureS, 0, 0, null);
-			} else
-				neighbourWalls[1] = true;
+			if (cells[x][y + 1].getContentAmount() != 0)
+				if (!(cells[x][y + 1].getContent()[0] instanceof Wall)) {
+					g.drawImage(textureS, 0, 0, null);
+				} else
+					neighbourWalls[1] = true;
 
 		if (cells[x - 1][y] != null)
-			if (!(cells[x - 1][y].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureW, 0, 0, null);
-			} else
-				neighbourWalls[2] = true;
+			if (cells[x - 1][y].getContentAmount() != 0)
+				if (!(cells[x - 1][y].getContent()[0] instanceof Wall)) {
+					g.drawImage(textureW, 0, 0, null);
+				} else
+					neighbourWalls[2] = true;
 
 		if (cells[x][y - 1] != null)
-			if (!(cells[x][y - 1].getContent()[0] instanceof Wall)) {
-				g.drawImage(textureN, 0, 0, null);
-			} else
-				neighbourWalls[3] = true;
+			if (cells[x][y - 1].getContentAmount() != 0)
+				if (!(cells[x][y - 1].getContent()[0] instanceof Wall)) {
+					g.drawImage(textureN, 0, 0, null);
+				} else
+					neighbourWalls[3] = true;
 
-		if (neighbourWalls[0] && neighbourWalls[1])
-			g.drawImage(textureSE, 0, 0, null);
-		if (neighbourWalls[1] && neighbourWalls[2])
-			g.drawImage(textureSW, 0, 0, null);
-		if (neighbourWalls[2] && neighbourWalls[3])
-			g.drawImage(textureNW, 0, 0, null);
-		if (neighbourWalls[3] && neighbourWalls[0])
-			g.drawImage(textureNE, 0, 0, null);
+		if (cells[x + 1][y + 1] != null)
+			if (neighbourWalls[0] && neighbourWalls[1]
+					&& cells[x + 1][y + 1].getContentAmount() != 0)
+				g.drawImage(textureSE, 0, 0, null);
+
+		if (cells[x - 1][y + 1] != null)
+			if (neighbourWalls[1] && neighbourWalls[2]
+					&& cells[x - 1][y + 1].getContentAmount() != 0)
+				g.drawImage(textureSW, 0, 0, null);
+
+		if (cells[x - 1][y - 1] != null)
+			if (neighbourWalls[2] && neighbourWalls[3]
+					&& cells[x - 1][y - 1].getContentAmount() != 0)
+				g.drawImage(textureNW, 0, 0, null);
+
+		if (cells[x + 1][y - 1] != null)
+			if (neighbourWalls[3] && neighbourWalls[0]
+					&& cells[x + 1][y - 1].getContentAmount() != 0)
+				g.drawImage(textureNE, 0, 0, null);
 
 		texture = finalTexture;
-		ready=true;
+		ready = true;
 	}
 
 	public void draw(Graphics g) {
-		if(!ready) 
+		if (!ready)
 			setTexture();
 		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
 	}
