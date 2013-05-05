@@ -107,7 +107,7 @@ public class GameField {
 		return GameField.otherThreads;
 	}
 
-	public void switchToNextLevel(int nextLevelId) {
+	public void switchToNextLevel(int nextLevelId,int robotx,int roboty) {
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
@@ -119,6 +119,9 @@ public class GameField {
 		robot.emptyContainer();
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
+		if ((robotx != -1) && (roboty != -1)) {
+			robot.SetXY(robotx, roboty);
+		}
 		robot.setContainer(buf);
 		try {
 			buf.itsAlive();
