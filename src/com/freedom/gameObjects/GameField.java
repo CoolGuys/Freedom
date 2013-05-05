@@ -104,11 +104,9 @@ public class GameField {
 		return GameField.otherThreads;
 	}
 
-<<<<<<< HEAD
-	public void switchToNextLevel(int nextLevelId, int robotx, int roboty) {
-=======
+
 	public void switchToNextLevel(int nextLevelId,int robotx,int roboty) {
->>>>>>> 4afdddd5e413ff78e2818a12e6a36e162b90bb98
+
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
 		resetTickerListeners();
@@ -172,11 +170,9 @@ public class GameField {
 		return cells;
 	}
 
-<<<<<<< HEAD
+
 	public synchronized Robot getRobot() {
-=======
-	public synchronized  Robot getRobot() {
->>>>>>> 4afdddd5e413ff78e2818a12e6a36e162b90bb98
+
 		return robot;
 	}
 
