@@ -123,6 +123,8 @@ public class Cell {
 		this.untouch();
 		int i;
 		for(i = 0; i<this.contentAmount; i++){
+			if(this.content[i]==null)
+				System.gc();
 			if(this.content[i].equals(element))
 				break;
 			if(i==(this.contentAmount - 1))
