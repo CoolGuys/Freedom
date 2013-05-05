@@ -175,11 +175,16 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="5">
 		</obj>
+		<obj class="com.freedom.gameObjects.Laser" x="6" y="5" direction = "S" color = "R">
+		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.ButtonOr" x="6" y="8">
+		<cels x="6" y="5" />
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="9">
 		</obj>

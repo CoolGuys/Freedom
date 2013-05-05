@@ -13,6 +13,8 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.view.GameScreen;
+
 public class TNT extends Stuff implements Moveable {
 
 	public static final int expDamage = 10;
@@ -117,12 +119,12 @@ public class TNT extends Stuff implements Moveable {
 			}
 
 			toWork.expBuf = 0;
+			GameScreen.getInstance().repaint();
 		}
 		
 		if ((GameField.getInstance().getRobot().getX() == this.getX())&&(GameField.getInstance().getRobot().getY() == this.getY())){
 			GameField.getInstance().getRobot().container[0] = null;
 		}
-		
 
 	}
 
