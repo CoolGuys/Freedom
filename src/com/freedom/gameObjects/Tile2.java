@@ -29,7 +29,7 @@ public class Tile2 extends Stuff {
 	}
 	
 	public Tile2() { 
-		super(false, true,false, false,0,10);
+		super(false, true,false, false,0,5);
 		texture = texture1;
 	}
 
@@ -44,4 +44,11 @@ public class Tile2 extends Stuff {
 		obj.setAttribute("y", String.valueOf((int)this.y));
 		obj.setAttribute("class","com.freedom.gameObjects.Tile2");
 	} 	
+	
+	void die(){
+		Pit buf = new Pit(this.x,this.y);
+		GameField.getInstance().cells[this.getX()][this.getY()].replace(this, buf);
+		
+	}
+	
 }

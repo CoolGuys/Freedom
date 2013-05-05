@@ -66,6 +66,7 @@ public class LevelExit extends Stuff {
 	public void touch() {
 		GameField.getInstance().getRobot()
 				.SetXY(super.getX() - 1, super.getY());
+
 		GameField.getInstance().switchToNextLevel(nextLevelID,robotx,roboty);
 	}
 }

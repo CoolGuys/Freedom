@@ -29,8 +29,7 @@ import com.freedom.gameObjects.Robot;
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
 
-	private GameScreen()
-	{
+	private GameScreen() {
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
@@ -126,7 +125,7 @@ public class GameScreen extends AbstractScreen {
 	public void activateModel() {
 		GameField.getInstance().activate();
 		ScreensHolder.getInstance().add(guiPane);
-		//ScreensHolder.getInstance().moveToFront(guiPane);
+		// ScreensHolder.getInstance().moveToFront(guiPane);
 	}
 
 	public static GameScreen getInstance() {
@@ -224,8 +223,7 @@ public class GameScreen extends AbstractScreen {
 	private static GameScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
-		public CoarseMovementAction(String name)
-		{
+		public CoarseMovementAction(String name) {
 			putValue(Action.NAME, name);
 		}
 
@@ -268,8 +266,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FineMovementAction extends AbstractAction {
-		public FineMovementAction(String name)
-		{
+		public FineMovementAction(String name) {
 			putValue(Action.NAME, name);
 		}
 
@@ -281,8 +278,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldCoarseOffsetAction extends AbstractAction {
-		public FieldCoarseOffsetAction(String name)
-		{
+		public FieldCoarseOffsetAction(String name) {
 			putValue(Action.NAME, name);
 		}
 
@@ -295,8 +291,7 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldFineOffsetAction extends AbstractAction {
-		public FieldFineOffsetAction(String name)
-		{
+		public FieldFineOffsetAction(String name) {
 			putValue(Action.NAME, name);
 		}
 
@@ -352,7 +347,7 @@ public class GameScreen extends AbstractScreen {
 			Graphics2D g2 = (Graphics2D) g;
 			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-			
+
 			FontRenderContext context = g2.getFontRenderContext();
 			g2.setFont(messageFont);
 			g2.setColor(new Color(0, 0, 0, 0.5f));
@@ -381,17 +376,17 @@ public class GameScreen extends AbstractScreen {
 		private ArrayList<String> messageLines = new ArrayList<String>();
 		private boolean visible;
 	}
-	
-	public class InGameGUIPane extends JLayeredPane { 
+
+	public class InGameGUIPane extends JLayeredPane {
 		public InGameGUIPane() {
 			this.setBounds(ScreensHolder.getInstance().getBounds());
 			this.setLocation(0, 0);
 			this.setVisible(true);
 		}
-		
+
 		public void paintComponent(Graphics g) {
 			msgDisplay.draw(g);
 		}
-		
+
 	}
 }

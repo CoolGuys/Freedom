@@ -1,6 +1,9 @@
 package com.freedom.gameObjects;
 
 import java.awt.Image;
+
+import java.util.*;
+
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -12,12 +15,14 @@ import org.w3c.dom.Element;
 
 public class TNT extends Stuff implements Moveable {
 
-	public static final int expDamage = 10;
+	public static final int expDamage = 5;
 	private static Image texture1;
 
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/TNT.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -26,9 +31,10 @@ public class TNT extends Stuff implements Moveable {
 
 	private String direction;
 
-	public TNT() {
+	public TNT()
+	{
 		super(true, false, false, false, 0, 1);
-		texture=texture1;
+		texture = texture1;
 	}
 
 	public void readLvlFile(Element obj) {
@@ -39,57 +45,106 @@ public class TNT extends Stuff implements Moveable {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.TNT");
+		obj.setAttribute("class", "com.freedom.gameObjects.TNT");
 	}
 
 	/*
 	 * здесь мы его взрываем. считаем, что в начальной клетке создаем волну, она
-	 * передает ее соседям, уменьшая дамаг на 1. обработка события - в целле,
-	 * "таймер" - там же(tryToDestroy) взрыв пока инициируется, когда робот
-	 * кладет динамит на пол
+	 * передает ее соседям, уменьшая дамаг на 1. "таймер" - здесь. взрыв
+	 * инициируется, когда робот кладет динамит на пол
 	 */
-	public void activate() {
+
+	private void activationProcess() {
 		Cell[][] buf = GameField.getInstance().getCells();
-		int[][] toGive = new int[2 * expDamage + 2][2 * expDamage + 2];
-		toGive[expDamage][expDamage] = this.expDamage;
-		int xSize = GameField.getInstance().getXsize();
-		int ySize = GameField.getInstance().getYsize();
+		Queue<Cell> que = new LinkedList<Cell>();
+		Cell toWork;
+
+		if (buf[this.getX()][this.getY()].deleteStuff(this))
+			buf[this.getX()][this.getY()].add(this);
+		else {
+			this.x = GameField.getInstance().getRobot().getX();
+			this.y = GameField.getInstance().getRobot().getY();
+			GameField.getInstance().getRobot().setContainer(null);
+		}
+
+		buf[this.getX()][this.getY()].expBuf = expDamage;
+		que.add(buf[this.getX()][this.getY()]);
 
 		// распределяем урон
-		for (int r = 0; r < expDamage; r++) {
-			for (int i = 0; i < expDamage; i++) {
-				for (int j = 0; j < expDamage; j++) {
 
-					if (((this.getX() + i + 1 - expDamage) < xSize)	& ((this.getY() + j - expDamage) < ySize)) {
-						if (((this.getX() + i + 1 - expDamage) >0)	& ((this.getY() + j - expDamage) >0)) {
-						if (toGive[i + expDamage][j + expDamage] != (1 + toGive[i + 1 + expDamage][j + expDamage])) {
-							toGive[i + 1 + expDamage][j + expDamage] = toGive[1 + expDamage][j	+ expDamage] - 1;
-							
-							if(!buf[getX()+i+1 - expDamage][getY()+j - expDamage].getTop().ifCanDestroy())
-								toGive[i + 1 + expDamage][j + expDamage] = 0;
-							if(toGive[i + 1 + expDamage][j + expDamage] <0)
-								toGive[i + 1 + expDamage][j + expDamage] = 0;
-						}
-						}
-					}
+		while (!que.isEmpty()) {
 
+			toWork = que.remove();
+			if (toWork.expBuf < 1)
+				continue;
+			toWork.tryToDestroy(toWork.expBuf);
+			toWork.ifExped = true;
+
+			if (!buf[toWork.getX() + 1][toWork.getY()].ifExped) {
+				if (buf[toWork.getX() + 1][toWork.getY()].getTop().expConductive) {
+					buf[toWork.getX() + 1][toWork.getY()].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX() + 1][toWork.getY()]);
 				}
 			}
+
+			if (!buf[toWork.getX() - 1][toWork.getY()].ifExped) {
+				if (buf[toWork.getX() - 1][toWork.getY()].getTop().expConductive) {
+					buf[toWork.getX() - 1][toWork.getY()].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX() - 1][toWork.getY()]);
+				}
+			}
+
+			if (!buf[toWork.getX()][toWork.getY() + 1].ifExped) {
+				if (buf[toWork.getX()][toWork.getY() + 1].getTop().expConductive) {
+					buf[toWork.getX()][toWork.getY() + 1].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX()][toWork.getY() + 1]);
+				}
+			}
+
+			if (!buf[toWork.getX()][toWork.getY() - 1].ifExped) {
+				if (buf[toWork.getX()][toWork.getY() - 1].getTop().expConductive) {
+					buf[toWork.getX()][toWork.getY() - 1].expBuf = toWork.expBuf - 1;
+					que.add(buf[toWork.getX()][toWork.getY() - 1]);
+				}
+			}
+
+			toWork.expBuf = 0;
 		}
 
-		for (int i = 1; i < 2 * expDamage; i++) {
-			for (int j = 1; j < 2 * expDamage; j++) {
-				buf[(int) this.x + i - expDamage][(int) this.y + j - expDamage]
-						.tryToDestroy(toGive[i][j]);
+		buf[this.getX()][this.getY()].deleteStuff(this);
+		for (int i = 0; i < expDamage; i++) {
+			for (int j = 0; j < expDamage; j++) {
+				buf[this.getX() + i][this.getY() + j].ifExped = false;
+				buf[this.getX() - i][this.getY() + j].ifExped = false;
+				buf[this.getX() + i][this.getY() - j].ifExped = false;
+				buf[this.getX() - i][this.getY() - j].ifExped = false;
 			}
 		}
 
 	}
 
-	public void setDirection(String direction) {
-		this.direction=direction;
+	public void activate() {
+		MyThread t = new MyThread();
+		t.setName("TNT Timer");
+		t.start();
 	}
 
+	private class MyThread extends Thread {
+		public void run() {
+			try {
+				sleep(10000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			activationProcess();
+
+		}
+	}
+
+	/*
+	 * Поправить этот метод!!!!!!
+	 */
 	public void move(String direction) {
 		double step = this.expDamage
 				* GameField.getInstance().getRobot().getStep();
@@ -116,12 +171,6 @@ public class TNT extends Stuff implements Moveable {
 	}
 
 	@Override
-	public void recalibrate() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public double getStep() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -137,5 +186,20 @@ public class TNT extends Stuff implements Moveable {
 	public Point getTargetCellCoordinates(String direction) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void recalibrate() {
+		x = Math.round(x);
+		y = Math.round(y);
+		if (container[0] == null)
+			return;
+		container[0].x = Math.round(container[0].x);
+		container[0].y = Math.round(container[0].y);
+	}
+
+	@Override
+	public void setDirection(String direction) {
+		// TODO Auto-generated method stub
+
 	}
 }

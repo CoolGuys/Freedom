@@ -265,7 +265,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			return point;
 		}
 	}
-
+	
 	public void changeTexture() {
 		switch (this.picID) {
 		case 1:

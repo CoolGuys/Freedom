@@ -15,6 +15,13 @@ public class Pit extends Stuff{
 		texture=texture1;
 	}
 	
+	public Pit(double x, double y) { 
+		super(false, true, false, false);
+		texture=texture1;
+		this.x = x;
+		this.y = y;
+	}
+	
 	
 	public void readLvlFile(Element obj) {
 		this.x=Integer.parseInt(obj.getAttribute("x"));
