@@ -84,9 +84,6 @@ public class Wall extends Stuff {
 		int y = (int) this.y;
 		boolean[] neighbourWalls = new boolean[4];
 
-		if (x == 10 && y == 9)
-			System.gc();
-
 		if (cells[x + 1][y] != null)
 			if (cells[x + 1][y].getContentAmount() != 0)
 				if (!(cells[x + 1][y].getContent()[0] instanceof Wall)) {

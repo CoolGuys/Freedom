@@ -291,7 +291,7 @@ public class Cell {
 
 	
 	//здесь наносим урон предметам 
-	public void tryToDestroy(int damage){
+	public void dealDamageToContent(int damage){
 		if(this.contentAmount == 0 )
 			return;
 		for (int i = 0; i < Cell.this.contentAmount; i++) {

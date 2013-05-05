@@ -23,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
+import com.freedom.gameObjects.Box;
 import com.freedom.gameObjects.GameField;
 import com.freedom.gameObjects.Robot;
 
@@ -68,6 +69,8 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
+		
+		imap.put(KeyStroke.getKeyStroke("B"), "give.box");
 
 	}
 
@@ -82,6 +85,7 @@ public class GameScreen extends AbstractScreen {
 		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
 		InteractAction interact = new InteractAction();
+		BoxGiver boxGiver = new BoxGiver();
 		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
@@ -113,6 +117,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
+		amap.put("give.box", boxGiver);
 
 	}
 
@@ -254,6 +259,19 @@ public class GameScreen extends AbstractScreen {
 				GameField.getInstance().getRobot().take();
 			else
 				GameField.getInstance().getRobot().put();
+		}
+	}
+	
+
+	private class BoxGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+				Robot r = GameField.getInstance().getRobot();
+				r.setContainer(new Box());
+				repaint();
+			
 		}
 	}
 

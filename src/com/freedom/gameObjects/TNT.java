@@ -13,14 +13,18 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.view.GameScreen;
+
 public class TNT extends Stuff implements Moveable {
 
-	public static final int expDamage = 10;
+	public static final int expDamage = 5;
 	private static Image texture1;
 
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/TNT.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -29,7 +33,8 @@ public class TNT extends Stuff implements Moveable {
 
 	private String direction;
 
-	public TNT() {
+	public TNT()
+	{
 		super(true, false, false, false, 0, 1);
 		texture = texture1;
 	}
@@ -42,14 +47,13 @@ public class TNT extends Stuff implements Moveable {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.TNT");
+		obj.setAttribute("class", "com.freedom.gameObjects.TNT");
 	}
 
 	/*
 	 * здесь мы его взрываем. считаем, что в начальной клетке создаем волну, она
-	 * передает ее соседям, уменьшая дамаг на 1.
-	 * "таймер" - здесь. взрыв инициируется, когда робот кладет динамит на
-	 * пол
+	 * передает ее соседям, уменьшая дамаг на 1. "таймер" - здесь. взрыв
+	 * инициируется, когда робот кладет динамит на пол
 	 */
 
 	private void activationProcess() {
@@ -65,17 +69,25 @@ public class TNT extends Stuff implements Moveable {
 			GameField.getInstance().getRobot().setContainer(null);
 		}
 
-		buf[this.getX()][this.getY()].expBuf = this.expDamage;
+		buf[this.getX()][this.getY()].expBuf = expDamage;
 		que.add(buf[this.getX()][this.getY()]);
+		
 
+		this.punch(1);
+		buf[this.getX()][this.getY()].deleteStuff(this);
 		// распределяем урон
 
 		while (!que.isEmpty()) {
-
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			toWork = que.remove();
 			if (toWork.expBuf < 1)
 				continue;
-			toWork.tryToDestroy(toWork.expBuf);
+			toWork.dealDamageToContent(toWork.expBuf);
 			toWork.ifExped = true;
 
 			if (!buf[toWork.getX() + 1][toWork.getY()].ifExped) {
@@ -105,43 +117,45 @@ public class TNT extends Stuff implements Moveable {
 					que.add(buf[toWork.getX()][toWork.getY() - 1]);
 				}
 			}
+			GameScreen.getInstance().repaint();
 
 			toWork.expBuf = 0;
 		}
 
-		buf[this.getX()][this.getY()].deleteStuff(this);
-		for (int i = 0; i < this.expDamage; i++) {
-			for (int j = 0; j < this.expDamage; j++) {
-				buf[this.getX() + i][this.getY() + j].ifExped = false;
-				buf[this.getX() - i][this.getY() + j].ifExped = false;
-				buf[this.getX() + i][this.getY() - j].ifExped = false;
-				buf[this.getX() - i][this.getY() - j].ifExped = false;
+		for (int i = 0; i < expDamage; i++) {
+			for (int j = 0; j < expDamage; j++) {
+				if (buf[this.getX() + i][this.getY() + j] != null)
+					buf[this.getX() + i][this.getY() + j].ifExped = false;
+				if (buf[this.getX() - i][this.getY() + j] != null)
+					buf[this.getX() - i][this.getY() + j].ifExped = false;
+				if (buf[this.getX() + i][this.getY() - j] != null)
+					buf[this.getX() + i][this.getY() - j].ifExped = false;
+				if (buf[this.getX() - i][this.getY() - j] != null)
+					buf[this.getX() - i][this.getY() - j].ifExped = false;
 			}
 		}
 
 	}
 
-
 	public void activate() {
-		MyThread t = new MyThread();
-		t.start();
+		TNTExploder exploder = new TNTExploder();
+		GameField.otherThreads.execute(exploder);
 	}
 
-	private class MyThread extends Thread {
+	
+	private class TNTExploder implements Runnable {
 		public void run() {
 			try {
-				this.sleep(3000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			TNT.this.activationProcess();
+			activationProcess();
 
 		}
 	}
 
-	
-	
 	/*
 	 * Поправить этот метод!!!!!!
 	 */
@@ -170,8 +184,6 @@ public class TNT extends Stuff implements Moveable {
 
 	}
 
-
-
 	@Override
 	public double getStep() {
 		// TODO Auto-generated method stub
@@ -189,19 +201,19 @@ public class TNT extends Stuff implements Moveable {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	public void recalibrate() {
 		x = Math.round(x);
 		y = Math.round(y);
-		if(container[0]==null)
+		if (container[0] == null)
 			return;
-		container[0].x=Math.round(container[0].x);
-		container[0].y=Math.round(container[0].y);
+		container[0].x = Math.round(container[0].x);
+		container[0].y = Math.round(container[0].y);
 	}
 
 	@Override
 	public void setDirection(String direction) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
