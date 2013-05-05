@@ -25,6 +25,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int direc;
 	private int trekLenght = 5;
 	private PacmanSoul p;
+	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger("");
 
 	private static BufferedImage texture1S = new BufferedImage(getSize(),
@@ -266,9 +267,6 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public void changeTexture() {
-		double rotationRequired = Math.toRadians(0);
-		double locationX;
-		double locationY;
 		switch (this.picID) {
 		case 1:
 			this.direc *= -1;

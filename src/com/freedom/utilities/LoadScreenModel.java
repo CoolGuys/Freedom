@@ -20,9 +20,8 @@ import java.util.logging.Logger;
 
 import com.freedom.gameObjects.GameField;
 import com.freedom.view.LoadScreen;
-import com.freedom.view.PauseScreen;
-import com.freedom.view.ScreensHolder;
 import com.freedom.view.SaveScreen;
+import com.freedom.view.ScreensHolder;
 
 public class LoadScreenModel {
 
@@ -137,10 +136,6 @@ public class LoadScreenModel {
 			return line * (dimensionY + gap) + offsetY;
 		}
 
-		public void reset() {
-			this.textColor = Color.LIGHT_GRAY;
-			this.text = null;
-		}
 
 		public void checkIfPressed(Point p) {
 			if ((p.getX() >= this.positionX

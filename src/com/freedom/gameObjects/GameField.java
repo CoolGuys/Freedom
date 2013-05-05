@@ -64,9 +64,6 @@ public class GameField {
 		active = true;
 		ticker.start();
 		deathTicker.start();
-		PathFinder finder =new PathFinder();
-		System.out.println("asd");
-		System.out.println(finder.find(2, 2, 2, 2, 4000));
 	}
 
 	public void deactivate() {

@@ -4,9 +4,7 @@ import javax.swing.JLayeredPane;
 
 import com.freedom.gameObjects.GameField;
 import com.freedom.gameObjects.Moveable;
-import com.freedom.gameObjects.TNT;
 import com.freedom.view.GameScreen;
-import com.freedom.view.ScreensHolder;
 
 public final class TNTmovementAnimator<MovingObj extends Moveable> implements Runnable {
 
