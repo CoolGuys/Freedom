@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.utilities.SoundEngine;
 import com.freedom.view.GameScreen;
 
 public class ButtonOr extends Stuff {
@@ -24,7 +25,7 @@ public class ButtonOr extends Stuff {
 	private int controlledCellsAmount; // количество целлов на которые действует
 										// батон
 	private ActionListener sender;
-
+	private static File f2;		
 	static {
 		try {
 			texturePressed = ImageIO.read(
@@ -35,6 +36,8 @@ public class ButtonOr extends Stuff {
 					new File("Resource/Textures/ButtonDepressed.png"))
 					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
+			f2 = new File("Resource/Sound/ButtonClicked.wav");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -102,6 +105,7 @@ public class ButtonOr extends Stuff {
 	}
 
 	void touch() {
+		SoundEngine.playClip(f2, -1, -15);
 		texture = texturePressed;
 		sender = new SignalOnSender();
 		GameField.getInstance().getTicker().addActionListener(sender);

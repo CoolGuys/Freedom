@@ -7,6 +7,9 @@ import java.awt.image.SinglePixelPackedSampleModel;
 import com.freedom.utilities.PathFinder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.swing.Timer;
 import com.freedom.utilities.Loader;
 import com.freedom.view.GameScreen;
@@ -34,14 +37,14 @@ public class GameField {
 	public Cell[][] cells;
 	private int xSize;
 	private int ySize;
-	// private Logger logger = Logger.getLogger("Core.GameField");
+	//private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
 	public static ExecutorService otherThreads;
 	public boolean active;
-
+	private Logger gleblo = Logger.getLogger("gleblo");
 	public void setPathToSave(String pathToSaveFile) {
 		this.pathToSave = pathToSaveFile;
 	}
@@ -104,8 +107,7 @@ public class GameField {
 		return GameField.otherThreads;
 	}
 
-
-	public void switchToNextLevel(int nextLevelId,int robotx,int roboty) {
+	public void switchToNextLevel(int nextLevelId, int robotx, int roboty) {
 
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
@@ -118,10 +120,29 @@ public class GameField {
 		robot.emptyContainer();
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
-		if ((robotx != -1) && (roboty != -1)) {
-			robot.SetXY(robotx, roboty);
-		}
 		robot.setContainer(buf);
+		if ((robotx != -1) && (roboty != -1)) {
+			gleblo.setLevel(Level.ALL);
+			gleblo.info("robotXYsetting x=" + robotx + " y=" + roboty);
+
+			int previousx = robot.getX();
+			int previousy = robot.getY();
+			Stuff element = GameField.getInstance().getCells()[previousx][previousy]
+					.getTop();
+			for (Stuff containedElement : element.container) {
+				if (containedElement != null) {
+					containedElement.x = robotx;
+					containedElement.y = roboty;
+				}
+			}
+			if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
+				GameField.getInstance().getCells()[previousx][previousy]
+						.deleteStuff();
+			}
+
+			gleblo.setLevel(Level.OFF);
+		}
+		
 		try {
 			buf.itsAlive();
 		} catch (Exception E) {

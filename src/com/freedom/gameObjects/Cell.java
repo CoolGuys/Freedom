@@ -123,6 +123,16 @@ public class Cell {
 		return buf;
 	}
 
+	public void kickAllStuff(int painValue){
+		for (int i = 0; i < this.contentAmount; i++) {
+			try{
+				content[i].punch(painValue);
+			}catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+		}
+	}
 	
 	public boolean deleteStuff(Stuff element) {
 

@@ -181,7 +181,7 @@ public class PacmanBody extends Stuff implements Moveable {
 
 	public PacmanBody()
 	{
-		super(true, false, false, false);
+		super(true, false, false, false,0,1);
 		texture = texture1N;
 		this.picID = 1;
 		this.direction = "N";
@@ -201,7 +201,10 @@ public class PacmanBody extends Stuff implements Moveable {
 		itsAlive();
 		// p.InHell();
 	}
-
+	
+	void die(){
+		this.p.alive=false;
+	}
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!

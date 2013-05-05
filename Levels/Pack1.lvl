@@ -95,6 +95,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="3" y="15">
 		</obj>
+		<obj class="com.freedom.gameObjects.LevelExit" xr="13" yr="9" next="2" x="3" y="15">
+		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="3" y="16">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="4" y="1">
@@ -205,8 +207,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="6">
 		</obj>
-		<obj class="com.freedom.gameObjects.LevelExit" xr="-1" yr="-1" next="2" x="7" y="6">
-		</obj>
+		<obj class="com.freedom.gameObjects.LevelExit" xr="13" yr="2" next="2" x="7" y="6">
+		</obj>		
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="7" y="8">
@@ -985,9 +987,6 @@
 		<robot dir="W" x="2" y="2">
 		</robot>
 	</level>
-	
-	
-	
 	<level height="10" num="2" width="15">		
 		<obj class="com.freedom.gameObjects.Wall" x="1" y="1">
 		</obj>
@@ -1052,6 +1051,8 @@
 		<obj class="com.freedom.gameObjects.Tile" x="3" y="5">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="3" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.Trap" x="3" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="3" y="7">
 		</obj>
@@ -1286,13 +1287,11 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="13" y="6">
 		</obj>
-		<obj class="com.freedom.gameObjects.Tile" x="13" y="7">
+		<obj class="com.freedom.gameObjects.Wall" x="13" y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="13" y="8">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="13" y="9">
-		</obj>
-		<obj class="com.freedom.gameObjects.Box" color="b" x="13" y="9">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="13" y="10">
 		</obj>
@@ -1300,7 +1299,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="2">
 		</obj>
-		<obj class="com.freedom.gameObjects.LevelExit" xr="-1" yr="-1" next="1" x="14" y="2">
+		<obj class="com.freedom.gameObjects.LevelExit" xr="3" yr="3" next="1" x="14" y="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="3">
 		</obj>
@@ -1310,11 +1309,15 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="6">
 		</obj>
-		<obj class="com.freedom.gameObjects.Tile" x="14" y="7">
+		<obj class="com.freedom.gameObjects.Wall" x="14" y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="8">
 		</obj>
+		<obj class="com.freedom.gameObjects.HealthKit" heals="10" x="14" y="8">
+		</obj>				
 		<obj class="com.freedom.gameObjects.Tile" x="14" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.LevelExit" xr="2" yr="15" next="1" x="14" y="9">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="14" y="10">
 		</obj>
