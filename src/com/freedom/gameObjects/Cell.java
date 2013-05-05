@@ -20,21 +20,24 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
-	
+
 	private static Image highlighted;
 	private boolean isHighlighted;
 	
+	int expBuf; // буфер для взрыва - не трогать!
+	boolean ifExped; //ключ для взрыва - не трогать!
+
 	public boolean isExamined;
 	static {
 		try {
-			highlighted= ImageIO.read(new File(
+			highlighted = ImageIO.read(new File(
 					"Resource/Textures/Highlighter.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public Cell(int a, int b) {
 		this.x = a;
 		this.y = b;
@@ -43,6 +46,8 @@ public class Cell {
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
+		this.expBuf = 0;
+		ifExped = false;
 	}
 
 	public void utilityAdd(Stuff toAdd) {
@@ -98,7 +103,7 @@ public class Cell {
 
 	public Stuff deleteStuff() {
 
-		if (this.contentAmount == 1)
+		if (this.contentAmount == 0)
 			return null;
 
 
@@ -117,26 +122,51 @@ public class Cell {
 		buf.stopHarming();
 		return buf;
 	}
+
 	
-	public Stuff deleteStuff(Stuff element) {
+	public boolean deleteStuff(Stuff element) {
 
 		this.untouch();
+		if (this.contentAmount == 0)
+			return false;
+
 		int i;
-		for(i = 0; i<this.contentAmount; i++){
-			if(this.content[i].equals(element))
+		for (i = 0; i < this.contentAmount; i++) {
+			if (this.content[i].equals(element))
 				break;
+
 			if(i==(this.contentAmount - 1))
-				return null;
+				return false;
 		}
 		this.damage = this.damage - element.getDamage();
-		
-		for(int j = i; j<this.contentAmount-1; j++){
-			this.content[j] = this.content[j+1];
+
+		for (int j = i; j < this.contentAmount - 1; j++) {
+			this.content[j] = this.content[j + 1];
 		}
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
+
+		this.touch();// //под вопросом
+		return true;
+	}
+	
+	boolean replace(Stuff toReplace,Stuff replaceWith){
+		if (this.contentAmount == 0)
+			return false;
 		
-		return element;
+		if(replaceWith.equals(null))
+			this.deleteStuff(toReplace);
+		
+		int i;
+		for (i = 0; i < this.contentAmount; i++) {
+			if (this.content[i].equals(toReplace))
+				break;
+			if (i == (this.contentAmount - 1))
+				return false;
+		}
+		this.content[i] = replaceWith;
+		return true;
+		
 	}
 
 	// блок выдачи информации
@@ -232,27 +262,41 @@ public class Cell {
 		return false;
 	}
 
+
+	/*public void robotOn() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			this.content[i].robotOn();
+		}
+		GameField.getInstance().getRobot().harm(this.damage); // робот должен
+																// быть уже
+																// сверху
+	}
+
+	public void robotOff() {
+		for (int i = 1; i < this.contentAmount; i++) {
+			this.content[i].robotOff();
+		}
+	}*/
+
+
 	
-	//здесь наносим урон предметам с задержкой
+	//здесь наносим урон предметам 
 	public void tryToDestroy(int damage){
 		if(this.contentAmount == 0 )
 			return;
-		
-		try {
-			wait(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (int i = 0; i < Cell.this.contentAmount; i++) {
+			Cell.this.content[i].punch(damage);
 		}
-		
-		for(int i = 0; i<this.contentAmount; i++){
-			this.content[i].punch(damage);
+
+	}
+
+	public void activate() {
+		for (int i = 0; i < this.contentAmount; i++) {
+			this.content[i].activate();
 		}
 	}
-	
-	
-	
-	
+
+	// ////////////////
 
 	boolean getIfPassable() {
 		for (int i = 0; i < this.contentAmount; i++) {
@@ -262,13 +306,13 @@ public class Cell {
 
 		return true;
 	}
-	
-	boolean getIfConductsExp(){
+
+	boolean getIfConductsExp() {
 		for (int i = 0; i < this.contentAmount; i++) {
 			if (!this.content[i].expConductive)
 				return false;
 		}
-		
+
 		return true;
 	}
 
@@ -278,22 +322,25 @@ public class Cell {
 		else
 			return false;
 	}
-	
+
 	public void draw(Graphics g) {
-		if(isHighlighted)
-			g.drawImage(highlighted, (int) (content[0].x * Stuff.getSize()), (int) (content[0].y * Stuff.getSize()),
-					Stuff.getSize(), Stuff.getSize(), null);
+		if (isHighlighted)
+			g.drawImage(highlighted, (int) (content[0].x * Stuff.getSize()),
+					(int) (content[0].y * Stuff.getSize()), Stuff.getSize(),
+					Stuff.getSize(), null);
 		else
 			return;
-		
+
 	}
 
 	public void highlight() {
 		this.isHighlighted = true;
 	}
+
 	public void unhighlight() {
 		this.isHighlighted = false;
 	}
+
 
 	public void setMeta(Stuff toToggle) {
 		this.metaLevel=toToggle;
@@ -305,6 +352,5 @@ public class Cell {
 		return this.metaLevel;
 	}
 
-	
 
 }

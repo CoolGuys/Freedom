@@ -264,7 +264,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			return point;
 		}
 	}
-
+	
 	public void changeTexture() {
 		double rotationRequired = Math.toRadians(0);
 		double locationX;

@@ -55,13 +55,14 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
-		super(false, true, false, true, 0, 15);
+		super(false, true, false, true, 0, maxLives);
+
 		super.x = posX;
 		super.y = posY;
 		this.direction = direction;
 		this.container[0] = c;
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.ALL);
 	}
 
 	public boolean obj() {
@@ -140,8 +141,7 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void moveCoarse(String direction) {
-		if (Math.abs(GameScreen.getInstance()
-				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
+		if (Math.abs(GameScreen.getInstance().рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
 				.getInstance().getWidth() / 2 - 4 * getSize())
 			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
 
@@ -241,6 +241,9 @@ public class Robot extends Stuff implements Moveable {
 		if (isMoving || GameField.getInstance().cells[this.getTargetCellCoordinates(getDirection()).x][this.getTargetCellCoordinates(getDirection()).y].locked)
 			return;
 
+		if (this.container[0] == null)
+			return;
+		
 		if (this.container[0] instanceof TNT) {
 			TNT buf = (TNT) this.container[0];
 			buf.x = this.getTargetCellCoordinates(direction).x;
@@ -249,8 +252,7 @@ public class Robot extends Stuff implements Moveable {
 			this.container[0] = null;
 		}
 
-		if (this.container[0] == null)
-			return;
+		
 
 		int targetX = this.getTargetCellCoordinates(getDirection()).x;
 		int targetY = this.getTargetCellCoordinates(getDirection()).y;
@@ -260,8 +262,10 @@ public class Robot extends Stuff implements Moveable {
 		if (!GameField.getInstance().cells[targetX][targetY]
 				.add(this.container[0]))
 			return;
+
 		this.container[0] = null;
 		GameScreen.getInstance().repaint();
+		
 		return;
 
 	}
@@ -290,7 +294,10 @@ public class Robot extends Stuff implements Moveable {
 		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-
+		if(direction==null) {
+			logger.info("EverythingIsBad");
+			return;
+		}
 		if (direction.equals("N")) {
 			g2.drawImage(textureN, (int) (x * getSize()),
 					(int) (y * getSize()), null);
