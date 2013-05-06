@@ -60,7 +60,7 @@ public class Laser extends Stuff {
 			return false;
 		else{
 			this.ifActive = true;
-			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 5);
+			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 50);
 			this.beamHead.setSource(this);
 			GameField.getInstance().getDeathTicker().addActionListener(sender);
 			return true;	

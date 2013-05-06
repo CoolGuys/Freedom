@@ -144,13 +144,14 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "SE";
 				this.y = this.y + 1;
-				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
-						.getIfAbsorb()) {
+						.getIfAbsorb()
+						&& ((int) Math.ceil(this.getDamage() / 2.0) - 1 > 0)) {
 
 					this.prev.secondNext = new LaserBeam("NW", this.getX() - 1,
-							this.getY() - 1, this.getDamage() / 2);
+							this.getY() - 1,
+							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
@@ -158,18 +159,32 @@ public class LaserBeam extends Stuff {
 					this.prev.secondNext.buildBeam();
 				}
 
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getIfAbsorb()) {
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
+					//this.prev.secondNext = null;
+					//return;
+				}
+
+				this.reduceDamage(this.getDamage() / 2 + 1);
+
 			} else if (!GameField.getInstance().cells[this.getX()][this.getY() + 1]
 					.getIfReflect()) {
 				this.direction = "SE";
 				this.y = this.y + 1;
+				this.reduceDamage(1);
 			} else if (!GameField.getInstance().cells[this.getX() - 1][this
 					.getY()].getIfReflect()) {
 				this.direction = "NW";
 				this.x = this.x - 1;
+				this.reduceDamage(1);
 			} else {
 				this.direction = "SW";
 				this.y = this.y + 1;
 				this.x = this.x - 1;
+				this.reduceDamage(1);
 			}
 		}
 
@@ -181,12 +196,15 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "SW";
 				this.y = this.y + 1;
-				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
-						.getIfAbsorb()) {
+						.getIfAbsorb()
+						&& (int) Math.ceil(this.getDamage() / 2.0) - 1 > 0) {
+
 					this.prev.secondNext = new LaserBeam("NE", this.getX() + 1,
-							this.getY() - 1, this.getDamage() / 2);
+							this.getY() - 1,
+							(int) Math.ceil(this.getDamage() / 2.0) - 1);
+
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
@@ -194,18 +212,32 @@ public class LaserBeam extends Stuff {
 					this.prev.secondNext.buildBeam();
 				}
 
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getIfAbsorb()) {
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
+					//this.prev.secondNext = null;
+					//return;
+				}
+
+				this.reduceDamage(this.getDamage() / 2 + 1);
+
 			} else if (!GameField.getInstance().cells[this.getX()][this.getY() + 1]
 					.getIfReflect()) {
 				this.direction = "SW";
 				this.y = this.y + 1;
+				this.reduceDamage(1);
 			} else if (!GameField.getInstance().cells[this.getX() + 1][this
 					.getY()].getIfReflect()) {
 				this.direction = "NE";
 				this.x = this.x + 1;
+				this.reduceDamage(1);
 			} else {
 				this.direction = "SE";
 				this.y = this.y + 1;
 				this.x = this.x + 1;
+				this.reduceDamage(1);
 			}
 		}
 
@@ -218,31 +250,47 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "NE";
 				this.y = this.y - 1;
-				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
-						.getIfAbsorb()) {
+						.getIfAbsorb()
+						&& (int) Math.ceil(this.getDamage() / 2.0) - 1 > 0) {
+
 					this.prev.secondNext = new LaserBeam("SW", this.getX() - 1,
-							this.getY() + 1, this.getDamage() / 2);
+							this.getY() + 1,
+							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
+				
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].getIfAbsorb()) {
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
+					//this.prev.secondNext = null;
+					//return;
+				}
+
+				this.reduceDamage(this.getDamage() / 2 + 1);
 
 			} else if (!GameField.getInstance().cells[this.getX()][this.getY() - 1]
 					.getIfReflect()) {
 				this.direction = "NE";
 				this.y = this.y - 1;
+				this.reduceDamage(1);
 			} else if (!GameField.getInstance().cells[this.getX() - 1][this
 					.getY()].getIfReflect()) {
 				this.direction = "SW";
 				this.x = this.x - 1;
+				this.reduceDamage(1);
 			} else {
 				this.direction = "NW";
 				this.y = this.y - 1;
 				this.x = this.x - 1;
+				this.reduceDamage(1);
 			}
 		} else {
 			if ((!GameField.getInstance().cells[this.getX()][this.getY() - 1]
@@ -252,31 +300,47 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "NW";
 				this.y = this.y - 1;
-				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
-						.getIfAbsorb()) {
+						.getIfAbsorb()
+						&& (int) Math.ceil(this.getDamage() / 2.0) - 1 > 0) {
+
 					this.prev.secondNext = new LaserBeam("SE", this.getX() + 1,
-							this.getY() + 1, this.getDamage() / 2);
+							this.getY() + 1,
+							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
+				
+				if (GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].getIfAbsorb()) {
+
+					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
+					//this.prev.secondNext = null;
+					//return;
+				}
+
+				this.reduceDamage(this.getDamage() / 2 + 1);
 
 			} else if (!GameField.getInstance().cells[this.getX()][this.getY() - 1]
 					.getIfReflect()) {
 				this.direction = "NW";
 				this.y = this.y - 1;
+				this.reduceDamage(1);
 			} else if (!GameField.getInstance().cells[this.getX() + 1][this
 					.getY()].getIfReflect()) {
 				this.direction = "SE";
 				this.x = this.x + 1;
+				this.reduceDamage(1);
 			} else {
 				this.direction = "NE";
 				this.y = this.y - 1;
 				this.x = this.x + 1;
+				this.reduceDamage(1);
 			}
 
 		}
@@ -367,7 +431,7 @@ public class LaserBeam extends Stuff {
 			this.next.setSource(this.source);
 			this.next.prev = this;
 			buf[this.next.getX()][this.next.getY()].add(this.next);
-			
+
 			this.next.buildBeam();
 		}
 		GameScreen.getInstance().repaint();
@@ -378,20 +442,24 @@ public class LaserBeam extends Stuff {
 	 * удалится все после этого элемента
 	 */
 	void deleteBeam() {
-		LaserBeam buf = this.next;
+		LaserBeam buf = this;
 		Cell[][] cellBuf = GameField.getInstance().cells;
 		while (buf != null) {
 
 			if (buf.secondNext != null) {
+				/*GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
+						.getY()].deleteStuff(buf.prev.secondNext);*/
 				buf.secondNext.deleteBeam();
-				GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
-						.getY()].deleteStuff(buf.secondNext);
+				
 
 			}
 
-			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+			
+			System.out.println(buf.getX() + " " + buf.getY() + cellBuf[buf.getX()][buf.getY()].deleteStuff(buf));
 			buf = buf.next;
+			
 		}
+		
 		this.next = null;
 	}
 

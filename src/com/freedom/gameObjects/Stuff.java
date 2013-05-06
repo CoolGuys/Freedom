@@ -25,7 +25,7 @@ public class Stuff {
 	public Stuff[] container = new Stuff[1];
 	int maxLives;
 
-	private int damage; // number of lives you loose
+	protected int damage; // number of lives you loose
 	private boolean ifDestroyable;
 	private int lives;
 	private boolean ifAbsorb;
@@ -170,8 +170,8 @@ public class Stuff {
 
 	void reduceDamage(int toReduce) {
 		this.damage = this.damage - toReduce;
-		if (this.damage < 0)
-			this.damage = 0;
+		if (this.damage < 1)
+			damage=0;
 	}
 
 	public boolean getIfTakeable() {
@@ -267,7 +267,7 @@ public class Stuff {
 		g2.setColor(Color.WHITE);
 		g2.fill(r);
 		try {
-			Thread.sleep(1);
+			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

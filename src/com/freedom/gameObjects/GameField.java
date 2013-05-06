@@ -33,8 +33,8 @@ public class GameField {
 	private String pathToSave;
 	private int previousLevelId;
 	public Cell[][] previousCells;
-	private Robot robot;
-	public Cell[][] cells;
+	private volatile Robot robot;
+	public volatile Cell[][] cells;
 	private int xSize;
 	private int ySize;
 	//private Logger logger = Logger.getLogger("Core.GameField");
