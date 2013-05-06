@@ -17,6 +17,7 @@ import com.freedom.utilities.Mover;
 
 public class PacmanBody extends Stuff implements Moveable {
 
+	private boolean alive;
 	private int rate;
 	boolean isMoving;
 	private double step = 0.1;
@@ -134,8 +135,10 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public void itsAlive() {
-		this.p = new PacmanSoul(this.rate, this, this.trekLenght);
-		GameField.getInstance().getThreads().execute(this.p);
+		if (this.alive) {
+			this.p = new PacmanSoul(this.rate, this, this.trekLenght);
+			GameField.getInstance().getThreads().execute(this.p);
+		}
 	}
 
 	public void move(String direction) {
@@ -198,11 +201,19 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.rate = Integer.parseInt(obj.getAttribute("rate"));
 		// System.out.println("ololo");
+		String salive= obj.getAttribute("alive");
+		System.out.println(salive+"lolo");
+		if(!salive.equals("")){
+			this.alive=Boolean.parseBoolean(salive);
+		}else {
+			this.alive=true;
+		}
 		itsAlive();
 		// p.InHell();
 	}
 	
 	void die(){
+		this.alive=false;
 		this.p.alive=false;
 	}
 	/**
@@ -215,7 +226,9 @@ public class PacmanBody extends Stuff implements Moveable {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("rate", String.valueOf((int) this.rate));
+		obj.setAttribute("alive", String.valueOf(this.alive));
 		obj.setAttribute("class", "com.freedom.gameObjects.PacmanBody");
+		
 	}
 
 	public void move1(String direction) {
@@ -234,9 +247,7 @@ public class PacmanBody extends Stuff implements Moveable {
 				.getTargetCellCoordinates(direction).x][this
 				.getTargetCellCoordinates(direction).y].ifCanPassThrough())
 			return true;
-
 		return false;
-
 	}
 
 	/**

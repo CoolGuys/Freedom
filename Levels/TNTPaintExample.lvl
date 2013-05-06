@@ -241,7 +241,7 @@
 </obj><obj class="com.freedom.gameObjects.Tile" x="4" y="6">
 </obj><obj class="com.freedom.gameObjects.Box" color="null" x="4" y="6">
 </obj><obj class="com.freedom.gameObjects.Tile" x="4" y="7">
-</obj><obj class="com.freedom.gameObjects.Box" color="null" x="4" y="7">
+</obj><obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="4" y="7">
 </obj><obj class="com.freedom.gameObjects.Tile" x="4" y="8">
 </obj><obj class="com.freedom.gameObjects.Box" color="null" x="4" y="8">
 </obj><obj class="com.freedom.gameObjects.Tile" x="4" y="9">
