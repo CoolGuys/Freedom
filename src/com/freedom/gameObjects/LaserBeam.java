@@ -150,10 +150,11 @@ public class LaserBeam extends Stuff {
 						.getIfAbsorb()) {
 
 					this.prev.secondNext = new LaserBeam("NW", this.getX() - 1,
-							this.getY() - 1, this.getDamage() / 2 );
+							this.getY() - 1, this.getDamage() / 2);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
+					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
@@ -180,15 +181,16 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "SW";
 				this.y = this.y + 1;
-				this.reduceDamage(this.getDamage() / 2 + 1 );
+				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
 						.getIfAbsorb()) {
 					this.prev.secondNext = new LaserBeam("NE", this.getX() + 1,
-							this.getY() - 1, this.getDamage() / 2 );
+							this.getY() - 1, this.getDamage() / 2);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
+					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
@@ -216,15 +218,16 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "NE";
 				this.y = this.y - 1;
-				this.reduceDamage(this.getDamage() / 2 + 1 );
+				this.reduceDamage(this.getDamage() / 2 + 1);
 
 				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
 						.getIfAbsorb()) {
 					this.prev.secondNext = new LaserBeam("SW", this.getX() - 1,
-							this.getY() + 1, this.getDamage() / 2 );
+							this.getY() + 1, this.getDamage() / 2);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
+					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
@@ -249,15 +252,16 @@ public class LaserBeam extends Stuff {
 
 				this.direction = "NW";
 				this.y = this.y - 1;
-				this.reduceDamage(this.getDamage() / 2 + 1 );
+				this.reduceDamage(this.getDamage() / 2 + 1);
 
-				if (!GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
+				if (!GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
 						.getIfAbsorb()) {
 					this.prev.secondNext = new LaserBeam("SE", this.getX() + 1,
-							this.getY() + 1, this.getDamage() / 2 );
+							this.getY() + 1, this.getDamage() / 2);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
 					this.prev.secondNext.source = this.source;
+					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
@@ -323,8 +327,8 @@ public class LaserBeam extends Stuff {
 					.getTargetCellCoordinates().y].getTop().touch(this);
 
 			buf[this.getTargetCellCoordinates().x][this
-					.getTargetCellCoordinates().y]
-					.dealDamageToContent(this.getDamage());
+					.getTargetCellCoordinates().y].dealDamageToContent(this
+					.getDamage());
 			// this.next.reduceDamage(absorbReduce);
 		}
 		// если отражает
@@ -343,9 +347,14 @@ public class LaserBeam extends Stuff {
 				return;
 			}
 
-			if (GameField.getInstance().cells[this.next.getX()][this.next.getY()]
-					.getIfAbsorb()) {
-				this.prev.next = null;
+			if (GameField.getInstance().cells[this.next.getX()][this.next
+					.getY()].getIfAbsorb()) {
+
+				buf[this.next.getX()][this.next.getY()].getTop().touch(this);
+
+				buf[this.next.getX()][this.next.getY()]
+						.dealDamageToContent(this.getDamage());
+				this.next = null;
 				return;
 			} else {
 				buf[this.next.getX()][this.next.getY()].add(this.next);
@@ -356,8 +365,9 @@ public class LaserBeam extends Stuff {
 					this.getTargetCellCoordinates().x,
 					this.getTargetCellCoordinates().y, this.getDamage());
 			this.next.setSource(this.source);
-			buf[this.next.getX()][this.next.getY()].add(this.next);
 			this.next.prev = this;
+			buf[this.next.getX()][this.next.getY()].add(this.next);
+			
 			this.next.buildBeam();
 		}
 		GameScreen.getInstance().repaint();
