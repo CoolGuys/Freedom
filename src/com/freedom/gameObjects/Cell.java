@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -20,6 +21,7 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
+	Logger logger = Logger.getLogger("Cell");
 
 	private static Image highlighted;
 	private boolean isHighlighted;
@@ -49,9 +51,11 @@ public class Cell {
 		this.expBuf = 0;
 	}
 
-	public void utilityAdd(Stuff toAdd) {
+	public synchronized void utilityAdd(Stuff toAdd) {
+		System.out.println("Utility add on "+ toAdd.toString()+" "+contentAmount+" "+x+" "+y);
 		this.content[this.contentAmount] = toAdd;
 		this.contentAmount++;
+
 	}
 	
 	boolean getIfReflect(){
@@ -62,7 +66,7 @@ public class Cell {
 		return this.content[this.contentAmount -1].getIfAbsorb();
 }
 	
-	public Stuff utilityRemove(Stuff toRemove) {
+	public synchronized Stuff utilityRemove(Stuff toRemove) {
 		int i;
 		for(i = 0; i<this.contentAmount; i++){
 			if(this.content[i].equals(toRemove))
@@ -70,6 +74,8 @@ public class Cell {
 			if(i==(this.contentAmount - 1))
 				return null;
 		}
+		
+		System.out.println("Utility remove on "+ toRemove.toString()+" "+x+" "+y);
 		
 		for(int j = i; j<this.contentAmount-1; j++){
 			this.content[j] = this.content[j+1];
@@ -79,9 +85,13 @@ public class Cell {
 		return toRemove;
 	}
 	
-	public boolean add(Stuff element) {
+	public synchronized boolean add(Stuff element) {
+		System.out.println("Add on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+
 		if (this.contentAmount == 10)
 			return false;
+		
+
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
@@ -108,8 +118,9 @@ public class Cell {
 	 * @ivan
 	 */
 
-	public Stuff deleteStuff() {
+	public synchronized Stuff deleteStuff() {
 
+		
 		if (this.contentAmount == 0)
 			return null;
 
@@ -127,16 +138,19 @@ public class Cell {
 		}
 		this.damage = this.damage - buf.getDamage();
 		buf.stopHarming();
+		System.out.println("Remove on "+ buf.toString()+ ": " + contentAmount+" "+x+" "+y);
+
 		return buf;
 	}
 
 	
-	public boolean deleteStuff(Stuff element) {
+	public synchronized boolean deleteStuff(Stuff element) {
 
-		
+		System.out.println("Remove on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+
 		if (this.contentAmount == 0)
 			return false;
-		this.untouch(element );
+		this.untouch(element);
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
@@ -160,7 +174,7 @@ public class Cell {
 		return true;
 	}
 	
-	boolean replace(Stuff toReplace,Stuff replaceWith){
+	synchronized boolean replace(Stuff toReplace,Stuff replaceWith){
 		if (this.contentAmount == 0)
 			return false;
 		
