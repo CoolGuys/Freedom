@@ -11,19 +11,20 @@ import org.w3c.dom.Element;
 import com.freedom.utilities.SoundEngine;
 import com.freedom.view.GameScreen;
 
-public class Trap extends Stuff{
-	
-	
+public class Trap extends Stuff {
+
 	private boolean used;
 	private int damage;
-	private static Image texture1;
-	private static Image texture2;
+	private static Image textureOpen;
+	private static Image textureClosed;
 	private static File f1;
 	private static File f2;
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/TrapOpen.png"));
-			texture2 = ImageIO.read(new File("Resource/Textures/TrapClosed.png"));
+			textureOpen = ImageIO.read(new File(
+					"Resource/Textures/TrapOpen.png"));
+			textureClosed = ImageIO.read(new File(
+					"Resource/Textures/TrapClosed.png"));
 			f1 = new File("Resource/Sound/beep-5.wav");
 			f2 = new File("Resource/Sound/ButtonClicked.wav");
 		} catch (IOException e) {
@@ -34,12 +35,13 @@ public class Trap extends Stuff{
 
 	public Trap()
 	{
-		super(true, true,true, false, 0, 0);
-		texture=texture1;
+		super(true, true, true, false, 0, 0);
+		texture = textureOpen;
 	}
-	
+
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
+	 * 
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
@@ -68,37 +70,22 @@ public class Trap extends Stuff{
 		obj.setAttribute("used", String.valueOf(this.used));
 		obj.setAttribute("class", "com.freedom.gameObjects.Trap");
 	}
-	/*
-	 * 			File f = new File("Resource/Sound/Alert.wav");
-			if (f.exists()) {
-				SoundEngine.playClip(f, -5, -10);
-			} else {
-				//System.out.println("File ne naiden");
-			}
-	 * 
-	 * 
-	 * (non-Javadoc)
-	 * @see com.freedom.gameObjects.Stuff#touch()
-	 */
-	void touch(){
-		if (!this.used) {
-			GameField.getInstance().getCells()[this.getX()][this.getY()]
-					.kickAllStuff(this.damage);
-			used = true;
-			this.texture = texture2;
-			SoundEngine.playClip(f1, -1, -15);
-			GameScreen.getInstance().repaint(
-					(int) (this.getX() * Stuff.getSize()),
-					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
-					Stuff.getSize());
-		} else {
-			used = false;
-			this.texture = texture1;
-			SoundEngine.playClip(f2, -1, -15);
-			GameScreen.getInstance().repaint(
-					(int) (this.getX() * Stuff.getSize()),
-					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
-					Stuff.getSize());
-		}
+
+	void touch(Stuff element) {
+		element.punch(this.damage);
+		this.texture = textureClosed;
+		SoundEngine.playClip(f1, -1, -15);
+		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
+				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
+				Stuff.getSize());
+	}
+
+	void untouch(Stuff element) {
+		this.texture = textureOpen;
+		SoundEngine.playClip(f2, -1, -15);
+		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
+				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
+				Stuff.getSize());
+	
 	}
 }

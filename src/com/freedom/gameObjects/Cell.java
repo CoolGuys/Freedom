@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -20,15 +21,16 @@ public class Cell {
 	private int contentAmount;
 	int buttonsNumber;
 	int counter;
+	Logger logger = Logger.getLogger("Cell");
 
 	private static Image highlighted;
 	private boolean isHighlighted;
 	
 	int expBuf; // буфер для взрыва - не трогать!
-	boolean ifExped; //ключ для взрыва - не трогать!
 
 	public boolean isExamined;
 	static {
+		
 		try {
 			highlighted = ImageIO.read(new File(
 					"Resource/Textures/Highlighter.png"));
@@ -42,20 +44,29 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[6];
+		this.content = new Stuff[10];
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
 		this.expBuf = 0;
-		ifExped = false;
 	}
 
-	public void utilityAdd(Stuff toAdd) {
+	public synchronized void utilityAdd(Stuff toAdd) {
+		System.out.println("Utility add on "+ toAdd.toString()+" "+contentAmount+" "+x+" "+y);
 		this.content[this.contentAmount] = toAdd;
 		this.contentAmount++;
+
 	}
 	
-	public Stuff utilityRemove(Stuff toRemove) {
+	boolean getIfReflect(){
+			return this.content[this.contentAmount -1].getIfReflect();
+	}
+	
+	boolean getIfAbsorb(){
+		return this.content[this.contentAmount -1].getIfAbsorb();
+}
+	
+	public synchronized Stuff utilityRemove(Stuff toRemove) {
 		int i;
 		for(i = 0; i<this.contentAmount; i++){
 			if(this.content[i].equals(toRemove))
@@ -63,6 +74,8 @@ public class Cell {
 			if(i==(this.contentAmount - 1))
 				return null;
 		}
+		
+		System.out.println("Utility remove on "+ toRemove.toString()+" "+x+" "+y);
 		
 		for(int j = i; j<this.contentAmount-1; j++){
 			this.content[j] = this.content[j+1];
@@ -72,9 +85,13 @@ public class Cell {
 		return toRemove;
 	}
 	
-	public boolean add(Stuff element) {
-		if (this.contentAmount == 6)
+	public synchronized boolean add(Stuff element) {
+		System.out.println("Add on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+
+		if (this.contentAmount == 10)
 			return false;
+		
+
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
@@ -90,7 +107,7 @@ public class Cell {
 		element.x = this.x;
 		element.y = this.y;
 		this.locked = false;
-		this.touch();
+		this.touch(element);
 		return true;
 	}
 
@@ -101,13 +118,14 @@ public class Cell {
 	 * @ivan
 	 */
 
-	public Stuff deleteStuff() {
+	public synchronized Stuff deleteStuff() {
 
+		
 		if (this.contentAmount == 0)
 			return null;
 
 
-		this.untouch();
+		this.untouch( this.content[this.contentAmount - 1]);
 		Stuff buf;
 		this.contentAmount--;
 		if (this.content[this.contentAmount] instanceof LaserBeam) {
@@ -120,26 +138,19 @@ public class Cell {
 		}
 		this.damage = this.damage - buf.getDamage();
 		buf.stopHarming();
+		System.out.println("Remove on "+ buf.toString()+ ": " + contentAmount+" "+x+" "+y);
+
 		return buf;
 	}
 
-	public void kickAllStuff(int painValue){
-		for (int i = 0; i < this.contentAmount; i++) {
-			try{
-				content[i].punch(painValue);
-			}catch (Exception e) {
-				e.printStackTrace();
-				// TODO: handle exception
-			}
-		}
-	}
 	
-	public boolean deleteStuff(Stuff element) {
+	public synchronized boolean deleteStuff(Stuff element) {
 
-		this.untouch();
+		System.out.println("Remove on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+
 		if (this.contentAmount == 0)
 			return false;
-
+		this.untouch(element);
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
@@ -148,6 +159,9 @@ public class Cell {
 			if(i==(this.contentAmount - 1))
 				return false;
 		}
+		
+		
+		
 		this.damage = this.damage - element.getDamage();
 
 		for (int j = i; j < this.contentAmount - 1; j++) {
@@ -155,12 +169,12 @@ public class Cell {
 		}
 		this.contentAmount--;
 		this.content[this.contentAmount] = null;
-
-		this.touch();// //под вопросом
+		
+		
 		return true;
 	}
 	
-	boolean replace(Stuff toReplace,Stuff replaceWith){
+	synchronized boolean replace(Stuff toReplace,Stuff replaceWith){
 		if (this.contentAmount == 0)
 			return false;
 		
@@ -204,14 +218,15 @@ public class Cell {
 
 	// Everything for robot:
 
-	public void touch() {
+	public void touch(Stuff toucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			this.content[i].touch();
+			this.content[i].touch(toucher);
 		}
 	}
-	public void untouch() {
+	
+	public void untouch(Stuff untoucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			this.content[i].untouch();
+			this.content[i].untouch(untoucher);
 		}
 	}
 
@@ -291,11 +306,41 @@ public class Cell {
 
 	
 	//здесь наносим урон предметам 
-	public void dealDamageToContent(int damage){
+	int dealDamageToContent(int damage){
+		if(this.contentAmount == 0 )
+			return 0;
+		
+		int buf = damage;
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
+			buf = buf - Cell.this.content[i].punch(buf);
+		}
+		return (damage - buf);
+	}
+	
+	void harmContent(int damage){
 		if(this.contentAmount == 0 )
 			return;
+		
+		int buf = damage;
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
+			Cell.this.content[i].harm(buf);
+		}
+	}
+	
+	void stopHarmingContent(){
+		if(this.contentAmount == 0 )
+			return;
+		
+		for (int i = Cell.this.contentAmount -1; i >=0 ; i--) {
+			Cell.this.content[i].stopHarming();
+		}
+	}
+	
+	
+	public void healContent(int heal){
+		
 		for (int i = 0; i < Cell.this.contentAmount; i++) {
-			Cell.this.content[i].punch(damage);
+			Cell.this.content[i].heal(heal);
 		}
 
 	}

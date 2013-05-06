@@ -23,7 +23,7 @@ public class Robot extends Stuff implements Moveable {
 	volatile boolean isMoving;
 	private double step = 0.1;
 
-	static int maxLives = 50;
+	static int maxLives = 0;
 
 	private static Image textureN;
 	private static Image textureS;

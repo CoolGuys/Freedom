@@ -33,14 +33,14 @@ public class GameField {
 	private String pathToSave;
 	private int previousLevelId;
 	public Cell[][] previousCells;
-	private Robot robot;
-	public Cell[][] cells;
+	private volatile Robot robot;
+	public volatile Cell[][] cells;
 	private int xSize;
 	private int ySize;
 	//private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-	private Timer deathTicker = new Timer(100, null);
+	private Timer deathTicker = new Timer(5000, null);
 	private static GameField INSTANCE;
 	public static ExecutorService otherThreads;
 	public boolean active;

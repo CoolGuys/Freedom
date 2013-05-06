@@ -1,5 +1,7 @@
 package com.freedom.gameObjects;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -10,8 +12,9 @@ import org.w3c.dom.Element;
 public class Laser extends Stuff {
 	LaserBeam beamHead;
 	boolean ifActive;
-	String colour;
+	String color;
 	String direction;
+	private BeamSender sender;
 	
 
 	public Laser() {
@@ -25,13 +28,14 @@ public class Laser extends Stuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		sender = new BeamSender();
 	}
 	
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.direction = obj.getAttribute("direction");
-		this.colour = obj.getAttribute("colour");
+		this.color = obj.getAttribute("color");
 		
 		
 		
@@ -41,8 +45,14 @@ public class Laser extends Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("direction",this.direction);
-		obj.setAttribute("colour",this.colour);
+		obj.setAttribute("color",this.color);
 		obj.setAttribute("class", "com.freedom.gameObjects.Laser");
+	}
+	
+	
+	void rebuidBeam(){
+		this.beamHead.deleteBeam();
+		this.beamHead.buildBeam();
 	}
 	
 	boolean useOn(){
@@ -50,21 +60,30 @@ public class Laser extends Stuff {
 			return false;
 		else{
 			this.ifActive = true;
-			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY());
-			this.beamHead.buildBeam();
+			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 5);
+			this.beamHead.setSource(this);
+			GameField.getInstance().getDeathTicker().addActionListener(sender);
 			return true;	
 		}
 	}
 	
-	boolean useOf(){
+	@Override
+	boolean useOff(){
 		if(!this.ifActive)
 			return false;
 		else{
 			this.ifActive = false;
+			GameField.getInstance().getDeathTicker().removeActionListener(sender);
 			this.beamHead.deleteBeam();
 			return true;
 		}
 	}
 	
+	private class BeamSender implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			Laser.this.beamHead.deleteBeam();
+			Laser.this.beamHead.buildBeam();
+		}
+	}
 	
 }

@@ -175,11 +175,16 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="5">
 		</obj>
+		<obj class="com.freedom.gameObjects.Laser" x="6" y="5" direction = "SW" color = "R">
+		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.ButtonOr" x="6" y="8">
+		<cels x="6" y="5" />
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="9">
 		</obj>
@@ -194,6 +199,8 @@
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="14">
 		</obj>
 		<obj class="com.freedom.gameObjects.Tile" x="6" y="15">
+		</obj>
+		<obj class="com.freedom.gameObjects.PacmanBody" rate="300" x="6" y="15">
 		</obj>
 		<obj class="com.freedom.gameObjects.Wall" x="6" y="16">
 		</obj>

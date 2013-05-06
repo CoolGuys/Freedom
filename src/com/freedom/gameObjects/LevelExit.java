@@ -29,8 +29,7 @@ public class LevelExit extends Stuff {
 		}
 	}
 
-	public LevelExit()
-	{
+	public LevelExit() {
 		super(false, true, true, false);
 		texture = texture1;
 	}
@@ -63,10 +62,12 @@ public class LevelExit extends Stuff {
 		obj.setAttribute("next", String.valueOf((int) this.nextLevelID));
 	}
 
-	public void touch() {
-		GameField.getInstance().getRobot()
-				.SetXY(super.getX() - 1, super.getY());
+	public void touch(Stuff element) {
 
-		GameField.getInstance().switchToNextLevel(nextLevelID,robotx,roboty);
+		if (element instanceof Robot) {
+			GameField.getInstance().getRobot().setXY(this.x-1, this.y);
+			GameField.getInstance().switchToNextLevel(nextLevelID, robotx,
+					roboty);
+		}
 	}
 }

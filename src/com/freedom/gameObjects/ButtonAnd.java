@@ -97,7 +97,7 @@ public class ButtonAnd extends Stuff {
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	void untouch() {
+	void untouch(Stuff element) {
 		texture = textureDepressed;
 		for (int i = 0; i < controlledCellsAmount; i++) {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
@@ -108,7 +108,7 @@ public class ButtonAnd extends Stuff {
 					.useOff();
 	}
 
-	void touch() {
+	void touch(Stuff element) {
 		SoundEngine.playClip(f2, -1, -15);
 		texture = texturePressed;
 		sender = new SignalOnSender();
