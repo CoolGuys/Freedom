@@ -71,7 +71,7 @@ public class Cell {
 		for(i = 0; i<this.contentAmount; i++){
 			if(this.content[i].equals(toRemove))
 				break;
-			if(i==(this.contentAmount - 1))
+			if(i==(this.contentAmount))
 				return null;
 		}
 		

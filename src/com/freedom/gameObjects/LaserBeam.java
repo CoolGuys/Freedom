@@ -454,8 +454,8 @@ public class LaserBeam extends Stuff {
 
 			}
 
-			
-			System.out.println(buf.getX() + " " + buf.getY() + cellBuf[buf.getX()][buf.getY()].deleteStuff(buf));
+			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+			//System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
 			
 		}

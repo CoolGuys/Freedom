@@ -38,11 +38,11 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(direction).x][theOneToMove
 							.getTargetCellCoordinates(direction).y].locked = true;
 
-					Stuff toToggle = GameField.getInstance().cells[(int) theOneToMove
+					GameField.getInstance().cells[(int) theOneToMove
 							.getX()][(int) (int) theOneToMove.getY()]
 							.utilityRemove((Stuff) theOneToMove);
 					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
-							.getY()].setMeta(toToggle);
+							.getY()].setMeta((Stuff)theOneToMove);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
@@ -62,7 +62,7 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
-							.utilityAdd(toToggle);
+							.utilityAdd((Stuff)theOneToMove);
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
