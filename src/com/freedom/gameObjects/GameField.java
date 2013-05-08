@@ -107,7 +107,7 @@ public class GameField {
 		return GameField.otherThreads;
 	}
 
-	public void switchToNextLevel(int nextLevelId, int robotx, int roboty) {
+	public void switchToNextLevel(int nextLevelId, int robotx, int roboty, boolean canTakeBuf) {
 
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
@@ -117,10 +117,14 @@ public class GameField {
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
 		Stuff buf = robot.getContent();
-		robot.emptyContainer();
+		if (canTakeBuf) {
+			robot.emptyContainer();
+		}
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
-		robot.setContainer(buf);
+		if (canTakeBuf) {
+			robot.setContainer(buf);
+		}
 		if ((robotx != -1) && (roboty != -1)) {
 			gleblo.setLevel(Level.ALL);
 			gleblo.info("robotXYsetting x=" + robotx + " y=" + roboty);
