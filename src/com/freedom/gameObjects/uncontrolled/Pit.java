@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
 import java.io.File;
@@ -7,6 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
+
+import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.characters.Robot;
 
 public class Pit extends Stuff{
 	
@@ -33,7 +36,7 @@ public class Pit extends Stuff{
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int)this.x));
 		obj.setAttribute("y", String.valueOf((int)this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.Pit");
+		obj.setAttribute("class","com.freedom.gameObjects.uncontrolled.Pit");
 	} 
 	
 	
@@ -48,7 +51,7 @@ public class Pit extends Stuff{
 	}
 	
 	@Override
-	void touch(Stuff element){
+	public void touch(Stuff element){
 		element.punch(this.getDamage());
 	}
 

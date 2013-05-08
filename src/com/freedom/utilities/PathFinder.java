@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.freedom.gameObjects.Cell;
-import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
 
 /**
  * You cannot pass! I am a servant of the Secret Fire, wielder of the Flame of

@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controllers;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.SoundEngine;
 import com.freedom.view.GameScreen;
 
@@ -20,7 +22,7 @@ public class ButtonAnd extends Stuff {
 	private static Image texturePressed;
 	private static Image textureDepressed;
 	private int[][] controlledCellsList;// массив с координатами селлов на
-	private static File f2;									// которые действует
+	private static File f2; // которые действует
 	// батон
 	private int controlledCellsAmount; // количество целлов на которые действует
 										// батон
@@ -93,22 +95,24 @@ public class ButtonAnd extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.ButtonAnd");
+		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonAnd");
 		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	void untouch(Stuff element) {
+	@Override
+	public void untouch(Stuff element) {
 		texture = textureDepressed;
 		for (int i = 0; i < controlledCellsAmount; i++) {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
 		}
 		GameField.getInstance().getTicker().removeActionListener(sender);
-		for (int i = 0; i < controlledCellsAmount; i++) 
+		for (int i = 0; i < controlledCellsAmount; i++)
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 	}
 
-	void touch(Stuff element) {
+	@Override
+	public void touch(Stuff element) {
 		SoundEngine.playClip(f2, -1, -15);
 		texture = texturePressed;
 		sender = new SignalOnSender();
@@ -119,6 +123,7 @@ public class ButtonAnd extends Stuff {
 
 	}
 
+	@Override
 	public void giveInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
 
@@ -128,6 +133,7 @@ public class ButtonAnd extends Stuff {
 		}
 	}
 
+	@Override
 	public void removeInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
 

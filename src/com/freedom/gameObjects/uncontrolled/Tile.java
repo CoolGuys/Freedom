@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
 import java.io.File;
@@ -8,35 +8,42 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-public class Box extends Stuff {
+import com.freedom.gameObjects.base.Stuff;
+
+
+/**
+ * 
+ * @author IvTakm
+ * 
+ */
+
+public class Tile extends Stuff {
 
 	private static Image texture1;
 	static {
+
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/BoxBlack.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public Box()
+	// if you want tile to be pit, just put damage = maxDamage
+	// we also don't need coordinates - it'll get them while pulling to cell
+
+	public Tile()
 	{
-		super(true, false,true, false, 0, 3);
-		texture=texture1;
-
+		super(false, true, false, false);
+		texture = texture1;
 	}
+	
 
-	/**
-	 * Метод, который считывает всю инфу из файла с лвлами
-	 * 
-	 * @param - Scanner файла
-	 */
 	public void readLvlFile(Element obj) {
-		super.readLvlFile(obj);
-		this.color = obj.getAttribute("color");
+		this.x = Integer.parseInt(obj.getAttribute("x"));
+		this.y = Integer.parseInt(obj.getAttribute("y"));
 	}
-
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
@@ -46,15 +53,8 @@ public class Box extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("color", String.valueOf(this.color));
-		obj.setAttribute("class", "com.freedom.gameObjects.Box");
+		obj.setAttribute("class", "com.freedom.gameObjects.uncontrolled.Tile");
 	}
-
-	public String getColour() {
-		return this.color;
-	}
-
 	
 
-	private String color;
 }

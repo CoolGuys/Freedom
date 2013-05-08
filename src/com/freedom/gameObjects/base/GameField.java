@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.base;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
+import com.freedom.gameObjects.characters.Robot;
 import com.freedom.utilities.Loader;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadScreen;

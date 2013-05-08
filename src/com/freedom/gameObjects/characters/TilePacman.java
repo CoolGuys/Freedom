@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.characters;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -29,7 +29,7 @@ public class TilePacman extends PacmanBody{
 		obj.setAttribute("rate", String.valueOf((int) super.getRate()));
 		obj.setAttribute("alive", String.valueOf(super.getAlive()));
 		obj.setAttribute("trekLenght", String.valueOf((int) super.trekLenght));
-		obj.setAttribute("class", "com.freedom.gameObjects.TilePacman");
+		obj.setAttribute("class", "com.freedom.gameObjects.characters.TilePacman");
 		
 	}
 	public TilePacman()

@@ -1,13 +1,19 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controlled;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
+
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
 
 public class Laser extends Stuff {
 	LaserBeam beamHead;
@@ -15,19 +21,24 @@ public class Laser extends Stuff {
 	String color;
 	String direction;
 	private BeamSender sender;
+	private static Image texture1;
 	
-
+	private static Logger logger = Logger.getLogger("Laser");
+	
+	
+	static {
+		logger.setLevel(Level.WARNING);
+		try {
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"));
+		} catch (IOException e) {
+			logger.warning("Laser texture was corrupted or deleted");
+		}
+	}
+	
 	public Laser() {
 		super(false, false,true, false);
 		ifActive = false;
-		
-		
-		try {
-			this.texture = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		texture=texture1;
 		sender = new BeamSender();
 	}
 	
@@ -46,16 +57,16 @@ public class Laser extends Stuff {
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("direction",this.direction);
 		obj.setAttribute("color",this.color);
-		obj.setAttribute("class", "com.freedom.gameObjects.Laser");
+		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Laser");
 	}
 	
 	
-	void rebuidBeam(){
+	public void rebuidBeam(){
 		this.beamHead.deleteBeam();
 		this.beamHead.buildBeam();
 	}
 	
-	boolean useOn(){
+	public boolean useOn(){
 		if(this.ifActive)
 			return false;
 		else{
@@ -68,7 +79,7 @@ public class Laser extends Stuff {
 	}
 	
 	@Override
-	boolean useOff(){
+	public boolean useOff(){
 		if(!this.ifActive)
 			return false;
 		else{

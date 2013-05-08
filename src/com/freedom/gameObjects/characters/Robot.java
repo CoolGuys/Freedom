@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.characters;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -12,6 +12,10 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Moveable;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.Mover;
 import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
@@ -23,7 +27,7 @@ public class Robot extends Stuff implements Moveable {
 	volatile boolean isMoving;
 	private double step = 0.1;
 
-	static int maxLives = 0;
+	public static int maxLives = 0;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -50,7 +54,7 @@ public class Robot extends Stuff implements Moveable {
 					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warning("Robot texture was corrupted or deleted");
 		}
 	}
 
@@ -276,6 +280,7 @@ public class Robot extends Stuff implements Moveable {
 
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		// logger.info("Coords double:" + x + " " + y + "|| Coord int: "
 		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
@@ -307,17 +312,15 @@ public class Robot extends Stuff implements Moveable {
 
 	@Override
 	public boolean checkIfBeingMoved() {
-		// TODO Auto-generated method stub
 		return isMoving;
 	}
 
 	@Override
 	public void tellIfBeingMoved(boolean isMoved) {
-		// TODO Auto-generated method stub
 		isMoving = isMoved;
 	}
 
-	void die() {
+	public void die() {
 		System.out.println("You are dead, idiot!");
 		System.exit(10);
 	}

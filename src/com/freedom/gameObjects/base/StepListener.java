@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.base;
 
 import java.awt.Image;
 import java.io.File;
@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
+
 
 /**
  * Это класс который прослеживает находится ли робот в какой-то области и

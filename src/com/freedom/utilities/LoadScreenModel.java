@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.base.GameField;
 import com.freedom.view.LoadScreen;
 import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;

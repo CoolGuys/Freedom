@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controlled;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -11,6 +11,9 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.view.GameScreen;
 
 /*

@@ -1,44 +1,47 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controlled;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-public class Door extends Stuff {
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.uncontrolled.Wall;
+
+public class NotDoor extends Stuff {
 
 	// открытость двери проверяем по passable
 
 	private static Image textureOpen;
-	private static Image textureClosedVertical;
-	private static Image textureClosedHorisontal;
 	private static Image textureClosed;
+	private static Image textureClosedHorisontal;
+	private static Image textureClosedVertical;
 	private boolean textureSet;
 
 	static {
 		try {
 			textureClosedVertical = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedVertical.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
+					"Resource/Textures/DoorClosedVertical.png"));
 			textureClosedHorisontal = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedHorisontal.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
+					"Resource/Textures/DoorClosedHorisontal.png"));
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// TODO Auto-generated catch block\
 		}
 	}
 
-	public Door()
+	public NotDoor()
 	{
-		super(false, false,true, false);
-		super.expConductive = false;
-
+		super(false, true,true, false);
+		super.setExpConductive(false);
 	}
+
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
@@ -50,21 +53,21 @@ public class Door extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.Door");
+		obj.setAttribute("class", "com.freedom.gameObjects.controlled.NotDoor");
 	}
 
-	boolean useOff() {
-
-		texture = textureClosed;
+	@Override
+	public boolean useOn() {
+			texture = textureClosed;
 		if (super.passable) {
 			super.passable = false;
 			return true;
 		}
 		return false;
-
 	}
 
-	boolean useOn() {
+	@Override
+	public boolean useOff() {
 
 		texture = textureOpen;
 		if (!super.passable) {
@@ -74,6 +77,7 @@ public class Door extends Stuff {
 		return false;
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		if (!textureSet) {
 			Cell[][] cells = GameField.getInstance().cells;
@@ -100,7 +104,7 @@ public class Door extends Stuff {
 			else
 				textureClosed = textureClosedHorisontal;
 			textureSet = true;
-			texture = textureClosed;
+			texture = textureOpen;
 		}
 		g.drawImage(texture, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);

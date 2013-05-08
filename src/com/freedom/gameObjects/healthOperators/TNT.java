@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -11,6 +11,10 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Moveable;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.view.GameScreen;
 
 public class TNT extends Stuff implements Moveable {
@@ -43,7 +47,7 @@ public class TNT extends Stuff implements Moveable {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class","com.freedom.gameObjects.TNT");
+		obj.setAttribute("class","com.freedom.gameObjects.healthOperators.TNT");
 	}
 
 	/*
@@ -90,28 +94,28 @@ public class TNT extends Stuff implements Moveable {
 			ifExped[toWork.getX()][toWork.getY()] = true;
 
 			if (!ifExped[toWork.getX() - x + 1][toWork.getY() - y]) {
-				if (buf[toWork.getX() + 1][toWork.getY() ].getTop().expConductive) {
+				if (buf[toWork.getX() + 1][toWork.getY() ].getTop().isExpConductive()) {
 					buf[toWork.getX() + 1][toWork.getY()].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()  + 1][toWork.getY()]);
 				}
 			}
 
 			if (!ifExped[toWork.getX() -x- 1][toWork.getY()-y]) {
-				if (buf[toWork.getX()- 1][toWork.getY()].getTop().expConductive) {
+				if (buf[toWork.getX()- 1][toWork.getY()].getTop().isExpConductive()) {
 					buf[toWork.getX()- 1][toWork.getY()].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX() - 1][toWork.getY()]);
 				}
 			}
 
 			if (!ifExped[toWork.getX()-x][toWork.getY() -y + 1]) {
-				if (buf[toWork.getX()][toWork.getY() + 1].getTop().expConductive) {
+				if (buf[toWork.getX()][toWork.getY() + 1].getTop().isExpConductive()) {
 					buf[toWork.getX()][toWork.getY() + 1].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()][toWork.getY() + 1]);
 				}
 			}
 
 			if (!ifExped[toWork.getX()-x][toWork.getY() -y- 1]) {
-				if (buf[toWork.getX()][toWork.getY() - 1].getTop().expConductive) {
+				if (buf[toWork.getX()][toWork.getY() - 1].getTop().isExpConductive()) {
 					buf[toWork.getX()][toWork.getY() - 1].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()][toWork.getY() - 1]);
 				}
@@ -165,7 +169,7 @@ public class TNT extends Stuff implements Moveable {
 	}
 	
 	@Override
-	int punch(int damage){
+	public int punch(int damage){
 		this.activationProcess();
 		return this.maxLives;
 	}

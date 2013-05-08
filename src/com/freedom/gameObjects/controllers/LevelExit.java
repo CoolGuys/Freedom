@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controllers;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -8,6 +8,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
+
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.characters.Robot;
 
 public class LevelExit extends Stuff {
 
@@ -67,7 +71,7 @@ public class LevelExit extends Stuff {
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("xr", String.valueOf((int) this.robotx));
 		obj.setAttribute("yr", String.valueOf((int) this.roboty));
-		obj.setAttribute("class", "com.freedom.gameObjects.LevelExit");
+		obj.setAttribute("class", "com.freedom.gameObjects.controllers.LevelExit");
 		obj.setAttribute("next", String.valueOf((int) this.nextLevelID));
 		obj.setAttribute("buf", String.valueOf(this.buf));
 	}

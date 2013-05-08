@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.base;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.util.logging.Logger;
 
 import org.w3c.dom.Element;
 
@@ -15,37 +16,65 @@ import com.freedom.view.GameScreen;
 
 public class Stuff {
 
-	double x;
-	double y;
-	Image texture;
-	private boolean pickable;
-	boolean passable;
-	private static int size = GameField.getInstance().getCellSize();
+	public double x;
+	public double y;
+	protected Image texture;
+	protected static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
-	int maxLives;
+	protected int maxLives;
 
-	protected int damage; // number of lives you loose
-	private boolean ifDestroyable;
-	private int lives;
-	private boolean ifAbsorb;
-	private boolean ifReflect;
+	protected boolean pickable;
+	protected boolean passable;
+	protected int damage;
+	protected boolean ifDestroyable;
+	protected int lives;
+	protected boolean ifAbsorb;
+	protected boolean ifReflect;
+	private boolean expConductive;
 
-	boolean expConductive;
 	private DamageSender damager;
 	private int toHarm; // буферное поле для передачи урона
+	private Logger logger = Logger.getLogger("Stuff");
 
-	// конструктор для совсем убогих объектов, которые
-	// безвредны и которые не уничтожишь.
+	public Stuff()
+	{
+		this.pickable = true;
+		this.passable = false;
+		this.damage = 0;
+	}
+
+	// if lives<=0 , we cannot destroy this stuff
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable) {
-		/*if ((!reflectable) && (!absorbable)) {
-			this.ifAbsorb = true;
-			this.ifReflect = false;
-			System.out.println("bad reflection\\absorbation choice");
-		} else {*/
-			this.ifReflect = reflectable;
-			this.ifAbsorb = absorbable;
-			
+			boolean absorbable, int damage, int lives)
+	{
+		this.pickable = pickable;
+		this.passable = passable;
+
+		if (damage < 0)
+			this.damage = 0;
+		else
+			this.damage = damage;
+
+		this.ifReflect = reflectable;
+		this.ifAbsorb = absorbable;
+		this.setExpConductive(true);
+		damager = new DamageSender();
+		this.maxLives = this.lives;
+
+		if (lives < 1) {
+			this.lives = 1;
+			this.ifDestroyable = false;
+		} else {
+			this.lives = lives;
+			this.ifDestroyable = true;
+		}
+	}
+
+	public Stuff(boolean pickable, boolean passable, boolean reflectable,
+			boolean absorbable)
+	{
+		this.ifReflect = reflectable;
+		this.ifAbsorb = absorbable;
 
 		this.pickable = pickable;
 		this.passable = passable;
@@ -53,7 +82,7 @@ public class Stuff {
 		this.damage = 0;
 		this.ifDestroyable = false;
 		this.lives = 10;
-		this.expConductive = true;
+		this.setExpConductive(true);
 		damager = new DamageSender();
 	}
 
@@ -71,73 +100,33 @@ public class Stuff {
 		return true;
 	}
 
-	// кастыли
 	public boolean objc() {
 		return false;
 	}
 
 	public void itsAlive() {
-
 	}
 
-	/**
-	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
-	 * пихайте такие методы везде где стафф!
-	 * 
-	 * @author UshAle
-	 */
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 	}
 
-	public Stuff() {
-		this.pickable = true;
-		this.passable = false;
-		this.damage = 0;
-	}
-
-	// if lives<=0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives) {
-		this.pickable = pickable;
-		this.passable = passable;
-
-		if (damage < 0)
-			this.damage = 0;
-		else
-			this.damage = damage;
-
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
-		this.expConductive = true;
-		damager = new DamageSender();
-		this.maxLives = this.lives;
-
-		if (lives < 1) {
-			this.lives = 1;
-			this.ifDestroyable = false;
-		} else {
-			this.lives = lives;
-			this.ifDestroyable = true;
-		}
-	}
-
 	// Action methods
 
-	boolean useOn() {
+	public boolean useOn() {
 		return false;
 	}
 
-	boolean useOff() {
+	public boolean useOff() {
 		return false;
 	}
 
-	void touch(Stuff toucher) {
+	public void touch(Stuff toucher) {
 		return;
 	}
 
-	void untouch(Stuff untouvher) {
+	public void untouch(Stuff untouvher) {
 
 	}
 
@@ -147,7 +136,7 @@ public class Stuff {
 
 	// //getters
 
-	boolean getIfAbsorb() {
+	public boolean getIfAbsorb() {
 		return this.ifAbsorb;
 	}
 
@@ -163,14 +152,14 @@ public class Stuff {
 		return size;
 	}
 
-	void raiseDamage(int extraDamage) {
+	public void raiseDamage(int extraDamage) {
 		this.damage = this.damage + extraDamage;
 	}
 
-	void reduceDamage(int toReduce) {
+	public void reduceDamage(int toReduce) {
 		this.damage = this.damage - toReduce;
 		if (this.damage < 1)
-			damage=0;
+			damage = 0;
 	}
 
 	public boolean getIfTakeable() {
@@ -197,8 +186,16 @@ public class Stuff {
 		return this.ifDestroyable;
 	}
 
-	boolean getIfReflect() {
+	public boolean getIfReflect() {
 		return this.ifReflect;
+	}
+
+	public boolean isExpConductive() {
+		return expConductive;
+	}
+
+	public void setExpConductive(boolean expConductive) {
+		this.expConductive = expConductive;
 	}
 
 	public void draw(Graphics g) {
@@ -219,18 +216,11 @@ public class Stuff {
 	}
 
 	public int[][] getUseList() {
-		// TODO Автоматически созданная заглушка метода
 		return null;
 	}
 
-	// methods for damage
-
-	/*
-	 * здесь: вызывать метод harm нужно самостоятельно, stopHarming включается
-	 * сам в Cell.deleteStuff() (должно быть прописано в Movement Animator)
-	 */
-
-	// "непрерывный" урон
+	
+	//TODO Remove this method
 	boolean harm(int damage) {
 		if (damage == 0) {
 			return false;
@@ -247,13 +237,13 @@ public class Stuff {
 		GameField.getInstance().getDeathTicker().removeActionListener(damager);
 	}
 
-	void die() {
+	public void die() {
 		GameField.getInstance().cells[this.getX()][this.getY()]
 				.deleteStuff(this);
 	}
 
 	// разовый урон
-	int punch(int damage) {
+	public int punch(int damage) {
 		if (damage < 1) {
 			return 0;
 		}
@@ -268,8 +258,7 @@ public class Stuff {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("Interrupted while punched");
 		}
 
 		if (this.lives < damage) {
@@ -283,13 +272,13 @@ public class Stuff {
 		return damage;
 	}
 
-	void heal(int lives) {
+	public void heal(int lives) {
 		this.lives = this.lives + lives;
 		if (this.lives > this.maxLives)
 			this.lives = this.maxLives;
 	}
 
-	// дописать обратботку смерти
+	//TODO Finish death handling
 	private class DamageSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Stuff.this.lives = Stuff.this.lives - Stuff.this.toHarm;

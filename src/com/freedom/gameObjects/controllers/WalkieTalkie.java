@@ -1,8 +1,9 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controllers;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.gameObjects.base.StepListener;
 import com.freedom.view.GameScreen;
 
 public class WalkieTalkie extends StepListener {
@@ -27,7 +28,7 @@ public class WalkieTalkie extends StepListener {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.WalkieTalkie");
+		obj.setAttribute("class", "com.freedom.gameObjects.controllers.WalkieTalkie");
 		obj.setAttribute("messageToDisplay", this.message);
 	}
 	

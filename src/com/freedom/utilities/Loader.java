@@ -16,10 +16,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.freedom.gameObjects.Cell;
-import com.freedom.gameObjects.GameField;
-import com.freedom.gameObjects.Robot;
-import com.freedom.gameObjects.Stuff;
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.characters.Robot;
 
 /**
  * !!!!!!!!!!!!!!!!!!!Attention please!!!!!!!!!!!

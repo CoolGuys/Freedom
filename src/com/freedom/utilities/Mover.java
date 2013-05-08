@@ -5,9 +5,9 @@ import java.util.logging.Logger;
 
 import javax.swing.JLayeredPane;
 
-import com.freedom.gameObjects.GameField;
-import com.freedom.gameObjects.Moveable;
-import com.freedom.gameObjects.Stuff;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Moveable;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.view.GameScreen;
 
 public final class Mover<MO extends Moveable> implements Runnable {

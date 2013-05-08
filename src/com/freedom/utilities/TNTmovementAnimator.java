@@ -2,8 +2,8 @@ package com.freedom.utilities;
 
 import javax.swing.JLayeredPane;
 
-import com.freedom.gameObjects.GameField;
-import com.freedom.gameObjects.Moveable;
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Moveable;
 import com.freedom.view.GameScreen;
 
 public final class TNTmovementAnimator<MovingObj extends Moveable> implements Runnable {

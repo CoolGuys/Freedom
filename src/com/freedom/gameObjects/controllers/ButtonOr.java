@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.controllers;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,6 +12,8 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.SoundEngine;
 import com.freedom.view.GameScreen;
 
@@ -92,10 +94,10 @@ public class ButtonOr extends Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class", "com.freedom.gameObjects.ButtonOr");
+		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonOr");
 	}
-
-	void untouch(Stuff element) {
+	@Override
+	public void untouch(Stuff element) {
 		texture = textureDepressed;
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		for (int i = 0; i < controlledCellsAmount; i++) {
@@ -103,8 +105,8 @@ public class ButtonOr extends Stuff {
 					.useOff();
 		}
 	}
-
-	void touch(Stuff element) {
+	@Override
+	public void touch(Stuff element) {
 		SoundEngine.playClip(f2, -1, -15);
 		texture = texturePressed;
 		sender = new SignalOnSender();

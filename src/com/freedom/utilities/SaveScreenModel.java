@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JTextField;
 
-import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.base.GameField;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;

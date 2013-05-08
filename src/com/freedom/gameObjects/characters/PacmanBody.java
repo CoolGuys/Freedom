@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.characters;
 
 import java.awt.Image;
 import java.awt.Point;
@@ -13,6 +13,9 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Moveable;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.Mover;
 
 public class PacmanBody extends Stuff implements Moveable {
@@ -232,7 +235,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		// p.InHell();
 	}
 
-	void die() {
+	public void die() {
 		this.alive = false;
 		if (p != null)
 			this.p.alive = false;
@@ -250,7 +253,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		obj.setAttribute("rate", String.valueOf((int) this.rate));
 		obj.setAttribute("trekLenght", String.valueOf((int) this.trekLenght));
 		obj.setAttribute("alive", String.valueOf(this.alive));
-		obj.setAttribute("class", "com.freedom.gameObjects.PacmanBody");
+		obj.setAttribute("class", "com.freedom.gameObjects.characters.PacmanBody");
 
 	}
 

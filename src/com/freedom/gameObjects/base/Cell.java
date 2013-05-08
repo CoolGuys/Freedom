@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.base;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
+
+import com.freedom.gameObjects.controlled.LaserBeam;
 
 public class Cell {
 
@@ -19,14 +21,14 @@ public class Cell {
 	private Stuff[] content;
 	private Stuff metaLevel;
 	private int contentAmount;
-	int buttonsNumber;
-	int counter;
+	public int buttonsNumber;
+	public int counter;
 	Logger logger = Logger.getLogger("Cell");
 
 	private static Image highlighted;
 	private boolean isHighlighted;
 	
-	int expBuf; // буфер для взрыва - не трогать!
+	public int expBuf; // буфер для взрыва - не трогать!
 
 	public boolean isExamined;
 	static {
@@ -58,11 +60,11 @@ public class Cell {
 
 	}
 	
-	boolean getIfReflect(){
+	public boolean getIfReflect(){
 			return this.content[this.contentAmount -1].getIfReflect();
 	}
 	
-	boolean getIfAbsorb(){
+	public boolean getIfAbsorb(){
 		return this.content[this.contentAmount -1].getIfAbsorb();
 }
 	
@@ -176,7 +178,7 @@ public class Cell {
 		return true;
 	}
 	
-	synchronized boolean replace(Stuff toReplace,Stuff replaceWith){
+	public synchronized boolean replace(Stuff toReplace,Stuff replaceWith){
 		if (this.contentAmount == 0)
 			return false;
 		
@@ -268,7 +270,7 @@ public class Cell {
 		return buf;
 	}
 
-	boolean useOn() {
+	public boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOn()) {
 
@@ -279,7 +281,7 @@ public class Cell {
 		return false;
 	}
 
-	boolean useOff() {
+	public boolean useOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOff()) {
 				return true;
@@ -292,7 +294,7 @@ public class Cell {
 
 	
 	//здесь наносим урон предметам 
-	int dealDamageToContent(int damage){
+	public int dealDamageToContent(int damage){
 		if(this.contentAmount == 0 )
 			return 0;
 		
@@ -339,7 +341,7 @@ public class Cell {
 
 	// ////////////////
 
-	boolean getIfPassable() {
+	public boolean getIfPassable() {
 		for (int i = 0; i < this.contentAmount; i++) {
 			if (!this.content[i].passable)
 				return false;
@@ -348,16 +350,16 @@ public class Cell {
 		return true;
 	}
 
-	boolean getIfConductsExp() {
+	public boolean getIfConductsExp() {
 		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].expConductive)
+			if (!this.content[i].isExpConductive())
 				return false;
 		}
 
 		return true;
 	}
 
-	boolean ifCanBePressed() {
+	public boolean ifCanBePressed() {
 		if (this.counter == this.buttonsNumber)
 			return true;
 		else

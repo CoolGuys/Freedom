@@ -13,7 +13,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.gameObjects.GameField;
+import com.freedom.gameObjects.base.GameField;
 import com.freedom.utilities.GAction;
 import com.freedom.utilities.PauseScreenModel;
 import com.freedom.utilities.SaveScreenModel;

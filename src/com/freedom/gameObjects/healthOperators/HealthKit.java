@@ -1,4 +1,4 @@
-package com.freedom.gameObjects;
+package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
 import java.io.File;
@@ -8,7 +8,33 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
+import com.freedom.gameObjects.base.GameField;
+import com.freedom.gameObjects.base.Stuff;
+
 public class HealthKit extends Stuff{
+	public HealthKit()
+	{
+		super(true, true, true, false);
+		texture = texture1;
+	}
+	@Override
+	public void readLvlFile(Element obj) {
+		super.readLvlFile(obj);
+		this.heals = Integer.parseInt(obj.getAttribute("heals"));
+	}
+	@Override
+	public void loadToFile(Element obj) {
+		obj.setAttribute("x", String.valueOf((int) this.x));
+		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("heals", String.valueOf((int) this.heals));
+		obj.setAttribute("class", "com.freedom.gameObjects.healthOperators.HealthKit");
+	}
+	@Override
+	public void touch(Stuff element) {
+		element.heal(this.heals);
+		//heals=0;
+		GameField.getInstance().getCells()[(int) this.x][(int) this.y].deleteStuff(this);
+	}	
 	
 	private int heals;
 	private static Image texture1;
@@ -19,28 +45,5 @@ public class HealthKit extends Stuff{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public HealthKit()
-	{
-		super(true, true, true, false);
-		texture = texture1;
-	}
-	public void readLvlFile(Element obj) {
-		super.readLvlFile(obj);
-		this.heals = Integer.parseInt(obj.getAttribute("heals"));
-	}
-	
-	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("heals", String.valueOf((int) this.heals));
-		obj.setAttribute("class", "com.freedom.gameObjects.HealthKit");
-	}
-	
-	void touch(Stuff element) {
-		element.heal(this.heals);
-		//heals=0;
-		GameField.getInstance().getCells()[(int) this.x][(int) this.y].deleteStuff(this);
 	}
 }
