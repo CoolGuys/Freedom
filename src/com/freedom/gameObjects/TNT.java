@@ -1,13 +1,11 @@
 package com.freedom.gameObjects;
 
 import java.awt.Image;
-
-import java.util.*;
-
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.imageio.ImageIO;
 
@@ -17,7 +15,7 @@ import com.freedom.view.GameScreen;
 
 public class TNT extends Stuff implements Moveable {
 
-	public static final int expDamage = 10;
+	private int expDamage = 10;
 	private static Image texture1;
 
 	static {
@@ -29,6 +27,7 @@ public class TNT extends Stuff implements Moveable {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private String direction;
 
 	public TNT() {
@@ -130,14 +129,14 @@ public class TNT extends Stuff implements Moveable {
 
 
 	public void activate() {
-		MyThread t = new MyThread();
-		t.start();
+		TNTExploder t = new TNTExploder();
+		GameField.otherThreads.execute(t);
 	}
 
-	private class MyThread extends Thread {
+	private class TNTExploder implements Runnable {
 		public void run() {
 			try {
-				this.sleep(3000);
+				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

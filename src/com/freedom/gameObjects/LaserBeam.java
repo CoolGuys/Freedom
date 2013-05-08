@@ -26,7 +26,7 @@ public class LaserBeam extends Stuff {
 	LaserBeam secondNext;
 	String direction;
 	private Laser source;
-	private static int absorbReduce = 5;
+	//private static int absorbReduce = 5;
 
 	private static Image textureVertical;
 	private static Image textureNW;

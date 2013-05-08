@@ -2,15 +2,13 @@ package com.freedom.gameObjects;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
-import java.awt.image.SinglePixelPackedSampleModel;
-
-import com.freedom.utilities.PathFinder;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Timer;
+
 import com.freedom.utilities.Loader;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadScreen;

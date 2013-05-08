@@ -10,11 +10,9 @@ import com.freedom.gameObjects.Moveable;
 import com.freedom.gameObjects.Stuff;
 import com.freedom.view.GameScreen;
 
-public final class Mover<MovingObj extends Moveable> implements Runnable {
+public final class Mover<MO extends Moveable> implements Runnable {
 
-	
-	
-	public Mover(MovingObj mover, String direction, int distance, int delay)
+	public Mover(MO mover, String direction, int distance, int delay)
 	{
 		this.theOneToRepaint = GameScreen.getInstance();
 		this.direction = direction;
@@ -29,7 +27,8 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 		try {
 			if (GameField.getInstance().cells[theOneToMove
 					.getTargetCellCoordinates(direction).x][theOneToMove
-					.getTargetCellCoordinates(direction).y].locked == true ||theOneToMove.checkIfBeingMoved())
+					.getTargetCellCoordinates(direction).y].locked == true
+					|| theOneToMove.checkIfBeingMoved())
 				return;
 			for (int k = 0; k < distance; k++) {
 				if (theOneToMove.canGo()) {
@@ -38,11 +37,10 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(direction).x][theOneToMove
 							.getTargetCellCoordinates(direction).y].locked = true;
 
-					GameField.getInstance().cells[(int) theOneToMove
-							.getX()][(int) (int) theOneToMove.getY()]
-							.utilityRemove((Stuff) theOneToMove);
 					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
-							.getY()].setMeta((Stuff)theOneToMove);
+							.getY()].utilityRemove((Stuff) theOneToMove);
+					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
+							.getY()].setMeta((Stuff) theOneToMove);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
@@ -62,17 +60,16 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
-							.utilityAdd((Stuff)theOneToMove);
+							.utilityAdd((Stuff) theOneToMove);
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
 							.clearMeta();
-				
+
 					GameField.getInstance().cells[(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
 							.getTargetCellCoordinates(invertDirection()).y]
 							.deleteStuff((Stuff) theOneToMove);
-					
 
 					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
 							.getY()].add((Stuff) theOneToMove);
@@ -104,7 +101,7 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 		}
 	}
 
-	private MovingObj theOneToMove;
+	private MO theOneToMove;
 	private String direction;
 	private JLayeredPane theOneToRepaint;
 	private int delay;

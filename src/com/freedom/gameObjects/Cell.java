@@ -290,22 +290,6 @@ public class Cell {
 	}
 
 
-	/*public void robotOn() {
-		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].robotOn();
-		}
-		GameField.getInstance().getRobot().harm(this.damage); // робот должен
-																// быть уже
-																// сверху
-	}
-
-	public void robotOff() {
-		for (int i = 1; i < this.contentAmount; i++) {
-			this.content[i].robotOff();
-		}
-	}*/
-
-
 	
 	//здесь наносим урон предметам 
 	int dealDamageToContent(int damage){
