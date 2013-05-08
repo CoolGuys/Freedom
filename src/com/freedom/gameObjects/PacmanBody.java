@@ -24,7 +24,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	private int picID;
 	private String direction;
 	private int direc;
-	private int trekLenght = 5;
+	protected int trekLenght = 5;
 	private PacmanSoul p;
 	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger("");
@@ -133,6 +133,14 @@ public class PacmanBody extends Stuff implements Moveable {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean getAlive(){
+		return this.alive;
+	}
+	
+	public int getRate(){
+		return this.rate;
+	}
 
 	public void itsAlive() {
 		if (this.alive) {
@@ -190,6 +198,11 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.direction = "N";
 		this.direc = -1;
 	}
+	
+	public PacmanBody(boolean pickable, boolean passable, boolean reflectable,
+			boolean absorbable, int damage, int lives){
+		super(pickable,passable,reflectable,absorbable,damage,lives);		
+	}
 
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
@@ -200,9 +213,14 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.rate = Integer.parseInt(obj.getAttribute("rate"));
+		try{
+			this.trekLenght = Integer.parseInt(obj.getAttribute("trekLenght"));
+		}catch(Exception e){
+			this.trekLenght = 5;
+		}		
 		// System.out.println("ololo");
 		String salive= obj.getAttribute("alive");
-		System.out.println(salive+"lolo");
+		//System.out.println(salive+"lolo");
 		if(!salive.equals("")){
 			this.alive=Boolean.parseBoolean(salive);
 		}else {
@@ -226,6 +244,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("rate", String.valueOf((int) this.rate));
+		obj.setAttribute("trekLenght", String.valueOf((int) this.trekLenght));
 		obj.setAttribute("alive", String.valueOf(this.alive));
 		obj.setAttribute("class", "com.freedom.gameObjects.PacmanBody");
 		
@@ -237,6 +256,7 @@ public class PacmanBody extends Stuff implements Moveable {
 //				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
 //	
 	//	System.out.println(direction);
+		//this.die();
 		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10);
 		Thread t = new Thread(r);
 		t.start();

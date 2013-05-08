@@ -23,7 +23,7 @@ public final class Mover<MovingObj extends Moveable> implements Runnable {
 		this.distance = distance;
 	}
 
-	public void run() {
+	public synchronized void run() {
 		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
 		try {

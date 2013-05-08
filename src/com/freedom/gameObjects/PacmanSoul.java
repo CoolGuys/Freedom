@@ -65,6 +65,7 @@ public class PacmanSoul implements Runnable {
 				this.destinationY = GameField.getInstance().getRobot().getY();
 				//System.out.println("fsd");
 				String dir = finder.find(x, y, destinationX, destinationY, widh);
+				//dir="WWWWW";
 				if (!dir.equals("0")) {
 					//System.out.println(dir);
 					if (dir.length() > 1) {
@@ -76,8 +77,6 @@ public class PacmanSoul implements Runnable {
 						}
 					} else {
 						GameField.getInstance().getRobot().punch(1);
-						/*System.out.println(GameField.getInstance().getRobot()
-								.getLives());*/
 					}
 				}
 			}else {
