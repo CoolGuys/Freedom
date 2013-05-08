@@ -103,9 +103,10 @@ public class PacmanBody extends Stuff implements Moveable {
 			double rotationRequired = Math.toRadians(270);
 			int locationX = getSize() / 2;
 			int locationY = getSize() / 2;
-			AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			AffineTransform tx = AffineTransform.getRotateInstance(
+					rotationRequired, locationX, locationY);
+			AffineTransformOp op = new AffineTransformOp(tx,
+					AffineTransformOp.TYPE_BILINEAR);
 			texture1E = op.filter(texture1S, null);
 			texture2E = op.filter(texture2S, null);
 			texture3E = op.filter(texture3S, null);
@@ -133,12 +134,12 @@ public class PacmanBody extends Stuff implements Moveable {
 			e.printStackTrace();
 		}
 	}
-	
-	public boolean getAlive(){
+
+	public boolean getAlive() {
 		return this.alive;
 	}
-	
-	public int getRate(){
+
+	public int getRate() {
 		return this.rate;
 	}
 
@@ -187,21 +188,22 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public void setDirection(String direction) {
-		this.direction=direction;
+		this.direction = direction;
 	}
 
 	public PacmanBody()
 	{
-		super(true, false, false, true,0,3);
+		super(true, false, false, true, 0, 3);
 		texture = texture1N;
 		this.picID = 1;
 		this.direction = "N";
 		this.direc = -1;
 	}
-	
+
 	public PacmanBody(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives){
-		super(pickable,passable,reflectable,absorbable,damage,lives);		
+			boolean absorbable, int damage, int lives)
+	{
+		super(pickable, passable, reflectable, absorbable, damage, lives);
 	}
 
 	/**
@@ -213,27 +215,29 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		this.rate = Integer.parseInt(obj.getAttribute("rate"));
-		try{
+		try {
 			this.trekLenght = Integer.parseInt(obj.getAttribute("trekLenght"));
-		}catch(Exception e){
+		} catch (Exception e) {
 			this.trekLenght = 5;
-		}		
+		}
 		// System.out.println("ololo");
-		String salive= obj.getAttribute("alive");
-		//System.out.println(salive+"lolo");
-		if(!salive.equals("")){
-			this.alive=Boolean.parseBoolean(salive);
-		}else {
-			this.alive=true;
+		String salive = obj.getAttribute("alive");
+		// System.out.println(salive+"lolo");
+		if (!salive.equals("")) {
+			this.alive = Boolean.parseBoolean(salive);
+		} else {
+			this.alive = true;
 		}
 		itsAlive();
 		// p.InHell();
 	}
-	
-	void die(){
-		this.alive=false;
-		this.p.alive=false;
+
+	void die() {
+		this.alive = false;
+		if (p != null)
+			this.p.alive = false;
 	}
+
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
@@ -247,16 +251,16 @@ public class PacmanBody extends Stuff implements Moveable {
 		obj.setAttribute("trekLenght", String.valueOf((int) this.trekLenght));
 		obj.setAttribute("alive", String.valueOf(this.alive));
 		obj.setAttribute("class", "com.freedom.gameObjects.PacmanBody");
-		
+
 	}
 
 	public void move1(String direction) {
 
-//		logger.info("Coords double:" + x + " " + y + "|| Coord int: "
-//				+ (int) (x * getSize()) + " " + (int) (y * getSize()));
-//	
-	//	System.out.println(direction);
-		//this.die();
+		// logger.info("Coords double:" + x + " " + y + "|| Coord int: "
+		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
+		//
+		// System.out.println(direction);
+		// this.die();
 		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10);
 		Thread t = new Thread(r);
 		t.start();
@@ -299,7 +303,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			return point;
 		}
 	}
-	
+
 	public void changeTexture() {
 		switch (this.picID) {
 		case 1:

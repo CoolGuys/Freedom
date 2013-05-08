@@ -35,7 +35,7 @@ public class GameField {
 	public volatile Cell[][] cells;
 	private int xSize;
 	private int ySize;
-	//private Logger logger = Logger.getLogger("Core.GameField");
+	// private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
@@ -43,6 +43,7 @@ public class GameField {
 	public static ExecutorService otherThreads;
 	public boolean active;
 	private Logger gleblo = Logger.getLogger("gleblo");
+
 	public void setPathToSave(String pathToSaveFile) {
 		this.pathToSave = pathToSaveFile;
 	}
@@ -105,7 +106,8 @@ public class GameField {
 		return GameField.otherThreads;
 	}
 
-	public void switchToNextLevel(int nextLevelId, int robotx, int roboty, boolean canTakeBuf) {
+	public void switchToNextLevel(int nextLevelId, int robotx, int roboty,
+			boolean canTakeBuf) {
 
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
@@ -144,7 +146,7 @@ public class GameField {
 
 			gleblo.setLevel(Level.OFF);
 		}
-		
+
 		try {
 			buf.itsAlive();
 		} catch (Exception E) {
@@ -179,6 +181,11 @@ public class GameField {
 		ActionListener[] listeners = ticker.getActionListeners();
 		for (ActionListener l : listeners)
 			ticker.removeActionListener(l);
+
+		listeners = deathTicker.getActionListeners();
+		for (ActionListener l : listeners)
+			deathTicker.removeActionListener(l);
+
 	}
 
 	public int getXsize() {
@@ -192,7 +199,6 @@ public class GameField {
 	public Cell[][] getCells() {
 		return cells;
 	}
-
 
 	public synchronized Robot getRobot() {
 
