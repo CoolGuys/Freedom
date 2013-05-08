@@ -52,7 +52,7 @@ public class Cell {
 	}
 
 	public synchronized void utilityAdd(Stuff toAdd) {
-		System.out.println("Utility add on "+ toAdd.toString()+" "+contentAmount+" "+x+" "+y);
+//		System.out.println("Utility add on "+ toAdd.toString()+" "+contentAmount+" "+x+" "+y);
 		this.content[this.contentAmount] = toAdd;
 		this.contentAmount++;
 
@@ -71,11 +71,11 @@ public class Cell {
 		for(i = 0; i<this.contentAmount; i++){
 			if(this.content[i].equals(toRemove))
 				break;
-			if(i==(this.contentAmount - 1))
+			if(i==(this.contentAmount))
 				return null;
 		}
 		
-		System.out.println("Utility remove on "+ toRemove.toString()+" "+x+" "+y);
+	//	System.out.println("Utility remove on "+ toRemove.toString()+" "+x+" "+y);
 		
 		for(int j = i; j<this.contentAmount-1; j++){
 			this.content[j] = this.content[j+1];
@@ -86,7 +86,7 @@ public class Cell {
 	}
 	
 	public synchronized boolean add(Stuff element) {
-		System.out.println("Add on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+//		System.out.println("Add on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
 
 		if (this.contentAmount == 10)
 			return false;
@@ -138,7 +138,7 @@ public class Cell {
 		}
 		this.damage = this.damage - buf.getDamage();
 		buf.stopHarming();
-		System.out.println("Remove on "+ buf.toString()+ ": " + contentAmount+" "+x+" "+y);
+//		System.out.println("Remove on "+ buf.toString()+ ": " + contentAmount+" "+x+" "+y);
 
 		return buf;
 	}
@@ -146,20 +146,22 @@ public class Cell {
 	
 	public synchronized boolean deleteStuff(Stuff element) {
 
-		System.out.println("Remove on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
-
+//		System.out.println("Remove on "+ element.toString()+ ": " + contentAmount+" "+x+" "+y);
+		//добавить лог
+		if(element == null)
+			return false;
+		
 		if (this.contentAmount == 0)
 			return false;
 		this.untouch(element);
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
-				break;
-
-			if(i==(this.contentAmount - 1))
-				return false;
+				break;	
 		}
 		
+		if(i==(this.contentAmount))
+				return false;
 		
 		
 		this.damage = this.damage - element.getDamage();

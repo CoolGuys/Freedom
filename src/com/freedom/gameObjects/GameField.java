@@ -40,7 +40,7 @@ public class GameField {
 	//private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
-	private Timer deathTicker = new Timer(5000, null);
+	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
 	public static ExecutorService otherThreads;
 	public boolean active;

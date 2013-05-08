@@ -131,8 +131,7 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public boolean canGo() {
-		if (GameField.getInstance().cells[this
-				.getTargetCellCoordinates(getDirection()).x][this
+		if (GameField.getInstance().cells[this.getTargetCellCoordinates(getDirection()).x][this
 				.getTargetCellCoordinates(getDirection()).y].ifCanPassThrough())
 			return true;
 
