@@ -137,7 +137,7 @@ public class GameField {
 			}
 			if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
 				GameField.getInstance().getCells()[previousx][previousy]
-						.deleteStuff();
+						.deleteStuff(this.robot);
 			}
 
 			gleblo.setLevel(Level.OFF);

@@ -301,4 +301,8 @@ public class Stuff {
 		}
 	}
 
+	public boolean isExpConductive() {
+		return this.expConductive;
+	}
+
 }

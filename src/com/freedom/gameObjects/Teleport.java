@@ -91,7 +91,7 @@ public class Teleport extends Stuff {
 		if (GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.add(element)) {
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
-					.deleteStuff();
+					.deleteStuff(element);
 			return;
 		}
 	}
