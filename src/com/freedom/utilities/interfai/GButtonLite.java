@@ -15,9 +15,9 @@ import com.freedom.utilities.game.SoundEngine;
 import com.freedom.view.PauseScreen;
 
 public class GButtonLite {
-	public GButtonLite(String text, int lineNumber, String actionName)
+	public GButtonLite(String text, int lineNumber, GAction action)
 	{
-		this.actionName = actionName;
+		this.action = action;
 		this.text = text;
 		this.line = lineNumber;
 		positionY = calculateYPosition();
@@ -48,16 +48,16 @@ public class GButtonLite {
 		this.textColor = Color.LIGHT_GRAY;
 	}
 
-	public String checkIfPressed(Point p) {
+	public void checkIfPressed(Point p) {
 		if ((p.getX() >= this.positionX
 				&& p.getX() <= this.positionX + dimensionX
 				&& p.getY() >= this.positionY && p.getY() <= this.positionY
 				+ dimensionY)) {
 
 			SoundEngine.playClip(clickedSound, -1, -10);
-			return actionName;
+			action.performAction();
+			return;
 		}
-		return "WasNotPressed";
 	}
 
 	public void draw(Graphics g) {
@@ -93,7 +93,7 @@ public class GButtonLite {
 	private LineMetrics metrics;
 	private File clickedSound;
 	private Font textFont;
-	public final String actionName;
+	public final GAction action;
 	private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
 	private final int gap = PauseScreen.getInstance().getHeight() / 12;
 

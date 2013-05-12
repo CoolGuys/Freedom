@@ -13,10 +13,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.model.GameField;
 import com.freedom.model.PauseScreenModel;
-import com.freedom.model.SaveScreenModel;
-import com.freedom.utilities.interfai.GAction;
 
 @SuppressWarnings("serial")
 public class PauseScreen extends AbstractScreen {
@@ -28,7 +25,6 @@ public class PauseScreen extends AbstractScreen {
 				ScreensHolder.getInstance().getHeight());
 		this.addMouseListener(new MouseHandler());
 		this.addMouseMotionListener(new MouseHandler());
-		
 
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "resume");
@@ -36,87 +32,51 @@ public class PauseScreen extends AbstractScreen {
 		ActionMap amap = this.getActionMap();
 		amap.put("resume", resume);
 	}
-	
+
 	public static PauseScreen getInstance() {
-		if(INSTANCE==null)
+		if (INSTANCE == null)
 			return INSTANCE = new PauseScreen();
 		else
 			return INSTANCE;
 	}
-	
+
 	public void prepareModel() {
 		pauseScreenModel.addButtons();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-//		super.paintComponent(g);
+		// super.paintComponent(g);
 		pauseScreenModel.draw(g);
 	}
 
 	public void activateModel() {
 		pauseScreenModel.activate();
 	}
-	
+
 	public void deactivateModel() {
 		pauseScreenModel.deactivate();
 	}
-	
+
 	private Logger logger = Logger.getLogger("PauseScreen");
 	private PauseScreenModel pauseScreenModel = PauseScreenModel.getInstance();
 	private static PauseScreen INSTANCE;
-	
-	
+
 	private class MouseHandler extends MouseAdapter {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
-			String s = pauseScreenModel.reactToClick(e.getPoint());
-			if (!s.equals("NothingHappened")) {
-				GAction m;
-				try {
-					m = (GAction) Class.forName(s).newInstance();
-					m.performAction();
-				} catch (InstantiationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+			pauseScreenModel.reactToClick(e.getPoint());
 		}
+
 		public void mouseMoved(MouseEvent e) {
 			pauseScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
-	
-	public static class QuitAction extends GAction {
-		public void performAction() {
-			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
-					INSTANCE);
-			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
-			GameField.getInstance().resetTickerListeners();
-			GameField.otherThreads.shutdownNow();
-		}
-	}
-	
+
 	public static class ResumeAction extends AbstractAction {
 		public void actionPerformed(ActionEvent e) {
 			ScreensHolder.getInstance().removeScreen(getInstance());
-		}
-	}
-
-	public static class SaveLevelAction extends GAction {
-		public void performAction() {
-			SaveScreenModel.getInstance().setSourcePack(GameField.getInstance().getPathToSave());
-			SaveScreenModel.getInstance().setDescriptor("Enter Save Name");
-			SaveScreenModel.getInstance().addEntries();
-			ScreensHolder.getInstance().swapScreens(SaveScreen.getInstance(), INSTANCE);
 		}
 	}
 }

@@ -10,8 +10,13 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButtonLite;
+import com.freedom.view.GameScreen;
 import com.freedom.view.PauseScreen;
+import com.freedom.view.SaveScreen;
+import com.freedom.view.ScreensHolder;
+import com.freedom.view.StartScreen;
 
 public class PauseScreenModel {
 
@@ -29,9 +34,9 @@ public class PauseScreenModel {
 
 	public void addButtons() {
 		buttons[0] = new GButtonLite("QUIT", 2,
-				"com.freedom.view.PauseScreen$QuitAction");
+				new QuitAction());
 		buttons[1] = new GButtonLite("SAVE", 1,
-				"com.freedom.view.PauseScreen$SaveLevelAction");
+				new SaveLevelAction());
 	}
 
 	public static PauseScreenModel getInstance() {
@@ -60,14 +65,12 @@ public class PauseScreenModel {
 				b.draw(g);
 	}
 
-	public String reactToClick(Point p) {
+	public void reactToClick(Point p) {
 		logger.info(p.toString());
 		for (GButtonLite b : buttons) {
 			if (b != null)
-				if (!b.checkIfPressed(p).equals("WasNotPressed"))
-					return b.actionName;
+				b.checkIfPressed(p);
 		}
-		return "NothingHappened";
 	}
 
 	public void reactToRollOver(Point point) {
@@ -85,5 +88,26 @@ public class PauseScreenModel {
 
 	private Logger logger = Logger.getLogger("PauseScreenModel");
 
+	
+	public static class QuitAction extends GAction {
+		public void performAction() {
+			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
+					PauseScreen.getInstance());
+			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
+			GameField.getInstance().resetTickerListeners();
+			GameField.otherThreads.shutdownNow();
+		}
+	}
+	
+	
+
+	public static class SaveLevelAction extends GAction {
+		public void performAction() {
+			SaveScreenModel.getInstance().setSourcePack(GameField.getInstance().getPathToSave());
+			SaveScreenModel.getInstance().setDescriptor("Enter Save Name");
+			SaveScreenModel.getInstance().addEntries();
+			ScreensHolder.getInstance().swapScreens(SaveScreen.getInstance(), PauseScreen.getInstance());
+		}
+	}
 	
 }
