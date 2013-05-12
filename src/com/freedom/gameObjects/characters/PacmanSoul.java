@@ -49,46 +49,49 @@ public class PacmanSoul implements Runnable {
 	}
 
 	public void run() {
-		while (alive) {
+		while (alive && !Thread.currentThread().isInterrupted()) {
 
 			try {
 				Thread.sleep(this.stepRate);
+
+				int x = body.getX();
+				int y = body.getY();
+				boolean b = (GameField.getInstance().getRobot() == null);
+
+				if (!b && GameField.getInstance().active) {
+					// System.out.println("fsd");
+					this.destinationX = GameField.getInstance().getRobot()
+							.getX();
+					this.destinationY = GameField.getInstance().getRobot()
+							.getY();
+					// System.out.println("fsd");
+					String dir = finder.find(x, y, destinationX, destinationY,
+							widh);
+					// dir="WWWWW";
+					if (!dir.equals("0")) {
+						// System.out.println(dir);
+						if (dir.length() > 1) {
+							try {
+								body.move1((String) dir.subSequence(0, 1));
+							} catch (Exception e) {
+								// e.printStackTrace();
+								// System.out.println("pacman не двигается");
+							}
+						} else {
+							GameField.getInstance().getRobot().punch(1);
+						}
+					}
+				} else {
+					this.destinationX = y;
+					this.destinationY = x;
+					this.alive = true;
+					// System.out.println("Else");
+				}
 			} catch (InterruptedException e) {
 				// TODO Автоматически созданный блок catch
-				
-			}
-			int x = body.getX();
-			int y = body.getY();
-			boolean b = (GameField.getInstance().getRobot() == null);
-
-			if (!b &&GameField.getInstance().active) {
-				//System.out.println("fsd");
-				this.destinationX = GameField.getInstance().getRobot().getX();
-				this.destinationY = GameField.getInstance().getRobot().getY();
-				//System.out.println("fsd");
-				String dir = finder.find(x, y, destinationX, destinationY, widh);
-				//dir="WWWWW";
-				if (!dir.equals("0")) {
-					//System.out.println(dir);
-					if (dir.length() > 1) {
-						try {
-							body.move1((String) dir.subSequence(0, 1));
-						} catch (Exception e) {
-							//e.printStackTrace();
-							//System.out.println("pacman не двигается");
-						}
-					} else {
-						GameField.getInstance().getRobot().punch(1);
-					}
-				}
-			}else {
-				this.destinationX = y;
-				this.destinationY = x;
-				this.alive=true;
-				//System.out.println("Else");
+				this.alive=false;
 			}
 		}
-		
 
 	}
 
@@ -96,11 +99,11 @@ public class PacmanSoul implements Runnable {
 
 		public void run() {
 			while (alive) {
-				 body.changeTexture();
-				 GameScreen.getInstance().repaint((int)(body.getX() *
-				 Stuff.getSize()),
-				 (int)(body.getY() * Stuff.getSize()), Stuff.getSize(),
-				 Stuff.getSize());
+				body.changeTexture();
+				GameScreen.getInstance().repaint(
+						(int) (body.getX() * Stuff.getSize()),
+						(int) (body.getY() * Stuff.getSize()), Stuff.getSize(),
+						Stuff.getSize());
 				try {
 					Thread.sleep(30);
 				} catch (InterruptedException e) {

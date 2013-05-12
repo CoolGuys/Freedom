@@ -32,110 +32,19 @@ public class PacmanBody extends Stuff implements Moveable {
 	@SuppressWarnings("unused")
 	private static Logger logger = Logger.getLogger("");
 
-	private static BufferedImage texture1S = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture2S = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture3S = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture4S = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture5S = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture1N = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture2N = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture3N = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture4N = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture5N = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture1W = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture2W = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture3W = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture4W = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture5W = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture1E = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture2E = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture3E = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture4E = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
-	private static BufferedImage texture5E = new BufferedImage(getSize(),
-			getSize(), BufferedImage.TYPE_INT_ARGB);
+	public PacmanBody()
+	{
+		super(true, false, false, true, 0, 3);
+		texture = texture1N;
+		this.picID = 1;
+		this.direction = "N";
+		this.direc = -1;
+	}
 
-	static {
-		try {
-
-			Image texture1 = ImageIO
-					.read(new File("Resource/Textures/p1s.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			Image texture2 = ImageIO
-					.read(new File("Resource/Textures/p2s.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			Image texture3 = ImageIO
-					.read(new File("Resource/Textures/p3s.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			Image texture4 = ImageIO
-					.read(new File("Resource/Textures/p4s.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			Image texture5 = ImageIO
-					.read(new File("Resource/Textures/p5s.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-
-			PacmanBody.texture1S.getGraphics().drawImage(texture1, 0, 0, null);
-			PacmanBody.texture2S.getGraphics().drawImage(texture2, 0, 0, null);
-			PacmanBody.texture3S.getGraphics().drawImage(texture3, 0, 0, null);
-			PacmanBody.texture4S.getGraphics().drawImage(texture4, 0, 0, null);
-			PacmanBody.texture5S.getGraphics().drawImage(texture5, 0, 0, null);
-
-			double rotationRequired = Math.toRadians(270);
-			int locationX = getSize() / 2;
-			int locationY = getSize() / 2;
-			AffineTransform tx = AffineTransform.getRotateInstance(
-					rotationRequired, locationX, locationY);
-			AffineTransformOp op = new AffineTransformOp(tx,
-					AffineTransformOp.TYPE_BILINEAR);
-			texture1E = op.filter(texture1S, null);
-			texture2E = op.filter(texture2S, null);
-			texture3E = op.filter(texture3S, null);
-			texture4E = op.filter(texture4S, null);
-			texture5E = op.filter(texture5S, null);
-			rotationRequired = Math.toRadians(180);
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			texture1N = op.filter(texture1S, null);
-			texture2N = op.filter(texture2S, null);
-			texture3N = op.filter(texture3S, null);
-			texture4N = op.filter(texture4S, null);
-			texture5N = op.filter(texture5S, null);
-			rotationRequired = Math.toRadians(90);
-			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
-					locationY);
-			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-			texture1W = op.filter(texture1S, null);
-			texture2W = op.filter(texture2S, null);
-			texture3W = op.filter(texture3S, null);
-			texture4W = op.filter(texture4S, null);
-			texture5W = op.filter(texture5S, null);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public PacmanBody(boolean pickable, boolean passable, boolean reflectable,
+			boolean absorbable, int damage, int lives)
+	{
+		super(pickable, passable, reflectable, absorbable, damage, lives);
 	}
 
 	public boolean getAlive() {
@@ -194,26 +103,6 @@ public class PacmanBody extends Stuff implements Moveable {
 		this.direction = direction;
 	}
 
-	public PacmanBody()
-	{
-		super(true, false, false, true, 0, 3);
-		texture = texture1N;
-		this.picID = 1;
-		this.direction = "N";
-		this.direc = -1;
-	}
-
-	public PacmanBody(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives)
-	{
-		super(pickable, passable, reflectable, absorbable, damage, lives);
-	}
-
-	/**
-	 * Метод, который считывает всю инфу из файла с лвлами
-	 * 
-	 * @param - Scanner файла
-	 */
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
@@ -387,6 +276,111 @@ public class PacmanBody extends Stuff implements Moveable {
 			this.picID += this.direc;
 			break;
 		default:
+		}
+	}
+	private static BufferedImage texture1S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5S = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5N = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5W = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture1E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture2E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture3E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture4E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+	private static BufferedImage texture5E = new BufferedImage(getSize(),
+			getSize(), BufferedImage.TYPE_INT_ARGB);
+
+	static {
+		try {
+
+			Image texture1 = ImageIO
+					.read(new File("Resource/Textures/p1s.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			Image texture2 = ImageIO
+					.read(new File("Resource/Textures/p2s.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			Image texture3 = ImageIO
+					.read(new File("Resource/Textures/p3s.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			Image texture4 = ImageIO
+					.read(new File("Resource/Textures/p4s.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			Image texture5 = ImageIO
+					.read(new File("Resource/Textures/p5s.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+
+			PacmanBody.texture1S.getGraphics().drawImage(texture1, 0, 0, null);
+			PacmanBody.texture2S.getGraphics().drawImage(texture2, 0, 0, null);
+			PacmanBody.texture3S.getGraphics().drawImage(texture3, 0, 0, null);
+			PacmanBody.texture4S.getGraphics().drawImage(texture4, 0, 0, null);
+			PacmanBody.texture5S.getGraphics().drawImage(texture5, 0, 0, null);
+
+			double rotationRequired = Math.toRadians(270);
+			int locationX = getSize() / 2;
+			int locationY = getSize() / 2;
+			AffineTransform tx = AffineTransform.getRotateInstance(
+					rotationRequired, locationX, locationY);
+			AffineTransformOp op = new AffineTransformOp(tx,
+					AffineTransformOp.TYPE_BILINEAR);
+			texture1E = op.filter(texture1S, null);
+			texture2E = op.filter(texture2S, null);
+			texture3E = op.filter(texture3S, null);
+			texture4E = op.filter(texture4S, null);
+			texture5E = op.filter(texture5S, null);
+			rotationRequired = Math.toRadians(180);
+			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
+					locationY);
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			texture1N = op.filter(texture1S, null);
+			texture2N = op.filter(texture2S, null);
+			texture3N = op.filter(texture3S, null);
+			texture4N = op.filter(texture4S, null);
+			texture5N = op.filter(texture5S, null);
+			rotationRequired = Math.toRadians(90);
+			tx = AffineTransform.getRotateInstance(rotationRequired, locationX,
+					locationY);
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+			texture1W = op.filter(texture1S, null);
+			texture2W = op.filter(texture2S, null);
+			texture3W = op.filter(texture3S, null);
+			texture4W = op.filter(texture4S, null);
+			texture5W = op.filter(texture5S, null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }
