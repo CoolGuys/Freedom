@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.model.GameField;
 
 public class HealthKit extends Stuff{
 	public HealthKit()

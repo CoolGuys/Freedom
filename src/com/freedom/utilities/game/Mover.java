@@ -1,13 +1,13 @@
-package com.freedom.utilities;
+package com.freedom.utilities.game;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JLayeredPane;
 
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
 
 public final class Mover<MO extends Moveable> implements Runnable {

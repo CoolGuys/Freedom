@@ -1,4 +1,4 @@
-package com.freedom.utilities;
+package com.freedom.utilities.game;
 
 import java.io.*;
 import java.util.concurrent.*;

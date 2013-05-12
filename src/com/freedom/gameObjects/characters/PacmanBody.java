@@ -13,10 +13,10 @@ import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
-import com.freedom.utilities.Mover;
+import com.freedom.model.GameField;
+import com.freedom.utilities.game.Mover;
 
 public class PacmanBody extends Stuff implements Moveable {
 

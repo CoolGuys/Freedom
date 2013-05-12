@@ -1,11 +1,11 @@
-package com.freedom.utilities;
+package com.freedom.utilities.game;
 
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.freedom.gameObjects.base.Cell;
-import com.freedom.gameObjects.base.GameField;
+import com.freedom.model.GameField;
 
 /**
  * You cannot pass! I am a servant of the Secret Fire, wielder of the Flame of

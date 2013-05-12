@@ -14,7 +14,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.utilities.LoadScreenModel;
+import com.freedom.model.LoadScreenModel;
 
 //comment
 @SuppressWarnings("serial")

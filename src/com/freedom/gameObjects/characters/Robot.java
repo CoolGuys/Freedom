@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.base.Cell;
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
-import com.freedom.utilities.Mover;
+import com.freedom.model.GameField;
+import com.freedom.utilities.game.Mover;
 import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 

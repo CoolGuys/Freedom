@@ -2,9 +2,9 @@ package com.freedom.gameObjects.characters;
 
 import java.util.logging.Logger;
 
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Stuff;
-import com.freedom.utilities.PathFinder;
+import com.freedom.model.GameField;
+import com.freedom.utilities.game.PathFinder;
 import com.freedom.view.GameScreen;
 
 public class PacmanSoul implements Runnable {

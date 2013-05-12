@@ -13,10 +13,10 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.gameObjects.base.GameField;
-import com.freedom.utilities.GAction;
-import com.freedom.utilities.PauseScreenModel;
-import com.freedom.utilities.SaveScreenModel;
+import com.freedom.model.GameField;
+import com.freedom.model.PauseScreenModel;
+import com.freedom.model.SaveScreenModel;
+import com.freedom.utilities.interfai.GAction;
 
 @SuppressWarnings("serial")
 public class PauseScreen extends AbstractScreen {

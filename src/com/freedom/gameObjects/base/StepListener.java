@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.model.GameField;
+
 
 /**
  * Это класс который прослеживает находится ли робот в какой-то области и

@@ -7,15 +7,13 @@ import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.freedom.utilities.GAction;
-import com.freedom.utilities.LoadScreenModel;
-import com.freedom.utilities.StartScreenModel;
+import com.freedom.model.StartScreenModel;
 
 @SuppressWarnings("serial")
 public class StartScreen extends AbstractScreen {
 	private StartScreen()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.WARNING);
 
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
@@ -30,19 +28,22 @@ public class StartScreen extends AbstractScreen {
 		super.paintComponent(g);
 		startScreenModel.draw(g);
 	}
-	
-	public void prepareModel () {
+
+	@Override
+	public void prepareModel() {
 		StartScreenModel.getInstance().addButtons();
 	}
 
+	@Override
 	public void activateModel() {
 		startScreenModel.activate();
 	}
 
+	@Override
 	public void deactivateModel() {
 		startScreenModel.deactivate();
 	}
-
+	
 	public static StartScreen getInstance() {
 		if (INSTANCE == null) {
 			INSTANCE = new StartScreen();
@@ -61,69 +62,12 @@ public class StartScreen extends AbstractScreen {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
-			String s = startScreenModel.reactToClick(e.getPoint());
-			if (!s.equals("NothingHappened")) {
-				GAction m;
-				try {
-					m = (GAction) Class.forName(s).newInstance();
-					m.performAction();
-				} catch (InstantiationException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IllegalAccessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-			}
+			startScreenModel.reactToClick(e.getPoint());
 		}
-		
+
+		@Override
 		public void mouseMoved(MouseEvent e) {
 			startScreenModel.reactToRollOver(e.getPoint());
-		}
-	}
-
-	public static class StartGameAction extends GAction {
-		public void performAction() {	
-			//GameField.getInstance().loadLevel(GameField.getInstance().getPathToSave());	
-
-			/*TextFieldScreenModel.getInstance().setDescriptor("Choose Save Name");
-			TextFieldScreenModel.getInstance().addEntries();	
-			ScreensHolder.getInstance().swapScreens(TextFieldScreen.getInstance(),
-					StartScreen.getInstance());*/
-
-		}
-	}
-	
-	public static class NewGameAction extends GAction {
-		public void performAction() {
-			LoadScreenModel.getInstance().setListedDirectory("Levels");
-
-			//LoadScreenModel.getInstance().addEntries();
-			LoadScreenModel.getInstance().newLevel=true;
-			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
-					StartScreen.getInstance());
-
-		}
-	}
-	
-	public static class LoadGameAction extends GAction {
-		public void performAction() {
-			LoadScreenModel.getInstance().setListedDirectory("Saves");
-			LoadScreenModel.getInstance().newLevel=false;
-			LoadScreenModel.getInstance().addEntries();
-			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
-					StartScreen.getInstance());
-
-		}
-	}
-
-	public static class ExitGameAction extends GAction {
-		public void performAction() {
-			System.exit(0);
 		}
 	}
 }

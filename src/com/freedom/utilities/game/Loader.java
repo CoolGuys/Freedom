@@ -1,4 +1,4 @@
-package com.freedom.utilities;
+package com.freedom.utilities.game;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -17,9 +17,10 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.freedom.gameObjects.base.Cell;
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.model.GameField;
+import com.freedom.model.LoadingScreenModel;
 
 /**
  * !!!!!!!!!!!!!!!!!!!Attention please!!!!!!!!!!!

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 
 import org.w3c.dom.Element;
 
+import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
 
 public class Stuff {

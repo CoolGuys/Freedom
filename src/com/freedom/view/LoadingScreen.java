@@ -3,7 +3,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.freedom.utilities.LoadingScreenModel;
+
+import com.freedom.model.LoadingScreenModel;
 
 @SuppressWarnings("serial")
 public class LoadingScreen extends AbstractScreen {

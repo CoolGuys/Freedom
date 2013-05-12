@@ -9,9 +9,9 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Cell;
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.uncontrolled.Wall;
+import com.freedom.model.GameField;
 
 public class NotDoor extends Stuff {
 

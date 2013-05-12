@@ -23,9 +23,9 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
-import com.freedom.gameObjects.base.GameField;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
+import com.freedom.model.GameField;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {

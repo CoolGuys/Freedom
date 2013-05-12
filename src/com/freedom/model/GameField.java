@@ -1,4 +1,4 @@
-package com.freedom.gameObjects.base;
+package com.freedom.model;
 
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
@@ -9,12 +9,13 @@ import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
+import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.characters.Robot;
-import com.freedom.utilities.Loader;
+import com.freedom.utilities.game.Loader;
 import com.freedom.view.GameScreen;
 import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
-import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;
 
 /**
@@ -85,13 +86,10 @@ public class GameField {
 	 * @param levelID
 	 *            Апендикс, который сейчас не нужен
 	 */
-	public void loadLevel(String pathToPackage, boolean isNew) {
-		if (isNew)
-			ScreensHolder.getInstance().swapScreens(
-					LoadingScreen.getInstance(), SaveScreen.getInstance());
-		else
-			ScreensHolder.getInstance().swapScreens(
-					LoadingScreen.getInstance(), LoadScreen.getInstance());
+	public void loadLevel(String pathToPackage) {
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				LoadScreen.getInstance());
+		GameField.getInstance().setPathToSave(pathToPackage);
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		previousCells = cells;
