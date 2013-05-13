@@ -18,7 +18,6 @@ import com.freedom.model.GameField;
 public class Laser extends Stuff {
 	LaserBeam beamHead;
 	boolean ifActive;
-	String color;
 	String direction;
 	private BeamSender sender;
 	private static Image texture1;
@@ -43,20 +42,13 @@ public class Laser extends Stuff {
 	}
 	
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		this.direction = obj.getAttribute("direction");
-		this.color = obj.getAttribute("color");
-		
-		
-		
 	}
 	
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("direction",this.direction);
-		obj.setAttribute("color",this.color);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Laser");
 	}
 	

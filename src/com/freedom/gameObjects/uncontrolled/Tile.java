@@ -30,20 +30,13 @@ public class Tile extends Stuff {
 		}
 	}
 
-	// if you want tile to be pit, just put damage = maxDamage
-	// we also don't need coordinates - it'll get them while pulling to cell
 
 	public Tile()
 	{
 		super(false, true, false, false);
 		texture = texture1;
 	}
-	
 
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-	}
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!

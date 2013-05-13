@@ -20,7 +20,6 @@ import com.freedom.view.GameScreen;
  * признак конца - this.next.next = this.next;
  */
 
-//TODO Запилить раздвоение луча на углах и обработку прерывания луча барахлом
 
 public class LaserBeam extends Stuff {
 
@@ -73,6 +72,7 @@ public class LaserBeam extends Stuff {
 
 	void setSource(Laser source) {
 		this.source = source;
+		this.setColour(source.getColour());
 	}
 
 	private void setPicture(String direct) {
@@ -99,9 +99,7 @@ public class LaserBeam extends Stuff {
 
 	/*
 	 * у нас луч попал на отражающую клетку. этот метод перемещает его и
-	 * поворачивает Север- Юг не совпадают с реальным представлением если луч
-	 * попадает на грань кубика, я имею возможность устроить произвол - этим и
-	 * пользуюсь) урон после отражения уменьшается на 1
+	 * поворачивает Север- Юг не совпадают с реальным представлением 
 	 */
 
 	public boolean obj() {
@@ -114,7 +112,8 @@ public class LaserBeam extends Stuff {
 	}
 
 	private void reflect() {
-
+		
+		//сначала самое примитивное
 		if (this.direction.equals("N")) {
 			this.direction = "S";
 			this.y = this.y + 1;
@@ -138,7 +137,18 @@ public class LaserBeam extends Stuff {
 			this.x = this.x + 1;
 			this.reduceDamage(1);
 		}
-
+		
+		/*
+		 * далее - падение под углом. здесь я смотрю 2 соседние клетки.(так,
+		 * для NW соседи - N и W)
+		 * 
+		 * если на обеих нет ничего отражающего - раздваиваю луч(1ый if)
+		 * для вторичного луча проверяю поглощение и строю отдельно в этом методе
+		 * 
+		 * если на какой-то одной что-то отражает - луч без раздваивания идет на другую
+		 * если отражают обе соседки, луч просто идет обратно
+		 * 
+		 */
 		else if (this.direction.equals("NE")) {
 			if ((!GameField.getInstance().cells[this.getX()][this.getY() + 1]
 					.getIfReflect())

@@ -42,19 +42,10 @@ public class Door extends Stuff {
 	{
 		super(false, false,true, false);
 		super.setExpConductive(false);
-
 	}
 
-	/**
-	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
-	 * пихайте такие методы везде где стафф!
-	 * 
-	 * @author UshAle
-	 */
-
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Door");
 	}
 

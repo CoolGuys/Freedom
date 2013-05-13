@@ -45,8 +45,7 @@ public class LevelExit extends Stuff {
 	 */
 	
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		this.nextLevelID = Integer.parseInt(obj.getAttribute("next"));
 		this.robotx = Integer.parseInt(obj.getAttribute("xr"));
 		this.roboty = Integer.parseInt(obj.getAttribute("yr"));
@@ -66,8 +65,7 @@ public class LevelExit extends Stuff {
 	 */
 	
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("xr", String.valueOf((int) this.robotx));
 		obj.setAttribute("yr", String.valueOf((int) this.roboty));
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.LevelExit");

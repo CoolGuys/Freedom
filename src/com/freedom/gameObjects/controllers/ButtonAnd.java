@@ -78,8 +78,7 @@ public class ButtonAnd extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
 
 		int length = list.getLength();
@@ -93,11 +92,8 @@ public class ButtonAnd extends Stuff {
 	}
 
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("class",
-				"com.freedom.gameObjects.controllers.ButtonAnd");
-		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
+		super.loadToFile(obj);
+		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonAnd");
 	}
 
 	@Override

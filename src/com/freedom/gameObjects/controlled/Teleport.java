@@ -16,6 +16,8 @@ import com.freedom.model.GameField;
 
 public class Teleport extends Stuff {
 
+	//TODO подумать на тему того, стоит ли запретить телепортацию объектов,
+	//если не позволяет сила
 	public Teleport()
 	{
 		super(false, true, false, false, 0, 1);
@@ -24,17 +26,14 @@ public class Teleport extends Stuff {
 
 	@Override
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		this.xLeadTo = Integer.parseInt(obj.getAttribute("xLeadTo"));
 		this.yLeadTo = Integer.parseInt(obj.getAttribute("yLeadTo"));
 	}
 
-
 	@Override
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("xLeadTo", String.valueOf((int) this.xLeadTo));
 		obj.setAttribute("yLeadTo", String.valueOf((int) this.yLeadTo));
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Teleport");

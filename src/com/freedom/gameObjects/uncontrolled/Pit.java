@@ -24,18 +24,18 @@ public class Pit extends Stuff{
 		this.x = x;
 		this.y = y;
 		this.raiseDamage(10000);
+
+		this.setColour("Blue");
 	}
 	
 	
 	public void readLvlFile(Element obj) {
-		this.x=Integer.parseInt(obj.getAttribute("x"));
-		this.y=Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		super.raiseDamage(Robot.maxLives);
 	}
 	
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int)this.x));
-		obj.setAttribute("y", String.valueOf((int)this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("class","com.freedom.gameObjects.uncontrolled.Pit");
 	} 
 	

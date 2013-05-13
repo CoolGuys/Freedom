@@ -23,16 +23,25 @@ public class Stuff {
 	protected static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
 	protected int maxLives;
+	
+	private String colour;
 
 	protected boolean pickable;
 	protected boolean passable;
+	
+	//punching
 	protected int damage;
 	protected boolean ifDestroyable;
 	protected int lives;
-	protected boolean ifAbsorb;
+	
+	//for laser
+	private boolean ifAbsorb;
 	protected boolean ifReflect;
+	
+	//for TNT
 	private boolean expConductive;
 
+	//for harming
 	private DamageSender damager;
 	private int toHarm; // буферное поле для передачи урона
 	private Logger logger = Logger.getLogger("Stuff");
@@ -69,6 +78,8 @@ public class Stuff {
 			this.lives = lives;
 			this.ifDestroyable = true;
 		}
+		//TODO убрать и заменить нормальным чтением из файла
+				this.colour = "Red";////////////////Заглушка!
 	}
 
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
@@ -85,6 +96,8 @@ public class Stuff {
 		this.lives = 10;
 		this.setExpConductive(true);
 		damager = new DamageSender();
+		//TODO убрать и заменить нормальным чтением из файла
+		this.colour = "Red";////////////////Заглушка!
 	}
 
 	public void setXY(double x, double y) {
@@ -92,10 +105,17 @@ public class Stuff {
 		this.y = y;
 	}
 
+//TODO пока в случае отсутствия цвета делает красным
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
+		this.colour = obj.getAttribute("color");
+		
+		if (this.colour.equals(""))
+			this.colour = "Red";
 	}
+	
+	
 
 	public boolean obj() {
 		return true;
@@ -111,6 +131,7 @@ public class Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
+		obj.setAttribute("color", String.valueOf(this.colour));
 	}
 
 	// Action methods
@@ -288,6 +309,16 @@ public class Stuff {
 				Stuff.this.die();
 			}
 		}
+	}
+	
+	//фишки с рангом предметов
+	
+	public String getColour(){
+		return this.colour;
+	}
+	public void setColour(String s){
+		this.colour = s;
+
 	}
 
 }

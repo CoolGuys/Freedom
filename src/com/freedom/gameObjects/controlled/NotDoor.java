@@ -51,8 +51,7 @@ public class NotDoor extends Stuff {
 	 */
 
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.NotDoor");
 	}
 

@@ -11,6 +11,8 @@ public class WalkieTalkie extends StepListener {
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
+		this.setColour("Red");
+		
 		this.message = obj.getAttribute("messageToDisplay");
 		NodeList list = obj.getElementsByTagName("cels");
 		int length = list.getLength();

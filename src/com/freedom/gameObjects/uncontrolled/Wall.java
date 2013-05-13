@@ -23,7 +23,6 @@ public class Wall extends Stuff {
 		super.setExpConductive(false);
 	}
 
-
 	private void setTexture() {
 		Graphics g = finalTexture.getGraphics();
 		Cell[][] cells = GameField.getInstance().getCells();

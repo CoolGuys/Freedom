@@ -104,8 +104,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		this.rate = Integer.parseInt(obj.getAttribute("rate"));
 		try {
 			this.trekLenght = Integer.parseInt(obj.getAttribute("trekLenght"));
@@ -137,8 +136,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	 * @author UshAle
 	 */
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("rate", String.valueOf((int) this.rate));
 		obj.setAttribute("trekLenght", String.valueOf((int) this.trekLenght));
 		obj.setAttribute("alive", String.valueOf(this.alive));

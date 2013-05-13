@@ -40,13 +40,12 @@ public class TNT extends Stuff implements Moveable {
 	}
 
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+
+		super.readLvlFile(obj);
 	}
 
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("class","com.freedom.gameObjects.healthOperators.TNT");
 	}
 

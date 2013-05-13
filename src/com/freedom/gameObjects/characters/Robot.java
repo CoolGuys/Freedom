@@ -63,6 +63,8 @@ public class Robot extends Stuff implements Moveable {
 
 		super.x = posX;
 		super.y = posY;
+
+		this.setColour("Blue");
 		this.direction = direction;
 		this.container[0] = c;
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);

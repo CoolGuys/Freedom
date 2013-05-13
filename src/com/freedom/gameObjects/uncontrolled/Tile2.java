@@ -13,7 +13,11 @@ import com.freedom.model.GameField;
 
 /**
  * 
+<<<<<<< HEAD
+ * Эта плитка может быть уничтожена. После уничтожения - провал
+=======
  * Эта плитка может быть уничтожена После уничтожения - провал
+>>>>>>> branch 'master' of https://github.com/CoolGuys/Freedom.git
  * 
  */
 

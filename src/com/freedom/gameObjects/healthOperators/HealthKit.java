@@ -26,6 +26,8 @@ public class HealthKit extends Stuff{
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
+
+		//TODO придумать, как здесь обыграть цвет
 		obj.setAttribute("heals", String.valueOf((int) this.heals));
 		obj.setAttribute("class", "com.freedom.gameObjects.healthOperators.HealthKit");
 	}

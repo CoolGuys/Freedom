@@ -70,7 +70,6 @@ public class ButtonOr extends Stuff {
 		super.y = y;
 		texture = textureDepressed;
 		controlledCellsList = new int[10][2];
-
 	}
 
 	/**
@@ -79,8 +78,7 @@ public class ButtonOr extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
+		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
 		int length = list.getLength();
 		for (int i = 0; i < length; i++) {
@@ -92,8 +90,7 @@ public class ButtonOr extends Stuff {
 	}
 
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
+		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonOr");
 	}
 	@Override
