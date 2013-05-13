@@ -130,14 +130,15 @@ public class Robot extends Stuff implements Moveable {
 	public void recalibrate() {
 		x = Math.round(x);
 		y = Math.round(y);
-		if(container[0]==null)
+		if (container[0] == null)
 			return;
-		container[0].x=Math.round(container[0].x);
-		container[0].y=Math.round(container[0].y);
+		container[0].x = Math.round(container[0].x);
+		container[0].y = Math.round(container[0].y);
 	}
 
 	public boolean canGo() {
-		if (GameField.getInstance().cells[this.getTargetCellCoordinates(getDirection()).x][this
+		if (GameField.getInstance().cells[this
+				.getTargetCellCoordinates(getDirection()).x][this
 				.getTargetCellCoordinates(getDirection()).y].ifCanPassThrough())
 			return true;
 
@@ -146,7 +147,8 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void moveCoarse(String direction) {
-		if (Math.abs(GameScreen.getInstance().рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
+		if (Math.abs(GameScreen.getInstance()
+				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
 				.getInstance().getWidth() / 2 - 4 * getSize())
 			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
 
@@ -207,24 +209,24 @@ public class Robot extends Stuff implements Moveable {
 
 		if (direction.equals("N")) {
 			y -= step;
-			if(this.container[0]!=null){
-				this.container[0].y-=step;
+			if (this.container[0] != null) {
+				this.container[0].y -= step;
 			}
-				
+
 		} else if (direction.equals("S")) {
 			y += step;
-			if(this.container[0]!=null){
-				this.container[0].y+=step;
+			if (this.container[0] != null) {
+				this.container[0].y += step;
 			}
 		} else if (direction.equals("E")) {
 			x += step;
-			if(this.container[0]!=null){
-				this.container[0].x+=step;
+			if (this.container[0] != null) {
+				this.container[0].x += step;
 			}
 		} else {
 			x -= step;
-			if(this.container[0]!=null){
-				this.container[0].x-=step;
+			if (this.container[0] != null) {
+				this.container[0].x -= step;
 			}
 		}
 	}
@@ -243,9 +245,12 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void put() {
-		if (isMoving || GameField.getInstance().cells[this.getTargetCellCoordinates(getDirection()).x][this.getTargetCellCoordinates(getDirection()).y].locked)
+		if (isMoving
+				|| GameField.getInstance().cells[this
+						.getTargetCellCoordinates(getDirection()).x][this
+						.getTargetCellCoordinates(getDirection()).y].locked)
 			return;
-		
+
 		int targetX = this.getTargetCellCoordinates(getDirection()).x;
 		int targetY = this.getTargetCellCoordinates(getDirection()).y;
 		if (this.container[0] == null)
@@ -255,12 +260,22 @@ public class Robot extends Stuff implements Moveable {
 				.add(this.container[0]))
 			return;
 
-		container[0].activate();
+		// container[0].activate();
 		this.container[0] = null;
 		GameScreen.getInstance().repaint();
-		
+
 		return;
 
+	}
+
+	public void interact() {
+		if (this.container[0] != null)
+			this.container[0].interact(this);
+		else {
+			GameField.getInstance().cells[this
+					.getTargetCellCoordinates(getDirection()).x][this
+					.getTargetCellCoordinates(getDirection()).y].interract(this);
+		}
 	}
 
 	public void examineFrontCell() {
@@ -288,7 +303,7 @@ public class Robot extends Stuff implements Moveable {
 		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-		if(direction==null) {
+		if (direction == null) {
 			logger.info("EverythingIsBad");
 			return;
 		}

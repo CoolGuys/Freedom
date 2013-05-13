@@ -504,23 +504,27 @@ public class LaserBeam extends Stuff {
 	void deleteBeam() {
 		LaserBeam buf = this;
 		Cell[][] cellBuf = GameField.getInstance().cells;
-		while (buf != null) {
+		while (buf.next != null) {
 
 			if (buf.secondNext != null) {
-				/*
-				 * GameField.getInstance().cells[buf.secondNext.getX()][buf.
-				 * secondNext .getY()].deleteStuff(buf.prev.secondNext);
-				 */
-				buf.secondNext.deleteBeam();
 
+				/*GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
+						.getY()].deleteStuff(buf.prev.secondNext);*/
+				buf.secondNext.deleteBeam();		
 			}
-
 			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
 			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
 
 		}
-
+		//для антача последжняя итерация ручками
+		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().x].getIfAbsorb())
+			cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().x].untouch(buf);
+		
+		if (buf.secondNext != null) {
+			buf.secondNext.deleteBeam();		
+		}
+		cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
 		this.next = null;
 	}
 

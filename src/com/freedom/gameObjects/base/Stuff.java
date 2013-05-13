@@ -122,6 +122,10 @@ public class Stuff {
 			this.color = StuffColor.BLUE;
 		
 	}
+	
+	public boolean ifCoolEnough(Stuff element){
+		return GameField.ifPowerfulEnough(element, this);
+	}
 
 	public boolean obj() {
 		return true;
@@ -158,7 +162,7 @@ public class Stuff {
 
 	}
 
-	public void activate() {
+	public void interact(Stuff interactor) {
 		return;
 	}
 

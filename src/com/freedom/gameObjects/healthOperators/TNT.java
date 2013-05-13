@@ -126,7 +126,7 @@ public class TNT extends Stuff implements Moveable {
 	}
 
 
-	public void activate() {
+	public void interact() {
 		TNTExploder t = new TNTExploder();
 		GameField.otherThreads.execute(t);
 	}

@@ -8,8 +8,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.freedom.model.GameField;
-
 public class Cell {
 
 	public volatile boolean locked;
@@ -211,14 +209,14 @@ public class Cell {
 
 	public void touch(Stuff toucher) {
 		for (int i = 0; i < this.contentAmount - 1; i++) {
-			if (GameField.ifPowerfulEnough(toucher, this.content[i]))
+			if (this.content[i].ifCoolEnough(toucher))
 				this.content[i].touch(toucher);
 		}
 	}
 
 	public void untouch(Stuff untoucher) {
 		for (int i = 0; i < this.contentAmount - 1; i++) {
-			if (GameField.ifPowerfulEnough(untoucher, this.content[i]))
+			if (this.content[i].ifCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}
 	}
@@ -319,9 +317,9 @@ public class Cell {
 
 	}
 
-	public void activate() {
+	public void interract(Stuff interactor) {
 		for (int i = 0; i < this.contentAmount; i++) {
-			this.content[i].activate();
+			this.content[i].interact(interactor);
 		}
 	}
 

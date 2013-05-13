@@ -77,7 +77,6 @@ public class ButtonAnd extends Stuff {
 		return true;
 	}
 
-	
 
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
