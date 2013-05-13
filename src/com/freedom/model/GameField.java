@@ -248,22 +248,22 @@ public class GameField {
 	public Timer getDeathTicker() {
 		return deathTicker;
 	}
+	
 	//далее прописано распределение по классам
-	/*
-	 * здесь надо придумать потом цвета - в общем, свободу попугаям
-	 */
-	private static Map<String,Integer> power;
-	static{
-		power = new HashMap<String,Integer>();
-		power.put("Red",1);
-		power.put("Green",2);
-		power.put("Blue",3);
-	}
-	
-	public static boolean ifPowerfulEnough(Stuff agent, Stuff object){
-		if(power.get(agent.getColour())>=power.get(object.getColour()))
-			return true;
-		return false;
-	}
-	
+		/*
+		 * здесь надо придумать потом цвета - в общем, свободу попугаям
+		 */
+		private static Map<String,Integer> power;
+		static{
+			power = new HashMap<String,Integer>();
+			power.put("Red",1);
+			power.put("Green",2);
+			power.put("Blue",3);
+		}
+		
+		public static boolean ifPowerfulEnough(Stuff agent, Stuff object){
+			if(power.get(agent.getColour())>=power.get(object.getColour()))
+				return true;
+			return false;
+		}
 }

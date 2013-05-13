@@ -26,29 +26,14 @@ public class Box extends Stuff {
 	{
 		super(true, false,true, false, 0, 3);
 		texture=texture1;
-
 	}
 
-	/**
-	 * Метод, который считывает всю инфу из файла с лвлами
-	 * 
-	 * @param - Scanner файла
-	 */
-	public void readLvlFile(Element obj) {
-		super.readLvlFile(obj);
-	}
-
-	/**
-	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
-	 * пихайте такие методы везде где стафф!
-	 * 
-	 * @author UshAle
-	 */
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Box");
 	}
-
-
-
 }
+
+
+
+

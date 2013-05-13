@@ -59,6 +59,7 @@ public class Trap extends Stuff {
 	 * пихайте такие методы везде где стафф!
 	 */
 	public void loadToFile(Element obj) {
+
 		super.loadToFile(obj);
 		obj.setAttribute("damage", String.valueOf((int) this.damage));
 		obj.setAttribute("used", String.valueOf(this.used));

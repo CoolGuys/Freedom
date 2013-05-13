@@ -24,6 +24,7 @@ public class Pit extends Stuff{
 		this.x = x;
 		this.y = y;
 		this.raiseDamage(10000);
+
 		this.setColour("Blue");
 	}
 	

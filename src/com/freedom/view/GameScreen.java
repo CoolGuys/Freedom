@@ -270,6 +270,7 @@ public class GameScreen extends AbstractScreen {
 			
 				Robot r = GameField.getInstance().getRobot();
 				r.setContainer(new Box());
+				r.container[0].setColour("Blue");
 				repaint();
 			
 		}

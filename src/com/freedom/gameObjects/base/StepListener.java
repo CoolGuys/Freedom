@@ -118,6 +118,7 @@ public class StepListener extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
+
 		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
 		int length = list.getLength();

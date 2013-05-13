@@ -31,7 +31,6 @@ public class Teleport extends Stuff {
 		this.yLeadTo = Integer.parseInt(obj.getAttribute("yLeadTo"));
 	}
 
-
 	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);

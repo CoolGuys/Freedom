@@ -20,6 +20,7 @@ import com.freedom.view.GameScreen;
  * признак конца - this.next.next = this.next;
  */
 
+
 public class LaserBeam extends Stuff {
 
 	LaserBeam next;

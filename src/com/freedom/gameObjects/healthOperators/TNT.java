@@ -40,6 +40,7 @@ public class TNT extends Stuff implements Moveable {
 	}
 
 	public void readLvlFile(Element obj) {
+
 		super.readLvlFile(obj);
 	}
 

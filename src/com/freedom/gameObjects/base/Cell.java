@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.controlled.LaserBeam;
+
 import com.freedom.model.GameField;
 
 public class Cell {

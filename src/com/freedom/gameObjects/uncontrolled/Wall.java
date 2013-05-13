@@ -22,8 +22,6 @@ public class Wall extends Stuff {
 		super(false, false, true, false);
 		super.setExpConductive(false);
 	}
-	
-
 
 	private void setTexture() {
 		Graphics g = finalTexture.getGraphics();

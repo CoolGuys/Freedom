@@ -318,6 +318,7 @@ public class Stuff {
 	}
 	public void setColour(String s){
 		this.colour = s;
+
 	}
 
 }

@@ -30,12 +30,12 @@ public class Tile extends Stuff {
 		}
 	}
 
+
 	public Tile()
 	{
 		super(false, true, false, false);
 		texture = texture1;
 	}
-	
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
