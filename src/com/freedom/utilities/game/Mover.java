@@ -22,6 +22,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 	}
 
 	public synchronized void run() {
+		Thread.currentThread().setName("Mover@"+theOneToMove.getClass().toString());
 		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
 		try {

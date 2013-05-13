@@ -162,7 +162,7 @@ public class Robot extends Stuff implements Moveable {
 	public void moveFine(String direction) {
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
-			ScreensHolder.getInstance().repaint();
+			GameScreen.getInstance().repaint();
 			return;
 		}
 		Runnable r = new Mover<Robot>(this, direction, 1, 10);

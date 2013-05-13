@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 import javax.sound.sampled.*;
 import javax.sound.sampled.LineEvent.Type;
 
+import com.freedom.model.GameField;
+
 /**
  * Класс SoundEngine создает для переданного звукового файла отдельный поток, в
  * котором выполняется проигрывание этого файла.
@@ -37,11 +39,10 @@ public class SoundEngine {
 
 		player = new SoundPlayer(clipFile, loopCode, volume);
 
-		pool.submit(player);
+		GameField.otherThreads.execute(player);
 		return player;
 	}
 
-	private static ExecutorService pool = Executors.newCachedThreadPool();
 
 	public static class SoundPlayer implements Runnable {
 
@@ -104,8 +105,7 @@ public class SoundEngine {
 		}
 
 		public void fadeOut() {
-
-			pool.submit(new Fader());
+			GameField.otherThreads.execute(new Fader());
 		}
 
 		private int loopCode;
