@@ -21,13 +21,13 @@ public class Teleport extends Stuff {
 	public Teleport()
 	{
 		super(false, true, false, false, 0, 1);
-		texture = textureOff;
+		textureBlue=textureRed = textureOff;
 	}
 
 	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
-		System.out.println(this.getColour());
+		//System.out.println("Teleport" +this.getColour());
 		this.xLeadTo = Integer.parseInt(obj.getAttribute("xLeadTo"));
 		this.yLeadTo = Integer.parseInt(obj.getAttribute("yLeadTo"));
 	}
@@ -66,7 +66,7 @@ public class Teleport extends Stuff {
 	@Override
 	public boolean useOff() {
 		if (this.on) {
-			texture = textureOff;
+			textureRed = textureOff;
 			this.on = false;
 			return true;
 		}
@@ -78,7 +78,7 @@ public class Teleport extends Stuff {
 	public boolean useOn() {
 		if (!this.on) {
 			this.on = true;
-			texture = textureOn;
+			textureRed = textureOn;
 			return true;
 		} else
 			return false;

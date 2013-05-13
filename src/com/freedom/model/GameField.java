@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Timer;
@@ -39,13 +38,13 @@ public class GameField {
 	public volatile Cell[][] cells;
 	private int xSize;
 	private int ySize;
-	// private Logger logger = Logger.getLogger("Core.GameField");
 	private int cellSize;
 	public Timer ticker = new Timer(2, null);
 	private Timer deathTicker = new Timer(100, null);
 	private static GameField INSTANCE;
 	public static ExecutorService otherThreads;
 	public boolean active;
+	@SuppressWarnings("unused")
 	private Logger gleblo = Logger.getLogger("gleblo");
 
 	public void setPathToSave(String pathToSaveFile) {
@@ -127,8 +126,6 @@ public class GameField {
 			robot.setContainer(buf);
 		}
 		if ((robotx != -1) && (roboty != -1)) {
-			gleblo.setLevel(Level.ALL);
-			gleblo.info("robotXYsetting x=" + robotx + " y=" + roboty);
 
 			int previousx = robot.getX();
 			int previousy = robot.getY();
@@ -144,8 +141,6 @@ public class GameField {
 				GameField.getInstance().getCells()[previousx][previousy]
 						.deleteStuff();
 			}
-
-			gleblo.setLevel(Level.OFF);
 		}
 
 		try {
@@ -159,7 +154,6 @@ public class GameField {
 		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
-		ScreensHolder.getInstance().repaint();
 	}
 
 	/*

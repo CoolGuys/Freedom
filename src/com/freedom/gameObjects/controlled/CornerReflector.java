@@ -71,7 +71,7 @@ public class CornerReflector extends Laser {
 
 	public CornerReflector() {
 		super(true);	
-		texture = texture1;
+		textureRed = texture1;
 	}
 	
 	public boolean useOn(){

@@ -49,6 +49,7 @@ public class PacmanSoul implements Runnable {
 	}
 
 	public void run() {
+		Thread.currentThread().setName("Pacman Soul "+body);
 		while (alive && !Thread.currentThread().isInterrupted()) {
 
 			try {
@@ -98,6 +99,7 @@ public class PacmanSoul implements Runnable {
 	private class Changer implements Runnable {
 
 		public void run() {
+			Thread.currentThread().setName("Pacman texture changer "+ body);
 			while (alive) {
 				body.changeTexture();
 				GameScreen.getInstance().repaint(

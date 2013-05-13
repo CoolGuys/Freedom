@@ -37,8 +37,10 @@ public class GameScreen extends AbstractScreen {
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
+		setDoubleBuffered(true);
 
-		logger.setLevel(Level.ALL);
+		//setDebugGraphicsOptions(DebugGraphics.);
+		logger.setLevel(Level.WARNING);
 
 	}
 
@@ -187,6 +189,7 @@ public class GameScreen extends AbstractScreen {
 				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
 	}
 
+	
 	public void changeOffsetFine(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
@@ -305,7 +308,6 @@ public class GameScreen extends AbstractScreen {
 		public void actionPerformed(ActionEvent e) {
 			logger.info("Offset requested");
 			changeOffsetCoarse((String) getValue(Action.NAME));
-			// ScreensHolder.getInstance().repaint();
 		}
 	}
 
@@ -318,7 +320,6 @@ public class GameScreen extends AbstractScreen {
 		public void actionPerformed(ActionEvent e) {
 			logger.info("Offset requested");
 			changeOffsetFine((String) getValue(Action.NAME));
-			// ScreensHolder.getInstance().repaint();
 		}
 	}
 

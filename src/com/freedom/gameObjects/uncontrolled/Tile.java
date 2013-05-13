@@ -34,7 +34,7 @@ public class Tile extends Stuff {
 	public Tile()
 	{
 		super(false, true, false, false);
-		texture = texture1;
+		textureRed = texture1;
 	}
 
 	/**

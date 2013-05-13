@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -18,32 +19,46 @@ import com.freedom.utilities.game.SoundEngine;
 import com.freedom.view.GameScreen;
 
 public class ButtonAnd extends Stuff {
+	public ButtonAnd()
+	{
+		super(false, true, true, false);
+		super.x = x;
+		super.y = y;
+		controlledCellsList = new int[10][2];
 
-	private static Image texturePressed;
-	private static Image textureDepressed;
-	private int[][] controlledCellsList;// массив с координатами селлов на
-	private static File f2; // которые действует
-	// батон
-	private int controlledCellsAmount; // количество целлов на которые действует
-										// батон
-	private ActionListener sender;
+		textureRed = texturesDepressed[1];
+		textureGreen = texturesDepressed[2];
+		textureBlue = texturesDepressed[3];
 
-	static {
-		try {
-			texturePressed = ImageIO.read(
-					new File("Resource/Textures/ButtonPressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			textureDepressed = ImageIO.read(
-					new File("Resource/Textures/ButtonDepressed.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-			f2 = new File("Resource/Sound/ButtonClicked.wav");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
+	@Override
+	public void untouch(Stuff element) {
+		textureRed = texturesDepressed[1];
+		textureGreen = texturesDepressed[2];
+		textureBlue = texturesDepressed[3];
+		for (int i = 0; i < controlledCellsAmount; i++) {
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
+		}
+		GameField.getInstance().getTicker().removeActionListener(sender);
+		for (int i = 0; i < controlledCellsAmount; i++)
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+					.useOff();
+	}
+
+	@Override
+	public void touch(Stuff element) {
+		SoundEngine.playClip(f2, -1, -15);
+		textureRed = texturesPressed[1];
+		textureGreen = texturesPressed[2];
+		textureBlue = texturesPressed[3];
+		sender = new SignalOnSender();
+		for (int i = 0; i < controlledCellsAmount; i++)
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter++;
+
+		GameField.getInstance().getTicker().addActionListener(sender);
+
+	}
+	
 
 	public int getUseAmount() {
 		return controlledCellsAmount;
@@ -62,14 +77,6 @@ public class ButtonAnd extends Stuff {
 		return true;
 	}
 
-	public ButtonAnd()
-	{
-		super(false, true, false, false);
-		super.x = x;
-		super.y = y;
-		controlledCellsList = new int[10][2];
-		texture = textureDepressed;
-	}
 
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
@@ -93,32 +100,9 @@ public class ButtonAnd extends Stuff {
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonAnd");
-		// obj.setAttribute("Press", String.valueOf(this.ifPressed));
 	}
 
-	@Override
-	public void untouch(Stuff element) {
-		texture = textureDepressed;
-		for (int i = 0; i < controlledCellsAmount; i++) {
-			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
-		}
-		GameField.getInstance().getTicker().removeActionListener(sender);
-		for (int i = 0; i < controlledCellsAmount; i++)
-			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-					.useOff();
-	}
-
-	@Override
-	public void touch(Stuff element) {
-		SoundEngine.playClip(f2, -1, -15);
-		texture = texturePressed;
-		sender = new SignalOnSender();
-		for (int i = 0; i < controlledCellsAmount; i++)
-			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter++;
-
-		GameField.getInstance().getTicker().addActionListener(sender);
-
-	}
+	
 
 	@Override
 	public void giveInfo() {
@@ -161,6 +145,33 @@ public class ButtonAnd extends Stuff {
 									getSize());
 				}
 			}
+		}
+	}
+	private static Image[] texturesPressed = new Image[4];
+	private static Image[] texturesDepressed = new Image[4];
+	private int[][] controlledCellsList;// массив с координатами селлов на
+	private static File f2; // которые действует
+	// батон
+	private int controlledCellsAmount; // количество целлов на которые действует
+										// батон
+	private ActionListener sender;
+
+	private static Logger logger = Logger.getLogger("ButtonAnd");
+	static {
+		try {
+			for(int i=1; i<=3;i++) {
+				texturesPressed[i] = ImageIO.read(
+						new File("Resource/Textures/ButtonAND/Pressed"+i+".png"))
+						.getScaledInstance(getSize(), getSize(),
+								BufferedImage.SCALE_SMOOTH);
+				texturesDepressed[i] = ImageIO.read(
+						new File("Resource/Textures/ButtonAND/Depressed"+i+".png"))
+						.getScaledInstance(getSize(), getSize(),
+								BufferedImage.SCALE_SMOOTH);
+				}
+			f2 = new File("Resource/Sound/ButtonClicked.wav");
+		} catch (IOException e) {
+			logger.warning("Textures or sound corrupted");
 		}
 	}
 

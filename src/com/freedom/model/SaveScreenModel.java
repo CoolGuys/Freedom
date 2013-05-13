@@ -117,7 +117,7 @@ public class SaveScreenModel {
 					GameField.getInstance().saveCurrentLevelToPackage();
 					textField.setText("");
 
-					interactionLabel.setText("Overwrited");
+					interactionLabel.setText("Overwrote");
 					state = State.NORMAL;
 					return;
 				} else {

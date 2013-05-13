@@ -36,7 +36,7 @@ public class LevelExit extends Stuff {
 
 	public LevelExit() {
 		super(false, true, true, false);
-		texture = texture1;
+		textureRed = texture1;
 	}
 
 	/**
@@ -50,7 +50,6 @@ public class LevelExit extends Stuff {
 		this.robotx = Integer.parseInt(obj.getAttribute("xr"));
 		this.roboty = Integer.parseInt(obj.getAttribute("yr"));
 		String salive= obj.getAttribute("buf");
-		System.out.println(salive+"lolo");
 		if(!salive.equals("")){
 			this.buf=Boolean.parseBoolean(salive);
 		}else {

@@ -36,7 +36,7 @@ public class Laser extends Stuff {
 	public Laser() {
 		super(false, false, true, false);
 		ifActive = false;
-		texture = texture1;
+		textureRed=textureGreen=texture1;
 		sender = new BeamSender();
 	}
 	
@@ -44,13 +44,15 @@ public class Laser extends Stuff {
 	public Laser(boolean forReflector){
 		super(false, false, false, true);
 		ifActive = false;
-		texture = texture1;
+		textureRed=textureGreen=textureBlue = texture1;
 		sender = new BeamSender();
 	}
 
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
+		//this.setColour("Green");
 		this.direction = obj.getAttribute("direction");
+		System.out.println(""+getColour());
 	}
 
 	public void loadToFile(Element obj) {
@@ -94,25 +96,26 @@ public class Laser extends Stuff {
 	// вращаем по часовой
 	public void interact(Stuff interactor) {
 		boolean condition = this.useOff();
-		switch (this.direction) {
-		case "N":
+		if(this.direction.equals("N"))
 			this.direction = "NE";
-		case "S":
+		else if(this.direction.equals("S"))
 			this.direction = "SW";
-		case "E":
+		else if(this.direction.equals("E"))
 			this.direction = "SE";
-		case "W":
+		else if(this.direction.equals("W"))
 			this.direction = "NW";
 
-		case "NW":
+		else if(this.direction.equals("NW"))
 			this.direction = "N";
-		case "NE":
+		else if(this.direction.equals("NE"))
 			this.direction = "E";
-		case "SW":
+
+		else if(this.direction.equals("SW"))
 			this.direction = "W";
-		case "SE":
+
+		else if(this.direction.equals("SE"))
 			this.direction = "S";
-		}
+		
 		if(condition)
 			this.useOn();
 	}

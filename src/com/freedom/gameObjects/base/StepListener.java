@@ -3,6 +3,7 @@ package com.freedom.gameObjects.base;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,7 +13,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.freedom.model.GameField;
-
 
 /**
  * Это класс который прослеживает находится ли робот в какой-то области и
@@ -50,7 +50,7 @@ public class StepListener extends Stuff {
 
 		super(false, true, false, false, 0, 0);
 		gleblo.setLevel(Level.OFF);
-		texture = texture1;
+		textureRed = texture1;
 		alive = true;
 		robotOn = false;
 		gleblo.info("creating");
@@ -166,6 +166,8 @@ public class StepListener extends Stuff {
 
 	private class Checker implements Runnable {
 		public void run() {
+			Thread.currentThread().setName(
+					"StepListener@" + Arrays.toString(controlledCellsList[0]));
 			boolean ok;
 			while (alive) {
 				try {
@@ -173,9 +175,6 @@ public class StepListener extends Stuff {
 				} catch (InterruptedException e1) {
 					alive = false;
 				}
-
-				//System.out.println(alive);
-
 				if (GameField.getInstance().active) {
 					int x;
 					int y;
@@ -212,6 +211,7 @@ public class StepListener extends Stuff {
 					}
 
 				}
+
 			}
 		}
 	}

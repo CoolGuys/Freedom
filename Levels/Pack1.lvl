@@ -177,8 +177,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="5">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5"
-			direction="SW" color="Red">
+		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5" color="Green" direction = "SW">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="6">
 		</obj>
@@ -1255,7 +1254,7 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
 
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Teleport" x="4" y="2"
+		<obj class="com.freedom.gameObjects.controlled.Teleport" x="4" y="2" color = "Blue"
 			xLeadTo="4" yLeadTo="8">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
@@ -1419,7 +1418,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Teleport" x="2" y="4"
+		<obj class="com.freedom.gameObjects.controlled.Teleport" x="2" y="4" color="Red"
 			xLeadTo="2" yLeadTo="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile2"

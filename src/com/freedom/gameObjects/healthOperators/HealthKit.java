@@ -15,7 +15,7 @@ public class HealthKit extends Stuff{
 	public HealthKit()
 	{
 		super(true, true, true, false);
-		texture = texture1;
+		textureRed = texture1;
 	}
 	@Override
 	public void readLvlFile(Element obj) {

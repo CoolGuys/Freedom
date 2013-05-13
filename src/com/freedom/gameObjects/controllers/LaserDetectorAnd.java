@@ -67,7 +67,7 @@ public class LaserDetectorAnd extends Stuff {
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
-		texture = textureDepressed;
+		textureRed = textureDepressed;
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class LaserDetectorAnd extends Stuff {
 
 	@Override
 	public void untouch(Stuff element) {
-		texture = textureDepressed;
+		textureRed = textureDepressed;
 		for (int i = 0; i < controlledCellsAmount; i++) {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter--;
 		}
@@ -111,7 +111,7 @@ public class LaserDetectorAnd extends Stuff {
 	@Override
 	public void touch(Stuff element) {
 		SoundEngine.playClip(f2, -1, -15);
-		texture = texturePressed;
+		textureRed = texturePressed;
 		sender = new SignalOnSender();
 		for (int i = 0; i < controlledCellsAmount; i++)
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter++;

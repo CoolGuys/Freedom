@@ -78,7 +78,7 @@ public class Wall extends Stuff {
 					&& cells[x + 1][y - 1].getContentAmount() != 0)
 				g.drawImage(textureNE, 0, 0, null);
 
-		texture = finalTexture;
+		textureRed = finalTexture;
 		ready = true;
 	}
 	
@@ -92,7 +92,7 @@ public class Wall extends Stuff {
 	public void draw(Graphics g) {
 		if (!ready)
 			setTexture();
-		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
+		g.drawImage(textureRed, (int) (x * getSize()), (int) (y * getSize()), null);
 	}
 	private boolean ready;
 	private static Image textureN;
