@@ -36,12 +36,7 @@ public class TNT extends Stuff implements Moveable {
 
 	public TNT() {
 		super(true, false, false, false, 0, 1);
-		texture = texture1;
-	}
-
-	public void readLvlFile(Element obj) {
-
-		super.readLvlFile(obj);
+		textureRed = texture1;
 	}
 
 	public void loadToFile(Element obj) {

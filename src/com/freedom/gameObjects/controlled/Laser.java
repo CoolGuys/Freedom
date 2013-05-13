@@ -37,13 +37,15 @@ public class Laser extends Stuff {
 	public Laser() {
 		super(false, false,true, false);
 		ifActive = false;
-		texture=texture1;
+		textureRed=textureGreen=texture1;
 		sender = new BeamSender();
 	}
 	
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
+		//this.setColour("Green");
 		this.direction = obj.getAttribute("direction");
+		System.out.println(""+getColour());
 	}
 	
 	public void loadToFile(Element obj) {

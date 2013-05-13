@@ -36,7 +36,7 @@ public class LevelExit extends Stuff {
 
 	public LevelExit() {
 		super(false, true, true, false);
-		texture = texture1;
+		textureRed = texture1;
 	}
 
 	/**

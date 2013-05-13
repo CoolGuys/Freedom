@@ -57,7 +57,7 @@ public class NotDoor extends Stuff {
 
 	@Override
 	public boolean useOn() {
-			texture = textureClosed;
+			textureRed = textureClosed;
 		if (super.passable) {
 			super.passable = false;
 			return true;
@@ -68,7 +68,7 @@ public class NotDoor extends Stuff {
 	@Override
 	public boolean useOff() {
 
-		texture = textureOpen;
+		textureRed = textureOpen;
 		if (!super.passable) {
 			super.passable = true;
 			return true;
@@ -103,9 +103,9 @@ public class NotDoor extends Stuff {
 			else
 				textureClosed = textureClosedHorisontal;
 			textureSet = true;
-			texture = textureOpen;
+			textureRed = textureOpen;
 		}
-		g.drawImage(texture, (int) (getX() * getSize()),
+		g.drawImage(textureRed, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
 

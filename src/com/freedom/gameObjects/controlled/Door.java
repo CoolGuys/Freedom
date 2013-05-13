@@ -51,7 +51,7 @@ public class Door extends Stuff {
 
 	public boolean useOff() {
 
-		texture = textureClosed;
+		textureRed = textureClosed;
 		if (super.passable) {
 			super.passable = false;
 			return true;
@@ -62,7 +62,7 @@ public class Door extends Stuff {
 
 	public boolean useOn() {
 
-		texture = textureOpen;
+		textureRed = textureOpen;
 		if (!super.passable) {
 			super.passable = true;
 			return true;
@@ -96,9 +96,9 @@ public class Door extends Stuff {
 			else
 				textureClosed = textureClosedHorisontal;
 			textureSet = true;
-			texture = textureClosed;
+			textureRed = textureClosed;
 		}
-		g.drawImage(texture, (int) (getX() * getSize()),
+		g.drawImage(textureRed, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
 

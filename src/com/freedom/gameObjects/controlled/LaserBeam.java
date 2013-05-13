@@ -6,6 +6,8 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -20,7 +22,6 @@ import com.freedom.view.GameScreen;
  * признак конца - this.next.next = this.next;
  */
 
-
 public class LaserBeam extends Stuff {
 
 	LaserBeam next;
@@ -28,40 +29,45 @@ public class LaserBeam extends Stuff {
 	LaserBeam secondNext;
 	String direction;
 	private Laser source;
-	//private static int absorbReduce = 5;
+	// private static int absorbReduce = 5;
 
-	private static Image textureVertical;
-	private static Image textureNW;
-	private static Image textureHorisontal;
-	private static Image textureNE;
+	private static Image[] texturesVertical = new Image[4];
+	private static Image[] texturesNW = new Image[4];
+	private static Image[] texturesHorisontal = new Image[4];
+	private static Image[] texturesNE = new Image[4];
 
+	private static Logger logger = Logger.getLogger("LaserBeam");
 	static {
+		logger.setLevel(Level.WARNING);
 		try {
-			textureNE = ImageIO.read(
-					new File("Resource/Textures/LaserBeamSW.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+			for (int i = 1; i <= 3; i++) {
+				texturesNE[i] = ImageIO
+						.read(new File("Resource/Textures/LaserBeam/SW" + i
+								+ ".png")).getScaledInstance(getSize(),
+								getSize(), BufferedImage.SCALE_SMOOTH);
 
-			textureHorisontal = ImageIO.read(
-					new File("Resource/Textures/LaserBeamHor.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+				texturesHorisontal[i] = ImageIO
+						.read(new File("Resource/Textures/LaserBeam/Hor" + i
+								+ ".png")).getScaledInstance(getSize(),
+								getSize(), BufferedImage.SCALE_SMOOTH);
 
-			textureVertical = ImageIO.read(
-					new File("Resource/Textures/LaserBeamVer.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+				texturesVertical[i] = ImageIO
+						.read(new File("Resource/Textures/LaserBeam/Ver" + i
+								+ ".png")).getScaledInstance(getSize(),
+								getSize(), BufferedImage.SCALE_SMOOTH);
 
-			textureNW = ImageIO.read(
-					new File("Resource/Textures/LaserBeamNW.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+				texturesNW[i] = ImageIO
+						.read(new File("Resource/Textures/LaserBeam/NW" + i
+								+ ".png")).getScaledInstance(getSize(),
+								getSize(), BufferedImage.SCALE_SMOOTH);
+			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.warning("Textures were corrupted");
 		}
 	}
 
-	public LaserBeam(String direction, int x, int y, int damage) {
+	public LaserBeam(String direction, int x, int y, int damage)
+	{
 		super(false, true, false, false, damage, 0);
 		super.x = x;
 		super.y = y;
@@ -73,33 +79,59 @@ public class LaserBeam extends Stuff {
 	void setSource(Laser source) {
 		this.source = source;
 		this.setColour(source.getColour());
+		logger.info(this.getColour()+"");
 	}
 
 	private void setPicture(String direct) {
-		if (direct.equals("N"))
-			this.texture = textureVertical;
-		if (direct.equals("S"))
-			this.texture = textureVertical;
-		if (direct.equals("W"))
-			this.texture = textureHorisontal;
-		if (direct.equals("E"))
-			this.texture = textureHorisontal;
+		logger.warning(""+getColour());
+		if (direct.equals("N")) {
+			this.textureRed = texturesVertical[1];
+			this.textureGreen = texturesVertical[2];
+			this.textureBlue = texturesVertical[3];
+		}
+		if (direct.equals("S")) {
+			this.textureRed = texturesVertical[1];
+			this.textureGreen = texturesVertical[2];
+			this.textureBlue = texturesVertical[3];
+		}
+		if (direct.equals("W")) {
+			this.textureRed = texturesHorisontal[1];
+			this.textureGreen = texturesHorisontal[2];
+			this.textureBlue = texturesHorisontal[3];
+		}
+		if (direct.equals("E")) {
+			this.textureRed = texturesHorisontal[1];
+			this.textureGreen = texturesHorisontal[2];
+			this.textureBlue = texturesHorisontal[3];
+		}
 
-		if (direct.equals("NW"))
-			this.texture = textureNW;
-		if (direct.equals("SW"))
-			this.texture = textureNE;
-		if (direct.equals("NE"))
-			this.texture = textureNE;
-		if (direct.equals("SE"))
-			this.texture = textureNW;
+		if (direct.equals("NW")) {
+			this.textureRed = texturesNW[1];
+			this.textureGreen = texturesNW[2];
+			this.textureBlue = texturesNW[3];
+		}
+		if (direct.equals("SW")) {
+			this.textureRed = texturesNE[1];
+			this.textureGreen = texturesNE[2];
+			this.textureBlue = texturesNE[3];			
+		}
+		if (direct.equals("NE")){
+			this.textureRed = texturesNE[1];
+			this.textureGreen = texturesNE[2];
+			this.textureBlue = texturesNE[3];			
+		}
+		if (direct.equals("SE")){
+			this.textureRed = texturesNW[1];
+			this.textureGreen = texturesNW[2];
+			this.textureBlue = texturesNW[3];
+		}
 
 		return;
 	}
 
 	/*
 	 * у нас луч попал на отражающую клетку. этот метод перемещает его и
-	 * поворачивает Север- Юг не совпадают с реальным представлением 
+	 * поворачивает Север- Юг не совпадают с реальным представлением
 	 */
 
 	public boolean obj() {
@@ -112,8 +144,8 @@ public class LaserBeam extends Stuff {
 	}
 
 	private void reflect() {
-		
-		//сначала самое примитивное
+
+		// сначала самое примитивное
 		if (this.direction.equals("N")) {
 			this.direction = "S";
 			this.y = this.y + 1;
@@ -137,17 +169,16 @@ public class LaserBeam extends Stuff {
 			this.x = this.x + 1;
 			this.reduceDamage(1);
 		}
-		
+
 		/*
-		 * далее - падение под углом. здесь я смотрю 2 соседние клетки.(так,
-		 * для NW соседи - N и W)
+		 * далее - падение под углом. здесь я смотрю 2 соседние клетки.(так, для
+		 * NW соседи - N и W)
 		 * 
-		 * если на обеих нет ничего отражающего - раздваиваю луч(1ый if)
-		 * для вторичного луча проверяю поглощение и строю отдельно в этом методе
+		 * если на обеих нет ничего отражающего - раздваиваю луч(1ый if) для
+		 * вторичного луча проверяю поглощение и строю отдельно в этом методе
 		 * 
-		 * если на какой-то одной что-то отражает - луч без раздваивания идет на другую
-		 * если отражают обе соседки, луч просто идет обратно
-		 * 
+		 * если на какой-то одной что-то отражает - луч без раздваивания идет на
+		 * другую если отражают обе соседки, луч просто идет обратно
 		 */
 		else if (this.direction.equals("NE")) {
 			if ((!GameField.getInstance().cells[this.getX()][this.getY() + 1]
@@ -165,20 +196,24 @@ public class LaserBeam extends Stuff {
 					this.prev.secondNext = new LaserBeam("NW", this.getX() - 1,
 							this.getY() - 1,
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
+					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
-					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
-				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getIfAbsorb()) {
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+						.getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getTop().touch(this);
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+							.getTop().touch(this);
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
-					//this.prev.secondNext = null;
-					//return;
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+							.dealDamageToContent((int) Math.ceil(this
+									.getDamage() / 2.0) - 1);
+					// this.prev.secondNext = null;
+					// return;
 				}
 
 				this.reduceDamage(this.getDamage() / 2 + 1);
@@ -218,20 +253,24 @@ public class LaserBeam extends Stuff {
 							this.getY() - 1,
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 
+					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
-					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
 
-				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getIfAbsorb()) {
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+						.getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].getTop().touch(this);
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+							.getTop().touch(this);
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
-					//this.prev.secondNext = null;
-					//return;
+					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
+							.dealDamageToContent((int) Math.ceil(this
+									.getDamage() / 2.0) - 1);
+					// this.prev.secondNext = null;
+					// return;
 				}
 
 				this.reduceDamage(this.getDamage() / 2 + 1);
@@ -271,20 +310,24 @@ public class LaserBeam extends Stuff {
 					this.prev.secondNext = new LaserBeam("SW", this.getX() - 1,
 							this.getY() + 1,
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
+					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
-					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
-				
-				if (GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].getTop().touch(this);
+				if (GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
+						.getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
-					//this.prev.secondNext = null;
-					//return;
+					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
+							.getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
+							.dealDamageToContent((int) Math.ceil(this
+									.getDamage() / 2.0) - 1);
+					// this.prev.secondNext = null;
+					// return;
 				}
 
 				this.reduceDamage(this.getDamage() / 2 + 1);
@@ -321,20 +364,24 @@ public class LaserBeam extends Stuff {
 					this.prev.secondNext = new LaserBeam("SE", this.getX() + 1,
 							this.getY() + 1,
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
+					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
 							.getY()].add(this.prev.secondNext);
-					this.prev.secondNext.source = this.source;
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
-				
-				if (GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].getTop().touch(this);
+				if (GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
+						.getIfAbsorb()) {
 
-					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1].dealDamageToContent((int) Math.ceil(this.getDamage() / 2.0) - 1);
-					//this.prev.secondNext = null;
-					//return;
+					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
+							.getTop().touch(this);
+
+					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
+							.dealDamageToContent((int) Math.ceil(this
+									.getDamage() / 2.0) - 1);
+					// this.prev.secondNext = null;
+					// return;
 				}
 
 				this.reduceDamage(this.getDamage() / 2 + 1);
@@ -460,25 +507,26 @@ public class LaserBeam extends Stuff {
 		while (buf != null) {
 
 			if (buf.secondNext != null) {
-				/*GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
-						.getY()].deleteStuff(buf.prev.secondNext);*/
+				/*
+				 * GameField.getInstance().cells[buf.secondNext.getX()][buf.
+				 * secondNext .getY()].deleteStuff(buf.prev.secondNext);
+				 */
 				buf.secondNext.deleteBeam();
-				
 
 			}
 
 			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
-			//System.out.println(buf.getX() + " " + buf.getY() + );
+			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
-			
+
 		}
-		
+
 		this.next = null;
 	}
 
 	public void draw(Graphics g) {
 		setPicture(direction);
-		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()), null);
+		super.draw(g);
 	}
 
 	public void loadToFile(Element obj) {

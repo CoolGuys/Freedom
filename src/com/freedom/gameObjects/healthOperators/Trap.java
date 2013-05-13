@@ -16,13 +16,13 @@ public class Trap extends Stuff {
 	public Trap()
 	{
 		super(true, true, true, false, 0, 0);
-		texture = textureOpen;
+		textureRed = textureOpen;
 	}
 
 	@Override
 	public void touch(Stuff element) {
 		element.punch(this.damage);
-		this.texture = textureClosed;
+		this.textureRed = textureClosed;
 		SoundEngine.playClip(f1, -1, -15);
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
 				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
@@ -31,7 +31,7 @@ public class Trap extends Stuff {
 
 	@Override
 	public void untouch(Stuff element) {
-		this.texture = textureOpen;
+		this.textureRed = textureOpen;
 		SoundEngine.playClip(f2, -1, -15);
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
 				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),

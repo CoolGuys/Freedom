@@ -35,7 +35,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	public PacmanBody()
 	{
 		super(true, false, false, true, 0, 3);
-		texture = texture1N;
+		textureRed = texture1N;
 		this.picID = 1;
 		this.direction = "N";
 		this.direc = -1;
@@ -199,77 +199,77 @@ public class PacmanBody extends Stuff implements Moveable {
 		case 1:
 			this.direc *= -1;
 			if (this.direction.equals("S")) {
-				texture = texture1S;
+				textureRed = texture1S;
 			}
 			if (this.direction.equals("N")) {
-				texture = texture1N;
+				textureRed = texture1N;
 			}
 			if (this.direction.equals("W")) {
-				texture = texture1W;
+				textureRed = texture1W;
 			}
 			if (this.direction.equals("E")) {
-				texture = texture1E;
+				textureRed = texture1E;
 			}
 			this.picID += this.direc;
 			break;
 		case 2:
 			if (this.direction.equals("S")) {
-				texture = texture2S;
+				textureRed = texture2S;
 			}
 			if (this.direction.equals("N")) {
-				texture = texture2N;
+				textureRed = texture2N;
 			}
 			if (this.direction.equals("W")) {
-				texture = texture2W;
+				textureRed = texture2W;
 			}
 			if (this.direction.equals("E")) {
-				texture = texture2E;
+				textureRed = texture2E;
 			}
 			this.picID += this.direc;
 			break;
 		case 3:
 			if (this.direction.equals("S")) {
-				texture = texture3S;
+				textureRed = texture3S;
 			}
 			if (this.direction.equals("N")) {
-				texture = texture3N;
+				textureRed = texture3N;
 			}
 			if (this.direction.equals("W")) {
-				texture = texture3W;
+				textureRed = texture3W;
 			}
 			if (this.direction.equals("E")) {
-				texture = texture3E;
+				textureRed = texture3E;
 			}
 			this.picID += this.direc;
 			break;
 		case 4:
 			if (this.direction.equals("S")) {
-				texture = texture4S;
+				textureRed = texture4S;
 			}
 			if (this.direction.equals("N")) {
-				texture = texture4N;
+				textureRed = texture4N;
 			}
 			if (this.direction.equals("W")) {
-				texture = texture4W;
+				textureRed = texture4W;
 			}
 			if (this.direction.equals("E")) {
-				texture = texture4E;
+				textureRed = texture4E;
 			}
 			this.picID += this.direc;
 			break;
 		case 5:
 			this.direc *= -1;
 			if (this.direction.equals("S")) {
-				texture = texture5S;
+				textureRed = texture5S;
 			}
 			if (this.direction.equals("N")) {
-				texture = texture5N;
+				textureRed = texture5N;
 			}
 			if (this.direction.equals("W")) {
-				texture = texture5W;
+				textureRed = texture5W;
 			}
 			if (this.direction.equals("E")) {
-				texture = texture5E;
+				textureRed = texture5E;
 			}
 			this.picID += this.direc;
 			break;

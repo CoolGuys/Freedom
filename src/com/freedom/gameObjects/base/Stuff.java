@@ -17,31 +17,37 @@ import com.freedom.view.GameScreen;
 
 public class Stuff {
 
+	public enum StuffColor {
+		RED, GREEN, BLUE
+	}
+
 	public double x;
 	public double y;
-	protected Image texture;
+	protected Image textureRed;
+	protected Image textureGreen;
+	protected Image textureBlue;
 	protected static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
 	protected int maxLives;
-	
-	private String colour;
+
+	private StuffColor color;
 
 	protected boolean pickable;
 	protected boolean passable;
-	
-	//punching
+
+	// punching
 	protected int damage;
 	protected boolean ifDestroyable;
 	protected int lives;
-	
-	//for laser
+
+	// for laser
 	private boolean ifAbsorb;
 	protected boolean ifReflect;
-	
-	//for TNT
+
+	// for TNT
 	private boolean expConductive;
 
-	//for harming
+	// for harming
 	private DamageSender damager;
 	private int toHarm; // буферное поле для передачи урона
 	private Logger logger = Logger.getLogger("Stuff");
@@ -78,8 +84,6 @@ public class Stuff {
 			this.lives = lives;
 			this.ifDestroyable = true;
 		}
-		//TODO убрать и заменить нормальным чтением из файла
-				this.colour = "Red";////////////////Заглушка!
 	}
 
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
@@ -96,8 +100,6 @@ public class Stuff {
 		this.lives = 10;
 		this.setExpConductive(true);
 		damager = new DamageSender();
-		//TODO убрать и заменить нормальным чтением из файла
-		this.colour = "Red";////////////////Заглушка!
 	}
 
 	public void setXY(double x, double y) {
@@ -105,17 +107,21 @@ public class Stuff {
 		this.y = y;
 	}
 
-//TODO пока в случае отсутствия цвета делает красным
+	// TODO пока в случае отсутствия цвета делает красным
 	public void readLvlFile(Element obj) {
+		
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
-		this.colour = obj.getAttribute("color");
+		String color = obj.getAttribute("color");
+
+		if (color.equalsIgnoreCase("Red") || color.equalsIgnoreCase(""))
+			this.color = StuffColor.RED;
+		if (color.equalsIgnoreCase("Green"))
+			this.color = StuffColor.GREEN;
+		if (color.equalsIgnoreCase("Blue"))
+			this.color = StuffColor.BLUE;
 		
-		if (this.colour.equals(""))
-			this.colour = "Red";
 	}
-	
-	
 
 	public boolean obj() {
 		return true;
@@ -131,7 +137,7 @@ public class Stuff {
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
-		obj.setAttribute("color", String.valueOf(this.colour));
+		obj.setAttribute("color", String.valueOf(this.color));
 	}
 
 	// Action methods
@@ -197,7 +203,7 @@ public class Stuff {
 	}
 
 	public Image getTexture() {
-		return this.texture;
+		return this.textureRed;
 	}
 
 	public int getLives() {
@@ -221,8 +227,25 @@ public class Stuff {
 	}
 
 	public void draw(Graphics g) {
-		g.drawImage(texture, (int) (x * getSize()), (int) (y * getSize()),
-				getSize(), getSize(), null);
+		if(this.color==null)
+			System.gc();
+		switch (color) {
+		case RED: {
+			g.drawImage(textureRed, (int) (x * getSize()),
+					(int) (y * getSize()), getSize(), getSize(), null);
+			return;
+		}
+		case GREEN: {
+			g.drawImage(textureGreen, (int) (x * getSize()),
+					(int) (y * getSize()), getSize(), getSize(), null);
+			return;
+		}
+		case BLUE:
+			g.drawImage(textureBlue, (int) (x * getSize()),
+					(int) (y * getSize()), getSize(), getSize(), null);
+
+		}
+
 	}
 
 	public int getUseAmount() {
@@ -241,8 +264,7 @@ public class Stuff {
 		return null;
 	}
 
-	
-	//TODO Remove this method
+	// TODO Remove this method
 	boolean harm(int damage) {
 		if (damage == 0) {
 			return false;
@@ -300,7 +322,7 @@ public class Stuff {
 			this.lives = this.maxLives;
 	}
 
-	//TODO Finish death handling
+	// TODO Finish death handling
 	private class DamageSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Stuff.this.lives = Stuff.this.lives - Stuff.this.toHarm;
@@ -310,14 +332,30 @@ public class Stuff {
 			}
 		}
 	}
-	
-	//фишки с рангом предметов
-	
-	public String getColour(){
-		return this.colour;
+
+	// фишки с рангом предметов
+
+	public String getColour() {
+		if(this.color==null)
+			System.gc();
+		switch (color) {
+		case RED:
+			return "Red";
+		case GREEN:
+			return "Green";
+		case BLUE:
+			return "Blue";
+		}
+		return "Red";
 	}
-	public void setColour(String s){
-		this.colour = s;
+
+	public void setColour(String s) {
+		if (s.equals("Red"))
+			color = StuffColor.RED;
+		else if (s.equals("Green"))
+			color = StuffColor.GREEN;
+		else if (s.equals("Blue"))
+			color = StuffColor.BLUE;
 
 	}
 

@@ -21,7 +21,7 @@ public class Teleport extends Stuff {
 	public Teleport()
 	{
 		super(false, true, false, false, 0, 1);
-		texture = textureOff;
+		textureRed = textureOff;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class Teleport extends Stuff {
 	@Override
 	public boolean useOff() {
 		if (this.on) {
-			texture = textureOff;
+			textureRed = textureOff;
 			this.on = false;
 			return true;
 		}
@@ -76,7 +76,7 @@ public class Teleport extends Stuff {
 	public boolean useOn() {
 		if (!this.on) {
 			this.on = true;
-			texture = textureOn;
+			textureRed = textureOn;
 			return true;
 		} else
 			return false;

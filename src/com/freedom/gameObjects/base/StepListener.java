@@ -50,7 +50,7 @@ public class StepListener extends Stuff {
 
 		super(false, true, false, false, 0, 0);
 		gleblo.setLevel(Level.OFF);
-		texture = texture1;
+		textureRed = texture1;
 		alive = true;
 		robotOn = false;
 		gleblo.info("creating");

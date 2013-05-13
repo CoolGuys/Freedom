@@ -177,8 +177,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="5">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5"
-			direction="SW" color="Red">
+		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5" color="Green" direction = "SW">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="6">
 		</obj>
