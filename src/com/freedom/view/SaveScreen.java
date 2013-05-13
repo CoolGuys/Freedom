@@ -11,7 +11,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.freedom.utilities.SaveScreenModel;
+import com.freedom.model.SaveScreenModel;
 
 @SuppressWarnings("serial")
 public class SaveScreen extends AbstractScreen {

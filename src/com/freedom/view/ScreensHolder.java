@@ -2,7 +2,6 @@ package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.IllegalComponentStateException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
