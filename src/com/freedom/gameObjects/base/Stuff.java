@@ -154,7 +154,7 @@ public class Stuff {
 
 	}
 
-	public void interract() {
+	public void interact(Stuff interactor) {
 		return;
 	}
 

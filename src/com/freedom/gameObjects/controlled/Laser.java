@@ -92,7 +92,7 @@ public class Laser extends Stuff {
 
 	@Override
 	// вращаем по часовой
-	public void interract() {
+	public void interact(Stuff interactor) {
 		boolean condition = this.useOff();
 		switch (this.direction) {
 		case "N":

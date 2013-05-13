@@ -11,7 +11,7 @@ public interface Moveable {
 	public int getY();
 	public double getStep();
 	public void setDirection(String direction);
-	public void interract();
+	public void interact(Stuff interactor);
 	public boolean canGo();
 	public Point getTargetCellCoordinates(String direction);
 	

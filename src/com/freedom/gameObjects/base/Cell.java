@@ -321,9 +321,9 @@ public class Cell {
 
 	}
 
-	public void interract() {
+	public void interact(Stuff interactor) {
 		for (int i = 0; i < this.contentAmount; i++) {
-			this.content[i].interract();
+			this.content[i].interact(interactor);
 		}
 	}
 

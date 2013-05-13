@@ -270,11 +270,11 @@ public class Robot extends Stuff implements Moveable {
 
 	public void interract() {
 		if (this.container[0] != null)
-			this.container[0].interract();
+			this.container[0].interact(this);
 		else {
 			GameField.getInstance().cells[this
 					.getTargetCellCoordinates(getDirection()).x][this
-					.getTargetCellCoordinates(getDirection()).y].interract();
+					.getTargetCellCoordinates(getDirection()).y].interact(this);
 		}
 	}
 
