@@ -64,12 +64,11 @@ public class ButtonAnd extends Stuff {
 
 	public ButtonAnd()
 	{
-		super(false, true, true, false);
+		super(false, true, false, false);
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
 		texture = textureDepressed;
-
 	}
 
 	/**

@@ -426,7 +426,7 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="14">
 		</obj>
 		<obj class="com.freedom.gameObjects.controlled.Teleport" x="14"
-			xLeadTo="17" y="14" yLeadTo="14">
+			xLeadTo="17" y="14" yLeadTo="14" color = "Blue">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="15">
 		</obj>

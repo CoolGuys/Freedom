@@ -20,6 +20,7 @@ import com.freedom.utilities.game.Mover;
 
 public class PacmanBody extends Stuff implements Moveable {
 
+	//
 	private boolean alive;
 	private int rate;
 	boolean isMoving;
@@ -124,9 +125,13 @@ public class PacmanBody extends Stuff implements Moveable {
 	}
 
 	public void die() {
-		this.alive = false;
-		if (p != null)
-			this.p.alive = false;
+		if (this.alive) {
+			this.alive = false;
+			if (p != null)
+				this.p.alive = false;
+		}else{
+			super.die();
+		}
 	}
 
 	/**

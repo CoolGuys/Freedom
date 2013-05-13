@@ -27,6 +27,7 @@ public class Teleport extends Stuff {
 	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
+		System.out.println(this.getColour());
 		this.xLeadTo = Integer.parseInt(obj.getAttribute("xLeadTo"));
 		this.yLeadTo = Integer.parseInt(obj.getAttribute("yLeadTo"));
 	}
@@ -46,7 +47,8 @@ public class Teleport extends Stuff {
 		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.getIfPassable())
 			return;
-
+		
+		
 		for (Stuff containedElement : element.container) {
 			if (containedElement != null) {
 				containedElement.x = xLeadTo;
@@ -80,8 +82,15 @@ public class Teleport extends Stuff {
 			return true;
 		} else
 			return false;
-
 	}
+	
+	@Override
+	public boolean ifCoolEnough(Stuff element){
+		if(!super.ifCoolEnough(element) || this.getColour().equals(element.getColour()) )
+			return true;
+		else return false;
+	}
+	
 
 	@Override
 	public void giveInfo() {

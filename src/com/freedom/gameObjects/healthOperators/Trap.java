@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.game.SoundEngine;
 import com.freedom.view.GameScreen;
+//TODO поправить, чтобы становился неактивным!
 
 public class Trap extends Stuff {
 	public Trap()

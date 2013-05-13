@@ -21,10 +21,9 @@ public class Laser extends Stuff {
 	String direction;
 	private BeamSender sender;
 	private static Image texture1;
-	
+
 	private static Logger logger = Logger.getLogger("Laser");
-	
-	
+
 	static {
 		logger.setLevel(Level.WARNING);
 		try {
@@ -33,60 +32,96 @@ public class Laser extends Stuff {
 			logger.warning("Laser texture was corrupted or deleted");
 		}
 	}
-	
+
 	public Laser() {
-		super(false, false,true, false);
+		super(false, false, true, false);
 		ifActive = false;
-		texture=texture1;
+		texture = texture1;
 		sender = new BeamSender();
 	}
 	
+	//метод для призмы
+	public Laser(boolean forReflector){
+		super(false, false, false, true);
+		ifActive = false;
+		texture = texture1;
+		sender = new BeamSender();
+	}
+
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		this.direction = obj.getAttribute("direction");
 	}
-	
+
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("direction",this.direction);
+		obj.setAttribute("direction", this.direction);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Laser");
 	}
-	
-	
-	public void rebuidBeam(){
+
+	public void rebuidBeam() {
 		this.beamHead.deleteBeam();
 		this.beamHead.buildBeam();
 	}
-	
-	public boolean useOn(){
-		if(this.ifActive)
+
+	public boolean useOn() {
+		if (this.ifActive)
 			return false;
-		else{
+		else {
 			this.ifActive = true;
-			this.beamHead = new LaserBeam(this.direction, this.getX(), this.getY(), 8);
+			this.beamHead = new LaserBeam(this.direction, this.getX(),
+					this.getY(), 8);
 			this.beamHead.setSource(this);
 			GameField.getInstance().getDeathTicker().addActionListener(sender);
-			return true;	
+			return true;
 		}
 	}
-	
+
 	@Override
-	public boolean useOff(){
-		if(!this.ifActive)
+	public boolean useOff() {
+		if (!this.ifActive)
 			return false;
-		else{
+		else {
 			this.ifActive = false;
-			GameField.getInstance().getDeathTicker().removeActionListener(sender);
+			GameField.getInstance().getDeathTicker()
+					.removeActionListener(sender);
 			this.beamHead.deleteBeam();
 			return true;
 		}
 	}
-	
+
+	@Override
+	// вращаем по часовой
+	public void interract() {
+		boolean condition = this.useOff();
+		switch (this.direction) {
+		case "N":
+			this.direction = "NE";
+		case "S":
+			this.direction = "SW";
+		case "E":
+			this.direction = "SE";
+		case "W":
+			this.direction = "NW";
+
+		case "NW":
+			this.direction = "N";
+		case "NE":
+			this.direction = "E";
+		case "SW":
+			this.direction = "W";
+		case "SE":
+			this.direction = "S";
+		}
+		if(condition)
+			this.useOn();
+	}
+
 	private class BeamSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			Laser.this.beamHead.deleteBeam();
 			Laser.this.beamHead.buildBeam();
 		}
 	}
-	
+
 }

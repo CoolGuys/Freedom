@@ -65,7 +65,7 @@ public class ButtonOr extends Stuff {
 
 	public ButtonOr()
 	{
-		super(false, true, true, false);
+		super(false, true, false, false);
 		super.x = x;
 		super.y = y;
 		texture = textureDepressed;
