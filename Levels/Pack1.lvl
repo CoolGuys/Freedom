@@ -177,7 +177,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="5">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5" color="Green" direction = "SW">
+		<obj class="com.freedom.gameObjects.controlled.Laser" x="6" y="5" color="Blue" direction = "SE">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="6">
 		</obj>
@@ -193,6 +193,8 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="10">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="11">
+		</obj>
+		<obj class="com.freedom.gameObjects.controlled.CornerReflector" x="6" y="11">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="12">
 		</obj>
@@ -306,8 +308,10 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="9" y="13" color="Blue">
 			<cels x="10" y="12" />
+		</obj><obj class="com.freedom.gameObjects.controllers.LaserDetectorOr" x="9" y="6" color="Red">
+			<cels x="10" y="12" />
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Box" colour="Red"
+		<obj class="com.freedom.gameObjects.controlled.Box" color="Red"
 			x="9" y="11">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="14">

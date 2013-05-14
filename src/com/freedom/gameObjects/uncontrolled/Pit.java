@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -43,9 +42,7 @@ public class Pit extends Stuff {
 	private static Image texture1;
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Pit.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+			texture1 = ImageIO.read(new File("Resource/Textures/Pit.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

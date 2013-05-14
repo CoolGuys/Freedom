@@ -30,6 +30,13 @@ public class ButtonOr extends Stuff {
 		controlledCellsList = new int[10][2];
 	}
 	
+	public ButtonOr(boolean ifLaserDetector){
+		super(false, false, false, true);
+		super.x = x;
+		super.y = y;
+		controlledCellsList = new int[10][2];
+	}
+	
 	@Override
 	public void untouch(Stuff element) {
 		textureRed = texturesDepressed[1];

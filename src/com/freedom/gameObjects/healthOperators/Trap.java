@@ -1,6 +1,7 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,7 +38,6 @@ public class Trap extends Stuff {
 		GameScreen.getInstance().repaint((int) (this.getX() * Stuff.getSize()),
 				(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
 				Stuff.getSize());
-	
 	}
 	
 	public void readLvlFile(Element obj) {
@@ -52,7 +52,6 @@ public class Trap extends Stuff {
 		} catch (Exception e) {
 			this.damage = 10;
 		}
-
 	}
 
 	/**
@@ -67,7 +66,6 @@ public class Trap extends Stuff {
 		obj.setAttribute("class", "com.freedom.gameObjects.healthOperators.Trap");
 	}
 
-
 	private boolean used;
 	private int damage;
 	private static Image textureOpen;
@@ -77,9 +75,11 @@ public class Trap extends Stuff {
 	static {
 		try {
 			textureOpen = ImageIO.read(new File(
-					"Resource/Textures/TrapOpen.png"));
+					"Resource/Textures/TrapOpen.png")).getScaledInstance(getSize(),
+							getSize(), BufferedImage.SCALE_SMOOTH);
 			textureClosed = ImageIO.read(new File(
-					"Resource/Textures/TrapClosed.png"));
+					"Resource/Textures/TrapClosed.png")).getScaledInstance(getSize(),
+							getSize(), BufferedImage.SCALE_SMOOTH);
 			f1 = new File("Resource/Sound/beep-5.wav");
 			f2 = new File("Resource/Sound/ButtonClicked.wav");
 		} catch (IOException e) {

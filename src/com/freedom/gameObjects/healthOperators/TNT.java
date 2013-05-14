@@ -2,6 +2,7 @@ package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -24,7 +25,8 @@ public class TNT extends Stuff implements Moveable {
 
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/TNT.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/TNT.png")).getScaledInstance(getSize(), getSize(),
+					BufferedImage.SCALE_SMOOTH);;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,8 +127,8 @@ public class TNT extends Stuff implements Moveable {
 
 	}
 
-
-	public void interact() {
+	@Override
+	public void interact(Stuff interactor) {
 		TNTExploder t = new TNTExploder();
 		GameField.otherThreads.execute(t);
 	}

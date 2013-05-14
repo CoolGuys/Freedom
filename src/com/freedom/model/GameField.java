@@ -99,7 +99,7 @@ public class GameField {
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
-		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
+		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}
@@ -153,7 +153,7 @@ public class GameField {
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
-		GameScreen.getInstance().центрироватьПоРоботу(getRobot());
+		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 	}

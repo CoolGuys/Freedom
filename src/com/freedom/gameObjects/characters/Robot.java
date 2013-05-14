@@ -148,14 +148,14 @@ public class Robot extends Stuff implements Moveable {
 
 	public void moveCoarse(String direction) {
 		if (Math.abs(GameScreen.getInstance()
-				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).x) > ScreensHolder
+				.calculateDistanceFromRobotToScreenCenter(this).x) > ScreensHolder
 				.getInstance().getWidth() / 2 - 4 * getSize())
-			GameScreen.getInstance().центрироватьПоРоботуПоГоризонтали(this);
+			GameScreen.getInstance().centerByRobotHorisontally(this);
 
 		if (Math.abs(GameScreen.getInstance()
-				.рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(this).y) > ScreensHolder
+				.calculateDistanceFromRobotToScreenCenter(this).y) > ScreensHolder
 				.getInstance().getHeight() / 2 - 4 * getSize())
-			GameScreen.getInstance().центрироватьПоРоботуПоВертикали(this);
+			GameScreen.getInstance().centerByRobotVertically(this);
 
 		Runnable r = new Mover<Robot>(this, direction, 1, 10);
 		Thread t = new Thread(r);

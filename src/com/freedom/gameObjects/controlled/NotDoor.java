@@ -2,6 +2,7 @@ package com.freedom.gameObjects.controlled;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -25,10 +26,15 @@ public class NotDoor extends Stuff {
 
 	static {
 		try {
-			textureClosedVertical = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedVertical.png"));
-			textureClosedHorisontal = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedHorisontal.png"));
+			textureClosedVertical = ImageIO.read(
+					new File("Resource/Textures/DoorClosedVertical.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureClosedHorisontal = ImageIO.read(
+					new File("Resource/Textures/DoorClosedHorisontal.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			;
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
@@ -38,10 +44,9 @@ public class NotDoor extends Stuff {
 
 	public NotDoor()
 	{
-		super(false, true,true, false);
+		super(false, true, true, false);
 		super.setExpConductive(false);
 	}
-
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
@@ -57,7 +62,7 @@ public class NotDoor extends Stuff {
 
 	@Override
 	public boolean useOn() {
-			textureRed = textureClosed;
+		textureRed = textureClosed;
 		if (super.passable) {
 			super.passable = false;
 			return true;

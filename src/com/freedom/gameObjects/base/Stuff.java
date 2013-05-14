@@ -109,7 +109,7 @@ public class Stuff {
 
 	// TODO пока в случае отсутствия цвета делает красным
 	public void readLvlFile(Element obj) {
-		
+
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		String color = obj.getAttribute("color");
@@ -120,10 +120,10 @@ public class Stuff {
 			this.color = StuffColor.GREEN;
 		if (color.equalsIgnoreCase("Blue"))
 			this.color = StuffColor.BLUE;
-		
+
 	}
-	
-	public boolean ifCoolEnough(Stuff element){
+
+	public boolean ifCoolEnough(Stuff element) {
 		return GameField.ifPowerfulEnough(element, this);
 	}
 
@@ -230,23 +230,26 @@ public class Stuff {
 		this.expConductive = expConductive;
 	}
 
+	public StuffColor getColor() {
+		return this.color;
+	}
+
 	public void draw(Graphics g) {
-		if(this.color==null)
-			System.gc();
-		switch (color) {
+		
+		switch (getColor()) {
 		case RED: {
 			g.drawImage(textureRed, (int) (x * getSize()),
-					(int) (y * getSize()), getSize(), getSize(), null);
+					(int) (y * getSize()), null);
 			return;
 		}
 		case GREEN: {
 			g.drawImage(textureGreen, (int) (x * getSize()),
-					(int) (y * getSize()), getSize(), getSize(), null);
+					(int) (y * getSize()), null);
 			return;
 		}
 		case BLUE:
 			g.drawImage(textureBlue, (int) (x * getSize()),
-					(int) (y * getSize()), getSize(), getSize(), null);
+					(int) (y * getSize()), null);
 
 		}
 
@@ -340,7 +343,7 @@ public class Stuff {
 	// фишки с рангом предметов
 
 	public String getColour() {
-		if(this.color==null)
+		if (this.color == null)
 			System.gc();
 		switch (color) {
 		case RED:
