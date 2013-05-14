@@ -22,6 +22,7 @@ public class ButtonOr extends Stuff {
 	public ButtonOr()
 	{
 		super(false, true, true, false);
+		super.type=LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
 		textureRed = texturesDepressed[1];
@@ -67,16 +68,6 @@ public class ButtonOr extends Stuff {
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
-
-	public boolean obj() {
-		return false;
-	}
-
-	// кастыли
-	public boolean objc() {
-		return true;
-	}
-
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
 	 * 

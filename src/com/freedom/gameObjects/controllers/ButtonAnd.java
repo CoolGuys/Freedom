@@ -22,6 +22,7 @@ public class ButtonAnd extends Stuff {
 	public ButtonAnd()
 	{
 		super(false, true, true, false);
+		super.type=LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
@@ -79,17 +80,6 @@ public class ButtonAnd extends Stuff {
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
-
-	public boolean obj() {
-		return false;
-	}
-
-	// кастыли
-	public boolean objc() {
-		return true;
-	}
-
-
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
 	 * 

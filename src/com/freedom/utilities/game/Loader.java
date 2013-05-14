@@ -17,7 +17,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.base.Stuff.LoadingType;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.model.GameField;
 import com.freedom.model.LoadingScreenModel;
@@ -102,13 +104,13 @@ public class Loader {
 						int l = stu.length;
 						for (int i = 0; i < l; i++) {
 							try {
-								if (stu[i].obj()) {
+								if (stu[i].getLoadingType()==LoadingType.OBJ) {
 									Element obj = doc.createElement("obj");
 									stu[i].loadToFile(obj);
 									obj.setTextContent("\n");
 									lvl.appendChild(obj);
 								}
-								if (stu[i].objc()) {
+								if (stu[i].getLoadingType()==LoadingType.OBJC) {
 									//System.out.print(stu[i].getClass().getSimpleName());
 									Element obj = doc.createElement("obj");
 									stu[i].loadToFile(obj);
@@ -122,6 +124,7 @@ public class Loader {
 												.valueOf((int) useList[i1][0]));
 										cels.setAttribute("y", String
 												.valueOf((int) useList[i1][1]));
+										cels.setTextContent("\n");
 										obj.appendChild(cels);
 									}
 									lvl.appendChild(obj);
@@ -131,6 +134,39 @@ public class Loader {
 
 							}
 						}
+					}
+				}
+				Ghost gsts[]=GameField.getInstance().newGhosts(0);
+				for(int i=0;i<gsts.length;i++){
+					try {
+						if (gsts[i].getLoadingType()==LoadingType.OBJ) {
+							Element obj = doc.createElement("gst");
+							gsts[i].loadToFile(obj);
+							obj.setTextContent("\n");
+							lvl.appendChild(obj);
+						}
+						if (gsts[i].getLoadingType()==LoadingType.OBJC) {
+							//System.out.print(stu[i].getClass().getSimpleName());
+							Element obj = doc.createElement("gst");
+							gsts[i].loadToFile(obj);
+							obj.setTextContent("\n");
+							int useam = gsts[i].getUseAmount();
+							int useList[][] = gsts[i].getUseList();
+							for (int i1 = 0; i1 < useam; i1++) {
+								Element cels = obj.getOwnerDocument()
+										.createElement("cels");
+								cels.setAttribute("x", String
+										.valueOf((int) useList[i1][0]));
+								cels.setAttribute("y", String
+										.valueOf((int) useList[i1][1]));
+								cels.setTextContent("\n");
+								obj.appendChild(cels);
+							}
+							lvl.appendChild(obj);
+						}
+
+					} catch (Exception ei) {
+
 					}
 				}
 				Element robo = doc.createElement("robot");// writing robot
@@ -173,11 +209,10 @@ public class Loader {
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(fXml);
 			doc.getDocumentElement().normalize();
-			int tl=1;
+			int tl;
 			tl=Integer.parseInt(doc.getDocumentElement().getAttribute("startLvl"));
 			GameField.getInstance().setCurrentLevel(tl);			
 			GameField.getInstance().setPreviousLevel(tl);
-			//System.out.println("1");
 			Loader.readLvl(tl, lvlfile);
 		} catch (Exception ei) {
 			ei.printStackTrace();
@@ -236,7 +271,25 @@ public class Loader {
 						((Stuff) newstuff).readLvlFile(obj);
 						GameField.getInstance().cells[((Stuff) newstuff).getX()][((Stuff) newstuff)
 								.getY()].add(((Stuff) newstuff));
-						
+						lsm.setLoadingObjectName(obj.getAttribute("class").substring(24));
+						lsm.setProgressPercent(obji*100/objTagLeng);
+					}
+					
+					logger.info("Creating ghosts");
+					objTag = lvl.getElementsByTagName("gst");
+					logger.info("amount " + objTag.getLength());
+					lsm.setProgressPercent(0);
+					objTagLeng=objTag.getLength();
+					GameField.getInstance().newGhosts(objTagLeng);
+					for (int obji = 0; obji < objTagLeng; obji++) {
+						Element obj = (Element) objTag.item(obji);
+						logger.info("reading class="
+								+ obj.getAttribute("class"));
+						Object newgst;
+						Class<?> cla = Class.forName(obj.getAttribute("class"));
+						newgst = cla.newInstance();
+						((Ghost) newgst).readLvlFile(obj);
+						GameField.getInstance().setGhost(obji, (Ghost) newgst);						
 						lsm.setLoadingObjectName(obj.getAttribute("class").substring(24));
 						lsm.setProgressPercent(obji*100/objTagLeng);
 					}

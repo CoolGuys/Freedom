@@ -1047,7 +1047,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="2">
 		</obj>
-		<obj class="com.freedom.gameObjects.controllers.StepPlay" used="false"
+		<gst class="com.freedom.gameObjects.controllers.StepPlay" used="false"
 			x="2" y="2">
 			<cels x="4" y="2" />
 			<cels x="4" y="8" />
@@ -1056,11 +1056,11 @@
 			<cels x="4" y="9" />
 			<cels x="3" y="9" />
 			<cels x="5" y="9" />
-		</obj>
-		<obj class="com.freedom.gameObjects.controllers.WalkieTalkie" x="2"
+		</gst>
+		<gst class="com.freedom.gameObjects.controllers.WalkieTalkie" x="2"
 			y="2" messageToDisplay="Hello world!!!">
 			<cels x="4" y="3" />
-		</obj>
+		</gst>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="3">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">

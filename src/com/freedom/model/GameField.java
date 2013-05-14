@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.Timer;
 
 import com.freedom.gameObjects.base.Cell;
+import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.utilities.game.Loader;
@@ -33,9 +34,11 @@ public class GameField {
 	private int currentLevelId;
 	private String pathToSave;
 	private int previousLevelId;
-	public Cell[][] previousCells;
+	//public Cell[][] previousCells;
 	private volatile Robot robot;
 	public volatile Cell[][] cells;
+	public volatile Ghost[] ghosts;
+	private volatile int gostsAmount;
 	private int xSize;
 	private int ySize;
 	private int cellSize;
@@ -54,7 +57,30 @@ public class GameField {
 	public String getPathToSave() {
 		return this.pathToSave;
 	}
+	
+	public int setGstAmount(int number){
+		int previous=this.gostsAmount;
+		this.gostsAmount=number;
+		return previous;
+	}
+	
+	public Ghost[] newGhosts(int amount) {
+		Ghost[] previousGsts=this.ghosts;
+		this.ghosts = new Ghost[amount];
+		this.gostsAmount=amount;
+		return previousGsts;
+	}
+	
+	public Ghost setGhost(int i,Ghost gst){
+		Ghost prev=this.ghosts[i];
+		this.ghosts[i]=gst;
+		return prev;
+	}
 
+	public int getGstAmount(){
+		return this.gostsAmount;
+	}
+	
 	public void setCurrentLevel(int currentLevelIdToSet) {
 		this.currentLevelId = currentLevelIdToSet;
 	}
@@ -93,7 +119,7 @@ public class GameField {
 		GameField.getInstance().setPathToSave(pathToPackage);
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
-		previousCells = cells;
+		//previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
@@ -156,17 +182,6 @@ public class GameField {
 				LoadingScreen.getInstance());
 	}
 
-	/*
-	 * public void saveLevelToPackage(int levelID) { //this.pathToSave =
-	 * "Saves/Save1.lvl"; Loader.lvlToSv(this.currentLevelId, this.pathToSave);
-	 * try { buf.itsAlive(); } catch (Exception E) {
-	 * 
-	 * } Loader.lvlToSv(nextLevelId, this.pathToSave);
-	 * GameScreen.getInstance().setSize(cells.length * cellSize, cells[1].length
-	 * * cellSize);
-	 * ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
-	 * LoadingScreen.getInstance()); }
-	 */
 	public void saveCurrentLevelToPackage() {
 		// this.pathToSave = "Saves/Save1.lvl";
 		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
