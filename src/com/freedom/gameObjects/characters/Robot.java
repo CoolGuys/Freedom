@@ -60,7 +60,7 @@ public class Robot extends Stuff implements Moveable {
 
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
 		super(false, true, false, true, 0, maxLives);
-
+		super.type=LoadingType.DNW;
 		super.x = posX;
 		super.y = posY;
 
@@ -69,15 +69,6 @@ public class Robot extends Stuff implements Moveable {
 		this.container[0] = c;
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
 		logger.setLevel(Level.ALL);
-	}
-
-	public boolean obj() {
-		return false;
-	}
-
-	// кастыли
-	public boolean objc() {
-		return false;
 	}
 
 	public int getX() {

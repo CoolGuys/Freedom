@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.gameObjects.base.Stuff.LoadingType;
 import com.freedom.model.GameField;
 
 /**
@@ -31,6 +32,7 @@ public class StepListener extends Ghost {
 
 	public StepListener()
 	{
+		super.type=LoadingType.OBJC;
 		gleblo.setLevel(Level.OFF);
 		alive = true;
 		robotOn = false;
@@ -108,25 +110,6 @@ public class StepListener extends Ghost {
 		this.controlledCellsAmount = length;
 		itsAlive();
 	}
-
-	/**
-	 * Кастыльный метод
-	 * 
-	 * @return Возвращает кастыль
-	 */
-	public boolean obj() {
-		return false;
-	}
-
-	/**
-	 * Кастыльный метод
-	 * 
-	 * @return Возвращает кастыль
-	 */
-	public boolean objc() {
-		return true;
-	}
-
 	/**
 	 * просто так не юзать
 	 */

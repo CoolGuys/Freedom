@@ -38,6 +38,7 @@ public class GameField {
 	private volatile Robot robot;
 	public volatile Cell[][] cells;
 	public volatile Ghost[] ghosts;
+	private volatile int gostsAmount;
 	private int xSize;
 	private int ySize;
 	private int cellSize;
@@ -56,7 +57,30 @@ public class GameField {
 	public String getPathToSave() {
 		return this.pathToSave;
 	}
+	
+	public int setGstAmount(int number){
+		int previous=this.gostsAmount;
+		this.gostsAmount=number;
+		return previous;
+	}
+	
+	public Ghost[] newGhosts(int amount) {
+		Ghost[] previousGsts=this.ghosts;
+		this.ghosts = new Ghost[amount];
+		this.gostsAmount=amount;
+		return previousGsts;
+	}
+	
+	public Ghost setGhost(int i,Ghost gst){
+		Ghost prev=this.ghosts[i];
+		this.ghosts[i]=gst;
+		return prev;
+	}
 
+	public int getGstAmount(){
+		return this.gostsAmount;
+	}
+	
 	public void setCurrentLevel(int currentLevelIdToSet) {
 		this.currentLevelId = currentLevelIdToSet;
 	}

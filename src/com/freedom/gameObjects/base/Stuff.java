@@ -20,7 +20,12 @@ public class Stuff {
 	public enum StuffColor {
 		RED, GREEN, BLUE
 	}
-
+	
+	public enum LoadingType{
+		OBJ, OBJC, DNW; //simple object, object with cells, do not write;
+	}
+	
+	protected LoadingType type = LoadingType.OBJ;
 	public double x;
 	public double y;
 	protected Image textureRed;
@@ -127,14 +132,10 @@ public class Stuff {
 		return GameField.ifPowerfulEnough(element, this);
 	}
 
-	public boolean obj() {
-		return true;
+	public LoadingType getLoadingType(){
+		return this.type;
 	}
-
-	public boolean objc() {
-		return false;
-	}
-
+	
 	public void itsAlive() {
 	}
 

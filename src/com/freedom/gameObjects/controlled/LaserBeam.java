@@ -69,6 +69,7 @@ public class LaserBeam extends Stuff {
 	public LaserBeam(String direction, int x, int y, int damage)
 	{
 		super(false, true, false, false, damage, 0);
+		super.type=LoadingType.DNW;
 		super.x = x;
 		super.y = y;
 		this.direction = direction;
@@ -133,15 +134,6 @@ public class LaserBeam extends Stuff {
 	 * у нас луч попал на отражающую клетку. этот метод перемещает его и
 	 * поворачивает Север- Юг не совпадают с реальным представлением
 	 */
-
-	public boolean obj() {
-		return false;
-	}
-
-	// кастыли
-	public boolean objc() {
-		return false;
-	}
 
 	private void reflect() {
 
