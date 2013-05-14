@@ -8,11 +8,7 @@ import com.freedom.view.GameScreen;
 
 public class WalkieTalkie extends StepListener {
 
-	public void readLvlFile(Element obj) {
-		this.x = Integer.parseInt(obj.getAttribute("x"));
-		this.y = Integer.parseInt(obj.getAttribute("y"));
-		this.setColour("Red");
-		
+	public void readLvlFile(Element obj) {		
 		this.message = obj.getAttribute("messageToDisplay");
 		NodeList list = obj.getElementsByTagName("cels");
 		int length = list.getLength();
@@ -28,8 +24,6 @@ public class WalkieTalkie extends StepListener {
 	}
 
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.WalkieTalkie");
 		obj.setAttribute("messageToDisplay", this.message);
 	}

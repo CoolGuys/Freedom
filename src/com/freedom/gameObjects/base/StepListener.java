@@ -1,13 +1,8 @@
 package com.freedom.gameObjects.base;
 
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -26,35 +21,20 @@ import com.freedom.model.GameField;
  * @author ushale
  * 
  */
-public class StepListener extends Stuff {
+public class StepListener extends Ghost {
 	protected int[][] controlledCellsList;
 	protected int controlledCellsAmount;
-	private static Image texture1;
 	private boolean alive;
 	private boolean robotOn;
 	private Checker p;
 	private Logger gleblo = Logger.getLogger("StepListener");
 
-	static {
-		try {
-			texture1 = ImageIO.read(new File(
-					"Resource/Textures/EmptyTexture.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	public StepListener()
 	{
-
-		super(false, true, false, false, 0, 0);
 		gleblo.setLevel(Level.OFF);
-		textureRed = texture1;
 		alive = true;
 		robotOn = false;
 		gleblo.info("creating");
-
 	}
 
 	/**
@@ -106,8 +86,6 @@ public class StepListener extends Stuff {
 	 * этот метод нужно заоверрайдить при наследовании
 	 */
 	public void loadToFile(Element obj) {
-		obj.setAttribute("x", String.valueOf((int) this.x));
-		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.StepListener");
 		gleblo.info("Saving");
 	}
@@ -118,7 +96,6 @@ public class StepListener extends Stuff {
 	 * @param - Scanner файла
 	 */
 	public void readLvlFile(Element obj) {
-
 		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
 		int length = list.getLength();
