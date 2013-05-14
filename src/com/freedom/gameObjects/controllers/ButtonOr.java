@@ -91,7 +91,7 @@ public class ButtonOr extends Stuff {
 	}
 	
 
-	private class SignalOnSender implements ActionListener {
+	public class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
 
@@ -134,7 +134,7 @@ public class ButtonOr extends Stuff {
 	// батон
 	private int controlledCellsAmount; // количество целлов на которые действует
 										// батон
-	private ActionListener sender;
+	protected ActionListener sender;
 	private static File f2;	
 
 	private static Logger logger = Logger.getLogger("ButtonAnd");

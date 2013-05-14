@@ -200,6 +200,7 @@ public class LaserBeam extends Stuff {
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
 							.getTop().touch(this);
+					source.addTouchedCell(new Point(this.getX()-1, this.getY()-1));
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
 							.dealDamageToContent((int) Math.ceil(this
@@ -257,6 +258,7 @@ public class LaserBeam extends Stuff {
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
 							.getTop().touch(this);
+					source.addTouchedCell(new Point(this.getX()-1, this.getY()-1));
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
 							.dealDamageToContent((int) Math.ceil(this
@@ -314,6 +316,7 @@ public class LaserBeam extends Stuff {
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
 							.getTop().touch(this);
+					source.addTouchedCell(new Point(this.getX()-1, this.getY()+1));
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
 							.dealDamageToContent((int) Math.ceil(this
@@ -368,6 +371,7 @@ public class LaserBeam extends Stuff {
 
 					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
 							.getTop().touch(this);
+					source.addTouchedCell(new Point(this.getX()+1, this.getY()+1));
 
 					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
 							.dealDamageToContent((int) Math.ceil(this
@@ -441,6 +445,7 @@ public class LaserBeam extends Stuff {
 			this.next = null;
 			buf[this.getTargetCellCoordinates().x][this
 					.getTargetCellCoordinates().y].getTop().touch(this);
+			this.source.addTouchedCell(getTargetCellCoordinates());
 
 			buf[this.getTargetCellCoordinates().x][this
 					.getTargetCellCoordinates().y].dealDamageToContent(this
@@ -467,7 +472,8 @@ public class LaserBeam extends Stuff {
 					.getY()].getIfAbsorb()) {
 
 				buf[this.next.getX()][this.next.getY()].getTop().touch(this);
-
+				source.addTouchedCell(new Point(this.next.getX(), this.next.getY()));
+				
 				buf[this.next.getX()][this.next.getY()]
 						.dealDamageToContent(this.getDamage());
 				this.next = null;
@@ -507,25 +513,6 @@ public class LaserBeam extends Stuff {
 			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
 			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
-
-		}
-		//для антача последжняя итерация ручками
-		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].getIfAbsorb()){
-			cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].untouch(this);
-		}
-		
-		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].getIfReflect()){
-
-			buf.next = new LaserBeam(this.direction,
-					this.getTargetCellCoordinates().x,
-					this.getTargetCellCoordinates().y, this.getDamage());
-			buf.next.prev=buf;
-			buf.next.reflect();
-			if(cellBuf[buf.next.getX()][buf.next.getY()].getIfAbsorb()){
-				cellBuf[buf.next.getX()][buf.next.getY()].untouch(buf);
-				cellBuf[buf.next.getX()][buf.next.getY()].deleteStuff(buf.next);
-			}
-			buf.next = null;
 		}
 		
 		if (buf.secondNext != null) {

@@ -126,7 +126,7 @@ public class ButtonAnd extends Stuff {
 		}
 	}
 
-	private class SignalOnSender implements ActionListener {
+	public class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
 				// & action
@@ -151,12 +151,12 @@ public class ButtonAnd extends Stuff {
 	}
 	private static Image[] texturesPressed = new Image[4];
 	private static Image[] texturesDepressed = new Image[4];
-	private int[][] controlledCellsList;// массив с координатами селлов на
+	protected int[][] controlledCellsList;// массив с координатами селлов на
 	private static File f2; // которые действует
 	// батон
-	private int controlledCellsAmount; // количество целлов на которые действует
+	protected int controlledCellsAmount; // количество целлов на которые действует
 										// батон
-	private ActionListener sender;
+	protected ActionListener sender;
 
 	private static Logger logger = Logger.getLogger("ButtonAnd");
 	static {

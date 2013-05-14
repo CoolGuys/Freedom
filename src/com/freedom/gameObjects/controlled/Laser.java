@@ -1,6 +1,7 @@
 package com.freedom.gameObjects.controlled;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -8,6 +9,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,12 +26,27 @@ public class Laser extends Stuff {
 	boolean ifActive;
 	String direction;
 	private BeamSender sender;
+	private ArrayList<Point> touchedCells = new ArrayList<Point>();
 
 	public Laser()
 	{
 		super(false, false, true, false);
 		ifActive = false;
 		sender = new BeamSender();
+	}
+
+	public Point[] getTouchedCells() {
+		return touchedCells.toArray(new Point[1]);
+	}
+
+	public void addTouchedCell(Point p) {
+		touchedCells.add(p);
+	}
+
+	public void untouchTouched() {
+		for (Point p : getTouchedCells())
+			if (p != null)
+				GameField.getInstance().cells[p.x][p.y].untouch(beamHead);
 	}
 
 	// метод для призмы
@@ -55,6 +72,7 @@ public class Laser extends Stuff {
 	}
 
 	public void rebuidBeam() {
+		untouchTouched();
 		this.beamHead.deleteBeam();
 		this.beamHead.buildBeam();
 	}
@@ -79,10 +97,11 @@ public class Laser extends Stuff {
 		if (!this.ifActive)
 			return false;
 		else {
+			untouchTouched();
 			this.ifActive = false;
 			GameField.getInstance().getDeathTicker()
 					.removeActionListener(sender);
-			
+
 			this.beamHead.deleteBeam();
 			chooseTexture();
 			return true;
@@ -114,7 +133,7 @@ public class Laser extends Stuff {
 			this.direction = "S";
 		chooseTexture();
 		GameScreen.getInstance().repaint();
-		//System.out.println("Laser direction: "+ this.direction); 
+		// System.out.println("Laser direction: "+ this.direction);
 		if (condition)
 			this.useOn();
 	}
@@ -125,8 +144,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOnN[1];
 				textureGreen = texturesOnN[2];
 				textureBlue = texturesOnN[3];
-			}
-			else if (this.direction.equals("S")) {
+			} else if (this.direction.equals("S")) {
 				textureRed = texturesOnS[1];
 				textureGreen = texturesOnS[2];
 				textureBlue = texturesOnS[3];
@@ -138,8 +156,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOnW[1];
 				textureGreen = texturesOnW[2];
 				textureBlue = texturesOnW[3];
-			}
-			else if (this.direction.equals("NW")) {
+			} else if (this.direction.equals("NW")) {
 				textureRed = texturesOnNW[1];
 				textureGreen = texturesOnNW[2];
 				textureBlue = texturesOnNW[3];
@@ -147,8 +164,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOnNE[1];
 				textureGreen = texturesOnNE[2];
 				textureBlue = texturesOnNE[3];
-			}
-			else if (this.direction.equals("SW")) {
+			} else if (this.direction.equals("SW")) {
 				textureRed = texturesOnSW[1];
 				textureGreen = texturesOnSW[2];
 				textureBlue = texturesOnSW[3];
@@ -162,8 +178,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOffN[1];
 				textureGreen = texturesOffN[2];
 				textureBlue = texturesOffN[3];
-			}
-			else if (this.direction.equals("S")) {
+			} else if (this.direction.equals("S")) {
 				textureRed = texturesOffS[1];
 				textureGreen = texturesOffS[2];
 				textureBlue = texturesOffS[3];
@@ -175,8 +190,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOffW[1];
 				textureGreen = texturesOffW[2];
 				textureBlue = texturesOffW[3];
-			}
-			else if (this.direction.equals("NW")) {
+			} else if (this.direction.equals("NW")) {
 				textureRed = texturesOffNW[1];
 				textureGreen = texturesOffNW[2];
 				textureBlue = texturesOffNW[3];
@@ -184,8 +198,7 @@ public class Laser extends Stuff {
 				textureRed = texturesOffNE[1];
 				textureGreen = texturesOffNE[2];
 				textureBlue = texturesOffNE[3];
-			}
-			else if (this.direction.equals("SW")) {
+			} else if (this.direction.equals("SW")) {
 				textureRed = texturesOffSW[1];
 				textureGreen = texturesOffSW[2];
 				textureBlue = texturesOffSW[3];
@@ -199,8 +212,7 @@ public class Laser extends Stuff {
 
 	private class BeamSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			Laser.this.beamHead.deleteBeam();
-			Laser.this.beamHead.buildBeam();
+			rebuidBeam();
 		}
 	}
 
@@ -257,7 +269,7 @@ public class Laser extends Stuff {
 						0, null);
 				texturesOnSW[i].getGraphics().drawImage(texturesOnDiag[i], 0,
 						0, null);
-				
+
 				double rotationRequired = Math.toRadians(90);
 				int locationX = getSize() / 2;
 				int locationY = getSize() / 2;
@@ -265,28 +277,26 @@ public class Laser extends Stuff {
 						rotationRequired, locationX, locationY);
 				AffineTransformOp op = new AffineTransformOp(tx,
 						AffineTransformOp.TYPE_BILINEAR);
-				texturesOnW[i]= op.filter(texturesOnS[i], null);
-				texturesOffW[i]= op.filter(texturesOffS[i], null);
-				texturesOffNW[i]=op.filter(texturesOffSW[i], null);
-				texturesOnNW[i]=op.filter(texturesOnSW[i], null);
+				texturesOnW[i] = op.filter(texturesOnS[i], null);
+				texturesOffW[i] = op.filter(texturesOffS[i], null);
+				texturesOffNW[i] = op.filter(texturesOffSW[i], null);
+				texturesOnNW[i] = op.filter(texturesOnSW[i], null);
 				rotationRequired = Math.toRadians(180);
-				tx = AffineTransform.getRotateInstance(
-						rotationRequired, locationX, locationY);
-				op = new AffineTransformOp(tx,
-						AffineTransformOp.TYPE_BILINEAR);
-				texturesOnN[i]= op.filter(texturesOnS[i], null);
-				texturesOffN[i]= op.filter(texturesOffS[i], null);
-				texturesOffNE[i]=op.filter(texturesOffSW[i], null);
-				texturesOnNE[i]=op.filter(texturesOnSW[i], null);
+				tx = AffineTransform.getRotateInstance(rotationRequired,
+						locationX, locationY);
+				op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+				texturesOnN[i] = op.filter(texturesOnS[i], null);
+				texturesOffN[i] = op.filter(texturesOffS[i], null);
+				texturesOffNE[i] = op.filter(texturesOffSW[i], null);
+				texturesOnNE[i] = op.filter(texturesOnSW[i], null);
 				rotationRequired = Math.toRadians(270);
-				tx = AffineTransform.getRotateInstance(
-						rotationRequired, locationX, locationY);
-				op = new AffineTransformOp(tx,
-						AffineTransformOp.TYPE_BILINEAR);
-				texturesOnE[i]= op.filter(texturesOnS[i], null);
-				texturesOffE[i]= op.filter(texturesOffS[i], null);
-				texturesOffSE[i]=op.filter(texturesOffSW[i], null);
-				texturesOnSE[i]=op.filter(texturesOnSW[i], null);
+				tx = AffineTransform.getRotateInstance(rotationRequired,
+						locationX, locationY);
+				op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+				texturesOnE[i] = op.filter(texturesOnS[i], null);
+				texturesOffE[i] = op.filter(texturesOffS[i], null);
+				texturesOffSE[i] = op.filter(texturesOffSW[i], null);
+				texturesOnSE[i] = op.filter(texturesOnSW[i], null);
 			}
 		} catch (IOException e) {
 			logger.warning("Laser texture was corrupted or deleted");

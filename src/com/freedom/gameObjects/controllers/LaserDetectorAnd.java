@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.model.GameField;
 
 public class LaserDetectorAnd extends ButtonAnd {
 
@@ -18,7 +19,11 @@ public class LaserDetectorAnd extends ButtonAnd {
 
 	@Override
 	public void touch(Stuff toucher) {
-		super.touch(toucher);
+		sender = new SignalOnSender();
+		for (int i = 0; i < controlledCellsAmount; i++)
+			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].counter++;
+
+		GameField.getInstance().getTicker().addActionListener(sender);
 		switch (toucher.getColor()) {
 		case RED:
 			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];
@@ -30,7 +35,7 @@ public class LaserDetectorAnd extends ButtonAnd {
 	}
 
 	public void untouch(Stuff toucher) {
-		super.touch(toucher);
+		super.untouch(toucher);
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
 	}
 
