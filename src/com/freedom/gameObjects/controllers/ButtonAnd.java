@@ -31,6 +31,18 @@ public class ButtonAnd extends Stuff {
 		textureBlue = texturesDepressed[3];
 
 	}
+	
+	//конструктор ТОЛЬКо для детектора
+	public ButtonAnd(boolean ifLaserDetector){
+		super(false, false, false, true);
+		super.x = x;
+		super.y = y;
+		controlledCellsList = new int[10][2];
+
+		textureRed = texturesDepressed[1];
+		textureGreen = texturesDepressed[2];
+		textureBlue = texturesDepressed[3];
+	}
 	@Override
 	public void untouch(Stuff element) {
 		textureRed = texturesDepressed[1];

@@ -64,6 +64,8 @@ public class Cell {
 	}
 
 	public boolean getIfAbsorb() {
+		if(this.contentAmount - 1<0)
+			System.gc();
 		return this.content[this.contentAmount - 1].getIfAbsorb();
 	}
 
@@ -215,7 +217,7 @@ public class Cell {
 	}
 
 	public void untouch(Stuff untoucher) {
-		for (int i = 0; i < this.contentAmount - 1; i++) {
+		for (int i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].ifCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}

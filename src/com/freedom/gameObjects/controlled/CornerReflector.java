@@ -1,13 +1,9 @@
 package com.freedom.gameObjects.controlled;
 
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.base.Stuff;
 
@@ -62,11 +58,7 @@ public class CornerReflector extends Laser {
 
 	static {
 		logger.setLevel(Level.WARNING);
-		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"));
-		} catch (IOException e) {
-			logger.warning("Laser texture was corrupted or deleted");
-		}
+		texture1 = null;
 	}
 
 	public CornerReflector() {
@@ -92,32 +84,6 @@ public class CornerReflector extends Laser {
 	public void untouch(Stuff element){
 		super.useOff();
 	}
-	
-	public void interract() {
-		boolean condition = super.useOff();
-		switch (this.direction) {
-		case "N":
-			this.direction = "NE";
-		case "S":
-			this.direction = "SW";
-		case "E":
-			this.direction = "SE";
-		case "W":
-			this.direction = "NW";
-
-		case "NW":
-			this.direction = "N";
-		case "NE":
-			this.direction = "E";
-		case "SW":
-			this.direction = "W";
-		case "SE":
-			this.direction = "S";
-		}
-		if(condition)
-			super.useOn();
-	}
-	
 	
 
 }

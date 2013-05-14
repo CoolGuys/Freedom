@@ -1,6 +1,7 @@
 package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,7 +10,6 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
-
 
 /**
  * 
@@ -23,13 +23,14 @@ public class Tile extends Stuff {
 	static {
 
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
 
 	public Tile()
 	{
@@ -48,6 +49,5 @@ public class Tile extends Stuff {
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.uncontrolled.Tile");
 	}
-	
 
 }

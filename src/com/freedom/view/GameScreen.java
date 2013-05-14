@@ -23,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
+import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
 import com.freedom.model.GameField;
@@ -38,10 +39,7 @@ public class GameScreen extends AbstractScreen {
 		this.createInputMap();
 		this.createMovementController();
 		setDoubleBuffered(true);
-
-		//setDebugGraphicsOptions(DebugGraphics.);
 		logger.setLevel(Level.WARNING);
-
 	}
 
 	public void prepareModel() {
@@ -54,8 +52,10 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("D"), "move.right");
 		imap.put(KeyStroke.getKeyStroke("A"), "move.left");
 		imap.put(KeyStroke.getKeyStroke("S"), "move.down");
-		imap.put(KeyStroke.getKeyStroke("U"), "interact");
+		imap.put(KeyStroke.getKeyStroke("U"), "take");
+		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
 		imap.put(KeyStroke.getKeyStroke("E"), "examine");
+		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
 		imap.put(KeyStroke.getKeyStroke("I"), "turn.up");
 		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
 		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
@@ -86,6 +86,7 @@ public class GameScreen extends AbstractScreen {
 		FineMovementAction turnLeft = new FineMovementAction("W");
 		FineMovementAction turnRight = new FineMovementAction("E");
 		PauseAction pause = new PauseAction();
+		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
 		BoxGiver boxGiver = new BoxGiver();
 		ExamineAction examine = new ExamineAction();
@@ -104,6 +105,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("move.left", moveLeft);
 		amap.put("move.right", moveRight);
 		amap.put("pause", pause);
+		amap.put("take", take);
 		amap.put("interact", interact);
 		amap.put("examine", examine);
 		amap.put("turn.up", turnUp);
@@ -120,7 +122,6 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
 		amap.put("give.box", boxGiver);
-
 	}
 
 	@Override
@@ -160,7 +161,7 @@ public class GameScreen extends AbstractScreen {
 		repaint();
 	}
 
-	public Point рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(Robot robot) {
+	public Point calculateDistanceFromRobotToScreenCenter(Robot robot) {
 		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
 				- robot.getTargetCellCoordinates(robot.getDirection()).x
 				* Robot.getSize();
@@ -170,23 +171,23 @@ public class GameScreen extends AbstractScreen {
 		return new Point(deltaX, deltaY);
 	}
 
-	public void центрироватьПоРоботуПоВертикали(Robot robot) {
+	public void centerByRobotVertically(Robot robot) {
 
 		setLocation(getX(), getY()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
+				+ calculateDistanceFromRobotToScreenCenter(robot).y);
 	}
 
-	public void центрироватьПоРоботуПоГоризонтали(Robot robot) {
+	public void centerByRobotHorisontally(Robot robot) {
 
 		setLocation(getX()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).x, getY());
+				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY());
 	}
 
-	public void центрироватьПоРоботу(Robot robot) {
+	public void centerByRobot(Robot robot) {
 
 		setLocation(getX()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).x, getY()
-				+ рассчитатьРасстояниеОтРоботаДоЦентраЭкрана(robot).y);
+				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY()
+				+ calculateDistanceFromRobotToScreenCenter(robot).y);
 	}
 
 	
@@ -253,8 +254,15 @@ public class GameScreen extends AbstractScreen {
 			logger.info("Paused");
 		}
 	}
+	
+	private class InteractAction extends AbstractAction{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().interact();
+		}
+	}
 
-	private class InteractAction extends AbstractAction {
+	private class TakeAction extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -265,17 +273,27 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 	
-
 	private class BoxGiver extends AbstractAction {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-				Robot r = GameField.getInstance().getRobot();
+			Robot r = GameField.getInstance().getRobot();
+			if (r.container[0] != null) {
+				if (r.container[0].getColor() == StuffColor.BLUE) {
+					r.container[0].setColour("Red");
+				}
+				else if (r.container[0].getColor() == StuffColor.RED){
+					r.container[0].setColour("Green");
+				}
+				else if (r.container[0].getColor() == StuffColor.GREEN) {
+					r.container[0].setColour("Blue");
+				}
+			} else {
 				r.setContainer(new Box());
 				r.container[0].setColour("Blue");
-				repaint();
-			
+			}
+			repaint();
+
 		}
 	}
 

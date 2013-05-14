@@ -83,7 +83,7 @@ public class LaserBeam extends Stuff {
 	}
 
 	private void setPicture(String direct) {
-		logger.warning(""+getColour());
+		logger.info(""+getColour());
 		if (direct.equals("N")) {
 			this.textureRed = texturesVertical[1];
 			this.textureGreen = texturesVertical[2];
@@ -160,13 +160,13 @@ public class LaserBeam extends Stuff {
 
 		else if (this.direction.equals("W")) {
 			this.direction = "E";
-			this.x = this.x - 1;
+			this.x = this.x + 1;
 			this.reduceDamage(1);
 		}
 
 		else if (this.direction.equals("E")) {
 			this.direction = "W";
-			this.x = this.x + 1;
+			this.x = this.x - 1;
 			this.reduceDamage(1);
 		}
 
@@ -501,7 +501,7 @@ public class LaserBeam extends Stuff {
 	/*
 	 * удалится все после этого элемента
 	 */
-	void deleteBeam() {
+	public void deleteBeam() {
 		LaserBeam buf = this;
 		Cell[][] cellBuf = GameField.getInstance().cells;
 		while (buf.next != null) {
@@ -510,7 +510,7 @@ public class LaserBeam extends Stuff {
 
 				/*GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
 						.getY()].deleteStuff(buf.prev.secondNext);*/
-				buf.secondNext.deleteBeam();		
+				buf.secondNext.deleteBeam();
 			}
 			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
 			// System.out.println(buf.getX() + " " + buf.getY() + );
@@ -518,11 +518,26 @@ public class LaserBeam extends Stuff {
 
 		}
 		//для антача последжняя итерация ручками
-		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().x].getIfAbsorb())
-			cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().x].untouch(buf);
+		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].getIfAbsorb()){
+			cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].untouch(this);
+		}
+		
+		if(cellBuf[buf.getTargetCellCoordinates().x][buf.getTargetCellCoordinates().y].getIfReflect()){
+
+			buf.next = new LaserBeam(this.direction,
+					this.getTargetCellCoordinates().x,
+					this.getTargetCellCoordinates().y, this.getDamage());
+			buf.next.prev=buf;
+			buf.next.reflect();
+			if(cellBuf[buf.next.getX()][buf.next.getY()].getIfAbsorb()){
+				cellBuf[buf.next.getX()][buf.next.getY()].untouch(buf);
+				cellBuf[buf.next.getX()][buf.next.getY()].deleteStuff(buf.next);
+			}
+			buf.next = null;
+		}
 		
 		if (buf.secondNext != null) {
-			buf.secondNext.deleteBeam();		
+			buf.secondNext.deleteBeam();	
 		}
 		cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
 		this.next = null;

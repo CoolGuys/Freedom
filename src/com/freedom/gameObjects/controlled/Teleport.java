@@ -16,18 +16,21 @@ import com.freedom.model.GameField;
 
 public class Teleport extends Stuff {
 
-	//TODO подумать на тему того, стоит ли запретить телепортацию объектов,
-	//если не позволяет сила
+	// TODO подумать на тему того, стоит ли запретить телепортацию объектов,
+	// если не позволяет сила
 	public Teleport()
 	{
 		super(false, true, false, false, 0, 1);
-		textureBlue=textureRed = textureOff;
+		textureRed = texturesOff[1];
+		textureGreen = texturesOff[2];
+		textureBlue = texturesOff[3];
+
 	}
 
 	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
-		//System.out.println("Teleport" +this.getColour());
+		// System.out.println("Teleport" +this.getColour());
 		this.xLeadTo = Integer.parseInt(obj.getAttribute("xLeadTo"));
 		this.yLeadTo = Integer.parseInt(obj.getAttribute("yLeadTo"));
 	}
@@ -47,8 +50,7 @@ public class Teleport extends Stuff {
 		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.getIfPassable())
 			return;
-		
-		
+
 		for (Stuff containedElement : element.container) {
 			if (containedElement != null) {
 				containedElement.x = xLeadTo;
@@ -66,7 +68,9 @@ public class Teleport extends Stuff {
 	@Override
 	public boolean useOff() {
 		if (this.on) {
-			textureRed = textureOff;
+			textureRed = texturesOff[1];
+			textureGreen = texturesOff[2];
+			textureBlue = texturesOff[3];
 			this.on = false;
 			return true;
 		}
@@ -77,20 +81,23 @@ public class Teleport extends Stuff {
 	@Override
 	public boolean useOn() {
 		if (!this.on) {
+			textureRed = texturesOn[1];
+			textureGreen = texturesOn[2];
+			textureBlue = texturesOn[3];
 			this.on = true;
-			textureRed = textureOn;
 			return true;
 		} else
 			return false;
 	}
-	
+
 	@Override
-	public boolean ifCoolEnough(Stuff element){
-		if(!super.ifCoolEnough(element) || this.getColour().equals(element.getColour()) )
+	public boolean ifCoolEnough(Stuff element) {
+		if (!super.ifCoolEnough(element)
+				|| this.getColour().equals(element.getColour()))
 			return true;
-		else return false;
+		else
+			return false;
 	}
-	
 
 	@Override
 	public void giveInfo() {
@@ -104,8 +111,8 @@ public class Teleport extends Stuff {
 		GameField.getInstance().getCells()[xLeadTo][yLeadTo].unhighlight();
 	}
 
-	private static Image textureOn;
-	private static Image textureOff;
+	private static Image texturesOn[] = new Image[4];
+	private static Image texturesOff[] = new Image[4];
 
 	private int xLeadTo;
 	private int yLeadTo;
@@ -124,16 +131,17 @@ public class Teleport extends Stuff {
 	static {
 		logger.setLevel(Level.WARNING);
 		try {
-			textureOn = ImageIO.read(
-					new File("Resource/Textures/TeleporterOn.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+			for (int i = 1; i <= 3; i++) {
+				texturesOn[4-i] = ImageIO
+						.read(new File("Resource/Textures/Teleport/On" + i
+								+ ".png")).getScaledInstance(getSize(),
+								getSize(), BufferedImage.SCALE_SMOOTH);
 
-			textureOff = ImageIO.read(
-					new File("Resource/Textures/TeleporterOff.png"))
-					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
-
+				texturesOff[4-i] = ImageIO.read(
+						new File("Resource/Textures/Teleport/Off" + i
+								+ ".png")).getScaledInstance(getSize(),
+						getSize(), BufferedImage.SCALE_SMOOTH);
+			}
 		} catch (IOException e) {
 			logger.warning("Teleport texture was corrupted or deleted");
 		}
