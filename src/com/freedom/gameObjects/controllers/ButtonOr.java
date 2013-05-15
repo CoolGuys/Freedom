@@ -33,6 +33,7 @@ public class ButtonOr extends Stuff {
 	
 	public ButtonOr(boolean ifLaserDetector){
 		super(false, false, false, true);
+		super.type=LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
