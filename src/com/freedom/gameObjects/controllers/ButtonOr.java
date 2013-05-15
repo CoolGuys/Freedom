@@ -48,6 +48,7 @@ public class ButtonOr extends Stuff {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
+		GameScreen.getInstance().repaint();
 	}
 	@Override
 	public void touch(Stuff element) {
@@ -94,7 +95,7 @@ public class ButtonOr extends Stuff {
 	public class SignalOnSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
-
+				
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
 					GameScreen
@@ -129,15 +130,15 @@ public class ButtonOr extends Stuff {
 	}
 	private static Image[] texturesPressed = new Image[4];
 	private static Image[] texturesDepressed = new Image[4];
-	private int[][] controlledCellsList;// массив с координатами селлов на
+	protected int[][] controlledCellsList;// массив с координатами селлов на
 										// которые действует
 	// батон
-	private int controlledCellsAmount; // количество целлов на которые действует
+	protected int controlledCellsAmount; // количество целлов на которые действует
 										// батон
 	protected ActionListener sender;
 	private static File f2;	
 
-	private static Logger logger = Logger.getLogger("ButtonAnd");
+	protected static Logger logger = Logger.getLogger("ButtonAnd");
 	static {
 		try {
 			for(int i=1; i<=3;i++) {

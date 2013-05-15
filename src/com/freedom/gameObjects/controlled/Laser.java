@@ -46,7 +46,11 @@ public class Laser extends Stuff {
 	public void untouchTouched() {
 		for (Point p : getTouchedCells())
 			if (p != null)
-				GameField.getInstance().cells[p.x][p.y].untouch(beamHead);
+				if (GameField.getInstance().cells[p.x][p.y].getTop()
+						.getIfAbsorb())
+					GameField.getInstance().cells[p.x][p.y].getTop().untouch(
+							beamHead);
+				touchedCells.clear();
 	}
 
 	// метод для призмы

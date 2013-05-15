@@ -308,7 +308,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="9" y="13" color="Blue">
 			<cels x="10" y="12" />
-		</obj><obj class="com.freedom.gameObjects.controllers.LaserDetectorOr" x="9" y="6" color="Red">
+		</obj>
+		<obj class="com.freedom.gameObjects.controllers.LaserDetectorOr" x="9" y="6" color="Red">
 			<cels x="10" y="12" />
 		</obj>
 		<obj class="com.freedom.gameObjects.controlled.Box" color="Red"

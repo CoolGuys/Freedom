@@ -36,29 +36,30 @@ public class ScreensHolder extends JLayeredPane {
 		LoadingScreen.getInstance().prepareModel();
 		LoadScreen.getInstance().prepareModel();
 		SaveScreen.getInstance().prepareModel();
-
-		currentScreen = StartScreen.getInstance();
 		addScreen(StartScreen.getInstance());
 
 	}
 
 	public void addScreen(AbstractScreen toAdd) {
-			lastScreen = currentScreen;
-			currentScreen = toAdd;
-			INSTANCE.add(toAdd);
-			toAdd.requestFocusInWindow();
-			INSTANCE.moveToFront(toAdd);
-			toAdd.activateModel();
-			INSTANCE.revalidate();
-			paintImmediately(getBounds());
+		lastScreen = currentScreen;
+		if (lastScreen != null)
+			lastScreen.deactivateModel();
+		currentScreen = toAdd;
+		INSTANCE.add(toAdd);
+		toAdd.requestFocusInWindow();
+		INSTANCE.moveToFront(toAdd);
+		toAdd.activateModel();
+		INSTANCE.revalidate();
+		paintImmediately(getBounds());
 	}
 
+	
 	public void removeScreen(AbstractScreen toRemove) {
 		toRemove.deactivateModel();
 		INSTANCE.remove(toRemove);
 		lastScreen.requestFocusInWindow();
 		INSTANCE.moveToFront(lastScreen);
-		currentScreen = lastScreen;
+		currentScreen = (AbstractScreen) getComponents()[getComponents().length-1];
 		lastScreen = toRemove;
 		currentScreen.activateModel();
 		INSTANCE.revalidate();
