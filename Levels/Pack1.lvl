@@ -637,7 +637,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="20" y="11">
 		</obj>
-		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="20" y="12">
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="20" y="12">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="20" y="13">
 		</obj>
@@ -1423,7 +1423,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Teleport" x="2" y="4" color="Red"
+		<obj class="com.freedom.gameObjects.controlled.Teleport" x="2" y="4" color="Blue"
 			xLeadTo="2" yLeadTo="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile2"
@@ -1696,11 +1696,11 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="7">
-			<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="13"
+		</obj>	
+		<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="13"
 				y="7" color="Blue">
 				<cels x="12" y="8" />
 				<cels x="2" y="4" />
-			</obj>
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="8">
 		</obj>
@@ -1712,8 +1712,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="2">
 		</obj>
-		<obj class="com.freedom.gameObjects.controllers.LevelExit" next="2"
-			x="14" xr="3" y="2" yr="3">
+		<obj class="com.freedom.gameObjects.controllers.LevelExit" next="5"
+			x="14" xr="2" y="2" yr="2">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="3">
 		</obj>
@@ -1759,4 +1759,472 @@
 		</robot>
 	</level>
 
+<level height="10" num="5" width="15">
+<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="2" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="2" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="3" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="3">
+</obj><obj class="com.freedom.gameObjects.controlled.NotTeleport" x="3" xLeadTo="8" y="3" yLeadTo="3" color = "Blue">	
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="8">
+</obj><obj class="com.freedom.gameObjects.controlled.NotTeleport" x="3" xLeadTo="11" y="8" yLeadTo="8" color = "Blue">	
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="3" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="8">
+</obj><obj class="com.freedom.gameObjects.controlled.NotTeleport" x="7" xLeadTo="2" y="8" yLeadTo="8" color = "Blue">	
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="8" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="3">
+</obj><obj class="com.freedom.gameObjects.controllers.ButtonOr" x="8" y="3" color="Red">
+<cels  x="9" y="8"/>	
+</obj><obj class="com.freedom.gameObjects.characters.PacmanBody" color="Red" rate="1000" x="8" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="8" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="8" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="8">
+</obj><obj class="com.freedom.gameObjects.controlled.NotDoor" x="9" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="3">	
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="7">
+</obj><obj class="com.freedom.gameObjects.controllers.ButtonOr" x="11" y="7" color="Blue">
+<cels x="14" y="3" />		
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="12" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="12" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="12" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="3">
+</obj><obj class="com.freedom.gameObjects.controlled.Laser" x="14" y="3" color="Blue" direction = "W">		
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="5">
+		<obj class="com.freedom.gameObjects.controllers.LevelExit" next="2"
+			x="14" xr="3" y="5" yr="3">
+		</obj>
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="10">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="1">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="2">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="3">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="4">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="5">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="6">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="7">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="8">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="9">
+</obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="10">
+</obj><robot dir="E" x="2" y="2">
+</robot></level>	
+
+	<level height="10" num="666" width="15">
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="1" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="2" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="2" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="3" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="3" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="3" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="4" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="4" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="5" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="7" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="7" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="8" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="8" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="8" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="9" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="9" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="12" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="12" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="12" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="13" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="13" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="14" y="10">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="1">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="2">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="3">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="4">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="5">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="6">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="7">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="8">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="9">
+		</obj>
+		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="10">
+		</obj>
+		<robot dir="E" x="3" y="3">
+		</robot>
+	</level>
 </levels>

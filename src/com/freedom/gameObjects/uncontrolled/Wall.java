@@ -16,9 +16,7 @@ import com.freedom.model.GameField;
 
 public class Wall extends Stuff {
 
-	
-	public Wall()
-	{
+	public Wall() {
 		super(false, false, true, false);
 		super.setExpConductive(false);
 	}
@@ -58,30 +56,36 @@ public class Wall extends Stuff {
 				} else
 					neighbourWalls[3] = true;
 
+		
+		
 		if (cells[x + 1][y + 1] != null)
 			if (neighbourWalls[0] && neighbourWalls[1]
 					&& cells[x + 1][y + 1].getContentAmount() != 0)
-				g.drawImage(textureSE, 0, 0, null);
+				if (!(cells[x + 1][y + 1].getTop() instanceof Wall))
+					g.drawImage(textureSE, 0, 0, null);
 
 		if (cells[x - 1][y + 1] != null)
 			if (neighbourWalls[1] && neighbourWalls[2]
 					&& cells[x - 1][y + 1].getContentAmount() != 0)
-				g.drawImage(textureSW, 0, 0, null);
+
+				if (!(cells[x - 1][y + 1].getTop() instanceof Wall))
+					g.drawImage(textureSW, 0, 0, null);
 
 		if (cells[x - 1][y - 1] != null)
 			if (neighbourWalls[2] && neighbourWalls[3]
 					&& cells[x - 1][y - 1].getContentAmount() != 0)
-				g.drawImage(textureNW, 0, 0, null);
+				if (!(cells[x - 1][y - 1].getTop() instanceof Wall))
+					g.drawImage(textureNW, 0, 0, null);
 
 		if (cells[x + 1][y - 1] != null)
 			if (neighbourWalls[3] && neighbourWalls[0]
 					&& cells[x + 1][y - 1].getContentAmount() != 0)
-				g.drawImage(textureNE, 0, 0, null);
+				if (!(cells[x + 1][y - 1].getTop() instanceof Wall))
+					g.drawImage(textureNE, 0, 0, null);
 
 		textureRed = finalTexture;
 		ready = true;
 	}
-	
 
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
@@ -90,10 +94,12 @@ public class Wall extends Stuff {
 	}
 
 	public void draw(Graphics g) {
-		if (!ready)
+//		if (!ready)
 			setTexture();
-		g.drawImage(textureRed, (int) (x * getSize()), (int) (y * getSize()), null);
+		g.drawImage(textureRed, (int) (x * getSize()), (int) (y * getSize()),
+				null);
 	}
+
 	private boolean ready;
 	private static Image textureN;
 	private static Image textureE;
@@ -140,6 +146,5 @@ public class Wall extends Stuff {
 			e.printStackTrace();
 		}
 	}
-
 
 }

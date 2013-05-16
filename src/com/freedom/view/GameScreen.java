@@ -1,17 +1,9 @@
 package com.freedom.view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +19,8 @@ import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
 import com.freedom.model.GameField;
+import com.freedom.utilities.interfai.HitPointDisplay;
+import com.freedom.utilities.interfai.InGameMessageDisplay;
 
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
@@ -133,7 +127,7 @@ public class GameScreen extends AbstractScreen {
 	public void activateModel() {
 		GameField.getInstance().activate();
 		ScreensHolder.getInstance().add(guiPane);
-		// ScreensHolder.getInstance().moveToFront(guiPane);
+		ScreensHolder.getInstance().moveToFront(guiPane);
 	}
 
 	public static GameScreen getInstance() {
@@ -339,80 +333,7 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
-	private class InGameMessageDisplay {
-		public void displayMessage(String message) {
-			adapt(message);
-			this.visible = true;
-		}
-
-		public void removeMessage() {
-			this.visible = false;
-			this.messageLines.clear();
-		}
-
-		public void adapt(String message) {
-			FontRenderContext context = getFontMetrics(messageFont)
-					.getFontRenderContext();
-			Rectangle2D bounds = messageFont.getStringBounds("A", context);
-			// logger.info(message);
-			int symbolsOnLine = (int) (this.width / bounds.getWidth());
-			Scanner in = new Scanner(message);
-			String buffer = "";
-
-			while (in.hasNext()) {
-				String nextWord = in.next();
-				if (buffer.length() + nextWord.length() + 1 > symbolsOnLine) {
-					messageLines.add(buffer);
-					buffer = "";
-				}
-				if (buffer.length() + nextWord.length() + 1 <= symbolsOnLine) {
-					buffer = buffer.concat(nextWord).concat(" ");
-				}
-			}
-			this.messageLines.add(buffer);
-			this.height = (int) (messageLines.size() * bounds.getHeight());
-			this.y = (int) (ScreensHolder.getInstance().getHeight() - height);
-			this.x = (int) (ScreensHolder.getInstance().getWidth() / 6.0);
-		}
-
-		public void draw(Graphics g) {
-			if (!visible)
-				return;
-			String[] toDisp = messageLines.toArray(new String[1]);
-			// logger.info(toDisp[0]);
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-					RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-
-			FontRenderContext context = g2.getFontRenderContext();
-			g2.setFont(messageFont);
-			g2.setColor(new Color(0, 0, 0, 0.5f));
-			Rectangle2D rect = new Rectangle(x,
-					(int) (y
-							- messageFont.getStringBounds("A", context)
-									.getHeight() + messageFont.getLineMetrics(
-							"A", context).getDescent()), width, height);
-			g2.fill(rect);
-
-			g2.setColor(Color.WHITE);
-			Rectangle2D bounds = messageFont.getStringBounds("A", context);
-			int i = 0;
-			for (String line : toDisp) {
-				g2.drawString(line, this.x, (int) (this.y + bounds.getHeight()
-						* i));
-				i++;
-			}
-		}
-
-		private int x, y;
-		private int width = (int) (ScreensHolder.getInstance().getWidth() * 2.0 / 3.0);
-		private int height;
-		private Font messageFont = new Font("Monospaced", Font.PLAIN,
-				LoadingScreen.getInstance().getHeight() / 30);
-		private ArrayList<String> messageLines = new ArrayList<String>();
-		private boolean visible;
-	}
-
+	
 	public class InGameGUIPane extends JLayeredPane {
 		public InGameGUIPane() {
 			this.setBounds(ScreensHolder.getInstance().getBounds());
@@ -422,7 +343,9 @@ public class GameScreen extends AbstractScreen {
 
 		public void paintComponent(Graphics g) {
 			msgDisplay.draw(g);
+			hpDisp.draw(g);
 		}
 
+		private HitPointDisplay hpDisp = new HitPointDisplay();
 	}
 }
