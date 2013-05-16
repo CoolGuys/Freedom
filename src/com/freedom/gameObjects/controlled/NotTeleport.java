@@ -40,7 +40,7 @@ public class NotTeleport extends Stuff {
 		super.loadToFile(obj);
 		obj.setAttribute("xLeadTo", String.valueOf((int) this.xLeadTo));
 		obj.setAttribute("yLeadTo", String.valueOf((int) this.yLeadTo));
-		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Teleport");
+		obj.setAttribute("class", "com.freedom.gameObjects.controlled.NotTeleport");
 	}
 
 	@Override
