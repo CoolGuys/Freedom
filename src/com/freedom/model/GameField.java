@@ -216,7 +216,7 @@ public class GameField {
 	}
 
 	public void draw(Graphics g) {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 40; i++) {
 			for (int x = 1; x < cells.length - 1; x++) {
 				for (int y = 1; y < cells[1].length - 1; y++) {
 					if (cells[x][y].getContent()[i] != null)
@@ -262,7 +262,7 @@ public class GameField {
 		/*
 		 * здесь надо придумать потом цвета - в общем, свободу попугаям
 		 */
-		private static Map<String,Integer> power;
+		public static Map<String,Integer> power;
 		static{
 			power = new HashMap<String,Integer>();
 			power.put("Red",1);

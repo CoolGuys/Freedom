@@ -23,11 +23,9 @@ import com.freedom.view.ScreensHolder;
 public class Robot extends Stuff implements Moveable {
 
 	private String direction;
-
-	volatile boolean isMoving;
 	private double step = 0.1;
 
-	public static int maxLives = 0;
+	public static int maxLives = 100;
 
 	private static Image textureN;
 	private static Image textureS;

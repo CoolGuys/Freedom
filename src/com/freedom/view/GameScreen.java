@@ -182,6 +182,7 @@ public class GameScreen extends AbstractScreen {
 		setLocation(getX()
 				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY()
 				+ calculateDistanceFromRobotToScreenCenter(robot).y);
+		ScreensHolder.getInstance().repaint();
 	}
 
 	

@@ -25,8 +25,9 @@ public class Laser extends Stuff {
 	LaserBeam beamHead;
 	boolean ifActive;
 	String direction;
-	private BeamSender sender;
+	protected BeamSender sender;
 	private ArrayList<Point> touchedCells = new ArrayList<Point>();
+	protected int laserDamage = 8;
 
 	public Laser()
 	{
@@ -56,7 +57,7 @@ public class Laser extends Stuff {
 	// метод для призмы
 	public Laser(boolean forReflector)
 	{
-		super(false, false, false, true);
+		super(true, false, false, true);
 		ifActive = false;
 		sender = new BeamSender();
 	}
@@ -87,7 +88,7 @@ public class Laser extends Stuff {
 		else {
 			this.ifActive = true;
 			this.beamHead = new LaserBeam(this.direction, this.getX(),
-					this.getY(), 8);
+					this.getY(), laserDamage);
 			this.beamHead.setSource(this);
 			GameField.getInstance().getDeathTicker().addActionListener(sender);
 
