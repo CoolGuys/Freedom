@@ -67,8 +67,8 @@ public class Stuff {
 	}
 
 	// if lives<=0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives) {
+	public Stuff(boolean pickable, boolean passable, boolean reflects,
+			boolean absorbs, int damage, int lives) {
 		this.pickable = pickable;
 		this.passable = passable;
 
@@ -77,8 +77,8 @@ public class Stuff {
 		else
 			this.damage = damage;
 
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
+		this.ifReflect = reflects;
+		this.ifAbsorb = absorbs;
 		this.setExpConductive(true);
 		damager = new DamageSender();
 		

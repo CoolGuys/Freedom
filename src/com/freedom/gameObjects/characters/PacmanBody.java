@@ -23,7 +23,6 @@ public class PacmanBody extends Stuff implements Moveable {
 	//
 	private boolean alive;
 	private int rate;
-	boolean isMoving;
 	private double step = 0.1;
 	private int picID;
 	private String direction;
@@ -129,7 +128,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			this.alive = false;
 			if (p != null)
 				this.p.alive = false;
-			super.lives+=100;
+			super.lives+=0;
 		}else{
 			super.die();
 		}
