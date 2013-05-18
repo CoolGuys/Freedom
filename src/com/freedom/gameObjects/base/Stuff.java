@@ -14,17 +14,18 @@ import org.w3c.dom.Element;
 
 import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class Stuff {
 
 	public enum StuffColor {
 		RED, GREEN, BLUE
 	}
-	
-	public enum LoadingType{
-		OBJ, OBJC, DNW; //simple object, object with cells, do not write;
+
+	public enum LoadingType {
+		OBJ, OBJC, DNW; // simple object, object with cells, do not write;
 	}
-	
+
 	protected LoadingType type = LoadingType.OBJ;
 	public double x;
 	public double y;
@@ -34,6 +35,7 @@ public class Stuff {
 	protected static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
 	protected int maxLives;
+	private int basicMaxLives;
 
 	private StuffColor color;
 
@@ -56,9 +58,9 @@ public class Stuff {
 	private DamageSender damager;
 	private int toHarm; // буферное поле для передачи урона
 	private Logger logger = Logger.getLogger("Stuff");
+	public volatile boolean isMoving;
 
-	public Stuff()
-	{
+	public Stuff() {
 		this.pickable = true;
 		this.passable = false;
 		this.damage = 0;
@@ -66,8 +68,7 @@ public class Stuff {
 
 	// if lives<=0 , we cannot destroy this stuff
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives)
-	{
+			boolean absorbable, int damage, int lives) {
 		this.pickable = pickable;
 		this.passable = passable;
 
@@ -80,7 +81,7 @@ public class Stuff {
 		this.ifAbsorb = absorbable;
 		this.setExpConductive(true);
 		damager = new DamageSender();
-		this.maxLives = this.lives;
+		
 
 		if (lives < 1) {
 			this.lives = 1;
@@ -89,11 +90,11 @@ public class Stuff {
 			this.lives = lives;
 			this.ifDestroyable = true;
 		}
+		this.basicMaxLives = this.lives;
 	}
 
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable)
-	{
+			boolean absorbable) {
 		this.ifReflect = reflectable;
 		this.ifAbsorb = absorbable;
 
@@ -105,6 +106,7 @@ public class Stuff {
 		this.lives = 10;
 		this.setExpConductive(true);
 		damager = new DamageSender();
+		this.basicMaxLives = this.lives;
 	}
 
 	public void setXY(double x, double y) {
@@ -114,28 +116,20 @@ public class Stuff {
 
 	// TODO пока в случае отсутствия цвета делает красным
 	public void readLvlFile(Element obj) {
-
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
-		String color = obj.getAttribute("color");
-
-		if (color.equalsIgnoreCase("Red") || color.equalsIgnoreCase(""))
-			this.color = StuffColor.RED;
-		if (color.equalsIgnoreCase("Green"))
-			this.color = StuffColor.GREEN;
-		if (color.equalsIgnoreCase("Blue"))
-			this.color = StuffColor.BLUE;
-
+		setColour(obj.getAttribute("color"));
+		this.lives = this.maxLives;
 	}
 
 	public boolean ifCoolEnough(Stuff element) {
 		return GameField.ifPowerfulEnough(element, this);
 	}
 
-	public LoadingType getLoadingType(){
+	public LoadingType getLoadingType() {
 		return this.type;
 	}
-	
+
 	public void itsAlive() {
 	}
 
@@ -159,8 +153,8 @@ public class Stuff {
 		return;
 	}
 
-	public void untouch(Stuff untouvher) {
-
+	public void untouch(Stuff untoucher) {
+		return;
 	}
 
 	public void interact(Stuff interactor) {
@@ -236,7 +230,7 @@ public class Stuff {
 	}
 
 	public void draw(Graphics g) {
-		
+
 		switch (getColor()) {
 		case RED: {
 			g.drawImage(textureRed, (int) (x * getSize()),
@@ -290,8 +284,10 @@ public class Stuff {
 	}
 
 	public void die() {
-		GameField.getInstance().cells[this.getX()][this.getY()]
-				.deleteStuff(this);
+		if (!isMoving)
+			isMoving=true;
+			GameField.getInstance().cells[this.getX()][this.getY()]
+					.deleteStuff(this);
 	}
 
 	// разовый урон
@@ -321,6 +317,7 @@ public class Stuff {
 		this.lives = this.lives - damage;
 		System.out.println(Stuff.this.lives + " Punched: "
 				+ this.getClass().toString());
+		ScreensHolder.getInstance().repaint();
 		return damage;
 	}
 
@@ -357,14 +354,17 @@ public class Stuff {
 		return "Red";
 	}
 
-	public void setColour(String s) {
-		if (s.equals("Red"))
-			color = StuffColor.RED;
-		else if (s.equals("Green"))
-			color = StuffColor.GREEN;
-		else if (s.equals("Blue"))
-			color = StuffColor.BLUE;
+	public void setColour(String color) {
 
+		if (color.equalsIgnoreCase("Red") || color.equalsIgnoreCase(""))
+			this.color = StuffColor.RED;
+		if (color.equalsIgnoreCase("Green"))
+			this.color = StuffColor.GREEN;
+		if (color.equalsIgnoreCase("Blue"))
+			this.color = StuffColor.BLUE;
+		
+		this.maxLives = this.basicMaxLives * GameField.getInstance().power.get(this.getColour());
 	}
+	
 
 }

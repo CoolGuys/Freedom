@@ -129,6 +129,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			this.alive = false;
 			if (p != null)
 				this.p.alive = false;
+			super.lives+=100;
 		}else{
 			super.die();
 		}

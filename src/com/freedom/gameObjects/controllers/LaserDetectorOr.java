@@ -18,8 +18,7 @@ import com.freedom.view.GameScreen;
 
 public class LaserDetectorOr extends ButtonOr {
 
-	public LaserDetectorOr()
-	{
+	public LaserDetectorOr() {
 		super(true);
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
 	}
@@ -31,12 +30,15 @@ public class LaserDetectorOr extends ButtonOr {
 			sendingSignal = true;
 		}
 		switch (toucher.getColor()) {
-		case RED:
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];
-		case GREEN:
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];
-		case BLUE:
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];
+		case RED: {
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];return;
+		}
+		case GREEN: {
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];return;
+		}
+		case BLUE: {
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];return;
+		}
 		}
 	}
 
@@ -64,7 +66,6 @@ public class LaserDetectorOr extends ButtonOr {
 				"com.freedom.gameObjects.controllers.LaserDetectorOr");
 	}
 
-
 	private static Image textureOff;
 	private static Image[] texturesOn = new Image[4];
 	private InertedCircuitBreaker breaker = new InertedCircuitBreaker();
@@ -88,8 +89,6 @@ public class LaserDetectorOr extends ButtonOr {
 			logger.warning("Laser detector texture was corrupted");
 		}
 	}
-
-
 
 	private class InertedCircuitBreaker implements ActionListener {
 		public void setToucher(Stuff c) {

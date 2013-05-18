@@ -15,6 +15,7 @@ public class Cell {
 	private int x;
 	private int y;
 	private int damage;
+	public final static int capacity=40;
 
 	private Stuff[] content;
 	private Stuff metaLevel;
@@ -44,7 +45,7 @@ public class Cell {
 		this.x = a;
 		this.y = b;
 		this.contentAmount = 0;
-		this.content = new Stuff[10];
+		this.content = new Stuff[capacity];
 		this.damage = 0;
 		this.counter = 0;
 		this.buttonsNumber = 0;
@@ -93,7 +94,7 @@ public class Cell {
 		// System.out.println("Add on "+ element.toString()+ ": " +
 		// contentAmount+" "+x+" "+y);
 
-		if (this.contentAmount == 10)
+		if (this.contentAmount == capacity)
 			return false;
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
@@ -110,7 +111,7 @@ public class Cell {
 		element.x = this.x;
 		element.y = this.y;
 		this.locked = false;
-		this.touch(element);
+		this.touchOnAdd(element);
 		return true;
 	}
 
@@ -120,7 +121,7 @@ public class Cell {
 		if (this.contentAmount == 0)
 			return null;
 
-		this.untouch(this.content[this.contentAmount - 1]);
+		this.untouchOnDelete(this.content[this.contentAmount - 1]);
 		Stuff buf;
 		this.contentAmount--;
 
@@ -144,7 +145,7 @@ public class Cell {
 
 		if (this.contentAmount == 0)
 			return false;
-		this.untouch(element);
+		this.untouchOnDelete(element);
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
 			if (this.content[i].equals(element))
@@ -209,15 +210,15 @@ public class Cell {
 
 	// Everything for robot:
 
-	public void touch(Stuff toucher) {
-		for (int i = 0; i < this.contentAmount - 1; i++) {
+	public void touchOnAdd(Stuff toucher) {
+		for (int i = 0; i < this.contentAmount-1; i++) {
 			if (this.content[i].ifCoolEnough(toucher))
 				this.content[i].touch(toucher);
 		}
 	}
 
-	public void untouch(Stuff untoucher) {
-		for (int i = 0; i < this.contentAmount; i++) {
+	public void untouchOnDelete(Stuff untoucher) {
+		for (int i = 0; i < this.contentAmount-1; i++) {
 			if (this.content[i].ifCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}
@@ -231,7 +232,7 @@ public class Cell {
 			if (this.content[i].getIfTakeable()) {
 				Stuff buf = this.content[i];
 				if (this.deleteStuff(buf))
-					return buf;
+					return buf;																
 			}
 		}
 		return null;
