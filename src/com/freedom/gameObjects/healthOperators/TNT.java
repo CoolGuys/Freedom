@@ -90,28 +90,28 @@ public class TNT extends Stuff implements Moveable {
 			ifExped[toWork.getX()][toWork.getY()] = true;
 
 			if (!ifExped[toWork.getX() - x + 1][toWork.getY() - y]) {
-				if (buf[toWork.getX() + 1][toWork.getY() ].getTop().isExpConductive()) {
+				if (buf[toWork.getX() + 1][toWork.getY() ].getTop().expConductive()) {
 					buf[toWork.getX() + 1][toWork.getY()].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()  + 1][toWork.getY()]);
 				}
 			}
 
 			if (!ifExped[toWork.getX() -x- 1][toWork.getY()-y]) {
-				if (buf[toWork.getX()- 1][toWork.getY()].getTop().isExpConductive()) {
+				if (buf[toWork.getX()- 1][toWork.getY()].getTop().expConductive()) {
 					buf[toWork.getX()- 1][toWork.getY()].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX() - 1][toWork.getY()]);
 				}
 			}
 
 			if (!ifExped[toWork.getX()-x][toWork.getY() -y + 1]) {
-				if (buf[toWork.getX()][toWork.getY() + 1].getTop().isExpConductive()) {
+				if (buf[toWork.getX()][toWork.getY() + 1].getTop().expConductive()) {
 					buf[toWork.getX()][toWork.getY() + 1].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()][toWork.getY() + 1]);
 				}
 			}
 
 			if (!ifExped[toWork.getX()-x][toWork.getY() -y- 1]) {
-				if (buf[toWork.getX()][toWork.getY() - 1].getTop().isExpConductive()) {
+				if (buf[toWork.getX()][toWork.getY() - 1].getTop().expConductive()) {
 					buf[toWork.getX()][toWork.getY() - 1].expBuf = toWork.expBuf - 1;
 					que.add(buf[toWork.getX()][toWork.getY() - 1]);
 				}

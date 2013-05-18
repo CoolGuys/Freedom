@@ -60,14 +60,14 @@ public class Cell {
 
 	}
 
-	public boolean getIfReflect() {
-		return this.content[this.contentAmount - 1].getIfReflect();
+	public boolean reflects() {
+		return this.content[this.contentAmount - 1].reflects();
 	}
 
-	public boolean getIfAbsorb() {
+	public boolean absorbs() {
 		if(this.contentAmount - 1<0)
 			System.gc();
-		return this.content[this.contentAmount - 1].getIfAbsorb();
+		return this.content[this.contentAmount - 1].absorbs();
 	}
 
 	public synchronized Stuff utilityRemove(Stuff toRemove) {
@@ -99,7 +99,7 @@ public class Cell {
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
-			if (!this.content[i].getIfPassable())
+			if (!this.content[i].passable())
 				return false;
 		}
 
@@ -229,7 +229,7 @@ public class Cell {
 	public Stuff takeObject() {
 
 		for (int i = this.contentAmount - 1; i >= 0; i--) {
-			if (this.content[i].getIfTakeable()) {
+			if (this.content[i].takeable()) {
 				Stuff buf = this.content[i];
 				if (this.deleteStuff(buf))
 					return buf;																
@@ -240,7 +240,7 @@ public class Cell {
 
 	public boolean ifCanPassThrough() {
 		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].getIfPassable())
+			if (!this.content[i].passable())
 				return false;
 		}
 		return true;
@@ -340,7 +340,7 @@ public class Cell {
 
 	public boolean getIfConductsExp() {
 		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].isExpConductive())
+			if (!this.content[i].expConductive())
 				return false;
 		}
 
