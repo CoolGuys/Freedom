@@ -9,12 +9,14 @@ import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
+import com.freedom.gameObjects.characters.Robot;
 import com.freedom.model.GameField;
 import com.freedom.view.LoadingScreen;
 
 public class HitPointDisplay {
 
 	public void draw(Graphics g) {
+
 		String message = GameField.getInstance().getRobot().getLives() + "";
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
@@ -33,11 +35,15 @@ public class HitPointDisplay {
 				(int) bounds.getHeight());
 		g2.fill(rect);
 
-		g2.setColor(Color.RED);
-		g2.drawString(message, this.x, this.y);
+
+		if(GameField.getInstance().getRobot().getLives()<Robot.maxLives/10)
+			g2.setColor(Color.RED);
+		else
+			g2.setColor(Color.WHITE);
+		g2.drawString("Durability: "+message, this.x, this.y);
 	}
 
 	private int x = 50, y = 50;
-	private Font messageFont = new Font("Monospaced", Font.PLAIN, LoadingScreen
+	private Font messageFont = new Font("Courier", Font.PLAIN, LoadingScreen
 			.getInstance().getHeight() / 30);
 }

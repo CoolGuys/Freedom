@@ -284,6 +284,7 @@ public class Stuff {
 	}
 
 	public void die() {
+		this.lives=0;
 		if (!isMoving)
 			isMoving=true;
 			GameField.getInstance().cells[this.getX()][this.getY()]
@@ -306,12 +307,13 @@ public class Stuff {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			logger.info("Interrupted while punched");
+			logger.warning("Interrupted while punched");
 		}
 
 		if (this.lives < damage) {
+			int lastLives = this.lives;
 			this.die();
-			return this.lives;
+			return lastLives;
 		}
 
 		this.lives = this.lives - damage;
