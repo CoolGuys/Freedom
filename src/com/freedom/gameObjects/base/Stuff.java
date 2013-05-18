@@ -363,7 +363,8 @@ public class Stuff {
 		if (color.equalsIgnoreCase("Blue"))
 			this.color = StuffColor.BLUE;
 		
-		this.maxLives = this.basicMaxLives * GameField.getInstance().power.get(this.getColour());
+		GameField.getInstance();
+		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
 	}
 	
 

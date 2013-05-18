@@ -1,5 +1,6 @@
 package com.freedom.gameObjects.controlled;
 
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,14 +19,15 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.view.GameScreen;
 
-public class CornerReflector extends Laser {
+public class Deflector extends Laser {
 
 	private static Image texture1;
 	private int toDeflect;
 
-	public CornerReflector() {
+	public Deflector()
+	{
 		super(true);
-		textureRed = texture1;
+		textureRed = textureBlue=textureGreen=texture1;
 		this.beamHead = new LaserBeam("N", this.getX(), this.getY(), 6);
 	}
 
@@ -81,9 +83,9 @@ public class CornerReflector extends Laser {
 		}
 
 		LaserBeam buf = (LaserBeam) element;// /dangerous!!!!
-		this.laserDamage = buf.getDamage() - 1;
 		if (!buf.getSource().equals(this.beamHead.getSource())) {
-			this.direction = CornerReflector.list.get(this.revolve(
+			this.laserDamage = buf.getDamage() - 1;
+			this.direction = Deflector.list.get(this.revolve(
 					list.indexOf(buf.direction), this.toDeflect));
 			super.useOn();
 			GameScreen.getInstance().repaint();
@@ -95,8 +97,11 @@ public class CornerReflector extends Laser {
 		if (!ifCoolEnough(toucher)) {
 			return;
 		}
-		breaker.setToucher(toucher);
-		inertion.restart();
+		LaserBeam buf = (LaserBeam) toucher;
+		if (!buf.getSource().equals(this.beamHead.getSource())) {
+			breaker.setToucher(toucher);
+			inertion.restart();
+		}
 	}
 
 	public void realUntouch(Stuff element) {
@@ -118,7 +123,6 @@ public class CornerReflector extends Laser {
 
 	@Override
 	public void interact(Stuff interactor) {
-
 		super.useOff();
 		this.toDeflect++;
 		if (this.toDeflect > 7)
@@ -140,13 +144,35 @@ public class CornerReflector extends Laser {
 				"com.freedom.gameObjects.controlled.CornerReflector");
 	}
 
+	@Override
+	public void draw(Graphics g) {
+
+		switch (getColor()) {
+		case RED: {
+			g.drawImage(textureRed, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+			return;
+		}
+		case GREEN: {
+			g.drawImage(textureGreen, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+			return;
+		}
+		case BLUE:
+			g.drawImage(textureBlue, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+
+		}
+	}
+
+	private Image textureRed, textureGreen, textureBlue;
 	private InertedCircuitBreaker breaker = new InertedCircuitBreaker();
-	private Timer inertion = new Timer(500, breaker);
+	private Timer inertion = new Timer(200, breaker);
 	private static Logger logger = Logger.getLogger("Laser");
 
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Tile2.png"))
+			texture1 = ImageIO.read(new File("Resource/Textures/Deflector/NW.png"))
 					.getScaledInstance(getSize(), getSize(),
 							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
@@ -154,7 +180,6 @@ public class CornerReflector extends Laser {
 			e.printStackTrace();
 		}
 		logger.setLevel(Level.WARNING);
-		texture1 = null;
 		list.add("N");
 		list.add("NE");
 		list.add("E");
