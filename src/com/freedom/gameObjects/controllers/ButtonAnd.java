@@ -14,7 +14,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import com.freedom.gameObjects.base.Stuff;
-import com.freedom.gameObjects.base.Stuff.LoadingType;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
 import com.freedom.view.GameScreen;
