@@ -164,7 +164,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	public boolean canGo() {
 		if (GameField.getInstance().cells[this
 				.getTargetCellCoordinates(direction).x][this
-				.getTargetCellCoordinates(direction).y].ifCanPassThrough())
+				.getTargetCellCoordinates(direction).y].passable())
 			return true;
 		return false;
 	}

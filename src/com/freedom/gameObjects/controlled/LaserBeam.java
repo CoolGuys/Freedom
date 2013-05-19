@@ -203,7 +203,7 @@ public class LaserBeam extends Stuff {
 					source.addTouchedCell(new Point(this.getX()-1, this.getY()-1));
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() - 1]
-							.dealDamageToContent((int) Math.ceil(this
+							.punchContent((int) Math.ceil(this
 									.getDamage() / 2.0) - 1);
 					// this.prev.secondNext = null;
 					// return;
@@ -261,7 +261,7 @@ public class LaserBeam extends Stuff {
 					source.addTouchedCell(new Point(this.getX()+1, this.getY()-1));
 
 					GameField.getInstance().cells[this.getX() + 1][this.getY() - 1]
-							.dealDamageToContent((int) Math.ceil(this
+							.punchContent((int) Math.ceil(this
 									.getDamage() / 2.0) - 1);
 					// this.prev.secondNext = null;
 					// return;
@@ -319,7 +319,7 @@ public class LaserBeam extends Stuff {
 					source.addTouchedCell(new Point(this.getX()-1, this.getY()+1));
 
 					GameField.getInstance().cells[this.getX() - 1][this.getY() + 1]
-							.dealDamageToContent((int) Math.ceil(this
+							.punchContent((int) Math.ceil(this
 									.getDamage() / 2.0) - 1);
 					// this.prev.secondNext = null;
 					// return;
@@ -374,7 +374,7 @@ public class LaserBeam extends Stuff {
 					source.addTouchedCell(new Point(this.getX()+1, this.getY()+1));
 
 					GameField.getInstance().cells[this.getX() + 1][this.getY() + 1]
-							.dealDamageToContent((int) Math.ceil(this
+							.punchContent((int) Math.ceil(this
 									.getDamage() / 2.0) - 1);
 					// this.prev.secondNext = null;
 					// return;
@@ -448,7 +448,7 @@ public class LaserBeam extends Stuff {
 			this.source.addTouchedCell(getTargetCellCoordinates());
 
 			buf[this.getTargetCellCoordinates().x][this
-					.getTargetCellCoordinates().y].dealDamageToContent(this
+					.getTargetCellCoordinates().y].punchContent(this
 					.getDamage());
 			// this.next.reduceDamage(absorbReduce);
 		}
@@ -475,7 +475,7 @@ public class LaserBeam extends Stuff {
 				source.addTouchedCell(new Point(this.next.getX(), this.next.getY()));
 				
 				buf[this.next.getX()][this.next.getY()]
-						.dealDamageToContent(this.getDamage());
+						.punchContent(this.getDamage());
 				this.next = null;
 				return;
 			} else {

@@ -132,7 +132,7 @@ public class ButtonAnd extends Stuff {
 			for (int i = 0; i < controlledCellsAmount; i++) {
 				// & action
 				if (!GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.ifCanBePressed())
+						.allConnectedButtonsOn())
 					continue;
 				//
 
