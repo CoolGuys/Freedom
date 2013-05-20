@@ -21,7 +21,7 @@ public class ColourChanger extends Stuff{
 	//TODO переделать, если будем убивать "в глубину"
 	public void interact(Stuff interactor){
 		interactor.setColour(this.getColour());
-		if(GameField.getInstance().getRobot().container[0].equals(this))
+		if(GameField.getInstance().getRobot().container[0] == this)
 			GameField.getInstance().getRobot().container[0] = null;
 		else this.die();
 	}

@@ -22,7 +22,7 @@ import com.freedom.view.ScreensHolder;
 
 public class Robot extends Stuff implements Moveable {
 
-	private String direction;
+	protected String direction;
 	private double step = 0.1;
 
 	public static int maxLives = 100;
@@ -62,6 +62,7 @@ public class Robot extends Stuff implements Moveable {
 		super.x = posX;
 		super.y = posY;
 
+	//TODO Ушаков, залей запись цвета!
 		this.setColour("Blue");
 		this.direction = direction;
 		this.container[0] = c;
@@ -326,7 +327,7 @@ public class Robot extends Stuff implements Moveable {
 	public void die() {
 		this.lives=0;
 		System.out.println("You are dead, idiot!");
-		//System.exit(10);
+		//TODO обработать смерть
 		super.die();
 	}
 

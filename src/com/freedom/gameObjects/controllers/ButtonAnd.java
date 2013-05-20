@@ -13,6 +13,7 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
@@ -176,6 +177,13 @@ public class ButtonAnd extends Stuff {
 		} catch (IOException e) {
 			logger.warning("Textures or sound corrupted");
 		}
+	}
+	
+	//вставляет новый элемент в контрольный список
+	public void setControlled(Cell element) {
+		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
+		this.controlledCellsList[controlledCellsAmount][1] = element.getY();
+		this.controlledCellsAmount++;
 	}
 
 }
