@@ -13,6 +13,7 @@ import javax.swing.Timer;
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.utilities.game.Loader;
 import com.freedom.view.GameScreen;
@@ -146,6 +147,8 @@ public class GameField {
 		if (canTakeBuf) {
 			robot.emptyContainer();
 		}
+		int liv = this.robot.getLives();
+		StuffColor col = this.robot.color;
 		Loader.lvlToSv(previousLevelId, this.pathToSave);
 		Loader.readLvl(nextLevelId, this.pathToSave);
 		if (canTakeBuf) {
@@ -174,6 +177,8 @@ public class GameField {
 		} catch (Exception E) {
 
 		}
+		this.robot.color=col;
+		this.robot.setLives(liv);
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);

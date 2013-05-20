@@ -182,6 +182,7 @@ public class Loader {
 						"dir",
 						String.valueOf(GameField.getInstance().getRobot()
 								.getDirection()));
+				GameField.getInstance().getRobot().loadToFile(robo);
 				robo.setTextContent("\n");
 				if (!GameField.getInstance().getRobot().getIfEmpty()) {
 					Element RoboObj = doc.createElement("objr");
@@ -322,7 +323,7 @@ public class Loader {
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"), null,
 											Robot.maxLives));
-							//TODO Ушаков, запили сохранение жизней при смене уровня. 
+							GameField.getInstance().getRobot().readLvlFile(obj);
 						} else {
 							Element roboobj = (Element) robostuff.item(0);
 							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
@@ -338,6 +339,7 @@ public class Loader {
 											obj.getAttribute("dir"),
 											((Stuff) newstuff), Robot.maxLives));
 							GameField.getInstance().getRobot().getContent().setXY(GameField.getInstance().getRobot().getX(), GameField.getInstance().getRobot().getY());
+							GameField.getInstance().getRobot().readLvlFile(obj);
 						}
 					}
 					lsm.setProgressPercent(100);

@@ -61,8 +61,6 @@ public class Robot extends Stuff implements Moveable {
 		super.type=LoadingType.DNW;
 		super.x = posX;
 		super.y = posY;
-
-	//TODO Ушаков, залей запись цвета!
 		this.setColour("Blue");
 		this.direction = direction;
 		this.container[0] = c;

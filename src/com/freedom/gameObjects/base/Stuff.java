@@ -37,7 +37,7 @@ public class Stuff {
 	protected int maxLives;
 	private int basicMaxLives;
 
-	private StuffColor color;
+	public StuffColor color;
 
 	protected boolean pickable;
 	protected boolean passable;
@@ -118,9 +118,18 @@ public class Stuff {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
 		setColour(obj.getAttribute("color"));
-		this.lives = this.maxLives;
+		String str = obj.getAttribute("lives");
+		if (!str.equals("")) {
+			this.lives = Integer.parseInt(str);
+		} else {
+			this.lives = this.maxLives;
+		}
 	}
 
+	public void setLives(int liv){
+		this.lives=liv;
+	}
+	
 	public boolean ifCoolEnough(Stuff element) {
 		return GameField.ifPowerfulEnough(element, this);
 	}
@@ -137,6 +146,7 @@ public class Stuff {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("color", String.valueOf(this.color));
+		obj.setAttribute("lives", String.valueOf(this.lives));
 	}
 
 	// Action methods
