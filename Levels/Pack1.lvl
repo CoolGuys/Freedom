@@ -145,6 +145,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="5">
 		</obj>
+		<obj class="com.freedom.gameObjects.healthOperators.ColourChanger" x="5" y="5">
+		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="6">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="5" y="7">

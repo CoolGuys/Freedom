@@ -1,26 +1,21 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-
 import javax.imageio.ImageIO;
-
 import org.w3c.dom.Element;
-
 import com.freedom.gameObjects.base.Cell;
-import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
 
-public class TNT extends Stuff implements Moveable {
+public class TNT extends Stuff {
 
-	private int expDamage = 10;
+	private int expDamage = 15;
 	private static Image texture1;
 
 	static {
@@ -33,8 +28,8 @@ public class TNT extends Stuff implements Moveable {
 		}
 	}
 
-	@SuppressWarnings("unused")
-	private String direction;
+	/*@SuppressWarnings("unused")
+	private String direction;*/
 
 	public TNT() {
 		super(true, false, false, true, 0, 1);
@@ -49,12 +44,7 @@ public class TNT extends Stuff implements Moveable {
 	/*
 	 * здесь мы его взрываем. считаем, что в начальной клетке создаем волну, она
 	 * передает ее соседям, уменьшая дамаг на 1.
-	 * "таймер" - здесь. взрыв инициируется, когда робот кладет динамит на
-	 * пол
-	 */
-
-	/*
-	 * убрать поле ifexped, заменить на ручками сделанный буфер
+	 * "таймер" - здесь. взрыв инициируется interactом
 	 */
 	private void activationProcess() {
 		Cell[][] buf = GameField.getInstance().getCells();
@@ -67,9 +57,6 @@ public class TNT extends Stuff implements Moveable {
 				ifExped[i][j] = false;
 			}
 		}
-		
-		
-		
 
 		buf[this.getX()][this.getY()].expBuf = this.expDamage;
 		buf[this.getX()][this.getY()].deleteStuff(this);
@@ -147,60 +134,13 @@ public class TNT extends Stuff implements Moveable {
 	}
 
 	
-	
-	/*
-	 * Поправить этот метод!!!!!!
-	 */
-	public void move(String direction) {
-		double step = this.expDamage
-				* GameField.getInstance().getRobot().getStep();
-		if (direction.equals("N"))
-			y -= step;
-		else if (direction.equals("S"))
-			y += step;
-		else if (direction.equals("E"))
-			x += step;
-		else
-			x -= step;
-	}
-	
 	@Override
 	public int punch(int damage){
 		this.activationProcess();
 		return this.maxLives;
 	}
 
-	@Override
-	public boolean checkIfBeingMoved() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void tellIfBeingMoved(boolean isMoved) {
-		// TODO Auto-generated method stub
-
-	}
-
-
-
-	@Override
-	public double getStep() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public boolean canGo() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public Point getTargetCellCoordinates(String direction) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	public void recalibrate() {
 		x = Math.round(x);
@@ -211,9 +151,4 @@ public class TNT extends Stuff implements Moveable {
 		container[0].y=Math.round(container[0].y);
 	}
 
-	@Override
-	public void setDirection(String direction) {
-		// TODO Auto-generated method stub
-		
-	}
 }

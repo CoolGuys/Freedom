@@ -26,7 +26,7 @@ public class Stuff {
 		OBJ, OBJC, DNW; // simple object, object with cells, do not write;
 	}
 
-	protected LoadingType type = LoadingType.OBJ;
+	public LoadingType type = LoadingType.OBJ;
 	public double x;
 	public double y;
 	protected Image textureRed;
@@ -84,7 +84,6 @@ public class Stuff {
 		this.setExpConductive(true);
 		damager = new DamageSender();
 		
-
 		if (lives < 1) {
 			this.lives = 1;
 			this.destroyable = false;
@@ -317,8 +316,6 @@ public class Stuff {
 		}
 
 		this.lives = this.lives - damage;
-		System.out.println(Stuff.this.lives + " Punched: "
-				+ this.getClass().toString());
 		ScreensHolder.getInstance().repaint();
 		return damage;
 	}
@@ -367,6 +364,10 @@ public class Stuff {
 		
 		GameField.getInstance();
 		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
+	}
+
+	public void setControlled(Cell element) {
+		return;
 	}
 	
 
