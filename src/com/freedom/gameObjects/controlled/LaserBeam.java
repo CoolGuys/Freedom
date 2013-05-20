@@ -534,5 +534,15 @@ public class LaserBeam extends Stuff {
 	public Laser getSource() {
 		return this.source;
 	}
+	
+	@Override
+	public boolean absorbs(Stuff element) {
+		return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
 
 }
