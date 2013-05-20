@@ -66,6 +66,10 @@ public class GLabel {
 		switch (disposition) {
 		case CENTER: 
 			center();
+		case LEFT_BOTTOM_CORNER:
+			break;
+		default:
+			break;
 		}
 		SaveScreen.getInstance().repaint();
 	}
