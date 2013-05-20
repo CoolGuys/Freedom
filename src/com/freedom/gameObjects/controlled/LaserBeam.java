@@ -190,7 +190,7 @@ public class LaserBeam extends Stuff {
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
-							.getY()].add(this.prev.secondNext);
+							.getY()].utilityAdd(this.prev.secondNext);
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
@@ -248,7 +248,7 @@ public class LaserBeam extends Stuff {
 
 					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
-							.getY()].add(this.prev.secondNext);
+							.getY()].utilityAdd(this.prev.secondNext);
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
@@ -306,7 +306,7 @@ public class LaserBeam extends Stuff {
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
-							.getY()].add(this.prev.secondNext);
+							.getY()].utilityAdd(this.prev.secondNext);
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
@@ -361,7 +361,7 @@ public class LaserBeam extends Stuff {
 							(int) Math.ceil(this.getDamage() / 2.0) - 1);
 					this.prev.secondNext.setSource(this.source);
 					GameField.getInstance().cells[this.prev.secondNext.getX()][this.prev.secondNext
-							.getY()].add(this.prev.secondNext);
+							.getY()].utilityAdd(this.prev.secondNext);
 					this.prev.secondNext.prev = this.prev;
 					this.prev.secondNext.buildBeam();
 				}
@@ -479,7 +479,7 @@ public class LaserBeam extends Stuff {
 				this.next = null;
 				return;
 			} else {
-				buf[this.next.getX()][this.next.getY()].add(this.next);
+				buf[this.next.getX()][this.next.getY()].utilityAdd(this.next);
 				this.next.buildBeam();
 			}
 		} else {
@@ -488,7 +488,7 @@ public class LaserBeam extends Stuff {
 					this.getTargetCellCoordinates().y, this.getDamage());
 			this.next.setSource(this.source);
 			this.next.prev = this;
-			buf[this.next.getX()][this.next.getY()].add(this.next);
+			buf[this.next.getX()][this.next.getY()].utilityAdd(this.next);
 
 			this.next.buildBeam();
 		}
@@ -536,10 +536,10 @@ public class LaserBeam extends Stuff {
 	}
 	
 	@Override
-	public boolean absorbs(Stuff element) {
+	public boolean absorbs(Stuff element){
 		return false;
 	}
-
+	
 	@Override
 	public boolean reflects(Stuff element) {
 		return false;
