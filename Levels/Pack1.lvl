@@ -347,8 +347,8 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="10" y="12">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Laser" x="10"
-			y="12" direction="W">
+		<obj class="com.freedom.gameObjects.controlled.Door" x="10"
+			y="12">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="10" y="13">
 		</obj>
@@ -524,7 +524,7 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="17" y="14">
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonAnd" x="17"
-			y="12" color="Blue">
+			y="12" color="Red">
 			<cels x="21" y="14" />
 			<cels x="22" y="15" />
 		</obj>
@@ -737,7 +737,7 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="22" y="15">
 		</obj>
 		<obj class="com.freedom.gameObjects.controlled.Teleport" x="22" y="15"
-			xLeadTo="24" yLeadTo="13">
+			xLeadTo="24" yLeadTo="13" color="Blue">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="22" y="16">
 		</obj>
@@ -1004,16 +1004,16 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="29" y="16">
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonAnd" x="17"
-			y="16" color="Blue">
+			y="16" color="Red">
 			<cels x="21" y="14" />
 			<cels x="22" y="15" />
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="18"
-			y="13" color="Blue">
+			y="13" color="Red">
 			<cels x="19" y="13" />
 		</obj>
 		<obj class="com.freedom.gameObjects.controllers.ButtonOr" x="18"
-			y="15" color="Blue">
+			y="15" color="Red">
 			<cels x="19" y="15" />
 		</obj>
 		<obj class="com.freedom.gameObjects.controlled.Box" color="Red" x="20"

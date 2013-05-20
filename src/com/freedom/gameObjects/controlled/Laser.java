@@ -47,11 +47,10 @@ public class Laser extends Stuff {
 	public void untouchTouched() {
 		for (Point p : getTouchedCells())
 			if (p != null)
-				if (GameField.getInstance().cells[p.x][p.y].getTop()
-						.absorbs())
+				if (GameField.getInstance().cells[p.x][p.y].getTop().absorbs())
 					GameField.getInstance().cells[p.x][p.y].getTop().untouch(
 							beamHead);
-				touchedCells.clear();
+		touchedCells.clear();
 	}
 
 	// метод для призмы
@@ -217,7 +216,8 @@ public class Laser extends Stuff {
 
 	private class BeamSender implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			rebuidBeam();
+			if (ifActive)
+				rebuidBeam();
 		}
 	}
 
