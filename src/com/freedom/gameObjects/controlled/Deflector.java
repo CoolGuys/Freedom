@@ -70,7 +70,7 @@ public class Deflector extends Laser {
 	}
 
 	@Override
-	public boolean ifCoolEnough(Stuff element) {
+	public boolean isCoolEnough(Stuff element) {
 		if (this.getColor() == element.getColor())
 			return true;
 		else
@@ -78,7 +78,7 @@ public class Deflector extends Laser {
 	}
 
 	public void touch(Stuff element) {
-		if (!ifCoolEnough(element) || ifActive) {
+		if (!isCoolEnough(element) || ifActive) {
 			return;
 		}
 
@@ -94,7 +94,7 @@ public class Deflector extends Laser {
 
 	@Override
 	public void untouch(Stuff toucher) {
-		if (!ifCoolEnough(toucher)) {
+		if (!isCoolEnough(toucher)) {
 			return;
 		}
 		LaserBeam buf = (LaserBeam) toucher;

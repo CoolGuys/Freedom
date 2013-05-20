@@ -36,6 +36,7 @@ public class ScreensHolder extends JLayeredPane {
 		LoadingScreen.getInstance().prepareModel();
 		LoadScreen.getInstance().prepareModel();
 		SaveScreen.getInstance().prepareModel();
+		EditorSettingsScreen.getInstance().prepareModel();
 		addScreen(StartScreen.getInstance());
 
 	}

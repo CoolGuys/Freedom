@@ -270,7 +270,7 @@ public class GameField {
 			power.put("Blue",3);
 		}
 		
-		public static boolean ifPowerfulEnough(Stuff agent, Stuff object){
+		public static boolean isCoolEnough(Stuff agent, Stuff object){
 			if(power.get(agent.getColour())>=power.get(object.getColour()))
 				return true;
 			return false;

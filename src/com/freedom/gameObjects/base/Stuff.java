@@ -64,6 +64,7 @@ public class Stuff {
 		this.pickable = true;
 		this.passable = false;
 		this.damage = 0;
+		this.color = StuffColor.RED;
 	}
 
 	// if lives<=0 , we cannot destroy this stuff
@@ -71,6 +72,7 @@ public class Stuff {
 			boolean absorbs, int damage, int lives) {
 		this.pickable = pickable;
 		this.passable = passable;
+		this.color = StuffColor.RED;
 
 		if (damage < 0)
 			this.damage = 0;
@@ -93,10 +95,11 @@ public class Stuff {
 		this.basicMaxLives = this.lives;
 	}
 
-	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable) {
-		this.reflectsLaserBeam = reflectable;
-		this.absorbsLaserBeam = absorbable;
+	public Stuff(boolean pickable, boolean passable, boolean reflects,
+			boolean absorbs) {
+		this.reflectsLaserBeam = reflects;
+		this.absorbsLaserBeam = absorbs;
+		this.color = StuffColor.RED;
 
 		this.pickable = pickable;
 		this.passable = passable;
@@ -122,8 +125,8 @@ public class Stuff {
 		this.lives = this.maxLives;
 	}
 
-	public boolean ifCoolEnough(Stuff element) {
-		return GameField.ifPowerfulEnough(element, this);
+	public boolean isCoolEnough(Stuff element) {
+		return GameField.isCoolEnough(element, this);
 	}
 
 	public LoadingType getLoadingType() {

@@ -24,7 +24,7 @@ public class SaveScreenModel {
 
 	private SaveScreenModel()
 	{
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.WARNING);
 	}
 
 	public static SaveScreenModel getInstance() {

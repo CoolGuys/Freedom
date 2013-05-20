@@ -18,7 +18,7 @@ public class LoadScreenModel {
 
 	private LoadScreenModel()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.WARNING);
 	}
 
 	public void addEntries() {
@@ -40,10 +40,21 @@ public class LoadScreenModel {
 								LoadScreen.getInstance().getWidth(),
 								(int) (ScreensHolder.getInstance().getHeight() * (1 + 1f / 6f * counter)));
 		} catch (IOException e) {
-			logger.warning("Something bad while opening directory");
-			System.exit(-1);
+			createSavesDirectory();
 		}
 
+	}
+	
+	private void createSavesDirectory() {
+		Path dir = Paths.get(listedDirectory);
+		try {
+			Files.createDirectory(dir);
+		} catch (IOException e) {
+			logger.warning("Something bad while creating initial or something else directory "+e.getLocalizedMessage());
+			System.exit(-1);
+		}
+		
+		addEntries();
 	}
 
 	public static LoadScreenModel getInstance() {

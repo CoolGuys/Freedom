@@ -20,7 +20,7 @@ public class SaveScreen extends AbstractScreen {
 
 	private SaveScreen()
 	{
-		logger.setLevel(Level.OFF);
+		logger.setLevel(Level.WARNING);
 
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());

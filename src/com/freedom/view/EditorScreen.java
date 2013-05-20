@@ -2,10 +2,8 @@ package com.freedom.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -18,14 +16,19 @@ import javax.swing.KeyStroke;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
+import com.freedom.gameObjects.controlled.Door;
+import com.freedom.gameObjects.controlled.Teleport;
+import com.freedom.gameObjects.controllers.ButtonAnd;
+import com.freedom.gameObjects.controllers.ButtonOr;
+import com.freedom.gameObjects.healthOperators.TNT;
+import com.freedom.gameObjects.uncontrolled.Pit;
+import com.freedom.gameObjects.uncontrolled.Tile;
 import com.freedom.model.GameField;
 import com.freedom.utilities.interfai.HitPointDisplay;
-import com.freedom.utilities.interfai.InGameMessageDisplay;
 
 @SuppressWarnings("serial")
-public class GameScreen extends AbstractScreen {
-
-	protected GameScreen() {
+public class EditorScreen extends GameScreen {
+	private EditorScreen() {
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
@@ -34,10 +37,6 @@ public class GameScreen extends AbstractScreen {
 		this.createMovementController();
 		setDoubleBuffered(true);
 		logger.setLevel(Level.WARNING);
-	}
-
-	public void prepareModel() {
-		GameField.getInstance().setCellSize(scale);
 	}
 
 	public void createInputMap() {
@@ -65,8 +64,19 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
-		
+
 		imap.put(KeyStroke.getKeyStroke("B"), "give.box");
+
+		imap.put(KeyStroke.getKeyStroke("1"), "give.wall");
+		imap.put(KeyStroke.getKeyStroke("2"), "give.tile");
+		imap.put(KeyStroke.getKeyStroke("3"), "give.pit");
+		imap.put(KeyStroke.getKeyStroke("4"), "give.tnt");
+		imap.put(KeyStroke.getKeyStroke("5"), "give.teleport");
+		imap.put(KeyStroke.getKeyStroke("6"), "give.buttonAnd");
+		imap.put(KeyStroke.getKeyStroke("7"), "give.buttonOr");
+		imap.put(KeyStroke.getKeyStroke("8"), "give.door");
+		imap.put(KeyStroke.getKeyStroke("9"), "give.box");
+		imap.put(KeyStroke.getKeyStroke("0"), "give.box");
 
 	}
 
@@ -83,6 +93,14 @@ public class GameScreen extends AbstractScreen {
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
 		BoxGiver boxGiver = new BoxGiver();
+		DoorGiver doorGiver = new DoorGiver();
+		BoxGiver wallGiver = new BoxGiver();
+		ButtonOrGiver buttonOrGiver = new ButtonOrGiver();
+		ButtonAndGiver buttonAndGiver = new ButtonAndGiver();
+		TeleportGiver teleportGiver = new TeleportGiver();
+		PitGiver pitGiver = new PitGiver();
+		TNTGiver tntGiver = new TNTGiver();
+		TileGiver tileGiver = new TileGiver();
 		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
@@ -116,12 +134,14 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
 		amap.put("give.box", boxGiver);
-	}
-
-	@Override
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		GameField.getInstance().draw(g);
+		amap.put("give.tile", tileGiver);
+		amap.put("give.wall", wallGiver);
+		amap.put("give.door", doorGiver);
+		amap.put("give.buttonOr", buttonOrGiver);
+		amap.put("give.buttonAnd", buttonAndGiver);
+		amap.put("give.tnt", tntGiver);
+		amap.put("give.teleport", teleportGiver);
+		amap.put("give.pit", pitGiver);
 	}
 
 	public void activateModel() {
@@ -132,99 +152,12 @@ public class GameScreen extends AbstractScreen {
 
 	public static GameScreen getInstance() {
 		if (INSTANCE == null)
-			return INSTANCE = new GameScreen();
+			return INSTANCE = new EditorScreen();
 		else
 			return INSTANCE;
 	}
 
-	public void changeOffsetCoarse(String direction) {
-		logger.info("Offsettig");
-		if (direction.equals("N"))
-			setLocation(this.getLocation().x, this.getLocation().y
-					- coarseOffset);
-		if (direction.equals("W"))
-			setLocation(this.getLocation().x - coarseOffset,
-					this.getLocation().y);
-		if (direction.equals("E"))
-			setLocation(this.getLocation().x + coarseOffset,
-					this.getLocation().y);
-		if (direction.equals("S"))
-			setLocation(this.getLocation().x, this.getLocation().y + scale
-					+ coarseOffset);
-		revalidate();
-		repaint();
-	}
-
-	public Point calculateDistanceFromRobotToScreenCenter(Robot robot) {
-		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
-				- robot.getTargetCellCoordinates(robot.getDirection()).x
-				* Robot.getSize();
-		int deltaY = -this.getY() + ScreensHolder.getInstance().getHeight() / 2
-				- robot.getTargetCellCoordinates(robot.getDirection()).y
-				* Robot.getSize();
-		return new Point(deltaX, deltaY);
-	}
-
-	public void centerByRobotVertically(Robot robot) {
-
-		setLocation(getX(), getY()
-				+ calculateDistanceFromRobotToScreenCenter(robot).y);
-	}
-
-	public void centerByRobotHorisontally(Robot robot) {
-
-		setLocation(getX()
-				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY());
-	}
-
-	public void centerByRobot(Robot robot) {
-
-		setLocation(getX()
-				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY()
-				+ calculateDistanceFromRobotToScreenCenter(robot).y);
-		ScreensHolder.getInstance().repaint();
-	}
-
-	
-	public void changeOffsetFine(String direction) {
-		logger.info("Offsettig");
-		if (direction.equals("N"))
-			setLocation(this.getLocation().x, this.getLocation().y - fineOffset);
-		if (direction.equals("W"))
-			setLocation(this.getLocation().x - fineOffset, this.getLocation().y);
-		if (direction.equals("E"))
-			setLocation(this.getLocation().x + fineOffset, this.getLocation().y);
-		if (direction.equals("S"))
-			setLocation(this.getLocation().x, this.getLocation().y + fineOffset);
-		revalidate();
-		repaint();
-	}
-
-	public void deactivateModel() {
-		ScreensHolder.getInstance().remove(guiPane);
-		msgDisplay.removeMessage();
-		GameField.getInstance().deactivate();
-	}
-
-	public void displayMessage(String message) {
-		msgDisplay.displayMessage(message);
-		ScreensHolder.getInstance().moveToFront(guiPane);
-		ScreensHolder.getInstance().repaint();
-	}
-
-	public void removeMessage() {
-		msgDisplay.removeMessage();
-		ScreensHolder.getInstance().repaint();
-	}
-
-	protected InGameMessageDisplay msgDisplay = new InGameMessageDisplay();
-	protected InGameGUIPane guiPane = new InGameGUIPane();
-	private int scale = 50;
-	private final int fineOffset = scale / 2;
-	private final int coarseOffset = (scale * 3) / 2;
-
-	Logger logger = Logger.getLogger("GameScreen");
-	private static GameScreen INSTANCE;
+	private static EditorScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
 		public CoarseMovementAction(String name) {
@@ -247,8 +180,8 @@ public class GameScreen extends AbstractScreen {
 			logger.info("Paused");
 		}
 	}
-	
-	private class InteractAction extends AbstractAction{
+
+	private class InteractAction extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().getRobot().interact();
@@ -265,7 +198,7 @@ public class GameScreen extends AbstractScreen {
 				GameField.getInstance().getRobot().put();
 		}
 	}
-	
+
 	private class BoxGiver extends AbstractAction {
 
 		@Override
@@ -274,17 +207,90 @@ public class GameScreen extends AbstractScreen {
 			if (r.container[0] != null) {
 				if (r.container[0].getColor() == StuffColor.BLUE) {
 					r.container[0].setColour("Red");
-				}
-				else if (r.container[0].getColor() == StuffColor.RED){
+				} else if (r.container[0].getColor() == StuffColor.RED) {
 					r.container[0].setColour("Green");
-				}
-				else if (r.container[0].getColor() == StuffColor.GREEN) {
+				} else if (r.container[0].getColor() == StuffColor.GREEN) {
 					r.container[0].setColour("Blue");
 				}
 			} else {
 				r.setContainer(new Box());
 				r.container[0].setColour("Blue");
 			}
+			repaint();
+
+		}
+	}
+
+	private class DoorGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Door());
+			repaint();
+
+		}
+	}
+
+	private class TileGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Tile());
+			repaint();
+
+		}
+	}
+
+	private class ButtonOrGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new ButtonOr());
+			repaint();
+
+		}
+	}
+
+	private class ButtonAndGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new ButtonAnd());
+		}
+	}
+
+	private class TNTGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new TNT());
+			repaint();
+
+		}
+	}
+
+	private class TeleportGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Teleport());
+			repaint();
+
+		}
+	}
+
+	private class PitGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Pit());
 			repaint();
 
 		}
@@ -334,7 +340,6 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
-	
 	public class InGameGUIPane extends JLayeredPane {
 		public InGameGUIPane() {
 			this.setBounds(ScreensHolder.getInstance().getBounds());
@@ -349,4 +354,5 @@ public class GameScreen extends AbstractScreen {
 
 		private HitPointDisplay hpDisp = new HitPointDisplay();
 	}
+
 }

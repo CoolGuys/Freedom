@@ -66,6 +66,7 @@ public class GLabel {
 		switch (disposition) {
 		case CENTER: 
 			center();
+			break;
 		case LEFT_BOTTOM_CORNER:
 			break;
 		default:
