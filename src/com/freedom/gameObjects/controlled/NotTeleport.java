@@ -91,8 +91,8 @@ public class NotTeleport extends Stuff {
 	}
 
 	@Override
-	public boolean ifCoolEnough(Stuff element) {
-		if (!super.ifCoolEnough(element)
+	public boolean isCoolEnough(Stuff element) {
+		if (!super.isCoolEnough(element)
 				|| this.getColour().equals(element.getColour()))
 			return true;
 		else

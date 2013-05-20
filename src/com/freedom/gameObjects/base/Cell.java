@@ -214,14 +214,14 @@ public class Cell {
 
 	public void touchOnAdd(Stuff toucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			if (this.content[i].ifCoolEnough(toucher))
+			if (this.content[i].isCoolEnough(toucher))
 				this.content[i].touch(toucher);
 		}
 	}
 
 	public void untouchOnDelete(Stuff untoucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			if (this.content[i].ifCoolEnough(untoucher))
+			if (this.content[i].isCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}
 	}
