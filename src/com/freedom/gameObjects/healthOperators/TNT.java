@@ -14,7 +14,8 @@ import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
 
 public class TNT extends Stuff {
-
+	
+	private boolean ifActive;
 	private int expDamage = 15;
 	private static Image texture1;
 
@@ -34,6 +35,7 @@ public class TNT extends Stuff {
 	public TNT() {
 		super(true, false, 0, 1);
 		textureRed = texture1;
+		ifActive = false;
 	}
 
 	public void loadToFile(Element obj) {
@@ -116,6 +118,9 @@ public class TNT extends Stuff {
 
 	@Override
 	public void interact(Stuff interactor) {
+		if(this.ifActive)
+			return;
+		this.ifActive = true;
 		TNTExploder t = new TNTExploder();
 		GameField.otherThreads.execute(t);
 	}
