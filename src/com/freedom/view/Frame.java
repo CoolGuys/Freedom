@@ -1,15 +1,16 @@
 package com.freedom.view;
 
 import java.awt.Dimension;
-import java.awt.Toolkit; 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
- * Класс Frame расширяет класс JFrame. Разница между ними лишь размере, см. документацию javax.swing.JFrame
+ * Класс Frame расширяет класс JFrame. Разница между ними лишь размере, см.
+ * документацию javax.swing.JFrame
  * 
  * @author gleb
  * 
@@ -17,7 +18,7 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 class Frame extends JFrame {
-	
+
 	public Frame()
 	{
 		super("Freedom");
@@ -29,17 +30,18 @@ class Frame extends JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
 		height = screenSize.height;
 		width = screenSize.width;
-		
+
 		this.setSize(width, height);
 		ScreensHolder.setDimensions(width, height);
 		ScreensHolder.getInstance().createScreens();
 		this.add(ScreensHolder.getInstance());
 	}
+
 	private int height, width;
-	
+
 }
