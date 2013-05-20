@@ -17,7 +17,7 @@ import com.freedom.model.GameField;
 public class Wall extends Stuff {
 
 	public Wall() {
-		super(false, false, true, false);
+		super(false, false);
 		super.setExpConductive(false);
 	}
 
@@ -145,6 +145,16 @@ public class Wall extends Stuff {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return true;
 	}
 
 }

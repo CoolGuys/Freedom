@@ -15,7 +15,7 @@ import com.freedom.model.GameField;
 public class HealthKit extends Stuff{
 	public HealthKit()
 	{
-		super(true, true, true, false);
+		super(true, true);
 		textureRed = texture1;
 	}
 	@Override
@@ -49,5 +49,15 @@ public class HealthKit extends Stuff{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 }

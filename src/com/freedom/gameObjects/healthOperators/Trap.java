@@ -19,7 +19,7 @@ public class Trap extends Stuff {
 	private boolean open;
 
 	public Trap() {
-		super(true, true, true, false, 0, 0);
+		super(true, true, 0, 0);
 		textureRed = textureOpen;
 		this.open = true;
 	}
@@ -108,5 +108,14 @@ public class Trap extends Stuff {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 }

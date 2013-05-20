@@ -62,14 +62,14 @@ public class Cell {
 
 	}
 
-	public boolean reflects() {
-		return this.content[this.contentAmount - 1].reflects();
+	public boolean reflects(Stuff element) {
+		return this.content[this.contentAmount - 1].reflects(element);
 	}
 
-	public boolean absorbs() {
+	public boolean absorbs(Stuff element) {
 		if(this.contentAmount - 1<0)
 			System.gc();
-		return this.content[this.contentAmount - 1].absorbs();
+		return this.content[this.contentAmount - 1].absorbs(element);
 	}
 
 	public synchronized Stuff utilityRemove(Stuff toRemove) {
@@ -214,14 +214,14 @@ public class Cell {
 
 	public void touchOnAdd(Stuff toucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			if (this.content[i].ifCoolEnough(toucher))
+			if (this.content[i].isCoolEnough(toucher))
 				this.content[i].touch(toucher);
 		}
 	}
 
 	public void untouchOnDelete(Stuff untoucher) {
 		for (int i = 0; i < this.contentAmount-1; i++) {
-			if (this.content[i].ifCoolEnough(untoucher))
+			if (this.content[i].isCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}
 	}

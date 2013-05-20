@@ -38,7 +38,7 @@ public class Tile2 extends Stuff {
 
 	public Tile2()
 	{
-		super(false, true, false, false, 0, 5);
+		super(false, true, 0, 5);
 		textureRed = texture1;
 	}
 
@@ -60,6 +60,16 @@ public class Tile2 extends Stuff {
 		GameField.getInstance().cells[this.getX()][this.getY()].replace(this,
 				buf);
 
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 
 }

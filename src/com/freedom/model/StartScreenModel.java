@@ -15,6 +15,7 @@ import com.freedom.utilities.game.SoundEngine;
 import com.freedom.utilities.game.SoundEngine.SoundPlayer;
 import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButton;
+import com.freedom.view.EditorSettingsScreen;
 import com.freedom.view.LoadScreen;
 import com.freedom.view.ScreensHolder;
 import com.freedom.view.StartScreen;
@@ -46,6 +47,9 @@ public class StartScreenModel {
 
 		buttons[4] = new GButton("NEW", 4, 3,
 				new NewGameAction());
+
+		buttons[5] = new GButton("EDIT", 8, 4,
+				new LoadEditorAction());
 	}
 
 	public void activate() {
@@ -114,7 +118,7 @@ public class StartScreenModel {
 		}
 	}
 	
-	private GButton[] buttons = new GButton[5];
+	private GButton[] buttons = new GButton[10];
 	private Image backgroundPicture;
 	private File backgroundMusic;
 	private SoundPlayer backgroundMusicPlayer;
@@ -141,6 +145,14 @@ public class StartScreenModel {
 		public void performAction() {
 			LoadScreenModel.getInstance().setListedDirectory("Saves");
 			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
+					StartScreen.getInstance());
+
+		}
+	}
+	
+	public static class LoadEditorAction extends GAction {
+		public void performAction() {
+			ScreensHolder.getInstance().swapScreens(EditorSettingsScreen.getInstance(),
 					StartScreen.getInstance());
 
 		}

@@ -18,9 +18,8 @@ public class Teleport extends Stuff {
 
 	// TODO подумать на тему того, стоит ли запретить телепортацию объектов,
 	// если не позволяет сила
-	public Teleport()
-	{
-		super(false, true, false, false, 0, 1);
+	public Teleport() {
+		super(false, true, 0, 1);
 		textureRed = texturesOff[1];
 		textureGreen = texturesOff[2];
 		textureBlue = texturesOff[3];
@@ -91,8 +90,8 @@ public class Teleport extends Stuff {
 	}
 
 	@Override
-	public boolean ifCoolEnough(Stuff element) {
-		if (!super.ifCoolEnough(element)
+	public boolean isCoolEnough(Stuff element) {
+		if (!super.isCoolEnough(element)
 				|| this.getColour().equals(element.getColour()))
 			return true;
 		else
@@ -132,19 +131,28 @@ public class Teleport extends Stuff {
 		logger.setLevel(Level.WARNING);
 		try {
 			for (int i = 1; i <= 3; i++) {
-				texturesOn[4-i] = ImageIO
-						.read(new File("Resource/Textures/Teleport/On" + i
+				texturesOn[4 - i] = ImageIO.read(
+						new File("Resource/Textures/Teleport/On" + i + ".png"))
+						.getScaledInstance(getSize(), getSize(),
+								BufferedImage.SCALE_SMOOTH);
+
+				texturesOff[4 - i] = ImageIO
+						.read(new File("Resource/Textures/Teleport/Off" + i
 								+ ".png")).getScaledInstance(getSize(),
 								getSize(), BufferedImage.SCALE_SMOOTH);
-
-				texturesOff[4-i] = ImageIO.read(
-						new File("Resource/Textures/Teleport/Off" + i
-								+ ".png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
 			}
 		} catch (IOException e) {
 			logger.warning("Teleport texture was corrupted or deleted");
 		}
 	}
 
+	@Override
+	public boolean absorbs(Stuff element) {
+		return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
 }

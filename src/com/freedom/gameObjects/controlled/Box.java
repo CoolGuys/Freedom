@@ -37,7 +37,7 @@ public class Box extends Stuff {
 
 	public Box()
 	{
-		super(true, false, true, false, 0, 3);
+		super(true, false, 0, 3);
 		textureRed = texture1;
 		textureGreen = texture2;
 		textureBlue = texture3;

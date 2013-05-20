@@ -33,7 +33,7 @@ public class TilePacman extends PacmanBody{
 	}
 	public TilePacman()
 	{
-		super(false, true, false, false, 0, 3);
+		super(false, true, 0, 3);
 		textureRed = texturetile;
 	}
 

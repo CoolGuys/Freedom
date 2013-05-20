@@ -32,7 +32,7 @@ public class TNT extends Stuff {
 	private String direction;*/
 
 	public TNT() {
-		super(true, false, false, true, 0, 1);
+		super(true, false, 0, 1);
 		textureRed = texture1;
 	}
 
@@ -149,6 +149,12 @@ public class TNT extends Stuff {
 			return;
 		container[0].x=Math.round(container[0].x);
 		container[0].y=Math.round(container[0].y);
+	}
+	
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 
 }

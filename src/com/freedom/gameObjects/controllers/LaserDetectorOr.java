@@ -102,4 +102,16 @@ public class LaserDetectorOr extends ButtonOr {
 
 		private Stuff toucher;
 	}
+	
+	public boolean absorbs(Stuff element) {
+		if (element.getColour() != this.getColour())
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return !this.absorbs(element);
+	}
 }

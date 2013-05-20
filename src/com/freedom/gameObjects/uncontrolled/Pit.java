@@ -15,13 +15,13 @@ public class Pit extends Stuff {
 
 	public Pit()
 	{
-		super(false, true, false, false);
+		super(false, true);
 		textureRed = texture1;
 	}
 
 	public Pit(double x, double y)
 	{
-		super(false, true, false, false);
+		super(false, true);
 		textureRed = texture1;
 		this.x = x;
 		this.y = y;
@@ -54,4 +54,13 @@ public class Pit extends Stuff {
 		element.punch(this.getDamage());
 	}
 
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
 }

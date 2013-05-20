@@ -35,7 +35,7 @@ public class LevelExit extends Stuff {
 	}
 
 	public LevelExit() {
-		super(false, true, true, false);
+		super(false, true);
 		textureRed = texture1;
 	}
 
@@ -83,5 +83,13 @@ public class LevelExit extends Stuff {
 			GameField.getInstance().switchToNextLevel(nextLevelID, robotx,
 					roboty,this.buf);
 		}
+	}
+	public boolean absorbs(Stuff element) {
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 }

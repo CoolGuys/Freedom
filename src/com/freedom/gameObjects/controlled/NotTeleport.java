@@ -20,7 +20,7 @@ public class NotTeleport extends Stuff {
 	// если не позволяет сила
 	public NotTeleport()
 	{
-		super(false, true, false, false, 0, 1);
+		super(false, true, 0, 1);
 		textureRed = texturesOn[1];
 		textureGreen = texturesOn[2];
 		textureBlue = texturesOn[3];
@@ -91,8 +91,8 @@ public class NotTeleport extends Stuff {
 	}
 
 	@Override
-	public boolean ifCoolEnough(Stuff element) {
-		if (!super.ifCoolEnough(element)
+	public boolean isCoolEnough(Stuff element) {
+		if (!super.isCoolEnough(element)
 				|| this.getColour().equals(element.getColour()))
 			return true;
 		else
@@ -145,6 +145,16 @@ public class NotTeleport extends Stuff {
 		} catch (IOException e) {
 			logger.warning("Teleport texture was corrupted or deleted");
 		}
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element) {
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 
 }

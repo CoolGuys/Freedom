@@ -8,7 +8,7 @@ import com.freedom.model.GameField;
 public class ColourChanger extends Stuff{
 	
 	public ColourChanger(){
-		super(true, false, false,false, 0, 10);
+		super(true, false, 0, 10);
 	}
 	
 	@Override
@@ -24,6 +24,16 @@ public class ColourChanger extends Stuff{
 		if(GameField.getInstance().getRobot().container[0] == this)
 			GameField.getInstance().getRobot().container[0] = null;
 		else this.die();
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 	
 }
