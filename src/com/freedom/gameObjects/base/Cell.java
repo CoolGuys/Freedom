@@ -62,14 +62,14 @@ public class Cell {
 
 	}
 
-	public boolean reflects() {
-		return this.content[this.contentAmount - 1].reflects();
+	public boolean reflects(Stuff element) {
+		return this.content[this.contentAmount - 1].reflects(element);
 	}
 
-	public boolean absorbs() {
+	public boolean absorbs(Stuff element) {
 		if(this.contentAmount - 1<0)
 			System.gc();
-		return this.content[this.contentAmount - 1].absorbs();
+		return this.content[this.contentAmount - 1].absorbs(element);
 	}
 
 	public synchronized Stuff utilityRemove(Stuff toRemove) {

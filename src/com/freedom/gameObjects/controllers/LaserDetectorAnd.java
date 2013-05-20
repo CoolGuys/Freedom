@@ -12,8 +12,7 @@ import com.freedom.model.GameField;
 
 public class LaserDetectorAnd extends ButtonAnd {
 
-	public LaserDetectorAnd()
-	{
+	public LaserDetectorAnd() {
 		super(true);
 	}
 
@@ -59,4 +58,18 @@ public class LaserDetectorAnd extends ButtonAnd {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public boolean absorbs(Stuff element) {
+		if (element.getColour() != this.getColour())
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return !this.absorbs(element);
+	}
+
 }

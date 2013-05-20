@@ -34,17 +34,16 @@ public class PacmanBody extends Stuff implements Moveable {
 
 	public PacmanBody()
 	{
-		super(true, false, false, true, 0, 3);
+		super(true, false, 0, 3);
 		textureRed = texture1N;
 		this.picID = 1;
 		this.direction = "N";
 		this.direc = -1;
 	}
 
-	public PacmanBody(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives)
+	public PacmanBody(boolean pickable, boolean passable, int damage, int lives)
 	{
-		super(pickable, passable, reflectable, absorbable, damage, lives);
+		super(pickable, passable, damage, lives);
 	}
 
 	public boolean getAlive() {

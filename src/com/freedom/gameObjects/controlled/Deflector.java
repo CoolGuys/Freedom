@@ -202,4 +202,12 @@ public class Deflector extends Laser {
 
 		private Stuff toucher;
 	}
+	public boolean absorbs(Stuff element) {
+		return true;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
 }

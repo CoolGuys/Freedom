@@ -57,7 +57,7 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
-		super(false, true, false, true, 0, maxLives);
+		super(false, true, 0, maxLives);
 		super.type=LoadingType.DNW;
 		super.x = posX;
 		super.y = posY;

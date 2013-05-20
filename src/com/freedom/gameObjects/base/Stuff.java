@@ -47,9 +47,6 @@ public class Stuff {
 	protected boolean destroyable;
 	protected int lives;
 
-	// for laser
-	private boolean absorbsLaserBeam;
-	protected boolean reflectsLaserBeam;
 
 	// for TNT
 	private boolean expConductive;
@@ -67,8 +64,7 @@ public class Stuff {
 	}
 
 	// if lives<=0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable, boolean reflects,
-			boolean absorbs, int damage, int lives) {
+	public Stuff(boolean pickable, boolean passable, int damage, int lives) {
 		this.pickable = pickable;
 		this.passable = passable;
 
@@ -77,8 +73,6 @@ public class Stuff {
 		else
 			this.damage = damage;
 
-		this.reflectsLaserBeam = reflects;
-		this.absorbsLaserBeam = absorbs;
 		this.setExpConductive(true);
 		damager = new DamageSender();
 		
@@ -92,10 +86,7 @@ public class Stuff {
 		this.basicMaxLives = this.lives;
 	}
 
-	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable) {
-		this.reflectsLaserBeam = reflectable;
-		this.absorbsLaserBeam = absorbable;
+	public Stuff(boolean pickable, boolean passable) {
 
 		this.pickable = pickable;
 		this.passable = passable;
@@ -163,8 +154,10 @@ public class Stuff {
 
 	// //getters
 
-	public boolean absorbs() {
-		return this.absorbsLaserBeam;
+	public boolean absorbs(Stuff element) {
+		if(element.getColour() != this.getColour())
+			return true;
+		else return false;
 	}
 
 	public int getX() {
@@ -209,8 +202,8 @@ public class Stuff {
 		return this.destroyable;
 	}
 
-	public boolean reflects() {
-		return this.reflectsLaserBeam;
+	public boolean reflects(Stuff element) {
+		return !this.absorbs(element);
 	}
 
 	public boolean expConductive() {

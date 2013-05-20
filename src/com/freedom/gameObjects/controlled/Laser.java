@@ -31,7 +31,7 @@ public class Laser extends Stuff {
 
 	public Laser()
 	{
-		super(false, false, true, false);
+		super(false, false);
 		ifActive = false;
 		sender = new BeamSender();
 	}
@@ -47,7 +47,7 @@ public class Laser extends Stuff {
 	public void untouchTouched() {
 		for (Point p : getTouchedCells())
 			if (p != null)
-				if (GameField.getInstance().cells[p.x][p.y].getTop().absorbs())
+				if (GameField.getInstance().cells[p.x][p.y].getTop().absorbs(beamHead))
 					GameField.getInstance().cells[p.x][p.y].getTop().untouch(
 							beamHead);
 		touchedCells.clear();
@@ -56,7 +56,7 @@ public class Laser extends Stuff {
 	// метод для призмы
 	public Laser(boolean forReflector)
 	{
-		super(true, false, false, true);
+		super(true, false);
 		ifActive = false;
 		sender = new BeamSender();
 	}
@@ -346,6 +346,14 @@ public class Laser extends Stuff {
 					BufferedImage.TYPE_INT_ARGB);
 		}
 
+	}
+	public boolean absorbs(Stuff element) {
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return true;
 	}
 
 }

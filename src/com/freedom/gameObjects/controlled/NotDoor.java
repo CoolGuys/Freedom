@@ -44,7 +44,7 @@ public class NotDoor extends Stuff {
 
 	public NotDoor()
 	{
-		super(false, true, true, false);
+		super(false, true);
 		super.setExpConductive(false);
 	}
 
@@ -112,6 +112,14 @@ public class NotDoor extends Stuff {
 		}
 		g.drawImage(textureRed, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
+	}
+	public boolean absorbs(Stuff element) {
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 
 }

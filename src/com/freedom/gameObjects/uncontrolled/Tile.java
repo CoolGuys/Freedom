@@ -34,7 +34,7 @@ public class Tile extends Stuff {
 
 	public Tile()
 	{
-		super(false, true, false, false);
+		super(false, true);
 		textureRed = texture1;
 	}
 
@@ -49,5 +49,14 @@ public class Tile extends Stuff {
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.uncontrolled.Tile");
 	}
-
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
 }

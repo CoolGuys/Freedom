@@ -22,7 +22,7 @@ import com.freedom.view.GameScreen;
 public class ButtonOr extends Stuff {
 	public ButtonOr()
 	{
-		super(false, true, true, false);
+		super(false, true);
 		super.type=LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
@@ -33,7 +33,7 @@ public class ButtonOr extends Stuff {
 	}
 	
 	public ButtonOr(boolean ifLaserDetector){
-		super(false, false, false, true);
+		super(false, false);
 		super.type=LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
@@ -164,5 +164,15 @@ public class ButtonOr extends Stuff {
 		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
 		this.controlledCellsList[controlledCellsAmount][1] = element.getY();
 		this.controlledCellsAmount++;
+	}
+	
+	@Override
+	public boolean absorbs(Stuff element){
+		return false;
+	}
+	
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
 	}
 }

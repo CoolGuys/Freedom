@@ -40,7 +40,7 @@ public class Door extends Stuff {
 
 	public Door()
 	{
-		super(false, false,true, false);
+		super(false, false);
 		super.setExpConductive(false);
 	}
 
@@ -101,5 +101,13 @@ public class Door extends Stuff {
 		g.drawImage(textureRed, (int) (getX() * getSize()),
 				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
+	
+	public boolean absorbs(Stuff element) {
+			return false;
+	}
 
+	@Override
+	public boolean reflects(Stuff element) {
+		return true;
+	}
 }
