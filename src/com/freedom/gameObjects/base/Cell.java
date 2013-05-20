@@ -8,8 +8,6 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
-import com.freedom.gameObjects.base.Stuff.LoadingType;
-
 public class Cell {
 
 	public volatile boolean locked;
@@ -379,7 +377,7 @@ public class Cell {
 	}
 	public void setControlled(Cell element){
 		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type.equals(this.type)){
+			if(this.content[i].type.equals(Cell.type)){
 				this.content[i].setControlled(element);
 				return;
 			}
