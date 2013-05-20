@@ -321,7 +321,8 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"), null,
-											10));
+											Robot.maxLives));
+							//TODO Ушаков, запили сохранение жизней при смене уровня. 
 						} else {
 							Element roboobj = (Element) robostuff.item(0);
 							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
@@ -335,7 +336,7 @@ public class Loader {
 											.getAttribute("x")), Integer
 											.parseInt(obj.getAttribute("y")),
 											obj.getAttribute("dir"),
-											((Stuff) newstuff), 10));
+											((Stuff) newstuff), Robot.maxLives));
 							GameField.getInstance().getRobot().getContent().setXY(GameField.getInstance().getRobot().getX(), GameField.getInstance().getRobot().getY());
 						}
 					}
