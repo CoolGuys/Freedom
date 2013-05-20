@@ -84,7 +84,7 @@ public class Wall extends Stuff {
 					g.drawImage(textureNE, 0, 0, null);
 
 		textureRed = finalTexture;
-		ready = true;
+//		ready = true;
 	}
 
 	public void loadToFile(Element obj) {
@@ -100,7 +100,7 @@ public class Wall extends Stuff {
 				null);
 	}
 
-	private boolean ready;
+//	private boolean ready;
 	private static Image textureN;
 	private static Image textureE;
 	private static Image textureS;

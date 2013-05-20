@@ -128,7 +128,7 @@ public class Robot extends Stuff implements Moveable {
 	public boolean canGo() {
 		if (GameField.getInstance().cells[this
 				.getTargetCellCoordinates(getDirection()).x][this
-				.getTargetCellCoordinates(getDirection()).y].ifCanPassThrough())
+				.getTargetCellCoordinates(getDirection()).y].passable())
 			return true;
 
 		return false;
@@ -293,10 +293,7 @@ public class Robot extends Stuff implements Moveable {
 		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-		if (direction == null) {
-			logger.info("EverythingIsBad");
-			return;
-		}
+		
 		if (direction.equals("N")) {
 			g2.drawImage(textureN, (int) (x * getSize()),
 					(int) (y * getSize()), null);
@@ -313,7 +310,6 @@ public class Robot extends Stuff implements Moveable {
 
 		if (container[0] != null) {
 			container[0].draw(g);
-			// logger.info(container[0][0].toString());
 		}
 	}
 
@@ -328,8 +324,10 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void die() {
+		this.lives=0;
 		System.out.println("You are dead, idiot!");
-		System.exit(10);
+		//System.exit(10);
+		super.die();
 	}
 
 }

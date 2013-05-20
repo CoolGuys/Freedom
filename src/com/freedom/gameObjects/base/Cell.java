@@ -60,14 +60,14 @@ public class Cell {
 
 	}
 
-	public boolean getIfReflect() {
-		return this.content[this.contentAmount - 1].getIfReflect();
+	public boolean reflects() {
+		return this.content[this.contentAmount - 1].reflects();
 	}
 
-	public boolean getIfAbsorb() {
+	public boolean absorbs() {
 		if(this.contentAmount - 1<0)
 			System.gc();
-		return this.content[this.contentAmount - 1].getIfAbsorb();
+		return this.content[this.contentAmount - 1].absorbs();
 	}
 
 	public synchronized Stuff utilityRemove(Stuff toRemove) {
@@ -99,7 +99,7 @@ public class Cell {
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
-			if (!this.content[i].getIfPassable())
+			if (!this.content[i].passable())
 				return false;
 		}
 
@@ -229,7 +229,7 @@ public class Cell {
 	public Stuff takeObject() {
 
 		for (int i = this.contentAmount - 1; i >= 0; i--) {
-			if (this.content[i].getIfTakeable()) {
+			if (this.content[i].takeable()) {
 				Stuff buf = this.content[i];
 				if (this.deleteStuff(buf))
 					return buf;																
@@ -238,13 +238,7 @@ public class Cell {
 		return null;
 	}
 
-	public boolean ifCanPassThrough() {
-		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].getIfPassable())
-				return false;
-		}
-		return true;
-	}
+	
 
 	// считаем, что если есть элемент, "экранирующий" урон, остальные не
 	// действуют
@@ -282,7 +276,7 @@ public class Cell {
 	}
 
 	// здесь наносим урон предметам
-	public int dealDamageToContent(int damage) {
+	public int punchContent(int damage) {
 		if (this.contentAmount == 0)
 			return 0;
 
@@ -293,24 +287,6 @@ public class Cell {
 		return (damage - buf);
 	}
 
-	void harmContent(int damage) {
-		if (this.contentAmount == 0)
-			return;
-
-		int buf = damage;
-		for (int i = Cell.this.contentAmount - 1; i >= 0; i--) {
-			Cell.this.content[i].harm(buf);
-		}
-	}
-
-	void stopHarmingContent() {
-		if (this.contentAmount == 0)
-			return;
-
-		for (int i = Cell.this.contentAmount - 1; i >= 0; i--) {
-			Cell.this.content[i].stopHarming();
-		}
-	}
 
 	public void healContent(int heal) {
 
@@ -327,27 +303,25 @@ public class Cell {
 		}
 	}
 
-	// ////////////////
-
-	public boolean getIfPassable() {
+	public boolean passable() {
 		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].passable)
+			if (!this.content[i].passable())
+				return false;
+		}
+		return true;
+	}
+	
+
+	public boolean conductsExp() {
+		for (int i = 0; i < this.contentAmount; i++) {
+			if (!this.content[i].expConductive())
 				return false;
 		}
 
 		return true;
 	}
 
-	public boolean getIfConductsExp() {
-		for (int i = 0; i < this.contentAmount; i++) {
-			if (!this.content[i].isExpConductive())
-				return false;
-		}
-
-		return true;
-	}
-
-	public boolean ifCanBePressed() {
+	public boolean allConnectedButtonsOn() {
 		if (this.counter == this.buttonsNumber)
 			return true;
 		else

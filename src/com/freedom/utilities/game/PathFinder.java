@@ -63,7 +63,7 @@ public class PathFinder {
 			for (int j = 0; j < 2 * width + 1; j++) {
 				try {
 					//System.out.println((xs-width+i) + "," + (xs-width+j));
-					passable[i][j] = cells[xs-width+i][ys-width+j].ifCanPassThrough();
+					passable[i][j] = cells[xs-width+i][ys-width+j].passable();
 				} catch (Exception e) {
 					passable[i][j]=false;
 				}

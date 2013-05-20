@@ -91,11 +91,11 @@ public class PauseScreenModel {
 	
 	public static class QuitAction extends GAction {
 		public void performAction() {
-			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
-					PauseScreen.getInstance());
-			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
 			GameField.getInstance().resetTickerListeners();
 			GameField.otherThreads.shutdownNow();
+			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
+			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
+					PauseScreen.getInstance());
 		}
 	}
 	

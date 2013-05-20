@@ -48,7 +48,7 @@ public class Teleport extends Stuff {
 		if (!on)
 			return;
 		if (!GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
-				.getIfPassable())
+				.passable())
 			return;
 
 		for (Stuff containedElement : element.container) {

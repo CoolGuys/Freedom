@@ -141,7 +141,7 @@ public class Deflector extends Laser {
 		super.loadToFile(obj);
 		obj.setAttribute("toDeflect", toDeflect + "");
 		obj.setAttribute("class",
-				"com.freedom.gameObjects.controlled.CornerReflector");
+				"com.freedom.gameObjects.controlled.Deflector");
 	}
 
 	@Override

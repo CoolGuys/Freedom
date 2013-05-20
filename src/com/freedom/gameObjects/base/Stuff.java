@@ -44,12 +44,12 @@ public class Stuff {
 
 	// punching
 	protected int damage;
-	protected boolean ifDestroyable;
+	protected boolean destroyable;
 	protected int lives;
 
 	// for laser
-	private boolean ifAbsorb;
-	protected boolean ifReflect;
+	private boolean absorbsLaserBeam;
+	protected boolean reflectsLaserBeam;
 
 	// for TNT
 	private boolean expConductive;
@@ -67,8 +67,8 @@ public class Stuff {
 	}
 
 	// if lives<=0 , we cannot destroy this stuff
-	public Stuff(boolean pickable, boolean passable, boolean reflectable,
-			boolean absorbable, int damage, int lives) {
+	public Stuff(boolean pickable, boolean passable, boolean reflects,
+			boolean absorbs, int damage, int lives) {
 		this.pickable = pickable;
 		this.passable = passable;
 
@@ -77,32 +77,32 @@ public class Stuff {
 		else
 			this.damage = damage;
 
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
+		this.reflectsLaserBeam = reflects;
+		this.absorbsLaserBeam = absorbs;
 		this.setExpConductive(true);
 		damager = new DamageSender();
 		
 
 		if (lives < 1) {
 			this.lives = 1;
-			this.ifDestroyable = false;
+			this.destroyable = false;
 		} else {
 			this.lives = lives;
-			this.ifDestroyable = true;
+			this.destroyable = true;
 		}
 		this.basicMaxLives = this.lives;
 	}
 
 	public Stuff(boolean pickable, boolean passable, boolean reflectable,
 			boolean absorbable) {
-		this.ifReflect = reflectable;
-		this.ifAbsorb = absorbable;
+		this.reflectsLaserBeam = reflectable;
+		this.absorbsLaserBeam = absorbable;
 
 		this.pickable = pickable;
 		this.passable = passable;
 
 		this.damage = 0;
-		this.ifDestroyable = false;
+		this.destroyable = false;
 		this.lives = 10;
 		this.setExpConductive(true);
 		damager = new DamageSender();
@@ -131,6 +131,7 @@ public class Stuff {
 	}
 
 	public void itsAlive() {
+		return;
 	}
 
 	public void loadToFile(Element obj) {
@@ -163,8 +164,8 @@ public class Stuff {
 
 	// //getters
 
-	public boolean getIfAbsorb() {
-		return this.ifAbsorb;
+	public boolean absorbs() {
+		return this.absorbsLaserBeam;
 	}
 
 	public int getX() {
@@ -189,11 +190,11 @@ public class Stuff {
 			damage = 0;
 	}
 
-	public boolean getIfTakeable() {
+	public boolean takeable() {
 		return this.pickable;
 	}
 
-	public boolean getIfPassable() {
+	public boolean passable() {
 		return this.passable;
 	}
 
@@ -201,23 +202,19 @@ public class Stuff {
 		return this.damage;
 	}
 
-	public Image getTexture() {
-		return this.textureRed;
-	}
-
 	public int getLives() {
 		return this.lives;
 	}
 
-	public boolean ifCanDestroy() {
-		return this.ifDestroyable;
+	public boolean destroyable() {
+		return this.destroyable;
 	}
 
-	public boolean getIfReflect() {
-		return this.ifReflect;
+	public boolean reflects() {
+		return this.reflectsLaserBeam;
 	}
 
-	public boolean isExpConductive() {
+	public boolean expConductive() {
 		return expConductive;
 	}
 
@@ -271,7 +268,7 @@ public class Stuff {
 		if (damage == 0) {
 			return false;
 		}
-		if (!this.ifDestroyable)
+		if (!this.destroyable)
 			return false;
 
 		this.toHarm = damage;
@@ -284,6 +281,7 @@ public class Stuff {
 	}
 
 	public void die() {
+		this.lives=0;
 		if (!isMoving)
 			isMoving=true;
 			GameField.getInstance().cells[this.getX()][this.getY()]
@@ -295,7 +293,7 @@ public class Stuff {
 		if (damage < 1) {
 			return 0;
 		}
-		if (!this.ifDestroyable)
+		if (!this.destroyable)
 			return 0;
 
 		Graphics2D g2 = (Graphics2D) GameScreen.getInstance().getGraphics();
@@ -306,12 +304,13 @@ public class Stuff {
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
-			logger.info("Interrupted while punched");
+			logger.warning("Interrupted while punched");
 		}
 
 		if (this.lives < damage) {
+			int lastLives = this.lives;
 			this.die();
-			return this.lives;
+			return lastLives;
 		}
 
 		this.lives = this.lives - damage;

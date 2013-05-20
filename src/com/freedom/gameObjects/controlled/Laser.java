@@ -48,7 +48,7 @@ public class Laser extends Stuff {
 		for (Point p : getTouchedCells())
 			if (p != null)
 				if (GameField.getInstance().cells[p.x][p.y].getTop()
-						.getIfAbsorb())
+						.absorbs())
 					GameField.getInstance().cells[p.x][p.y].getTop().untouch(
 							beamHead);
 				touchedCells.clear();
