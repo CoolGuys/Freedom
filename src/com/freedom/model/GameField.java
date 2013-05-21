@@ -138,6 +138,7 @@ public class GameField {
 				GameScreen.getInstance());
 		resetTickerListeners();
 		otherThreads.shutdownNow();
+		this.active=false;
 		otherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
@@ -156,14 +157,7 @@ public class GameField {
 
 			int previousx = robot.getX();
 			int previousy = robot.getY();
-			Stuff element = this.robot;/* GameField.getInstance().getCells()[previousx][previousy]
-					.getTop();*/
-			
-			/*if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
-				GameField.getInstance().getCells()[previousx][previousy]
-						.deleteStuff();
-			}
-			}*/
+			Stuff element = this.robot;
 			GameField.getInstance().getCells()[previousx][previousy]
 						.deleteStuff();
 			while((!GameField.getInstance().getCells()[robotx][roboty].add(element))){
@@ -194,6 +188,8 @@ public class GameField {
 		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
+
+		this.active=true;
 		ScreensHolder.getInstance().repaint();
 	}
 

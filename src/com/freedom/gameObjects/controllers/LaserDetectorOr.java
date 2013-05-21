@@ -51,6 +51,10 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	public void realUntouch(Stuff toucher) {
+		if(!GameField.getInstance().active) {
+			inertion.stop();
+			return;
+		}
 		inertion.stop();
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		sendingSignal = false;
@@ -70,10 +74,10 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	private static Image textureOff;
-	private static Image[] texturesOn = new Image[4];
+	protected static Image[] texturesOn = new Image[4];
 	private InertedCircuitBreaker breaker = new InertedCircuitBreaker();
 	private Timer inertion = new Timer(500, breaker);
-	private SignalOnSender sender = new SignalOnSender();
+	protected SignalOnSender sender = new SignalOnSender();
 	private boolean sendingSignal;
 
 	static {

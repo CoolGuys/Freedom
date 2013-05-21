@@ -380,7 +380,7 @@ public class EditorScreen extends GameScreen {
 			repaint();
 
 		}
-	}
+	}	
 	
 	
 	private class ExamineAction extends AbstractAction {

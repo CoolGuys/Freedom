@@ -17,6 +17,7 @@ import javax.swing.Timer;
 import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.model.GameField;
 import com.freedom.view.GameScreen;
 
 public class Deflector extends Laser {
@@ -104,7 +105,10 @@ public class Deflector extends Laser {
 	}
 
 	public void realUntouch(Stuff element) {
-
+		if(!GameField.getInstance().active) {
+			inertion.stop();
+			return;
+		}
 		LaserBeam buf;
 		try {
 			buf = (LaserBeam) element;
