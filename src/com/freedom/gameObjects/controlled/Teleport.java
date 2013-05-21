@@ -62,6 +62,15 @@ public class Teleport extends Stuff {
 					.deleteStuff();
 			return;
 		}
+		else{
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.deleteStuff();
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.add(element);
+			GameField.getInstance().getCells()[this.getX()][this.getY()]
+					.deleteStuff();
+			return;
+		}
 	}
 
 	@Override

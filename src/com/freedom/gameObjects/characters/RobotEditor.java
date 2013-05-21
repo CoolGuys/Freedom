@@ -1,5 +1,7 @@
 package com.freedom.gameObjects.characters;
 
+import org.w3c.dom.Element;
+
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
@@ -19,6 +21,10 @@ public class RobotEditor extends Robot{
 		}
 	}
 	
+	public void loadToFile(Element obj) {
+		super.loadToFile(obj);
+		obj.setAttribute("editor", "true");
+	}
 
 	public RobotEditor(int posX, int posY, String direction) {
 		super(posX, posY, direction, null, 0);
