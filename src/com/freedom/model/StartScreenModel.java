@@ -37,8 +37,6 @@ public class StartScreenModel {
 	}
 
 	public void addButtons() {
-		buttons[0] = new GButton("GAME", 2, 4,
-				new StartGameAction());
 		buttons[1] = new GButton("EXIT", 12, 6,
 				new ExitGameAction());
 
@@ -48,7 +46,7 @@ public class StartScreenModel {
 		buttons[4] = new GButton("NEW", 4, 3,
 				new NewGameAction());
 
-		buttons[5] = new GButton("EDIT", 8, 4,
+		buttons[5] = new GButton("EDIT", 2, 4,
 				new LoadEditorAction());
 	}
 

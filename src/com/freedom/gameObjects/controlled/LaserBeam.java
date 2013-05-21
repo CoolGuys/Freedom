@@ -462,7 +462,12 @@ public class LaserBeam extends Stuff {
 			this.next.prev = this;
 
 			this.next.setSource(this.source);
-			this.next.reflect();
+			try {
+				this.next.reflect();
+			} catch(Exception e)
+			{
+				
+			}
 			if (this.next.getDamage() == 0) {
 				this.next = null;
 				return;

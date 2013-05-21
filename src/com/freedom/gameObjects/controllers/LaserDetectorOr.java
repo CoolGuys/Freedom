@@ -31,13 +31,16 @@ public class LaserDetectorOr extends ButtonOr {
 		}
 		switch (toucher.getColor()) {
 		case RED: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];
+			return;
 		}
 		case GREEN: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];
+			return;
 		}
 		case BLUE: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];
+			return;
 		}
 		}
 	}
@@ -102,7 +105,7 @@ public class LaserDetectorOr extends ButtonOr {
 
 		private Stuff toucher;
 	}
-	
+
 	public boolean absorbs(Stuff element) {
 		if (element.getColour() != this.getColour())
 			return true;

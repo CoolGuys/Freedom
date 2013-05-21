@@ -71,10 +71,9 @@ public class Deflector extends Laser {
 
 	@Override
 	public boolean isCoolEnough(Stuff element) {
-		if (this.getColor() == element.getColor())
-			return true;
-		else
-			return false;
+		this.setColour(element.getColour());	
+		return true;
+			
 	}
 
 	public void touch(Stuff element) {
