@@ -1,6 +1,9 @@
 package com.freedom.utilities.game;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +23,10 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.base.Stuff.LoadingType;
+import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.uncontrolled.Tile;
+import com.freedom.gameObjects.uncontrolled.Wall;
 import com.freedom.model.GameField;
 import com.freedom.model.LoadingScreenModel;
 
@@ -62,6 +68,62 @@ import com.freedom.model.LoadingScreenModel;
  */
 
 public class Loader {
+	
+	public static void createNewField(int x,int y,boolean withWalls, String lvlfile, int lvl){
+		//Tile tile= new Tile();
+		//Wall wall = new Wall();
+		GameField.getInstance().cells = new Cell[x + 2][x + 2];
+		GameField.getInstance().newGhosts(0);
+		GameField.getInstance().setCurrentLevel(lvl);
+		for(int i=0;i<x+2;i++){
+			for (int j = 0; j < y + 2; j++) {
+				if ((i != 0) && (j != 0) && (i != x + 1) && (j != j + 1)) {
+					Tile tile = new Tile(i, j, StuffColor.BLUE);
+					GameField.getInstance().cells[i][j].add(tile);
+				}else{
+					if(withWalls){
+						Wall wall= new Wall(i, j, StuffColor.BLUE);
+						GameField.getInstance().cells[i][j].add(wall);
+					}else{
+						Tile tile= new Tile(i, j, StuffColor.BLUE);
+						GameField.getInstance().cells[i][j].add(tile);
+					}
+				}
+			}
+		}
+		File fXml = new File(lvlfile);
+		if(!fXml.exists()){
+			try {
+				fXml.createNewFile();
+				createNewXml(lvlfile,lvl);
+			} catch (IOException e) {
+				// TODO Автоматически созданный блок catch
+				e.printStackTrace();
+			}
+		}
+		lvlToSv(lvl,lvlfile);
+	}
+	
+	/*
+	 * <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<levels startLvl="2">
+"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
+	 */
+	private static void createNewXml(String lvlfile, int stlvl){
+		File fXml = new File(lvlfile);
+		try {
+			FileOutputStream stream= new FileOutputStream(fXml, false);
+			stream.write("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n".getBytes());
+			stream.write("<levels startLvl=\"".getBytes());
+			stream.write(stlvl);
+			stream.write("\">\n</levels>".getBytes());
+			stream.close();
+		} catch (Exception e) {
+			// TODO Автоматически созданный блок catch
+			e.printStackTrace();
+		}
+		
+	}
 
 	public static void lvlToSv(int num, String lvlfile) {
 		logger.setLevel(Level.OFF);

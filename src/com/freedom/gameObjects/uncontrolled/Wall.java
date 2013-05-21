@@ -12,6 +12,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.model.GameField;
 
 public class Wall extends Stuff {
@@ -19,6 +20,13 @@ public class Wall extends Stuff {
 	public Wall() {
 		super(false, false);
 		super.setExpConductive(false);
+	}
+	
+	public Wall(int x,int y,StuffColor c){
+		super(false, true);
+		this.x = x;
+		this.y = y;
+		this.color=c;
 	}
 
 	private void setTexture() {

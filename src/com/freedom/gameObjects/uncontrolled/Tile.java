@@ -37,6 +37,13 @@ public class Tile extends Stuff {
 		super(false, true);
 		textureRed = texture1;
 	}
+	
+	public Tile(int x,int y,StuffColor c){
+		super(false, true);
+		this.x = x;
+		this.y = y;
+		this.color=c;
+	}
 
 	/**
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
