@@ -115,6 +115,7 @@ public class SaveScreenModel {
 					GameField.getInstance().setPathToSave(
 							"Saves/" + lastName + ".lvl");
 					GameField.getInstance().saveCurrentLevelToPackage();
+					GameField.getInstance().setPathToSave("TmpSave");
 					textField.setText("");
 
 					interactionLabel.setText("Overwrote");
@@ -143,7 +144,7 @@ public class SaveScreenModel {
 				GameField.getInstance().setPathToSave(
 						"Saves/" + textField.getText() + ".lvl");
 				GameField.getInstance().saveCurrentLevelToPackage();
-
+				GameField.getInstance().setPathToSave("TmpSave");
 				textField.setText("");
 				interactionLabel.setText("Saved");
 
