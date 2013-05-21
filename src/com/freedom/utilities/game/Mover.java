@@ -65,11 +65,11 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					// theOneToMove
 					// .getTargetCellCoordinates(invertDirection()).y]
 					// .utilityAdd((Stuff) theOneToMove);
-					
-					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
-							.getY()].add((Stuff) theOneToMove);
+
 					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].clearMeta();
+					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
+							.getY()].add((Stuff) theOneToMove);
 
 					// logger.info("current" + theOneToMove.getX() + " "
 					// + theOneToMove.getY());

@@ -194,6 +194,7 @@ public class GameField {
 		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
+		ScreensHolder.getInstance().repaint();
 	}
 
 	public void saveCurrentLevelToPackage() {

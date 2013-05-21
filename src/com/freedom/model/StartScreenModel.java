@@ -46,7 +46,7 @@ public class StartScreenModel {
 		buttons[4] = new GButton("NEW", 4, 3,
 				new NewGameAction());
 
-		buttons[5] = new GButton("EDIT", 8, 4,
+		buttons[5] = new GButton("EDIT", 2, 4,
 				new LoadEditorAction());
 	}
 

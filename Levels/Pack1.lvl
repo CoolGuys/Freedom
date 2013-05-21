@@ -2009,7 +2009,7 @@
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="15" y="10">
 		</obj>
 
-		<robot dir="E" x="3" y="3">
+		<robot dir="E" x="2" y="2">
 		</robot>
 	</level>
 	<level height="10" num="3" width="15">
@@ -2343,7 +2343,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="7">
 		</obj>
-		<obj class="com.freedom.gameObjects.controlled.Box" color="Red" x="14"
+		<obj class="com.freedom.gameObjects.controlled.Box" color="Blue" x="14"
 			y="7">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="14" y="8">
@@ -2488,7 +2488,7 @@
 </obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="5">
 </obj><obj class="com.freedom.gameObjects.uncontrolled.Wall" x="11" y="6">
 </obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="7">
-</obj><obj class="com.freedom.gameObjects.controllers.ButtonOr" x="11" y="7" color="Blue">
+</obj><obj class="com.freedom.gameObjects.controllers.ButtonOr" x="11" y="7" color="Red">
 <cels x="14" y="3" />		
 </obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="8">
 </obj><obj class="com.freedom.gameObjects.uncontrolled.Tile" x="11" y="9">

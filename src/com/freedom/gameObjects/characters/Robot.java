@@ -21,6 +21,7 @@ import com.freedom.model.GameField;
 import com.freedom.utilities.game.Mover;
 import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
+import com.freedom.view.StartScreen;
 
 public class Robot extends Stuff implements Moveable {
 
@@ -329,11 +330,9 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void die() {
-		this.lives=0;
-		System.out.println("You are dead, idiot!");
-		//TODO обработать смерть
+		System.out.println("You are dead!");
 		super.die();
-		ScreensHolder.getInstance().repaint();
+		ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),GameScreen.getInstance());
 	}
 
 }
