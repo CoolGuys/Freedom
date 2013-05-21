@@ -23,12 +23,14 @@ import com.freedom.gameObjects.controllers.ButtonOr;
 import com.freedom.gameObjects.healthOperators.TNT;
 import com.freedom.gameObjects.uncontrolled.Pit;
 import com.freedom.gameObjects.uncontrolled.Tile;
+import com.freedom.gameObjects.uncontrolled.Wall;
 import com.freedom.model.GameField;
 import com.freedom.utilities.interfai.HitPointDisplay;
 
 @SuppressWarnings("serial")
 public class EditorScreen extends GameScreen {
-	private EditorScreen() {
+	private EditorScreen()
+	{
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
@@ -48,7 +50,7 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("U"), "take");
 		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
 		imap.put(KeyStroke.getKeyStroke("E"), "examine");
-		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
+		imap.put(KeyStroke.getKeyStroke("O"), "assign");
 		imap.put(KeyStroke.getKeyStroke("I"), "turn.up");
 		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
 		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
@@ -92,9 +94,10 @@ public class EditorScreen extends GameScreen {
 		PauseAction pause = new PauseAction();
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
+		AssignAction assign = new AssignAction();
 		BoxGiver boxGiver = new BoxGiver();
 		DoorGiver doorGiver = new DoorGiver();
-		BoxGiver wallGiver = new BoxGiver();
+		WallGiver wallGiver = new WallGiver();
 		ButtonOrGiver buttonOrGiver = new ButtonOrGiver();
 		ButtonAndGiver buttonAndGiver = new ButtonAndGiver();
 		TeleportGiver teleportGiver = new TeleportGiver();
@@ -119,6 +122,7 @@ public class EditorScreen extends GameScreen {
 		amap.put("pause", pause);
 		amap.put("take", take);
 		amap.put("interact", interact);
+		amap.put("assign", assign);
 		amap.put("examine", examine);
 		amap.put("turn.up", turnUp);
 		amap.put("turn.left", turnLeft);
@@ -150,7 +154,7 @@ public class EditorScreen extends GameScreen {
 		ScreensHolder.getInstance().moveToFront(guiPane);
 	}
 
-	public static GameScreen getInstance() {
+	public static EditorScreen getInstance() {
 		if (INSTANCE == null)
 			return INSTANCE = new EditorScreen();
 		else
@@ -160,7 +164,8 @@ public class EditorScreen extends GameScreen {
 	private static EditorScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
-		public CoarseMovementAction(String name) {
+		public CoarseMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -285,6 +290,17 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+	private class WallGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Wall());
+			repaint();
+
+		}
+	}
+
 	private class PitGiver extends AbstractAction {
 
 		@Override
@@ -304,8 +320,17 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+	private class AssignAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobotEditor().assign();
+		}
+	}
+
 	private class FineMovementAction extends AbstractAction {
-		public FineMovementAction(String name) {
+		public FineMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -317,7 +342,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	private class FieldCoarseOffsetAction extends AbstractAction {
-		public FieldCoarseOffsetAction(String name) {
+		public FieldCoarseOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -329,7 +355,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	private class FieldFineOffsetAction extends AbstractAction {
-		public FieldFineOffsetAction(String name) {
+		public FieldFineOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -341,7 +368,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	public class InGameGUIPane extends JLayeredPane {
-		public InGameGUIPane() {
+		public InGameGUIPane()
+		{
 			this.setBounds(ScreensHolder.getInstance().getBounds());
 			this.setLocation(0, 0);
 			this.setVisible(true);

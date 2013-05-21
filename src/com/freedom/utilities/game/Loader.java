@@ -96,6 +96,7 @@ public class Loader {
 		}
 		RobotEditor robot = new RobotEditor(2, 2, "S");
 		GameField.getInstance().cells[2][2].add(robot);
+		GameField.getInstance().setRobotEditor(robot);
 		GameField.getInstance().setRobot(robot);
 		File fXml = new File(lvlfile);
 		if(!fXml.exists()){

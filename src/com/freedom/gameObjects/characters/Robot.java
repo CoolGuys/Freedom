@@ -151,7 +151,7 @@ public class Robot extends Stuff implements Moveable {
 				.getInstance().getHeight() / 2 - 4 * getSize())
 			GameScreen.getInstance().centerByRobotVertically(this);
 
-		Runnable r = new Mover<Robot>(this, direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
 		Thread t = new Thread(r);
 		t.start();
 
@@ -163,7 +163,7 @@ public class Robot extends Stuff implements Moveable {
 			GameScreen.getInstance().repaint();
 			return;
 		}
-		Runnable r = new Mover<Robot>(this, direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
 
 		Thread t = new Thread(r);
 		t.start();

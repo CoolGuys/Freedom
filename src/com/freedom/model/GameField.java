@@ -124,8 +124,7 @@ public class GameField {
 				cells[1].length * cellSize);
 
 		GameScreen.getInstance().centerByRobot(getRobot());
-		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
+		
 	}
 
 	public ExecutorService getThreads() {

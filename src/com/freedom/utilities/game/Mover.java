@@ -3,18 +3,16 @@ package com.freedom.utilities.game;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JLayeredPane;
-
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.AbstractScreen;
 
 public final class Mover<MO extends Moveable> implements Runnable {
 
-	public Mover(MO mover, String direction, int distance, int delay)
+	public Mover(MO mover, String direction, int distance, int delay, AbstractScreen theOneToRepaint)
 	{
-		this.theOneToRepaint = GameScreen.getInstance();
+		this.theOneToRepaint = theOneToRepaint;
 		this.direction = direction;
 		this.theOneToMove = mover;
 		this.delay = delay;
@@ -22,7 +20,8 @@ public final class Mover<MO extends Moveable> implements Runnable {
 	}
 
 	public synchronized void run() {
-		Thread.currentThread().setName("Mover@"+theOneToMove.getClass().toString());
+		Thread.currentThread().setName(
+				"Mover@" + theOneToMove.getClass().toString());
 		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
 		try {
@@ -38,10 +37,12 @@ public final class Mover<MO extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(direction).x][theOneToMove
 							.getTargetCellCoordinates(direction).y].locked = true;
 
-					GameField.getInstance().cells[theOneToMove.getTargetCellCoordinates(direction).x][ theOneToMove
-							.getTargetCellCoordinates(direction).y].setMeta((Stuff) theOneToMove);
-					
-					GameField.getInstance().cells[ theOneToMove.getX()][theOneToMove
+					GameField.getInstance().cells[theOneToMove
+							.getTargetCellCoordinates(direction).x][theOneToMove
+							.getTargetCellCoordinates(direction).y]
+							.setMeta((Stuff) theOneToMove);
+
+					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].delete((Stuff) theOneToMove);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
@@ -59,17 +60,16 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					}
 
 					theOneToMove.recalibrate();
-//					GameField.getInstance().cells[(int) theOneToMove
-//							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-//							.getTargetCellCoordinates(invertDirection()).y]
-//							.utilityAdd((Stuff) theOneToMove);
-					GameField.getInstance().cells[theOneToMove
-							.getX()][theOneToMove
-							.getY()]
-							.clearMeta();
-
+					// GameField.getInstance().cells[(int) theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).x][(int)
+					// theOneToMove
+					// .getTargetCellCoordinates(invertDirection()).y]
+					// .utilityAdd((Stuff) theOneToMove);
+					
 					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].add((Stuff) theOneToMove);
+					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
+							.getY()].clearMeta();
 
 					// logger.info("current" + theOneToMove.getX() + " "
 					// + theOneToMove.getY());
@@ -100,7 +100,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 
 	private MO theOneToMove;
 	private String direction;
-	private JLayeredPane theOneToRepaint;
+	private AbstractScreen theOneToRepaint;
 	private int delay;
 	private int distance;
 	private static Logger logger = Logger.getLogger("");

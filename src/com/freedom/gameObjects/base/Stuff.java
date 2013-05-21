@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import org.w3c.dom.Element;
 
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
 public class Stuff {
@@ -41,6 +40,7 @@ public class Stuff {
 
 	protected boolean pickable;
 	protected boolean passable;
+	protected boolean god;
 
 	// punching
 	protected int damage;

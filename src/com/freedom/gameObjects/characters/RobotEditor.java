@@ -5,36 +5,77 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
+import com.freedom.utilities.game.Mover;
+import com.freedom.view.EditorScreen;
 import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
-public class RobotEditor extends Robot{
-	public  Stuff source;
-	
-	public void assign(){
-		if(this.source == null){
-			source = GameField.getInstance().cells[this.getTargetCellCoordinates(direction).x][this.getTargetCellCoordinates(direction).y].ifHaveButtons();
-		}
-		else{
-			Cell element = GameField.getInstance().cells[this.getTargetCellCoordinates(direction).x][this.getTargetCellCoordinates(direction).y];
+public class RobotEditor extends Robot {
+	public Stuff source;
+
+	public void assign() {
+		if (this.source == null) {
+			source = GameField.getInstance().cells[this
+					.getTargetCellCoordinates(direction).x][this
+					.getTargetCellCoordinates(direction).y].ifHaveButtons();
+		} else {
+			Cell element = GameField.getInstance().cells[this
+					.getTargetCellCoordinates(direction).x][this
+					.getTargetCellCoordinates(direction).y];
 			this.source.setControlled(element);
 			this.source = null;
 		}
 	}
-	
+
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("editor", "true");
 	}
 
-	public RobotEditor(int posX, int posY, String direction) {
+	public RobotEditor(int posX, int posY, String direction)
+	{
 		super(posX, posY, direction, null, 0);
+		god = true;
 	}
-	
+
 	@Override
-	public boolean canGo(){
+	public boolean canGo() {
 		return true;
 	}
-	
+
+	@Override
+	public void moveCoarse(String direction) {
+		if (Math.abs(GameScreen.getInstance()
+				.calculateDistanceFromRobotToScreenCenter(this).x) > ScreensHolder
+				.getInstance().getWidth() / 2 - 4 * getSize())
+			GameScreen.getInstance().centerByRobotHorisontally(this);
+
+		if (Math.abs(GameScreen.getInstance()
+				.calculateDistanceFromRobotToScreenCenter(this).y) > ScreensHolder
+				.getInstance().getHeight() / 2 - 4 * getSize())
+			GameScreen.getInstance().centerByRobotVertically(this);
+
+		Runnable r = new Mover<Robot>(this, direction, 1, 10,
+				EditorScreen.getInstance());
+		Thread t = new Thread(r);
+		t.start();
+
+	}
+
+	@Override
+	public void moveFine(String direction) {
+		if (!direction.equals(this.direction)) {
+			this.direction = direction;
+			EditorScreen.getInstance().repaint();
+			return;
+		}
+		Runnable r = new Mover<Robot>(this, direction, 1, 10,
+				EditorScreen.getInstance());
+
+		Thread t = new Thread(r);
+		t.start();
+	}
+
 	@Override
 	public void take() {
 		if (this.container[0] != null)
@@ -46,9 +87,9 @@ public class RobotEditor extends Robot{
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		GameScreen.getInstance().repaint();
+		EditorScreen.getInstance().repaint();
 	}
-	
+
 	@Override
 	public void put() {
 		if (isMoving
@@ -65,8 +106,9 @@ public class RobotEditor extends Robot{
 		if (!GameField.getInstance().cells[targetX][targetY]
 				.add(this.container[0]))
 			return;
+		this.container[0] = null;
 
-		GameScreen.getInstance().repaint();
+		EditorScreen.getInstance().repaint();
 		return;
 	}
 }

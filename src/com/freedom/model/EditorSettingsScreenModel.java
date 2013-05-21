@@ -16,6 +16,7 @@ import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButtonLite;
 import com.freedom.utilities.interfai.GLabel;
 import com.freedom.utilities.interfai.GLabel.Alignment;
+import com.freedom.view.EditorScreen;
 import com.freedom.view.EditorSettingsScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
@@ -112,6 +113,8 @@ public class EditorSettingsScreenModel {
 					EditorSettingsScreen.getInstance());
 			Loader.createNewField(levelX, levelY, true, "TmpSave", 1);
 			GameField.getInstance().loadLevel("TmpSave");
+			ScreensHolder.getInstance().swapScreens(EditorScreen.getInstance(),
+					LoadingScreen.getInstance());
 		}
 	}
 

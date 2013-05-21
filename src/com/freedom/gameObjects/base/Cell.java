@@ -105,7 +105,7 @@ public class Cell {
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
-			if (!this.content[i].passable())
+			if (!this.content[i].passable() && !element.god)
 				return false;
 		}
 
