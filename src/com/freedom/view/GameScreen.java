@@ -118,8 +118,8 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		amap.put("give.box", boxGiver);
-		amap.put("give.tnt", tntGiver);
+//		amap.put("give.box", boxGiver);
+//		amap.put("give.tnt", tntGiver);
 	}
 
 	@Override

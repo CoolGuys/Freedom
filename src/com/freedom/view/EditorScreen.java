@@ -14,13 +14,18 @@ import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.base.Stuff.StuffColor;
+import com.freedom.gameObjects.characters.PacmanBody;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.gameObjects.controlled.Box;
+import com.freedom.gameObjects.controlled.Deflector;
 import com.freedom.gameObjects.controlled.Door;
+import com.freedom.gameObjects.controlled.Laser;
 import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.gameObjects.controllers.ButtonAnd;
 import com.freedom.gameObjects.controllers.ButtonOr;
+import com.freedom.gameObjects.controllers.LaserDetectorAnd;
+import com.freedom.gameObjects.controllers.LaserDetectorOr;
 import com.freedom.gameObjects.healthOperators.TNT;
 import com.freedom.gameObjects.uncontrolled.Pit;
 import com.freedom.gameObjects.uncontrolled.Tile;
@@ -68,7 +73,6 @@ public class EditorScreen extends GameScreen {
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
 		imap.put(KeyStroke.getKeyStroke("Z"), "free.container");
-		
 
 		imap.put(KeyStroke.getKeyStroke("B"), "change.color");
 		imap.put(KeyStroke.getKeyStroke("1"), "give.wall");
@@ -79,8 +83,12 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("6"), "give.buttonAnd");
 		imap.put(KeyStroke.getKeyStroke("7"), "give.buttonOr");
 		imap.put(KeyStroke.getKeyStroke("8"), "give.door");
-		imap.put(KeyStroke.getKeyStroke("9"), "give.box");
-		imap.put(KeyStroke.getKeyStroke("0"), "give.box");
+		imap.put(KeyStroke.getKeyStroke("9"), "give.laser");
+		imap.put(KeyStroke.getKeyStroke("0"), "give.laserDetectorOr");
+
+		imap.put(KeyStroke.getKeyStroke("shift 0"), "give.laserDetectorAnd");
+		imap.put(KeyStroke.getKeyStroke("shift 1"), "give.deflector");
+		imap.put(KeyStroke.getKeyStroke("shift 2"), "give.pacman");
 
 	}
 
@@ -319,6 +327,62 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+	private class LaserGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Laser());
+			repaint();
+
+		}
+	}
+
+	private class LaserDetectorOrGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new LaserDetectorOr());
+			repaint();
+
+		}
+	}
+	
+	private class LaserDetectorAndGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new LaserDetectorAnd());
+			repaint();
+
+		}
+	}
+	
+	private class DeflectorGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Deflector());
+			repaint();
+
+		}
+	}
+	
+	private class PacmanGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new PacmanBody());
+			repaint();
+
+		}
+	}
+	
+	
 	private class ExamineAction extends AbstractAction {
 
 		@Override
@@ -331,11 +395,12 @@ public class EditorScreen extends GameScreen {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GameField.getInstance().setRobotEditor( (RobotEditor)GameField.getInstance().getRobot());
+			GameField.getInstance().setRobotEditor(
+					(RobotEditor) GameField.getInstance().getRobot());
 			GameField.getInstance().getRobotEditor().assign();
 		}
 	}
-	
+
 	private class EraseAction extends AbstractAction {
 
 		@Override
