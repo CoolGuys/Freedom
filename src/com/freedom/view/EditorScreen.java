@@ -15,6 +15,7 @@ import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.gameObjects.controlled.Box;
 import com.freedom.gameObjects.controlled.Door;
 import com.freedom.gameObjects.controlled.Teleport;
@@ -330,6 +331,7 @@ public class EditorScreen extends GameScreen {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().setRobotEditor( (RobotEditor)GameField.getInstance().getRobot());
 			GameField.getInstance().getRobotEditor().assign();
 		}
 	}

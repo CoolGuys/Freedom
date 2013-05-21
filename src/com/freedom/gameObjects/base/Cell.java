@@ -8,6 +8,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import com.freedom.gameObjects.base.Stuff.LoadingType;
+
 public class Cell {
 
 	public volatile boolean locked;
@@ -366,16 +368,9 @@ public class Cell {
 		return this.metaLevel;
 	}
 	
-	
-	///все для редактора
-	public enum LoadingType {
-		OBJ, OBJC, DNW; // simple object, object with cells, do not write;
-	}
-	public static LoadingType type = LoadingType.OBJC;
-	
 	public Stuff ifHaveButtons(){
 		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type.equals(Cell.type))
+			if(this.content[i].type == LoadingType.OBJC)
 				return this.content[i];
 		}
 		
@@ -383,7 +378,7 @@ public class Cell {
 	}
 	public void setControlled(Cell element){
 		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type.equals(Cell.type)){
+			if(this.content[i].type == LoadingType.OBJC){
 				this.content[i].setControlled(element);
 				return;
 			}
