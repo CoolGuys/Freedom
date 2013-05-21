@@ -183,6 +183,7 @@ public class ButtonAnd extends Stuff {
 	public void setControlled(Cell element) {
 		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
 		this.controlledCellsList[controlledCellsAmount][1] = element.getY();
+		element.buttonsNumber++;
 		this.controlledCellsAmount++;
 	}
 	
