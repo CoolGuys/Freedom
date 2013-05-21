@@ -84,8 +84,6 @@ public class GameScreen extends AbstractScreen {
 		PauseAction pause = new PauseAction();
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
-		BoxGiver boxGiver = new BoxGiver();
-		TNTGiver tntGiver = new TNTGiver();
 		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
@@ -118,8 +116,8 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		amap.put("give.box", boxGiver);
-		amap.put("give.tnt", tntGiver);
+		//amap.put("give.box", boxGiver);
+		//amap.put("give.tnt", tntGiver);
 	}
 
 	@Override
@@ -267,6 +265,7 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private class TNTGiver extends AbstractAction {
 
 		@Override
@@ -278,6 +277,7 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private class BoxGiver extends AbstractAction {
 
 		@Override

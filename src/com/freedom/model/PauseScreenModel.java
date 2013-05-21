@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButtonLite;
 import com.freedom.view.AbstractScreen;
-import com.freedom.view.GameScreen;
 import com.freedom.view.PauseScreen;
 import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;
