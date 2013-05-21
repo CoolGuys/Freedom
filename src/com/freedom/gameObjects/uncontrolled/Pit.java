@@ -1,6 +1,7 @@
 package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,14 +14,12 @@ import com.freedom.gameObjects.characters.Robot;
 
 public class Pit extends Stuff {
 
-	public Pit()
-	{
+	public Pit() {
 		super(false, true);
 		textureRed = texture1;
 	}
 
-	public Pit(double x, double y)
-	{
+	public Pit(double x, double y) {
 		super(false, true);
 		textureRed = texture1;
 		this.x = x;
@@ -42,7 +41,9 @@ public class Pit extends Stuff {
 	private static Image texture1;
 	static {
 		try {
-			texture1 = ImageIO.read(new File("Resource/Textures/Pit.png"));
+			texture1 = ImageIO.read(new File("Resource/Textures/Pit.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,10 +56,10 @@ public class Pit extends Stuff {
 	}
 
 	@Override
-	public boolean absorbs(Stuff element){
+	public boolean absorbs(Stuff element) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean reflects(Stuff element) {
 		return false;

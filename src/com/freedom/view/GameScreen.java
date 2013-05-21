@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
+import com.freedom.gameObjects.healthOperators.TNT;
 import com.freedom.model.GameField;
 import com.freedom.utilities.interfai.HitPointDisplay;
 import com.freedom.utilities.interfai.InGameMessageDisplay;
@@ -65,8 +66,9 @@ public class GameScreen extends AbstractScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
-		
+
 		imap.put(KeyStroke.getKeyStroke("B"), "give.box");
+		imap.put(KeyStroke.getKeyStroke("T"), "give.tnt");
 
 	}
 
@@ -83,6 +85,7 @@ public class GameScreen extends AbstractScreen {
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
 		BoxGiver boxGiver = new BoxGiver();
+		TNTGiver tntGiver = new TNTGiver();
 		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
@@ -116,6 +119,7 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
 		amap.put("give.box", boxGiver);
+		amap.put("give.tnt", tntGiver);
 	}
 
 	@Override
@@ -173,19 +177,17 @@ public class GameScreen extends AbstractScreen {
 
 	public void centerByRobotHorisontally(Robot robot) {
 
-		setLocation(getX()
-				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY());
+		setLocation(getX() + calculateDistanceFromRobotToScreenCenter(robot).x,
+				getY());
 	}
 
 	public void centerByRobot(Robot robot) {
 
-		setLocation(getX()
-				+ calculateDistanceFromRobotToScreenCenter(robot).x, getY()
-				+ calculateDistanceFromRobotToScreenCenter(robot).y);
+		setLocation(getX() + calculateDistanceFromRobotToScreenCenter(robot).x,
+				getY() + calculateDistanceFromRobotToScreenCenter(robot).y);
 		ScreensHolder.getInstance().repaint();
 	}
 
-	
 	public void changeOffsetFine(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
@@ -247,8 +249,8 @@ public class GameScreen extends AbstractScreen {
 			logger.info("Paused");
 		}
 	}
-	
-	private class InteractAction extends AbstractAction{
+
+	private class InteractAction extends AbstractAction {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().getRobot().interact();
@@ -265,7 +267,18 @@ public class GameScreen extends AbstractScreen {
 				GameField.getInstance().getRobot().put();
 		}
 	}
-	
+
+	private class TNTGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new TNT());
+			repaint();
+
+		}
+	}
+
 	private class BoxGiver extends AbstractAction {
 
 		@Override
@@ -274,11 +287,9 @@ public class GameScreen extends AbstractScreen {
 			if (r.container[0] != null) {
 				if (r.container[0].getColor() == StuffColor.BLUE) {
 					r.container[0].setColour("Red");
-				}
-				else if (r.container[0].getColor() == StuffColor.RED){
+				} else if (r.container[0].getColor() == StuffColor.RED) {
 					r.container[0].setColour("Green");
-				}
-				else if (r.container[0].getColor() == StuffColor.GREEN) {
+				} else if (r.container[0].getColor() == StuffColor.GREEN) {
 					r.container[0].setColour("Blue");
 				}
 			} else {
@@ -334,7 +345,6 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
-	
 	public class InGameGUIPane extends JLayeredPane {
 		public InGameGUIPane() {
 			this.setBounds(ScreensHolder.getInstance().getBounds());
