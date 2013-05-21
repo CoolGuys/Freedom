@@ -303,7 +303,7 @@ public class Stuff {
 		if (!this.destroyable)
 			return 0;
 
-		Graphics2D g2 = (Graphics2D) GameScreen.getInstance().getGraphics();
+		Graphics2D g2 = (Graphics2D) ScreensHolder.getInstance().getCurrentScreen().getGraphics();
 		Rectangle2D r = new Rectangle((int) this.x * getSize(), (int) this.y
 				* getSize(), getSize(), getSize());
 		g2.setColor(Color.WHITE);
