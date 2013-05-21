@@ -158,17 +158,28 @@ public class GameField {
 
 			int previousx = robot.getX();
 			int previousy = robot.getY();
-			Stuff element = GameField.getInstance().getCells()[previousx][previousy]
-					.getTop();
-			for (Stuff containedElement : element.container) {
-				if (containedElement != null) {
-					containedElement.x = robotx;
-					containedElement.y = roboty;
-				}
-			}
-			if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
+			Stuff element = this.robot;/* GameField.getInstance().getCells()[previousx][previousy]
+					.getTop();*/
+			
+			/*if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
 				GameField.getInstance().getCells()[previousx][previousy]
 						.deleteStuff();
+			}
+			}*/
+			GameField.getInstance().getCells()[previousx][previousy]
+						.deleteStuff();
+			while((!GameField.getInstance().getCells()[robotx][roboty].add(element))){
+				GameField.getInstance().getCells()[robotx][roboty]
+						.deleteStuff();
+			}
+			
+			
+			
+			for (Stuff containedElement : element.container) {
+				if (containedElement != null) {
+					containedElement.x = robot.getX();
+					containedElement.y = robot.getY();
+				}
 			}
 		}
 
