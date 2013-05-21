@@ -292,7 +292,7 @@ public class Stuff {
 		if (!isMoving)
 			isMoving=true;
 			GameField.getInstance().cells[this.getX()][this.getY()]
-					.deleteStuff(this);
+					.delete(this);
 	}
 
 	// разовый урон

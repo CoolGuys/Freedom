@@ -25,7 +25,7 @@ public class Robot extends Stuff implements Moveable {
 	protected String direction;
 	private double step = 0.1;
 
-	public static int maxLives = 100;
+	public static int maxLives = 1000;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -327,6 +327,7 @@ public class Robot extends Stuff implements Moveable {
 		System.out.println("You are dead, idiot!");
 		//TODO обработать смерть
 		super.die();
+		ScreensHolder.getInstance().repaint();
 	}
 
 }

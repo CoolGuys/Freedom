@@ -61,12 +61,18 @@ public class Cell {
 	}
 
 	public boolean reflects(Stuff element) {
+		if(metaLevel!=null){
+			if(this.metaLevel.reflects(element))
+				return true;
+		}
 		return this.content[this.contentAmount - 1].reflects(element);
 	}
 
 	public boolean absorbs(Stuff element) {
-		if(this.contentAmount - 1<0)
-			System.gc();
+		if(metaLevel!=null){
+			if(this.metaLevel.absorbs(element))
+				return true;
+		}
 		return this.content[this.contentAmount - 1].absorbs(element);
 	}
 
@@ -135,7 +141,7 @@ public class Cell {
 		return buf;
 	}
 
-	public synchronized boolean deleteStuff(Stuff element) {
+	public synchronized boolean delete(Stuff element) {
 
 		// System.out.println("Remove on "+ element.toString()+ ": " +
 		// contentAmount+" "+x+" "+y);
@@ -171,7 +177,7 @@ public class Cell {
 			return false;
 
 		if (replaceWith.equals(null))
-			this.deleteStuff(toReplace);
+			this.delete(toReplace);
 
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
@@ -231,7 +237,7 @@ public class Cell {
 		for (int i = this.contentAmount - 1; i >= 0; i--) {
 			if (this.content[i].takeable()) {
 				Stuff buf = this.content[i];
-				if (this.deleteStuff(buf))
+				if (this.delete(buf))
 					return buf;																
 			}
 		}

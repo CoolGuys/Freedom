@@ -59,7 +59,7 @@ public class TNT extends Stuff {
 		}
 
 		buf[this.getX()][this.getY()].expBuf = this.expDamage;
-		buf[this.getX()][this.getY()].deleteStuff(this);
+		buf[this.getX()][this.getY()].delete(this);
 		que.add(buf[this.getX()][this.getY()]);
 
 		// распределяем урон

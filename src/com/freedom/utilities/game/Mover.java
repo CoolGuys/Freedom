@@ -38,10 +38,11 @@ public final class Mover<MO extends Moveable> implements Runnable {
 							.getTargetCellCoordinates(direction).x][theOneToMove
 							.getTargetCellCoordinates(direction).y].locked = true;
 
-					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
-							.getY()].utilityRemove((Stuff) theOneToMove);
-					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) (int) theOneToMove
-							.getY()].setMeta((Stuff) theOneToMove);
+					GameField.getInstance().cells[theOneToMove.getTargetCellCoordinates(direction).x][ theOneToMove
+							.getTargetCellCoordinates(direction).y].setMeta((Stuff) theOneToMove);
+					
+					GameField.getInstance().cells[ theOneToMove.getX()][theOneToMove
+							.getY()].delete((Stuff) theOneToMove);
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
@@ -58,21 +59,16 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					}
 
 					theOneToMove.recalibrate();
-					GameField.getInstance().cells[(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).y]
-							.utilityAdd((Stuff) theOneToMove);
-					GameField.getInstance().cells[(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).y]
+//					GameField.getInstance().cells[(int) theOneToMove
+//							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
+//							.getTargetCellCoordinates(invertDirection()).y]
+//							.utilityAdd((Stuff) theOneToMove);
+					GameField.getInstance().cells[theOneToMove
+							.getX()][theOneToMove
+							.getY()]
 							.clearMeta();
 
-					GameField.getInstance().cells[(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).x][(int) theOneToMove
-							.getTargetCellCoordinates(invertDirection()).y]
-							.deleteStuff((Stuff) theOneToMove);
-
-					GameField.getInstance().cells[(int) theOneToMove.getX()][(int) theOneToMove
+					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].add((Stuff) theOneToMove);
 
 					// logger.info("current" + theOneToMove.getX() + " "

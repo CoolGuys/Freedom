@@ -441,7 +441,7 @@ public class LaserBeam extends Stuff {
 
 		// если поглощает
 		if (buf[this.getTargetCellCoordinates().x][this
-				.getTargetCellCoordinates().y].getTop().absorbs(this)) {
+				.getTargetCellCoordinates().y].absorbs(this)) {
 			this.next = null;
 			buf[this.getTargetCellCoordinates().x][this
 					.getTargetCellCoordinates().y].getTop().touch(this);
@@ -454,7 +454,7 @@ public class LaserBeam extends Stuff {
 		}
 		// если отражает
 		else if (buf[this.getTargetCellCoordinates().x][this
-				.getTargetCellCoordinates().y].getTop().reflects(this)) {
+				.getTargetCellCoordinates().y].reflects(this)) {
 
 			this.next = new LaserBeam(this.direction,
 					this.getTargetCellCoordinates().x,
@@ -510,7 +510,7 @@ public class LaserBeam extends Stuff {
 						.getY()].deleteStuff(buf.prev.secondNext);*/
 				buf.secondNext.deleteBeam();
 			}
-			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+			cellBuf[buf.getX()][buf.getY()].delete(buf);
 			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
 		}
@@ -518,7 +518,7 @@ public class LaserBeam extends Stuff {
 		if (buf.secondNext != null) {
 			buf.secondNext.deleteBeam();	
 		}
-		cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+		cellBuf[buf.getX()][buf.getY()].delete(buf);
 		this.next = null;
 	}
 
