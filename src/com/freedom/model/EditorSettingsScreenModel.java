@@ -11,12 +11,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JFormattedTextField;
 
+import com.freedom.utilities.game.Loader;
 import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButtonLite;
 import com.freedom.utilities.interfai.GLabel;
 import com.freedom.utilities.interfai.GLabel.Alignment;
 import com.freedom.view.EditorSettingsScreen;
-import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
 
@@ -107,8 +107,11 @@ public class EditorSettingsScreenModel {
 		public void performAction() {
 			levelX = Integer.parseInt(dimensionXField.getText());
 			levelY = Integer.parseInt(dimensionYField.getText());
+			
 			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-					LoadScreen.getInstance());
+					EditorSettingsScreen.getInstance());
+			Loader.createNewField(levelX, levelY, true, "TmpSave", 1);
+			GameField.getInstance().loadLevel("TmpSave");
 		}
 	}
 

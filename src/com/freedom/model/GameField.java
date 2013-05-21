@@ -15,9 +15,9 @@ import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.utilities.game.Loader;
 import com.freedom.view.GameScreen;
-import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
 
@@ -37,6 +37,7 @@ public class GameField {
 	private int previousLevelId;
 	//public Cell[][] previousCells;
 	private volatile Robot robot;
+	private volatile RobotEditor robotEditor;
 	public volatile Cell[][] cells;
 	public volatile Ghost[] ghosts;
 	private volatile int gostsAmount;
@@ -115,8 +116,6 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
-		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-				LoadScreen.getInstance());
 		GameField.getInstance().setPathToSave(pathToPackage);
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
@@ -279,5 +278,13 @@ public class GameField {
 			if(power.get(agent.getColour())>=power.get(object.getColour()))
 				return true;
 			return false;
+		}
+
+		public RobotEditor getRobotEditor() {
+			return robotEditor;
+		}
+
+		public void setRobotEditor(RobotEditor robotEditor) {
+			this.robotEditor = robotEditor;
 		}
 }

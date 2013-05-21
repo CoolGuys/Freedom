@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
@@ -55,7 +57,11 @@ public class Robot extends Stuff implements Moveable {
 			logger.warning("Robot texture was corrupted or deleted");
 		}
 	}
-
+	
+	public void loadToFile(Element obj) {
+		super.loadToFile(obj);
+	}
+	
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
 		super(false, true, 0, maxLives);
 		super.type=LoadingType.DNW;

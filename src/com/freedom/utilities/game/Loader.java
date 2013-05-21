@@ -1,7 +1,6 @@
 package com.freedom.utilities.game;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -25,6 +24,7 @@ import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.base.Stuff.LoadingType;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.gameObjects.uncontrolled.Tile;
 import com.freedom.gameObjects.uncontrolled.Wall;
 import com.freedom.model.GameField;
@@ -72,25 +72,31 @@ public class Loader {
 	public static void createNewField(int x,int y,boolean withWalls, String lvlfile, int lvl){
 		//Tile tile= new Tile();
 		//Wall wall = new Wall();
-		GameField.getInstance().cells = new Cell[x + 2][x + 2];
+		GameField.getInstance().cells = new Cell[x + 2][y + 2];
 		GameField.getInstance().newGhosts(0);
 		GameField.getInstance().setCurrentLevel(lvl);
-		for(int i=0;i<x+2;i++){
-			for (int j = 0; j < y + 2; j++) {
-				if ((i != 0) && (j != 0) && (i != x + 1) && (j != j + 1)) {
+		for(int i=1;i<=x;i++){
+			for (int j = 1; j <= y; j++) {
+				if ((i != 1) && (j != 1) && (i != x) && (j != y)) {
+					GameField.getInstance().cells[i][j]=new Cell(i, j);
 					Tile tile = new Tile(i, j, StuffColor.BLUE);
 					GameField.getInstance().cells[i][j].add(tile);
 				}else{
 					if(withWalls){
+						GameField.getInstance().cells[i][j]=new Cell(i, j);
 						Wall wall= new Wall(i, j, StuffColor.BLUE);
 						GameField.getInstance().cells[i][j].add(wall);
 					}else{
+						GameField.getInstance().cells[i][j]=new Cell(i, j);
 						Tile tile= new Tile(i, j, StuffColor.BLUE);
 						GameField.getInstance().cells[i][j].add(tile);
 					}
 				}
 			}
 		}
+		RobotEditor robot = new RobotEditor(2, 2, "S");
+		GameField.getInstance().cells[2][2].add(robot);
+		GameField.getInstance().setRobot(robot);
 		File fXml = new File(lvlfile);
 		if(!fXml.exists()){
 			try {
@@ -378,30 +384,51 @@ public class Loader {
 					for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {
 						Element obj = (Element) robotlist.item(rbti);
 						NodeList robostuff = obj.getElementsByTagName("objr");
-						if (robostuff.getLength() == 0) {
+						if (obj.getAttribute("editor").equals("")) {
+							if (robostuff.getLength() == 0) {
+								GameField.getInstance().setRobot(
+										new Robot(Integer.parseInt(obj
+												.getAttribute("x")),
+												Integer.parseInt(obj
+														.getAttribute("y")),
+												obj.getAttribute("dir"), null,
+												Robot.maxLives));
+								GameField.getInstance().getRobot()
+										.readLvlFile(obj);
+							} else {
+								Element roboobj = (Element) robostuff.item(0);
+								// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
+								Object newstuff;
+								Class<?> cla = Class.forName(roboobj
+										.getAttribute("class"));
+								newstuff = cla.newInstance();
+								((Stuff) newstuff).readLvlFile(roboobj);
+								GameField.getInstance().setRobot(
+										new Robot(Integer.parseInt(obj
+												.getAttribute("x")),
+												Integer.parseInt(obj
+														.getAttribute("y")),
+												obj.getAttribute("dir"),
+												((Stuff) newstuff),
+												Robot.maxLives));
+								GameField
+										.getInstance()
+										.getRobot()
+										.getContent()
+										.setXY(GameField.getInstance()
+												.getRobot().getX(),
+												GameField.getInstance()
+														.getRobot().getY());
+								GameField.getInstance().getRobot()
+										.readLvlFile(obj);
+							}
+						}else {
 							GameField.getInstance().setRobot(
-									new Robot(Integer.parseInt(obj
-											.getAttribute("x")), Integer
-											.parseInt(obj.getAttribute("y")),
-											obj.getAttribute("dir"), null,
-											Robot.maxLives));
-							GameField.getInstance().getRobot().readLvlFile(obj);
-						} else {
-							Element roboobj = (Element) robostuff.item(0);
-							// logger.info("reading x="+obj.getAttribute("x")+" y="+obj.getAttribute("y")+" class="+obj.getAttribute("class"));
-							Object newstuff;
-							Class<?> cla = Class.forName(roboobj
-									.getAttribute("class"));
-							newstuff = cla.newInstance();
-							((Stuff) newstuff).readLvlFile(roboobj);
-							GameField.getInstance().setRobot(
-									new Robot(Integer.parseInt(obj
-											.getAttribute("x")), Integer
-											.parseInt(obj.getAttribute("y")),
-											obj.getAttribute("dir"),
-											((Stuff) newstuff), Robot.maxLives));
-							GameField.getInstance().getRobot().getContent().setXY(GameField.getInstance().getRobot().getX(), GameField.getInstance().getRobot().getY());
-							GameField.getInstance().getRobot().readLvlFile(obj);
+									new RobotEditor(Integer.parseInt(obj
+											.getAttribute("x")),
+											Integer.parseInt(obj
+													.getAttribute("y")),
+											obj.getAttribute("dir")));
 						}
 					}
 					lsm.setProgressPercent(100);
