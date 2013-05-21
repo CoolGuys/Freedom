@@ -47,6 +47,8 @@ public class EditorSettingsScreenModel {
 				- dimensionYField.getWidth() / 2, descriptionLabel.getY() + 4
 				* textSize);
 
+		dimensionXField.setText("10");
+		dimensionYField.setText("10");
 		if (!ready) {
 			EditorSettingsScreen.getInstance().add(dimensionXField);
 			dimensionXField.setFont(textFont);
@@ -108,7 +110,6 @@ public class EditorSettingsScreenModel {
 		public void performAction() {
 			levelX = Integer.parseInt(dimensionXField.getText());
 			levelY = Integer.parseInt(dimensionYField.getText());
-			
 			ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 					EditorSettingsScreen.getInstance());
 			Loader.createNewField(levelX, levelY, true, "TmpSave", 1);
@@ -125,8 +126,6 @@ public class EditorSettingsScreenModel {
 	public void reactToRollOver(Point point) {
 		if(doneButton.checkRollOver(point))
 			EditorSettingsScreen.getInstance().repaint();
-			
-		
 		}
 
 	

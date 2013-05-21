@@ -66,9 +66,10 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
+		imap.put(KeyStroke.getKeyStroke("Z"), "free.container");
+		
 
-		imap.put(KeyStroke.getKeyStroke("B"), "give.box");
-
+		imap.put(KeyStroke.getKeyStroke("B"), "change.color");
 		imap.put(KeyStroke.getKeyStroke("1"), "give.wall");
 		imap.put(KeyStroke.getKeyStroke("2"), "give.tile");
 		imap.put(KeyStroke.getKeyStroke("3"), "give.pit");
@@ -105,6 +106,7 @@ public class EditorScreen extends GameScreen {
 		TNTGiver tntGiver = new TNTGiver();
 		TileGiver tileGiver = new TileGiver();
 		ExamineAction examine = new ExamineAction();
+		EraseAction erase = new EraseAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
 		FieldCoarseOffsetAction offsetLeft = new FieldCoarseOffsetAction("W");
@@ -137,7 +139,7 @@ public class EditorScreen extends GameScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		amap.put("give.box", boxGiver);
+		amap.put("change.color", boxGiver);
 		amap.put("give.tile", tileGiver);
 		amap.put("give.wall", wallGiver);
 		amap.put("give.door", doorGiver);
@@ -146,6 +148,8 @@ public class EditorScreen extends GameScreen {
 		amap.put("give.tnt", tntGiver);
 		amap.put("give.teleport", teleportGiver);
 		amap.put("give.pit", pitGiver);
+
+		amap.put("free.container", erase);
 	}
 
 	public void activateModel() {
@@ -265,6 +269,8 @@ public class EditorScreen extends GameScreen {
 		public void actionPerformed(ActionEvent e) {
 			Robot r = GameField.getInstance().getRobot();
 			r.setContainer(new ButtonAnd());
+			repaint();
+
 		}
 	}
 
@@ -325,6 +331,15 @@ public class EditorScreen extends GameScreen {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			GameField.getInstance().getRobotEditor().assign();
+		}
+	}
+	
+	private class EraseAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().emptyContainer();
+			repaint();
 		}
 	}
 

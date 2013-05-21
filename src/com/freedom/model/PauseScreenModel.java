@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.freedom.utilities.interfai.GAction;
 import com.freedom.utilities.interfai.GButtonLite;
+import com.freedom.view.AbstractScreen;
 import com.freedom.view.GameScreen;
 import com.freedom.view.PauseScreen;
 import com.freedom.view.SaveScreen;
@@ -93,7 +94,7 @@ public class PauseScreenModel {
 		public void performAction() {
 			GameField.getInstance().resetTickerListeners();
 			GameField.otherThreads.shutdownNow();
-			ScreensHolder.getInstance().removeScreen(GameScreen.getInstance());
+			ScreensHolder.getInstance().removeScreen((AbstractScreen) ScreensHolder.getInstance().getComponents()[1]);
 			ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
 					PauseScreen.getInstance());
 		}

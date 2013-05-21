@@ -245,7 +245,6 @@ public class GameScreen extends AbstractScreen {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ScreensHolder.getInstance().addScreen(PauseScreen.getInstance());
-
 			logger.info("Paused");
 		}
 	}
