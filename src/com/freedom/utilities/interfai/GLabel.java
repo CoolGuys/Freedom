@@ -51,10 +51,9 @@ public class GLabel {
 	}
 
 	public void center() {
-		Graphics2D g2 = (Graphics2D) ScreensHolder.getInstance()
-				.getCurrentScreen().getGraphics();
 
-		FontRenderContext context = g2.getFontRenderContext();
+		FontRenderContext context = ScreensHolder.getInstance().getFontMetrics(textFont)
+				.getFontRenderContext();
 		Rectangle2D bounds = textFont.getStringBounds(text, context);
 		this.positionX = (int) (LoadingScreen.getInstance().getWidth() / 2 - bounds
 				.getWidth() / 2);

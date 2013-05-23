@@ -48,10 +48,6 @@ public class EditorSettingsScreen extends AbstractScreen {
 		editorScreenModel.addEntries();
 	}
 
-	public void deactivateModel() {
-		editorScreenModel.deactivate();
-	}
-	
 	private EditorSettingsScreenModel editorScreenModel = EditorSettingsScreenModel.getInstance();
 	private static EditorSettingsScreen INSTANCE;
 	private static Logger logger = Logger.getLogger("TextFieldScreen");
