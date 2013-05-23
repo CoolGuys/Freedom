@@ -28,7 +28,8 @@ public class Wall extends Stuff {
 		this.color=c;
 	}
 
-	private void setTexture() {
+	private void setTexture() throws ArrayIndexOutOfBoundsException {
+		finalTexture=new BufferedImage(getSize(), getSize(), BufferedImage.TYPE_INT_RGB);
 		Graphics g = finalTexture.getGraphics();
 		Cell[][] cells = GameField.getInstance().getCells();
 		int x = (int) this.x;
@@ -101,13 +102,11 @@ public class Wall extends Stuff {
 	}
 
 	public void draw(Graphics g) {
-//		if (!ready)
 		setTexture();
 		g.drawImage(textureRed, (int) (x * getSize()), (int) (y * getSize()),
 				null);
 	}
 
-//	private boolean ready;
 	private static Image textureN;
 	private static Image textureE;
 	private static Image textureS;

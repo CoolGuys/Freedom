@@ -17,7 +17,7 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class ButtonOr extends Stuff {
 	public ButtonOr()
@@ -50,7 +50,7 @@ public class ButtonOr extends Stuff {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 	}
 	@Override
 	public void touch(Stuff element) {
@@ -58,7 +58,6 @@ public class ButtonOr extends Stuff {
 		textureRed = texturesPressed[1];
 		textureGreen = texturesPressed[2];
 		textureBlue = texturesPressed[3];
-		sender = new SignalOnSender();
 		GameField.getInstance().getTicker().addActionListener(sender);
 
 	}
@@ -100,9 +99,7 @@ public class ButtonOr extends Stuff {
 				
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
-					GameScreen
-							.getInstance()
-							.repaint(
+					ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
 											* getSize(),
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
@@ -137,7 +134,7 @@ public class ButtonOr extends Stuff {
 	// батон
 	protected int controlledCellsAmount; // количество целлов на которые действует
 										// батон
-	protected ActionListener sender;
+	protected SignalOnSender sender = new SignalOnSender();
 	private static File f2;	
 
 	protected static Logger logger = Logger.getLogger("ButtonAnd");

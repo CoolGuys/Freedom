@@ -26,7 +26,7 @@ public class ScreensHolder extends JLayeredPane {
 		logger.setLevel(Level.WARNING);
 		logger.info("Entering the constructor...");
 		setLayout(null);
-		setDoubleBuffered(true);
+	//	setDoubleBuffered(true);
 	}
 
 	public void createScreens() {

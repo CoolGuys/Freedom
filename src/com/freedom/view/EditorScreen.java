@@ -8,24 +8,20 @@ import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.DebugGraphics;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.base.Stuff.StuffColor;
-import com.freedom.gameObjects.characters.PacmanBody;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.gameObjects.controlled.Box;
-import com.freedom.gameObjects.controlled.Deflector;
 import com.freedom.gameObjects.controlled.Door;
-import com.freedom.gameObjects.controlled.Laser;
 import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.gameObjects.controllers.ButtonAnd;
 import com.freedom.gameObjects.controllers.ButtonOr;
-import com.freedom.gameObjects.controllers.LaserDetectorAnd;
-import com.freedom.gameObjects.controllers.LaserDetectorOr;
 import com.freedom.gameObjects.healthOperators.TNT;
 import com.freedom.gameObjects.uncontrolled.Pit;
 import com.freedom.gameObjects.uncontrolled.Tile;
@@ -43,9 +39,11 @@ public class EditorScreen extends GameScreen {
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		setDoubleBuffered(true);
+		//setDoubleBuffered(true);
+		setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
 		logger.setLevel(Level.WARNING);
 	}
+
 
 	public void createInputMap() {
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -172,6 +170,11 @@ public class EditorScreen extends GameScreen {
 			return INSTANCE = new EditorScreen();
 		else
 			return INSTANCE;
+	}
+	
+
+	public EditorScreen instance() {
+		return INSTANCE;
 	}
 
 	private static EditorScreen INSTANCE;
@@ -327,62 +330,62 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
-	private class LaserGiver extends AbstractAction {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Robot r = GameField.getInstance().getRobot();
-			r.setContainer(new Laser());
-			repaint();
-
-		}
-	}
-
-	private class LaserDetectorOrGiver extends AbstractAction {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Robot r = GameField.getInstance().getRobot();
-			r.setContainer(new LaserDetectorOr());
-			repaint();
-
-		}
-	}
-	
-	private class LaserDetectorAndGiver extends AbstractAction {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Robot r = GameField.getInstance().getRobot();
-			r.setContainer(new LaserDetectorAnd());
-			repaint();
-
-		}
-	}
-	
-	private class DeflectorGiver extends AbstractAction {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Robot r = GameField.getInstance().getRobot();
-			r.setContainer(new Deflector());
-			repaint();
-
-		}
-	}
-	
-	private class PacmanGiver extends AbstractAction {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Robot r = GameField.getInstance().getRobot();
-			r.setContainer(new PacmanBody());
-			repaint();
-
-		}
-	}	
-	
-	
+//	private class LaserGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new Laser());
+//			repaint();
+//
+//		}
+//	}
+//
+//	private class LaserDetectorOrGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new LaserDetectorOr());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class LaserDetectorAndGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new LaserDetectorAnd());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class DeflectorGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new Deflector());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class PacmanGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new PacmanBody());
+//			repaint();
+//
+//		}
+//	}	
+//	
+//	
 	private class ExamineAction extends AbstractAction {
 
 		@Override

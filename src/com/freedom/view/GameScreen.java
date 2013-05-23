@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.DebugGraphics;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
@@ -26,14 +27,17 @@ import com.freedom.utilities.interfai.InGameMessageDisplay;
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
 
-	protected GameScreen() {
+	protected GameScreen()
+	{
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		setDoubleBuffered(true);
+		//setDoubleBuffered(true);
+		setDebugGraphicsOptions(DebugGraphics.LOG_OPTION);
+
 		logger.setLevel(Level.WARNING);
 	}
 
@@ -137,6 +141,10 @@ public class GameScreen extends AbstractScreen {
 			return INSTANCE;
 	}
 
+	public GameScreen instance() {
+		return INSTANCE;
+	}
+
 	public void changeOffsetCoarse(String direction) {
 		logger.info("Offsettig");
 		if (direction.equals("N"))
@@ -225,7 +233,8 @@ public class GameScreen extends AbstractScreen {
 	private static GameScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
-		public CoarseMovementAction(String name) {
+		public CoarseMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -307,7 +316,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FineMovementAction extends AbstractAction {
-		public FineMovementAction(String name) {
+		public FineMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -319,7 +329,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldCoarseOffsetAction extends AbstractAction {
-		public FieldCoarseOffsetAction(String name) {
+		public FieldCoarseOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -331,7 +342,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldFineOffsetAction extends AbstractAction {
-		public FieldFineOffsetAction(String name) {
+		public FieldFineOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -343,7 +355,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public class InGameGUIPane extends JLayeredPane {
-		public InGameGUIPane() {
+		public InGameGUIPane()
+		{
 			this.setBounds(ScreensHolder.getInstance().getBounds());
 			this.setLocation(0, 0);
 			this.setVisible(true);

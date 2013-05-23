@@ -17,7 +17,7 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class ButtonAnd extends Stuff {
 	public ButtonAnd()
@@ -139,8 +139,8 @@ public class ButtonAnd extends Stuff {
 
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
-					GameScreen
-							.getInstance()
+					ScreensHolder.getInstance().getCurrentScreen()
+							.instance()
 							.repaint(
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
 											* getSize(),
