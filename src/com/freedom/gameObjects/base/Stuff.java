@@ -366,9 +366,9 @@ public class Stuff {
 			this.color = StuffColor.GREEN;
 		if (color.equalsIgnoreCase("Blue"))
 			this.color = StuffColor.BLUE;
-		
 		GameField.getInstance();
 		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
+		ScreensHolder.getInstance().repaint();
 	}
 
 	public void setControlled(Cell element) {
