@@ -26,10 +26,14 @@ public class Door extends Stuff {
 
 	static {
 		try {
-			textureClosedVertical = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedVertical.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
-			textureClosedHorisontal = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedHorisontal.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
+			textureClosedVertical = ImageIO.read(
+					new File("Resource/Textures/DoorClosedVertical.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureClosedHorisontal = ImageIO.read(
+					new File("Resource/Textures/DoorClosedHorisontal.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
@@ -70,8 +74,10 @@ public class Door extends Stuff {
 		return false;
 	}
 
-	
-	public void draw(Graphics g) {
+	private void setTexture() {
+		if (passable)
+			textureRed = textureGreen = textureBlue = null;
+		else {
 			Cell[][] cells = GameField.getInstance().cells;
 			int x = (int) this.x;
 			int y = (int) this.y;
@@ -95,11 +101,15 @@ public class Door extends Stuff {
 				textureClosed = textureClosedVertical;
 			else
 				textureClosed = textureClosedHorisontal;
-			textureRed = textureClosed;
-		
+			textureRed = textureGreen = textureBlue = textureClosed;
+		}
+	}
+
+	public void draw(Graphics g) {
+		setTexture();
 		super.draw(g);
 	}
-	
+
 	public boolean absorbs(Stuff element) {
 		return false;
 	}

@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
-import javax.swing.DebugGraphics;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
@@ -36,7 +35,7 @@ public class GameScreen extends AbstractScreen {
 		this.createInputMap();
 		this.createMovementController();
 		//setDoubleBuffered(true);
-		setDebugGraphicsOptions(DebugGraphics.LOG_OPTION);
+		//setDebugGraphicsOptions(DebugGraphics.LOG_OPTION);
 
 		logger.setLevel(Level.WARNING);
 	}
