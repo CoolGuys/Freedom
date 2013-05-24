@@ -8,8 +8,6 @@ import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.Mover;
 import com.freedom.view.EditorScreen;
-import com.freedom.view.GameScreen;
-import com.freedom.view.ScreensHolder;
 
 public class RobotEditor extends Robot {
 	public Stuff source;
@@ -53,24 +51,6 @@ public class RobotEditor extends Robot {
 		return true;
 	}
 
-	@Override
-	public void moveCoarse(String direction) {
-		if (Math.abs(GameScreen.getInstance()
-				.calculateDistanceFromRobotToScreenCenter(this).x) > ScreensHolder
-				.getInstance().getWidth() / 2 - 4 * getSize())
-			GameScreen.getInstance().centerByRobotHorisontally(this);
-
-		if (Math.abs(GameScreen.getInstance()
-				.calculateDistanceFromRobotToScreenCenter(this).y) > ScreensHolder
-				.getInstance().getHeight() / 2 - 4 * getSize())
-			GameScreen.getInstance().centerByRobotVertically(this);
-
-		Runnable r = new Mover<Robot>(this, direction, 1, 10,
-				EditorScreen.getInstance());
-		Thread t = new Thread(r);
-		t.start();
-
-	}
 
 	@Override
 	public void moveFine(String direction) {

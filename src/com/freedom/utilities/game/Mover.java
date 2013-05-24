@@ -82,7 +82,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 
 			theOneToMove.tellIfBeingMoved(false);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			return;
 		}
 
 	}

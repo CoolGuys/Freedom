@@ -159,9 +159,8 @@ public class Robot extends Stuff implements Moveable {
 			GameScreen.getInstance().centerByRobotVertically(this);
 
 		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
-		Thread t = new Thread(r);
-		t.start();
 
+		GameField.otherThreads.execute(r);
 	}
 
 	public void moveFine(String direction) {
@@ -172,8 +171,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
 
-		Thread t = new Thread(r);
-		t.start();
+		GameField.otherThreads.execute(r);
 	}
 
 	/**

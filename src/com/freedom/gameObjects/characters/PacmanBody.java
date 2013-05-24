@@ -168,9 +168,9 @@ public class PacmanBody extends Stuff implements Moveable {
 		//
 		// System.out.println(direction);
 		// this.die();
-		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10, GameScreen.getInstance());
-		Thread t = new Thread(r);
-		t.start();
+		Runnable r = new Mover<PacmanBody>(this, direction, 2, 10, GameScreen.getInstance());
+
+		GameField.otherThreads.execute(r);
 	}
 
 	@Override

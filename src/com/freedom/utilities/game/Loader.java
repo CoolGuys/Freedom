@@ -183,8 +183,11 @@ public class Loader {
 						}
 						Stuff[] stu = GameField.getInstance().cells[x][y]
 								.getContent();
-						int l = stu.length;
+						int l = GameField.getInstance().cells[x][y]
+								.getContentAmount();
 						for (int i = 0; i < l; i++) {
+							if(stu[i]==null)
+								System.out.println("LoaderSv");
 							if (stu[i].getLoadingType() == LoadingType.OBJ) {
 								Element obj = doc.createElement("obj");
 								stu[i].loadToFile(obj);
