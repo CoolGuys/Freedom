@@ -130,8 +130,8 @@ public class Deflector extends Laser {
 	public void interact(Stuff interactor) {
 		super.useOff();
 		this.toDeflect++;
-		if (this.toDeflect > 7)
-			this.toDeflect = this.toDeflect - 7;
+		if (this.toDeflect > 8)
+			this.toDeflect = this.toDeflect - 8;
 	}
 
 	@Override
