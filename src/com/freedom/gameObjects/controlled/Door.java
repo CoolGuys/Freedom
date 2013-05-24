@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
@@ -22,14 +23,17 @@ public class Door extends Stuff {
 	private static Image textureClosedVertical;
 	private static Image textureClosedHorisontal;
 	private static Image textureClosed;
-	private boolean textureSet;
 
 	static {
 		try {
-			textureClosedVertical = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedVertical.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
-			textureClosedHorisontal = ImageIO.read(new File(
-					"Resource/Textures/DoorClosedHorisontal.png")).getScaledInstance(getSize(), getSize(), BufferedImage.SCALE_SMOOTH);
+			textureClosedVertical = ImageIO.read(
+					new File("Resource/Textures/DoorClosedVertical.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
+			textureClosedHorisontal = ImageIO.read(
+					new File("Resource/Textures/DoorClosedHorisontal.png"))
+					.getScaledInstance(getSize(), getSize(),
+							BufferedImage.SCALE_SMOOTH);
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
@@ -70,8 +74,10 @@ public class Door extends Stuff {
 		return false;
 	}
 
-	public void draw(Graphics g) {
-		if (!textureSet) {
+	private void setTexture() {
+		if (passable)
+			textureRed = textureGreen = textureBlue = null;
+		else {
 			Cell[][] cells = GameField.getInstance().cells;
 			int x = (int) this.x;
 			int y = (int) this.y;
@@ -95,15 +101,17 @@ public class Door extends Stuff {
 				textureClosed = textureClosedVertical;
 			else
 				textureClosed = textureClosedHorisontal;
-			textureSet = true;
-			textureRed = textureClosed;
+			textureRed = textureGreen = textureBlue = textureClosed;
 		}
-		g.drawImage(textureRed, (int) (getX() * getSize()),
-				(int) (getY() * getSize()), getSize(), getSize(), null);
 	}
-	
+
+	public void draw(Graphics g) {
+		setTexture();
+		super.draw(g);
+	}
+
 	public boolean absorbs(Stuff element) {
-			return false;
+		return false;
 	}
 
 	@Override

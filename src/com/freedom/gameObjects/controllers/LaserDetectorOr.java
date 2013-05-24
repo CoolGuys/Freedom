@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class LaserDetectorOr extends ButtonOr {
 
@@ -31,13 +31,16 @@ public class LaserDetectorOr extends ButtonOr {
 		}
 		switch (toucher.getColor()) {
 		case RED: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];
+			return;
 		}
 		case GREEN: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];
+			return;
 		}
 		case BLUE: {
-			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];return;
+			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];
+			return;
 		}
 		}
 	}
@@ -48,6 +51,10 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	public void realUntouch(Stuff toucher) {
+		if(!GameField.getInstance().active) {
+			inertion.stop();
+			return;
+		}
 		inertion.stop();
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		sendingSignal = false;
@@ -55,7 +62,7 @@ public class LaserDetectorOr extends ButtonOr {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
 	}
 
@@ -67,10 +74,10 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	private static Image textureOff;
-	private static Image[] texturesOn = new Image[4];
+	protected static Image[] texturesOn = new Image[4];
 	private InertedCircuitBreaker breaker = new InertedCircuitBreaker();
 	private Timer inertion = new Timer(500, breaker);
-	private SignalOnSender sender = new SignalOnSender();
+	protected SignalOnSender sender = new SignalOnSender();
 	private boolean sendingSignal;
 
 	static {
@@ -102,7 +109,7 @@ public class LaserDetectorOr extends ButtonOr {
 
 		private Stuff toucher;
 	}
-	
+
 	public boolean absorbs(Stuff element) {
 		if (element.getColour() != this.getColour())
 			return true;

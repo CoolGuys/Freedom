@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.PathFinder;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class PacmanSoul implements Runnable {
 	private int stepRate;
@@ -49,7 +49,7 @@ public class PacmanSoul implements Runnable {
 	}
 
 	public void run() {
-		Thread.currentThread().setName("Pacman Soul "+body);
+		Thread.currentThread().setName("Pacman Soul " + body);
 		while (alive && !Thread.currentThread().isInterrupted()) {
 
 			try {
@@ -90,7 +90,7 @@ public class PacmanSoul implements Runnable {
 				}
 			} catch (InterruptedException e) {
 				// TODO Автоматически созданный блок catch
-				this.alive=false;
+				this.alive = false;
 			}
 		}
 
@@ -99,13 +99,23 @@ public class PacmanSoul implements Runnable {
 	private class Changer implements Runnable {
 
 		public void run() {
-			Thread.currentThread().setName("Pacman texture changer "+ body);
+			Thread.currentThread().setName("Pacman texture changer " + body);
 			while (alive) {
+				if(GameField.getInstance().active) {
 				body.changeTexture();
-				GameScreen.getInstance().repaint(
-						(int) (body.getX() * Stuff.getSize()),
-						(int) (body.getY() * Stuff.getSize()), Stuff.getSize(),
-						Stuff.getSize());
+				try {
+					ScreensHolder
+				
+						.getInstance()
+						.getCurrentScreen()
+						.instance()
+						.repaint((int) (body.getX() * Stuff.getSize()),
+								(int) (body.getY() * Stuff.getSize()),
+								Stuff.getSize(), Stuff.getSize());
+				} catch (Exception e) {
+					System.gc();
+				}
+				}
 				try {
 					Thread.sleep(30);
 				} catch (InterruptedException e) {

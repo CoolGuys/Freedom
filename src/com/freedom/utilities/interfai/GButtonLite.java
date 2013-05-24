@@ -26,6 +26,18 @@ public class GButtonLite {
 
 	}
 
+	public GButtonLite(String text, int lineNumber, GAction action, Font font)
+	{
+		this.action = action;
+		this.text = text;
+		this.line = lineNumber;
+		this.textFont = font;
+		positionY = calculateYPosition();
+
+		clickedSound = new File("Resource/Sound/ButtonClicked.wav");
+
+	}
+
 	public boolean checkRollOver(Point p) {
 		if ((p.getX() >= this.positionX
 				&& p.getX() <= this.positionX + dimensionX
@@ -65,9 +77,6 @@ public class GButtonLite {
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		FontRenderContext context = g2.getFontRenderContext();
-		if(textFont==null)
-			textFont = new Font("Monospaced", Font.PLAIN, PauseScreen
-				.getInstance().getHeight() / 15);
 		Rectangle2D bounds = textFont.getStringBounds(text, context);
 
 		if (dimensionX == 0) {
@@ -85,17 +94,17 @@ public class GButtonLite {
 	}
 
 	private int line;
-	private int dimensionX=0;
+	private int dimensionX = 0;
 	private int dimensionY;
 	private int positionX, positionY;
 	private String text;
 	private Color textColor = Color.LIGHT_GRAY;
 	private LineMetrics metrics;
 	private File clickedSound;
-	private Font textFont;
+	private Font textFont = new Font("Monospaced", Font.PLAIN, PauseScreen
+			.getInstance().getHeight() / 15);;
 	public final GAction action;
 	private final int offsetY = PauseScreen.getInstance().getHeight() / 3;
 	private final int gap = PauseScreen.getInstance().getHeight() / 12;
 
 }
-

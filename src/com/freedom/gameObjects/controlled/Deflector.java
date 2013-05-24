@@ -17,7 +17,8 @@ import javax.swing.Timer;
 import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
-import com.freedom.view.GameScreen;
+import com.freedom.model.GameField;
+import com.freedom.view.ScreensHolder;
 
 public class Deflector extends Laser {
 
@@ -71,10 +72,9 @@ public class Deflector extends Laser {
 
 	@Override
 	public boolean isCoolEnough(Stuff element) {
-		if (this.getColor() == element.getColor())
-			return true;
-		else
-			return false;
+		this.setColour(element.getColour());	
+		return true;
+			
 	}
 
 	public void touch(Stuff element) {
@@ -88,7 +88,7 @@ public class Deflector extends Laser {
 			this.direction = Deflector.list.get(this.revolve(
 					list.indexOf(buf.direction), this.toDeflect));
 			super.useOn();
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		}
 	}
 
@@ -105,7 +105,10 @@ public class Deflector extends Laser {
 	}
 
 	public void realUntouch(Stuff element) {
-
+		if(!GameField.getInstance().active) {
+			inertion.stop();
+			return;
+		}
 		LaserBeam buf;
 		try {
 			buf = (LaserBeam) element;
@@ -114,7 +117,7 @@ public class Deflector extends Laser {
 			inertion.stop();
 
 			super.useOff();
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		} catch (ClassCastException e) {
 			// TODO Logger message
 		}

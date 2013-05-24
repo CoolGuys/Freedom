@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.ActionMap;
+import javax.swing.DebugGraphics;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
@@ -15,6 +16,7 @@ import javax.swing.KeyStroke;
 
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.gameObjects.controlled.Box;
 import com.freedom.gameObjects.controlled.Door;
 import com.freedom.gameObjects.controlled.Teleport;
@@ -23,21 +25,25 @@ import com.freedom.gameObjects.controllers.ButtonOr;
 import com.freedom.gameObjects.healthOperators.TNT;
 import com.freedom.gameObjects.uncontrolled.Pit;
 import com.freedom.gameObjects.uncontrolled.Tile;
+import com.freedom.gameObjects.uncontrolled.Wall;
 import com.freedom.model.GameField;
 import com.freedom.utilities.interfai.HitPointDisplay;
 
 @SuppressWarnings("serial")
 public class EditorScreen extends GameScreen {
-	private EditorScreen() {
+	private EditorScreen()
+	{
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		setDoubleBuffered(true);
+		//setDoubleBuffered(true);
+		setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
 		logger.setLevel(Level.WARNING);
 	}
+
 
 	public void createInputMap() {
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
@@ -48,7 +54,7 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("U"), "take");
 		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
 		imap.put(KeyStroke.getKeyStroke("E"), "examine");
-		imap.put(KeyStroke.getKeyStroke("Q"), "interact");
+		imap.put(KeyStroke.getKeyStroke("O"), "assign");
 		imap.put(KeyStroke.getKeyStroke("I"), "turn.up");
 		imap.put(KeyStroke.getKeyStroke("L"), "turn.right");
 		imap.put(KeyStroke.getKeyStroke("J"), "turn.left");
@@ -64,9 +70,9 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("shift I"), "fineOffset.down");
 
 		imap.put(KeyStroke.getKeyStroke("ESCAPE"), "pause");
+		imap.put(KeyStroke.getKeyStroke("Z"), "free.container");
 
-		imap.put(KeyStroke.getKeyStroke("B"), "give.box");
-
+		imap.put(KeyStroke.getKeyStroke("B"), "change.color");
 		imap.put(KeyStroke.getKeyStroke("1"), "give.wall");
 		imap.put(KeyStroke.getKeyStroke("2"), "give.tile");
 		imap.put(KeyStroke.getKeyStroke("3"), "give.pit");
@@ -75,8 +81,12 @@ public class EditorScreen extends GameScreen {
 		imap.put(KeyStroke.getKeyStroke("6"), "give.buttonAnd");
 		imap.put(KeyStroke.getKeyStroke("7"), "give.buttonOr");
 		imap.put(KeyStroke.getKeyStroke("8"), "give.door");
-		imap.put(KeyStroke.getKeyStroke("9"), "give.box");
-		imap.put(KeyStroke.getKeyStroke("0"), "give.box");
+		imap.put(KeyStroke.getKeyStroke("9"), "give.laser");
+		imap.put(KeyStroke.getKeyStroke("0"), "give.laserDetectorOr");
+
+		imap.put(KeyStroke.getKeyStroke("shift 0"), "give.laserDetectorAnd");
+		imap.put(KeyStroke.getKeyStroke("shift 1"), "give.deflector");
+		imap.put(KeyStroke.getKeyStroke("shift 2"), "give.pacman");
 
 	}
 
@@ -92,9 +102,10 @@ public class EditorScreen extends GameScreen {
 		PauseAction pause = new PauseAction();
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
+		AssignAction assign = new AssignAction();
 		BoxGiver boxGiver = new BoxGiver();
 		DoorGiver doorGiver = new DoorGiver();
-		BoxGiver wallGiver = new BoxGiver();
+		WallGiver wallGiver = new WallGiver();
 		ButtonOrGiver buttonOrGiver = new ButtonOrGiver();
 		ButtonAndGiver buttonAndGiver = new ButtonAndGiver();
 		TeleportGiver teleportGiver = new TeleportGiver();
@@ -102,6 +113,7 @@ public class EditorScreen extends GameScreen {
 		TNTGiver tntGiver = new TNTGiver();
 		TileGiver tileGiver = new TileGiver();
 		ExamineAction examine = new ExamineAction();
+		EraseAction erase = new EraseAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
 		FieldCoarseOffsetAction offsetLeft = new FieldCoarseOffsetAction("W");
@@ -119,6 +131,7 @@ public class EditorScreen extends GameScreen {
 		amap.put("pause", pause);
 		amap.put("take", take);
 		amap.put("interact", interact);
+		amap.put("assign", assign);
 		amap.put("examine", examine);
 		amap.put("turn.up", turnUp);
 		amap.put("turn.left", turnLeft);
@@ -133,7 +146,7 @@ public class EditorScreen extends GameScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		amap.put("give.box", boxGiver);
+		amap.put("change.color", boxGiver);
 		amap.put("give.tile", tileGiver);
 		amap.put("give.wall", wallGiver);
 		amap.put("give.door", doorGiver);
@@ -142,6 +155,8 @@ public class EditorScreen extends GameScreen {
 		amap.put("give.tnt", tntGiver);
 		amap.put("give.teleport", teleportGiver);
 		amap.put("give.pit", pitGiver);
+
+		amap.put("free.container", erase);
 	}
 
 	public void activateModel() {
@@ -150,17 +165,23 @@ public class EditorScreen extends GameScreen {
 		ScreensHolder.getInstance().moveToFront(guiPane);
 	}
 
-	public static GameScreen getInstance() {
+	public static EditorScreen getInstance() {
 		if (INSTANCE == null)
 			return INSTANCE = new EditorScreen();
 		else
 			return INSTANCE;
 	}
+	
+
+	public EditorScreen instance() {
+		return INSTANCE;
+	}
 
 	private static EditorScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
-		public CoarseMovementAction(String name) {
+		public CoarseMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -260,6 +281,8 @@ public class EditorScreen extends GameScreen {
 		public void actionPerformed(ActionEvent e) {
 			Robot r = GameField.getInstance().getRobot();
 			r.setContainer(new ButtonAnd());
+			repaint();
+
 		}
 	}
 
@@ -285,6 +308,17 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+	private class WallGiver extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Robot r = GameField.getInstance().getRobot();
+			r.setContainer(new Wall());
+			repaint();
+
+		}
+	}
+
 	private class PitGiver extends AbstractAction {
 
 		@Override
@@ -296,6 +330,62 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+//	private class LaserGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new Laser());
+//			repaint();
+//
+//		}
+//	}
+//
+//	private class LaserDetectorOrGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new LaserDetectorOr());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class LaserDetectorAndGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new LaserDetectorAnd());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class DeflectorGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new Deflector());
+//			repaint();
+//
+//		}
+//	}
+//	
+//	private class PacmanGiver extends AbstractAction {
+//
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			Robot r = GameField.getInstance().getRobot();
+//			r.setContainer(new PacmanBody());
+//			repaint();
+//
+//		}
+//	}	
+//	
+//	
 	private class ExamineAction extends AbstractAction {
 
 		@Override
@@ -304,8 +394,28 @@ public class EditorScreen extends GameScreen {
 		}
 	}
 
+	private class AssignAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().setRobotEditor(
+					(RobotEditor) GameField.getInstance().getRobot());
+			GameField.getInstance().getRobotEditor().assign();
+		}
+	}
+
+	private class EraseAction extends AbstractAction {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GameField.getInstance().getRobot().emptyContainer();
+			repaint();
+		}
+	}
+
 	private class FineMovementAction extends AbstractAction {
-		public FineMovementAction(String name) {
+		public FineMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -317,7 +427,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	private class FieldCoarseOffsetAction extends AbstractAction {
-		public FieldCoarseOffsetAction(String name) {
+		public FieldCoarseOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -329,7 +440,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	private class FieldFineOffsetAction extends AbstractAction {
-		public FieldFineOffsetAction(String name) {
+		public FieldFineOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -341,7 +453,8 @@ public class EditorScreen extends GameScreen {
 	}
 
 	public class InGameGUIPane extends JLayeredPane {
-		public InGameGUIPane() {
+		public InGameGUIPane()
+		{
 			this.setBounds(ScreensHolder.getInstance().getBounds());
 			this.setLocation(0, 0);
 			this.setVisible(true);

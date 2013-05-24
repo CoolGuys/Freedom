@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import com.freedom.gameObjects.base.Stuff.LoadingType;
+import com.freedom.gameObjects.controlled.Teleport;
+
 public class Cell {
 
 	public volatile boolean locked;
@@ -61,12 +64,18 @@ public class Cell {
 	}
 
 	public boolean reflects(Stuff element) {
+		if(metaLevel!=null){
+			if(this.metaLevel.reflects(element))
+				return true;
+		}
 		return this.content[this.contentAmount - 1].reflects(element);
 	}
 
 	public boolean absorbs(Stuff element) {
-		if(this.contentAmount - 1<0)
-			System.gc();
+		if(metaLevel!=null){
+			if(this.metaLevel.absorbs(element))
+				return true;
+		}
 		return this.content[this.contentAmount - 1].absorbs(element);
 	}
 
@@ -99,7 +108,7 @@ public class Cell {
 
 		for (int i = 0; i < this.contentAmount; i++) { // с этим местом
 														// аккуратнее при работе
-			if (!this.content[i].passable())
+			if (!this.content[i].passable() && !element.god)
 				return false;
 		}
 
@@ -135,7 +144,7 @@ public class Cell {
 		return buf;
 	}
 
-	public synchronized boolean deleteStuff(Stuff element) {
+	public synchronized boolean delete(Stuff element) {
 
 		// System.out.println("Remove on "+ element.toString()+ ": " +
 		// contentAmount+" "+x+" "+y);
@@ -171,7 +180,7 @@ public class Cell {
 			return false;
 
 		if (replaceWith.equals(null))
-			this.deleteStuff(toReplace);
+			this.delete(toReplace);
 
 		int i;
 		for (i = 0; i < this.contentAmount; i++) {
@@ -231,7 +240,7 @@ public class Cell {
 		for (int i = this.contentAmount - 1; i >= 0; i--) {
 			if (this.content[i].takeable()) {
 				Stuff buf = this.content[i];
-				if (this.deleteStuff(buf))
+				if (this.delete(buf))
 					return buf;																
 			}
 		}
@@ -360,24 +369,28 @@ public class Cell {
 		return this.metaLevel;
 	}
 	
-	
-	///все для редактора
-	public enum LoadingType {
-		OBJ, OBJC, DNW; // simple object, object with cells, do not write;
-	}
-	public static LoadingType type = LoadingType.OBJC;
-	
-	public Stuff ifHaveButtons(){
+	public Stuff containsObjc(){
 		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type.equals(Cell.type))
+			if(this.content[i].type == LoadingType.OBJC)
 				return this.content[i];
 		}
 		
 		return null;
 	}
+	
+	public Teleport containsTeleport(){
+		for(int i = this.contentAmount - 1; i>0; i--){
+			if(this.content[i] instanceof Teleport)
+				return (Teleport)this.content[i];
+		}
+		
+		return null;
+	}
+	
+	
 	public void setControlled(Cell element){
 		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type.equals(Cell.type)){
+			if(this.content[i].type == LoadingType.OBJC){
 				this.content[i].setControlled(element);
 				return;
 			}

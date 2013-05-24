@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 /*
  * признак конца - this.next.next = this.next;
@@ -441,7 +441,7 @@ public class LaserBeam extends Stuff {
 
 		// если поглощает
 		if (buf[this.getTargetCellCoordinates().x][this
-				.getTargetCellCoordinates().y].getTop().absorbs(this)) {
+				.getTargetCellCoordinates().y].absorbs(this)) {
 			this.next = null;
 			buf[this.getTargetCellCoordinates().x][this
 					.getTargetCellCoordinates().y].getTop().touch(this);
@@ -454,7 +454,7 @@ public class LaserBeam extends Stuff {
 		}
 		// если отражает
 		else if (buf[this.getTargetCellCoordinates().x][this
-				.getTargetCellCoordinates().y].getTop().reflects(this)) {
+				.getTargetCellCoordinates().y].reflects(this)) {
 
 			this.next = new LaserBeam(this.direction,
 					this.getTargetCellCoordinates().x,
@@ -462,7 +462,12 @@ public class LaserBeam extends Stuff {
 			this.next.prev = this;
 
 			this.next.setSource(this.source);
-			this.next.reflect();
+			try {
+				this.next.reflect();
+			} catch(Exception e)
+			{
+				
+			}
 			if (this.next.getDamage() == 0) {
 				this.next = null;
 				return;
@@ -492,7 +497,7 @@ public class LaserBeam extends Stuff {
 
 			this.next.buildBeam();
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 	}
 
@@ -510,7 +515,7 @@ public class LaserBeam extends Stuff {
 						.getY()].deleteStuff(buf.prev.secondNext);*/
 				buf.secondNext.deleteBeam();
 			}
-			cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+			cellBuf[buf.getX()][buf.getY()].delete(buf);
 			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
 		}
@@ -518,7 +523,7 @@ public class LaserBeam extends Stuff {
 		if (buf.secondNext != null) {
 			buf.secondNext.deleteBeam();	
 		}
-		cellBuf[buf.getX()][buf.getY()].deleteStuff(buf);
+		cellBuf[buf.getX()][buf.getY()].delete(buf);
 		this.next = null;
 	}
 

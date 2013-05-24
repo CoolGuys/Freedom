@@ -17,6 +17,9 @@ import java.util.logging.Logger;
 
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
+import com.freedom.view.GameScreen;
+import com.freedom.view.LoadScreen;
+import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
 
 public class GButtonLoaderLite {
@@ -67,7 +70,11 @@ public class GButtonLoaderLite {
 		File src = new File(fileToLoad);
 		File dst = new File("TmpSave");
 		Files.copy(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
+				LoadScreen.getInstance());
 		GameField.getInstance().loadLevel(dst.getAbsolutePath());
+		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
+				LoadingScreen.getInstance());
 	}
 
 	public void draw(Graphics g) {

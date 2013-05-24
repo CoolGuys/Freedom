@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import org.w3c.dom.Element;
 
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
 public class Stuff {
@@ -41,6 +40,7 @@ public class Stuff {
 
 	protected boolean pickable;
 	protected boolean passable;
+	protected boolean god;
 
 	// punching
 	protected int damage;
@@ -292,7 +292,7 @@ public class Stuff {
 		if (!isMoving)
 			isMoving=true;
 			GameField.getInstance().cells[this.getX()][this.getY()]
-					.deleteStuff(this);
+					.delete(this);
 	}
 
 	// разовый урон
@@ -303,7 +303,7 @@ public class Stuff {
 		if (!this.destroyable)
 			return 0;
 
-		Graphics2D g2 = (Graphics2D) GameScreen.getInstance().getGraphics();
+		Graphics2D g2 = (Graphics2D) ScreensHolder.getInstance().getCurrentScreen().getGraphics();
 		Rectangle2D r = new Rectangle((int) this.x * getSize(), (int) this.y
 				* getSize(), getSize(), getSize());
 		g2.setColor(Color.WHITE);
@@ -366,9 +366,9 @@ public class Stuff {
 			this.color = StuffColor.GREEN;
 		if (color.equalsIgnoreCase("Blue"))
 			this.color = StuffColor.BLUE;
-		
 		GameField.getInstance();
 		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
+		ScreensHolder.getInstance().repaint();
 	}
 
 	public void setControlled(Cell element) {

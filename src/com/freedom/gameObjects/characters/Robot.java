@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
+import org.w3c.dom.Element;
+
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
@@ -19,13 +21,14 @@ import com.freedom.model.GameField;
 import com.freedom.utilities.game.Mover;
 import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
+import com.freedom.view.StartScreen;
 
 public class Robot extends Stuff implements Moveable {
 
 	protected String direction;
 	private double step = 0.1;
 
-	public static int maxLives = 100;
+	public static int maxLives = 1000;
 
 	private static Image textureN;
 	private static Image textureS;
@@ -55,7 +58,11 @@ public class Robot extends Stuff implements Moveable {
 			logger.warning("Robot texture was corrupted or deleted");
 		}
 	}
-
+	
+	public void loadToFile(Element obj) {
+		super.loadToFile(obj);
+	}
+	
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
 		super(false, true, 0, maxLives);
 		super.type=LoadingType.DNW;
@@ -145,7 +152,7 @@ public class Robot extends Stuff implements Moveable {
 				.getInstance().getHeight() / 2 - 4 * getSize())
 			GameScreen.getInstance().centerByRobotVertically(this);
 
-		Runnable r = new Mover<Robot>(this, direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
 		Thread t = new Thread(r);
 		t.start();
 
@@ -154,10 +161,10 @@ public class Robot extends Stuff implements Moveable {
 	public void moveFine(String direction) {
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 			return;
 		}
-		Runnable r = new Mover<Robot>(this, direction, 1, 10);
+		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
 
 		Thread t = new Thread(r);
 		t.start();
@@ -229,7 +236,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 	}
 
 	public void put() {
@@ -250,7 +257,7 @@ public class Robot extends Stuff implements Moveable {
 
 		// container[0].activate();
 		this.container[0] = null;
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 		return;
 
@@ -282,7 +289,7 @@ public class Robot extends Stuff implements Moveable {
 					s.removeInfo();
 			cell.isExamined = false;
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 	}
 
@@ -323,10 +330,9 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	public void die() {
-		this.lives=0;
-		System.out.println("You are dead, idiot!");
-		//TODO обработать смерть
+		System.out.println("You are dead!");
 		super.die();
+		ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),GameScreen.getInstance());
 	}
 
 }

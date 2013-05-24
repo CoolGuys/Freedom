@@ -8,6 +8,9 @@ public class AbstractScreen extends JLayeredPane {
 	public void activateModel() {}
 	public void deactivateModel() {}
 	public void prepareModel() {}
+	public AbstractScreen instance() {
+		return null;
+	}
 			
 	
 }

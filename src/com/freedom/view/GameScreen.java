@@ -26,14 +26,17 @@ import com.freedom.utilities.interfai.InGameMessageDisplay;
 @SuppressWarnings("serial")
 public class GameScreen extends AbstractScreen {
 
-	protected GameScreen() {
+	protected GameScreen()
+	{
 		this.setBackground(Color.BLACK);
 		this.setBounds(0, 0, ScreensHolder.getInstance().getWidth(),
 				ScreensHolder.getInstance().getHeight());
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		setDoubleBuffered(true);
+		//setDoubleBuffered(true);
+		//setDebugGraphicsOptions(DebugGraphics.LOG_OPTION);
+
 		logger.setLevel(Level.WARNING);
 	}
 
@@ -84,8 +87,6 @@ public class GameScreen extends AbstractScreen {
 		PauseAction pause = new PauseAction();
 		TakeAction take = new TakeAction();
 		InteractAction interact = new InteractAction();
-		BoxGiver boxGiver = new BoxGiver();
-		TNTGiver tntGiver = new TNTGiver();
 		ExamineAction examine = new ExamineAction();
 		FieldCoarseOffsetAction offsetUp = new FieldCoarseOffsetAction("N");
 		FieldCoarseOffsetAction offsetDown = new FieldCoarseOffsetAction("S");
@@ -118,8 +119,6 @@ public class GameScreen extends AbstractScreen {
 		amap.put("fineOffset.left", fineOffsetLeft);
 		amap.put("fineOffset.right", fineOffsetRight);
 		amap.put("fineOffset.down", fineOffsetDown);
-		amap.put("give.box", boxGiver);
-		amap.put("give.tnt", tntGiver);
 	}
 
 	@Override
@@ -139,6 +138,10 @@ public class GameScreen extends AbstractScreen {
 			return INSTANCE = new GameScreen();
 		else
 			return INSTANCE;
+	}
+
+	public GameScreen instance() {
+		return INSTANCE;
 	}
 
 	public void changeOffsetCoarse(String direction) {
@@ -229,7 +232,8 @@ public class GameScreen extends AbstractScreen {
 	private static GameScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {
-		public CoarseMovementAction(String name) {
+		public CoarseMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -245,7 +249,6 @@ public class GameScreen extends AbstractScreen {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ScreensHolder.getInstance().addScreen(PauseScreen.getInstance());
-
 			logger.info("Paused");
 		}
 	}
@@ -268,6 +271,7 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private class TNTGiver extends AbstractAction {
 
 		@Override
@@ -279,6 +283,7 @@ public class GameScreen extends AbstractScreen {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private class BoxGiver extends AbstractAction {
 
 		@Override
@@ -310,7 +315,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FineMovementAction extends AbstractAction {
-		public FineMovementAction(String name) {
+		public FineMovementAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -322,7 +328,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldCoarseOffsetAction extends AbstractAction {
-		public FieldCoarseOffsetAction(String name) {
+		public FieldCoarseOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -334,7 +341,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	private class FieldFineOffsetAction extends AbstractAction {
-		public FieldFineOffsetAction(String name) {
+		public FieldFineOffsetAction(String name)
+		{
 			putValue(Action.NAME, name);
 		}
 
@@ -346,7 +354,8 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public class InGameGUIPane extends JLayeredPane {
-		public InGameGUIPane() {
+		public InGameGUIPane()
+		{
 			this.setBounds(ScreensHolder.getInstance().getBounds());
 			this.setLocation(0, 0);
 			this.setVisible(true);

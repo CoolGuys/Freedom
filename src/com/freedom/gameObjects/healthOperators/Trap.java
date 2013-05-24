@@ -11,7 +11,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 //TODO поправить, чтобы становился неактивным!
 
@@ -30,7 +30,7 @@ public class Trap extends Stuff {
 			element.punch(this.damage);
 			this.textureRed = textureClosed;
 			SoundEngine.playClip(f1, -1, -15);
-			GameScreen.getInstance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
 					(int) (this.getX() * Stuff.getSize()),
 					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
 					Stuff.getSize());
@@ -39,7 +39,7 @@ public class Trap extends Stuff {
 			this.textureRed = textureOpen;
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
-			GameScreen.getInstance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
 					(int) (this.getX() * Stuff.getSize()),
 					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
 					Stuff.getSize());
@@ -52,7 +52,7 @@ public class Trap extends Stuff {
 			this.textureRed = textureOpen;
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
-			GameScreen.getInstance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
 					(int) (this.getX() * Stuff.getSize()),
 					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
 					Stuff.getSize());

@@ -1,6 +1,7 @@
 package com.freedom.gameObjects.controlled;
 
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,7 +19,8 @@ public class Teleport extends Stuff {
 
 	// TODO подумать на тему того, стоит ли запретить телепортацию объектов,
 	// если не позволяет сила
-	public Teleport() {
+	public Teleport()
+	{
 		super(false, true, 0, 1);
 		textureRed = texturesOff[1];
 		textureGreen = texturesOff[2];
@@ -58,6 +60,14 @@ public class Teleport extends Stuff {
 		}
 		if (GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
 				.add(element)) {
+			GameField.getInstance().getCells()[this.getX()][this.getY()]
+					.deleteStuff();
+			return;
+		} else {
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.deleteStuff();
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.add(element);
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
 					.deleteStuff();
 			return;
@@ -144,6 +154,11 @@ public class Teleport extends Stuff {
 		} catch (IOException e) {
 			logger.warning("Teleport texture was corrupted or deleted");
 		}
+	}
+
+	public void setDestination(Point p) {
+		this.xLeadTo = p.x;
+		this.yLeadTo = p.y;
 	}
 
 	@Override

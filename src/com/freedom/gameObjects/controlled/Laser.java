@@ -19,7 +19,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class Laser extends Stuff {
 	LaserBeam beamHead;
@@ -136,7 +136,7 @@ public class Laser extends Stuff {
 		else if (this.direction.equals("SE"))
 			this.direction = "S";
 		chooseTexture();
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		// System.out.println("Laser direction: "+ this.direction);
 		if (condition)
 			this.useOn();

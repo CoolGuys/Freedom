@@ -15,9 +15,9 @@ import com.freedom.gameObjects.base.Ghost;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
+import com.freedom.gameObjects.characters.RobotEditor;
 import com.freedom.utilities.game.Loader;
 import com.freedom.view.GameScreen;
-import com.freedom.view.LoadScreen;
 import com.freedom.view.LoadingScreen;
 import com.freedom.view.ScreensHolder;
 
@@ -37,6 +37,7 @@ public class GameField {
 	private int previousLevelId;
 	//public Cell[][] previousCells;
 	private volatile Robot robot;
+	private volatile RobotEditor robotEditor;
 	public volatile Cell[][] cells;
 	public volatile Ghost[] ghosts;
 	private volatile int gostsAmount;
@@ -115,9 +116,7 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
-		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
-				LoadScreen.getInstance());
-		GameField.getInstance().setPathToSave(pathToPackage);
+		GameField.getInstance().setPathToSave("TmpSave");
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		//previousCells = cells;
@@ -125,8 +124,7 @@ public class GameField {
 				cells[1].length * cellSize);
 
 		GameScreen.getInstance().centerByRobot(getRobot());
-		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
-				LoadingScreen.getInstance());
+		
 	}
 
 	public ExecutorService getThreads() {
@@ -140,6 +138,7 @@ public class GameField {
 				GameScreen.getInstance());
 		resetTickerListeners();
 		otherThreads.shutdownNow();
+		this.active=false;
 		otherThreads = Executors.newCachedThreadPool();
 		previousLevelId = currentLevelId;
 		currentLevelId = nextLevelId;
@@ -158,17 +157,21 @@ public class GameField {
 
 			int previousx = robot.getX();
 			int previousy = robot.getY();
-			Stuff element = GameField.getInstance().getCells()[previousx][previousy]
-					.getTop();
+			Stuff element = this.robot;
+			GameField.getInstance().getCells()[previousx][previousy]
+						.deleteStuff();
+			while((!GameField.getInstance().getCells()[robotx][roboty].add(element))){
+				GameField.getInstance().getCells()[robotx][roboty]
+						.deleteStuff();
+			}
+			
+			
+			
 			for (Stuff containedElement : element.container) {
 				if (containedElement != null) {
-					containedElement.x = robotx;
-					containedElement.y = roboty;
+					containedElement.x = robot.getX();
+					containedElement.y = robot.getY();
 				}
-			}
-			if (GameField.getInstance().getCells()[robotx][roboty].add(element)) {
-				GameField.getInstance().getCells()[previousx][previousy]
-						.deleteStuff();
 			}
 		}
 
@@ -185,6 +188,9 @@ public class GameField {
 		GameScreen.getInstance().centerByRobot(getRobot());
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
+
+		this.active=true;
+		ScreensHolder.getInstance().repaint();
 	}
 
 	public void saveCurrentLevelToPackage() {
@@ -279,5 +285,13 @@ public class GameField {
 			if(power.get(agent.getColour())>=power.get(object.getColour()))
 				return true;
 			return false;
+		}
+
+		public RobotEditor getRobotEditor() {
+			return robotEditor;
+		}
+
+		public void setRobotEditor(RobotEditor robotEditor) {
+			this.robotEditor = robotEditor;
 		}
 }
