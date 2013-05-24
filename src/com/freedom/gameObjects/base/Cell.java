@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.base.Stuff.LoadingType;
+import com.freedom.gameObjects.controlled.Teleport;
 
 public class Cell {
 
@@ -368,7 +369,7 @@ public class Cell {
 		return this.metaLevel;
 	}
 	
-	public Stuff ifHaveButtons(){
+	public Stuff containsObjc(){
 		for(int i = this.contentAmount - 1; i>0; i--){
 			if(this.content[i].type == LoadingType.OBJC)
 				return this.content[i];
@@ -376,6 +377,17 @@ public class Cell {
 		
 		return null;
 	}
+	
+	public Teleport containsTeleport(){
+		for(int i = this.contentAmount - 1; i>0; i--){
+			if(this.content[i] instanceof Teleport)
+				return (Teleport)this.content[i];
+		}
+		
+		return null;
+	}
+	
+	
 	public void setControlled(Cell element){
 		for(int i = this.contentAmount - 1; i>0; i--){
 			if(this.content[i].type == LoadingType.OBJC){

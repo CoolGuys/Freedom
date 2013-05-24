@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
+import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.Mover;
 import com.freedom.view.EditorScreen;
@@ -12,18 +13,26 @@ import com.freedom.view.ScreensHolder;
 
 public class RobotEditor extends Robot {
 	public Stuff source;
+	public Teleport teleport;
 
 	public void assign() {
 		if (this.source == null) {
 			source = GameField.getInstance().cells[this
 					.getTargetCellCoordinates(direction).x][this
-					.getTargetCellCoordinates(direction).y].ifHaveButtons();
+					.getTargetCellCoordinates(direction).y].containsObjc();
 		} else {
 			Cell element = GameField.getInstance().cells[this
 					.getTargetCellCoordinates(direction).x][this
 					.getTargetCellCoordinates(direction).y];
 			this.source.setControlled(element);
 			this.source = null;
+		}
+		if (teleport == null) {
+			teleport = GameField.getInstance().cells[this
+					.getTargetCellCoordinates(direction).x][this
+					.getTargetCellCoordinates(direction).y].containsTeleport();
+		} else {
+			teleport.setDestination(this.getTargetCellCoordinates(direction));
 		}
 	}
 
