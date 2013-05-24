@@ -72,12 +72,12 @@ public class Loader {
 	public static void createNewField(int x,int y,boolean withWalls, String lvlfile, int lvl){
 		//Tile tile= new Tile();
 		//Wall wall = new Wall();
-		GameField.getInstance().cells = new Cell[x + 2][x + 2];
+		GameField.getInstance().cells = new Cell[x + 2][y + 2];
 		GameField.getInstance().newGhosts(0);
 		GameField.getInstance().setCurrentLevel(lvl);
-		for(int i=0;i<x+2;i++){
-			for (int j = 0; j < y + 2; j++) {
-				if ((i != 0) && (j != 0) && (i != x + 1) && (j != j + 1)) {
+		for(int i=1;i<x+2;i++){
+			for (int j = 1; j < y + 2; j++) {
+				if ((i != 1) && (j != 1) && (i != x ) && (j != y)) {
 					Tile tile = new Tile(i, j, StuffColor.BLUE);
 					GameField.getInstance().cells[i][j].add(tile);
 				}else{
