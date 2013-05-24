@@ -18,7 +18,7 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class Deflector extends Laser {
 
@@ -88,7 +88,7 @@ public class Deflector extends Laser {
 			this.direction = Deflector.list.get(this.revolve(
 					list.indexOf(buf.direction), this.toDeflect));
 			super.useOn();
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		}
 	}
 
@@ -117,7 +117,7 @@ public class Deflector extends Laser {
 			inertion.stop();
 
 			super.useOff();
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		} catch (ClassCastException e) {
 			// TODO Logger message
 		}

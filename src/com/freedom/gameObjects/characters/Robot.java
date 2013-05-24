@@ -161,7 +161,7 @@ public class Robot extends Stuff implements Moveable {
 	public void moveFine(String direction) {
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 			return;
 		}
 		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
@@ -236,7 +236,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 	}
 
 	public void put() {
@@ -257,7 +257,7 @@ public class Robot extends Stuff implements Moveable {
 
 		// container[0].activate();
 		this.container[0] = null;
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 		return;
 
@@ -289,7 +289,7 @@ public class Robot extends Stuff implements Moveable {
 					s.removeInfo();
 			cell.isExamined = false;
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 	}
 

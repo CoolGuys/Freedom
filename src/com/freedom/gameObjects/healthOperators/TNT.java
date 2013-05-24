@@ -6,12 +6,15 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
+
 import javax.imageio.ImageIO;
+
 import org.w3c.dom.Element;
+
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 public class TNT extends Stuff {
 	
@@ -107,7 +110,7 @@ public class TNT extends Stuff {
 			}
 
 			toWork.expBuf = 0;
-			GameScreen.getInstance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 		}
 		
 		if ((GameField.getInstance().getRobot().getX() == this.getX())&&(GameField.getInstance().getRobot().getY() == this.getY())){

@@ -116,7 +116,7 @@ public class GameField {
 	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
-		GameField.getInstance().setPathToSave(pathToPackage);
+		GameField.getInstance().setPathToSave("TmpSave");
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
 		//previousCells = cells;

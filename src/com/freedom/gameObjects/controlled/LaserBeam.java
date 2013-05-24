@@ -16,7 +16,7 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
+import com.freedom.view.ScreensHolder;
 
 /*
  * признак конца - this.next.next = this.next;
@@ -497,7 +497,7 @@ public class LaserBeam extends Stuff {
 
 			this.next.buildBeam();
 		}
-		GameScreen.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
 
 	}
 

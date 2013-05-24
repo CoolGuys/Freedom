@@ -15,6 +15,12 @@ public class RobotEditor extends Robot {
 	public Stuff source;
 	public Teleport teleport;
 
+	public RobotEditor(int posX, int posY, String direction)
+	{
+		super(posX, posY, direction, null, 0);
+		god = true;
+	}
+
 	public void assign() {
 		if (this.source == null) {
 			source = GameField.getInstance().cells[this
@@ -39,12 +45,6 @@ public class RobotEditor extends Robot {
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("editor", "true");
-	}
-
-	public RobotEditor(int posX, int posY, String direction)
-	{
-		super(posX, posY, direction, null, 0);
-		god = true;
 	}
 
 	@Override
