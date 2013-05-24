@@ -825,7 +825,7 @@
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="6" y="15">
 		</obj>
-		<obj class="com.freedom.gameObjects.characters.PacmanBody" rate="300"
+		<obj class="com.freedom.gameObjects.characters.PacmanBody" trekLenght="15" rate="300"
 			x="6" y="15">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Wall" x="6" y="16">
