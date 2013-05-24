@@ -23,7 +23,6 @@ public final class Mover<MO extends Moveable> implements Runnable {
 	public synchronized void run() {
 		Thread.currentThread().setName(
 				"Mover@" + theOneToMove.getClass().toString());
-		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
 		try {
 			if (GameField.getInstance().cells[theOneToMove
@@ -31,6 +30,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					.getTargetCellCoordinates(direction).y].locked == true
 					|| theOneToMove.checkIfBeingMoved())
 				return;
+			theOneToMove.setDirection(direction);
 			for (int k = 0; k < distance; k++) {
 				if (theOneToMove.canGo()) {
 					theOneToMove.tellIfBeingMoved(true);

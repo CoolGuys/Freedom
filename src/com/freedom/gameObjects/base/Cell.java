@@ -18,7 +18,7 @@ public class Cell {
 	private int x;
 	private int y;
 	private int damage;
-	public final static int capacity=40;
+	public final static int capacity = 40;
 
 	private Stuff[] content;
 	private Stuff metaLevel;
@@ -64,16 +64,16 @@ public class Cell {
 	}
 
 	public boolean reflects(Stuff element) {
-		if(metaLevel!=null){
-			if(this.metaLevel.reflects(element))
+		if (metaLevel != null) {
+			if (this.metaLevel.reflects(element))
 				return true;
 		}
 		return this.content[this.contentAmount - 1].reflects(element);
 	}
 
 	public boolean absorbs(Stuff element) {
-		if(metaLevel!=null){
-			if(this.metaLevel.absorbs(element))
+		if (metaLevel != null) {
+			if (this.metaLevel.absorbs(element))
 				return true;
 		}
 		return this.content[this.contentAmount - 1].absorbs(element);
@@ -220,14 +220,14 @@ public class Cell {
 	// Everything for robot:
 
 	public void touchOnAdd(Stuff toucher) {
-		for (int i = 0; i < this.contentAmount-1; i++) {
+		for (int i = 0; i < this.contentAmount - 1; i++) {
 			if (this.content[i].isCoolEnough(toucher))
 				this.content[i].touch(toucher);
 		}
 	}
 
 	public void untouchOnDelete(Stuff untoucher) {
-		for (int i = 0; i < this.contentAmount-1; i++) {
+		for (int i = 0; i < this.contentAmount - 1; i++) {
 			if (this.content[i].isCoolEnough(untoucher))
 				this.content[i].untouch(untoucher);
 		}
@@ -241,15 +241,11 @@ public class Cell {
 			if (this.content[i].takeable()) {
 				Stuff buf = this.content[i];
 				if (this.delete(buf))
-					return buf;																
+					return buf;
 			}
 		}
 		return null;
 	}
-	
-	
-
-	
 
 	// считаем, что если есть элемент, "экранирующий" урон, остальные не
 	// действуют
@@ -298,7 +294,6 @@ public class Cell {
 		return (damage - buf);
 	}
 
-
 	public void healContent(int heal) {
 
 		for (int i = 0; i < Cell.this.contentAmount; i++) {
@@ -307,7 +302,6 @@ public class Cell {
 
 	}
 
-
 	public void interact(Stuff interactor) {
 		for (int i = 0; i < this.contentAmount; i++) {
 			this.content[i].interact(interactor);
@@ -315,13 +309,15 @@ public class Cell {
 	}
 
 	public boolean passable() {
+		if (this.metaLevel != null)
+			if (!this.metaLevel.passable)
+				return false;
 		for (int i = 0; i < this.contentAmount; i++) {
 			if (!this.content[i].passable())
 				return false;
 		}
 		return true;
 	}
-	
 
 	public boolean conductsExp() {
 		for (int i = 0; i < this.contentAmount; i++) {
@@ -368,29 +364,28 @@ public class Cell {
 	public Stuff getMeta() {
 		return this.metaLevel;
 	}
-	
-	public Stuff containsObjc(){
-		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type == LoadingType.OBJC)
+
+	public Stuff containsObjc() {
+		for (int i = this.contentAmount - 1; i > 0; i--) {
+			if (this.content[i].type == LoadingType.OBJC)
 				return this.content[i];
 		}
-		
+
 		return null;
 	}
-	
-	public Teleport containsTeleport(){
-		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i] instanceof Teleport)
-				return (Teleport)this.content[i];
+
+	public Teleport containsTeleport() {
+		for (int i = this.contentAmount - 1; i > 0; i--) {
+			if (this.content[i] instanceof Teleport)
+				return (Teleport) this.content[i];
 		}
-		
+
 		return null;
 	}
-	
-	
-	public void setControlled(Cell element){
-		for(int i = this.contentAmount - 1; i>0; i--){
-			if(this.content[i].type == LoadingType.OBJC){
+
+	public void setControlled(Cell element) {
+		for (int i = this.contentAmount - 1; i > 0; i--) {
+			if (this.content[i].type == LoadingType.OBJC) {
 				this.content[i].setControlled(element);
 				return;
 			}
