@@ -9,7 +9,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 import com.freedom.view.LoadingScreen;
-import com.freedom.view.SaveScreen;
 import com.freedom.view.ScreensHolder;
 
 public class GLabel {
@@ -71,7 +70,7 @@ public class GLabel {
 		default:
 			break;
 		}
-		SaveScreen.getInstance().repaint();
+		//ScreensHolder.getInstance().repaint();
 	}
 
 	public void draw(Graphics g) {
