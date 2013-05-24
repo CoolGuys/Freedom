@@ -90,7 +90,7 @@ public class StartScreenModel {
 		double[] parameters = new double[2];
 
 		double aspect = 761.0 / 1516.0;
-		double width = (double) StartScreen.getInstance().getWidth();
+		double width = StartScreen.getInstance().getWidth();
 
 		parameters[0] = (2.0 * width * (aspect - 0.5));
 		parameters[1] = (1.0 / 12.0 * width * (14.0 - 26.0 * aspect));
@@ -125,12 +125,14 @@ public class StartScreenModel {
 	Logger logger = Logger.getLogger("StartScreenModel");
 
 	public static class StartGameAction extends GAction {
+		@Override
 		public void performAction() {	
 
 		}
 	}
 	
 	public static class NewGameAction extends GAction {
+		@Override
 		public void performAction() {
 			LoadScreenModel.getInstance().setListedDirectory("Levels");
 			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
@@ -140,6 +142,7 @@ public class StartScreenModel {
 	}
 	
 	public static class LoadGameAction extends GAction {
+		@Override
 		public void performAction() {
 			LoadScreenModel.getInstance().setListedDirectory("Saves");
 			ScreensHolder.getInstance().swapScreens(LoadScreen.getInstance(),
@@ -149,6 +152,7 @@ public class StartScreenModel {
 	}
 	
 	public static class LoadEditorAction extends GAction {
+		@Override
 		public void performAction() {
 			ScreensHolder.getInstance().swapScreens(EditorSettingsScreen.getInstance(),
 					StartScreen.getInstance());
@@ -157,6 +161,7 @@ public class StartScreenModel {
 	}
 
 	public static class ExitGameAction extends GAction {
+		@Override
 		public void performAction() {
 			System.exit(0);
 		}

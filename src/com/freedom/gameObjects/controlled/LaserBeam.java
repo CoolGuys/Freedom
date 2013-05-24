@@ -3,7 +3,6 @@ package com.freedom.gameObjects.controlled;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -44,22 +43,22 @@ public class LaserBeam extends Stuff {
 				texturesNE[i] = ImageIO
 						.read(new File("Resource/Textures/LaserBeam/SW" + i
 								+ ".png")).getScaledInstance(getSize(),
-								getSize(), BufferedImage.SCALE_SMOOTH);
+								getSize(), Image.SCALE_SMOOTH);
 
 				texturesHorisontal[i] = ImageIO
 						.read(new File("Resource/Textures/LaserBeam/Hor" + i
 								+ ".png")).getScaledInstance(getSize(),
-								getSize(), BufferedImage.SCALE_SMOOTH);
+								getSize(), Image.SCALE_SMOOTH);
 
 				texturesVertical[i] = ImageIO
 						.read(new File("Resource/Textures/LaserBeam/Ver" + i
 								+ ".png")).getScaledInstance(getSize(),
-								getSize(), BufferedImage.SCALE_SMOOTH);
+								getSize(), Image.SCALE_SMOOTH);
 
 				texturesNW[i] = ImageIO
 						.read(new File("Resource/Textures/LaserBeam/NW" + i
 								+ ".png")).getScaledInstance(getSize(),
-								getSize(), BufferedImage.SCALE_SMOOTH);
+								getSize(), Image.SCALE_SMOOTH);
 			}
 		} catch (IOException e) {
 			logger.warning("Textures were corrupted");
@@ -527,11 +526,13 @@ public class LaserBeam extends Stuff {
 		this.next = null;
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		setPicture(direction);
 		super.draw(g);
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		return;
 	}

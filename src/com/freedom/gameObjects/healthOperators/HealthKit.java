@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,7 +28,7 @@ public class HealthKit extends Stuff{
 		obj.setAttribute("y", String.valueOf((int) this.y));
 
 		//TODO придумать, как здесь обыграть цвет
-		obj.setAttribute("heals", String.valueOf((int) this.heals));
+		obj.setAttribute("heals", String.valueOf(this.heals));
 		obj.setAttribute("class", "com.freedom.gameObjects.healthOperators.HealthKit");
 	}
 	@Override
@@ -44,7 +43,7 @@ public class HealthKit extends Stuff{
 	static {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/HealthKit.png")).getScaledInstance(getSize(),
-					getSize(), BufferedImage.SCALE_SMOOTH);
+					getSize(), Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

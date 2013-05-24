@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,10 +61,12 @@ public class Deflector extends Laser {
 	 */
 	//
 
+	@Override
 	public boolean useOn() {
 		return false;
 	}
 
+	@Override
 	public boolean useOff() {
 		return false;
 	}
@@ -77,6 +78,7 @@ public class Deflector extends Laser {
 			
 	}
 
+	@Override
 	public void touch(Stuff element) {
 		if (!isCoolEnough(element) || ifActive) {
 			return;
@@ -132,6 +134,7 @@ public class Deflector extends Laser {
 			this.toDeflect = this.toDeflect - 7;
 	}
 
+	@Override
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
@@ -140,6 +143,7 @@ public class Deflector extends Laser {
 		beamHead.setSource(this);
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("toDeflect", toDeflect + "");
@@ -177,7 +181,7 @@ public class Deflector extends Laser {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/Deflector/NW.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Logger message
 			e.printStackTrace();
@@ -205,6 +209,7 @@ public class Deflector extends Laser {
 
 		private Stuff toucher;
 	}
+	@Override
 	public boolean absorbs(Stuff element) {
 		return true;
 	}

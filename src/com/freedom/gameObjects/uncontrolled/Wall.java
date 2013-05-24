@@ -95,12 +95,14 @@ public class Wall extends Stuff {
 //		ready = true;
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));
 		obj.setAttribute("class", "com.freedom.gameObjects.uncontrolled.Wall");
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		setTexture();
 		g.drawImage(textureRed, (int) (x * getSize()), (int) (y * getSize()),
@@ -126,28 +128,28 @@ public class Wall extends Stuff {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/WallN.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureE = ImageIO.read(new File("Resource/Textures/WallE.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureS = ImageIO.read(new File("Resource/Textures/WallS.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureW = ImageIO.read(new File("Resource/Textures/WallW.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureNE = ImageIO.read(new File("Resource/Textures/WallNE.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureSE = ImageIO.read(new File("Resource/Textures/WallSE.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureSW = ImageIO.read(new File("Resource/Textures/WallSW.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureNW = ImageIO.read(new File("Resource/Textures/WallNW.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

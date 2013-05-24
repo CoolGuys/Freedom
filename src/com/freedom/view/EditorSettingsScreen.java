@@ -44,6 +44,7 @@ public class EditorSettingsScreen extends AbstractScreen {
 		editorScreenModel.draw(g);
 	}
 	
+	@Override
 	public void activateModel() {
 		editorScreenModel.addEntries();
 	}

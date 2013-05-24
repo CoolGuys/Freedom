@@ -47,7 +47,7 @@ public class InGameMessageDisplay {
 		}
 		this.messageLines.add(buffer);
 		this.height = (int) (messageLines.size() * bounds.getHeight());
-		this.y = (int) (ScreensHolder.getInstance().getHeight() - height);
+		this.y = ScreensHolder.getInstance().getHeight() - height;
 		this.x = (int) (ScreensHolder.getInstance().getWidth() / 6.0);
 		in.close();
 	}

@@ -48,6 +48,7 @@ public class PacmanSoul implements Runnable {
 		gleblo.info("weed");
 	}
 
+	@Override
 	public void run() {
 		Thread.currentThread().setName("Pacman Soul " + body);
 		while (alive && !Thread.currentThread().isInterrupted()) {
@@ -98,6 +99,7 @@ public class PacmanSoul implements Runnable {
 
 	private class Changer implements Runnable {
 
+		@Override
 		public void run() {
 			Thread.currentThread().setName("Pacman texture changer " + body);
 			while (alive) {
@@ -109,8 +111,8 @@ public class PacmanSoul implements Runnable {
 						.getInstance()
 						.getCurrentScreen()
 						.instance()
-						.repaint((int) (body.getX() * Stuff.getSize()),
-								(int) (body.getY() * Stuff.getSize()),
+						.repaint(body.getX() * Stuff.getSize(),
+								body.getY() * Stuff.getSize(),
 								Stuff.getSize(), Stuff.getSize());
 				} catch (Exception e) {
 					System.gc();

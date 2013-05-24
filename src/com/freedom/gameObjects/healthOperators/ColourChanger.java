@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,11 +20,11 @@ public class ColourChanger extends Stuff{
 	static {
 		try {
 			textureb = ImageIO.read(new File("Resource/Textures/CCHb.png")).getScaledInstance(getSize(), getSize(),
-					BufferedImage.SCALE_SMOOTH);
+					Image.SCALE_SMOOTH);
 			texturer = ImageIO.read(new File("Resource/Textures/CCHr.png")).getScaledInstance(getSize(), getSize(),
-					BufferedImage.SCALE_SMOOTH);;
+					Image.SCALE_SMOOTH);;
 			textureg = ImageIO.read(new File("Resource/Textures/CCHg.png")).getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);;
+							Image.SCALE_SMOOTH);;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

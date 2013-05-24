@@ -193,9 +193,9 @@ public class Loader {
 										Element cels = obj.getOwnerDocument()
 												.createElement("cels");
 										cels.setAttribute("x", String
-												.valueOf((int) useList[i1][0]));
+												.valueOf(useList[i1][0]));
 										cels.setAttribute("y", String
-												.valueOf((int) useList[i1][1]));
+												.valueOf(useList[i1][1]));
 										cels.setTextContent("\n");
 										obj.appendChild(cels);
 									}
@@ -228,9 +228,9 @@ public class Loader {
 								Element cels = obj.getOwnerDocument()
 										.createElement("cels");
 								cels.setAttribute("x",
-										String.valueOf((int) useList[i1][0]));
+										String.valueOf(useList[i1][0]));
 								cels.setAttribute("y",
-										String.valueOf((int) useList[i1][1]));
+										String.valueOf(useList[i1][1]));
 								cels.setTextContent("\n");
 								obj.appendChild(cels);
 							}

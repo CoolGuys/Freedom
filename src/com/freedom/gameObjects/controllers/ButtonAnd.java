@@ -3,7 +3,6 @@ package com.freedom.gameObjects.controllers;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -75,10 +74,12 @@ public class ButtonAnd extends Stuff {
 	}
 	
 
+	@Override
 	public int getUseAmount() {
 		return controlledCellsAmount;
 	}
 
+	@Override
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
@@ -87,6 +88,7 @@ public class ButtonAnd extends Stuff {
 	 * 
 	 * @param - Scanner файла
 	 */
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
@@ -101,6 +103,7 @@ public class ButtonAnd extends Stuff {
 		this.controlledCellsAmount = length;
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonAnd");
@@ -129,6 +132,7 @@ public class ButtonAnd extends Stuff {
 	}
 
 	public class SignalOnSender implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
 				// & action
@@ -167,11 +171,11 @@ public class ButtonAnd extends Stuff {
 				texturesPressed[i] = ImageIO.read(
 						new File("Resource/Textures/ButtonAND/Pressed"+i+".png"))
 						.getScaledInstance(getSize(), getSize(),
-								BufferedImage.SCALE_SMOOTH);
+								Image.SCALE_SMOOTH);
 				texturesDepressed[i] = ImageIO.read(
 						new File("Resource/Textures/ButtonAND/Depressed"+i+".png"))
 						.getScaledInstance(getSize(), getSize(),
-								BufferedImage.SCALE_SMOOTH);
+								Image.SCALE_SMOOTH);
 				}
 			f2 = new File("Resource/Sound/ButtonClicked.wav");
 		} catch (IOException e) {
@@ -180,6 +184,7 @@ public class ButtonAnd extends Stuff {
 	}
 	
 	//вставляет новый элемент в контрольный список
+	@Override
 	public void setControlled(Cell element) {
 		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
 		this.controlledCellsList[controlledCellsAmount][1] = element.getY();

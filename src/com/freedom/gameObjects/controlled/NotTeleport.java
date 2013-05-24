@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.controlled;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -38,8 +37,8 @@ public class NotTeleport extends Stuff {
 	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("xLeadTo", String.valueOf((int) this.xLeadTo));
-		obj.setAttribute("yLeadTo", String.valueOf((int) this.yLeadTo));
+		obj.setAttribute("xLeadTo", String.valueOf(this.xLeadTo));
+		obj.setAttribute("yLeadTo", String.valueOf(this.yLeadTo));
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.NotTeleport");
 	}
 
@@ -135,12 +134,12 @@ public class NotTeleport extends Stuff {
 				texturesOn[4-i] = ImageIO
 						.read(new File("Resource/Textures/Teleport/On" + i
 								+ ".png")).getScaledInstance(getSize(),
-								getSize(), BufferedImage.SCALE_SMOOTH);
+								getSize(), Image.SCALE_SMOOTH);
 
 				texturesOff[4-i] = ImageIO.read(
 						new File("Resource/Textures/Teleport/Off" + i
 								+ ".png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 			}
 		} catch (IOException e) {
 			logger.warning("Teleport texture was corrupted or deleted");

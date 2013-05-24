@@ -61,6 +61,7 @@ public class Laser extends Stuff {
 		sender = new BeamSender();
 	}
 
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		// this.setColour("Green");
@@ -69,6 +70,7 @@ public class Laser extends Stuff {
 		chooseTexture();
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("direction", this.direction);
@@ -81,6 +83,7 @@ public class Laser extends Stuff {
 		this.beamHead.buildBeam();
 	}
 
+	@Override
 	public boolean useOn() {
 		if (this.ifActive)
 			return false;
@@ -215,6 +218,7 @@ public class Laser extends Stuff {
 	}
 
 	private class BeamSender implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (ifActive)
 				rebuidBeam();
@@ -252,19 +256,19 @@ public class Laser extends Stuff {
 				texturesOnStraight[i] = ImageIO.read(
 						new File("Resource/Textures/Laser/Off" + i
 								+ "Straight.png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 				texturesOffDiag[i] = ImageIO.read(
 						new File("Resource/Textures/Laser/Off" + i
 								+ "Diagonal.png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 				texturesOffStraight[i] = ImageIO.read(
 						new File("Resource/Textures/Laser/Off" + i
 								+ "Straight.png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 				texturesOnDiag[i] = ImageIO.read(
 						new File("Resource/Textures/Laser/On" + i
 								+ "Diagonal.png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 
 				texturesOffS[i].getGraphics().drawImage(texturesOffStraight[i],
 						0, 0, null);
@@ -347,6 +351,7 @@ public class Laser extends Stuff {
 		}
 
 	}
+	@Override
 	public boolean absorbs(Stuff element) {
 			return false;
 	}

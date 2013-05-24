@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -41,24 +40,25 @@ public class Robot extends Stuff implements Moveable {
 		try {
 			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 
 			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 
 			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 
 			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			logger.warning("Robot texture was corrupted or deleted");
 		}
 	}
 	
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 	}
@@ -75,14 +75,17 @@ public class Robot extends Stuff implements Moveable {
 		logger.setLevel(Level.ALL);
 	}
 
+	@Override
 	public int getX() {
 		return (int) Math.round(x);
 	}
 
+	@Override
 	public int getY() {
 		return (int) Math.round(y);
 	}
 
+	@Override
 	public double getStep() {
 		return step;
 	}
@@ -103,6 +106,7 @@ public class Robot extends Stuff implements Moveable {
 		return this.direction;
 	}
 
+	@Override
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
@@ -122,6 +126,7 @@ public class Robot extends Stuff implements Moveable {
 		return false;
 	}
 
+	@Override
 	public void recalibrate() {
 		x = Math.round(x);
 		y = Math.round(y);
@@ -131,6 +136,7 @@ public class Robot extends Stuff implements Moveable {
 		container[0].y = Math.round(container[0].y);
 	}
 
+	@Override
 	public boolean canGo() {
 		if (GameField.getInstance().cells[this
 				.getTargetCellCoordinates(getDirection()).x][this
@@ -179,6 +185,7 @@ public class Robot extends Stuff implements Moveable {
 	 * 
 	 * @return пара координат нужного целла
 	 */
+	@Override
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")) {
@@ -200,6 +207,7 @@ public class Robot extends Stuff implements Moveable {
 		}
 	}
 
+	@Override
 	public void move(String direction) {
 
 		if (direction.equals("N")) {
@@ -329,6 +337,7 @@ public class Robot extends Stuff implements Moveable {
 		isMoving = isMoved;
 	}
 
+	@Override
 	public void die() {
 		System.out.println("You are dead!");
 		super.die();

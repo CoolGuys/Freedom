@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.controlled;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,13 +20,13 @@ public class Box extends Stuff {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/Box/1.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			texture2 = ImageIO.read(new File("Resource/Textures/Box/2.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			texture3 = ImageIO.read(new File("Resource/Textures/Box/3.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -43,6 +42,7 @@ public class Box extends Stuff {
 		textureBlue = texture3;
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Box");

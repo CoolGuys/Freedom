@@ -333,6 +333,7 @@ public class Stuff {
 
 	// TODO Finish death handling
 	private class DamageSender implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			Stuff.this.lives = Stuff.this.lives - Stuff.this.toHarm;
 			System.out.println(Stuff.this.lives);

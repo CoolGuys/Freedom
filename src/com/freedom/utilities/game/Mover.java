@@ -19,6 +19,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 		this.distance = distance;
 	}
 
+	@Override
 	public synchronized void run() {
 		Thread.currentThread().setName(
 				"Mover@" + theOneToMove.getClass().toString());
@@ -49,10 +50,10 @@ public final class Mover<MO extends Moveable> implements Runnable {
 						theOneToMove.move(direction);
 
 						theOneToRepaint.repaint(
-								(int) ((theOneToMove.getX() - 1) * GameField
-										.getInstance().getCellSize()),
-								(int) ((theOneToMove.getY() - 1) * GameField
-										.getInstance().getCellSize()),
+								(theOneToMove.getX() - 1) * GameField
+										.getInstance().getCellSize(),
+								(theOneToMove.getY() - 1) * GameField
+										.getInstance().getCellSize(),
 								GameField.getInstance().getCellSize() * 3,
 								GameField.getInstance().getCellSize() * 3);
 

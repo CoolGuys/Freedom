@@ -17,17 +17,18 @@ public class TilePacman extends PacmanBody{
 			Image texturetile = ImageIO
 					.read(new File("Resource/Textures/Tile.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			TilePacman.texturetile.getGraphics().drawImage(texturetile, 0, 0, null);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("rate", String.valueOf((int) super.getRate()));
+		obj.setAttribute("rate", String.valueOf(super.getRate()));
 		obj.setAttribute("alive", String.valueOf(super.getAlive()));
-		obj.setAttribute("trekLenght", String.valueOf((int) super.trekLenght));
+		obj.setAttribute("trekLenght", String.valueOf(super.trekLenght));
 		obj.setAttribute("class", "com.freedom.gameObjects.characters.TilePacman");
 		
 	}
@@ -37,6 +38,7 @@ public class TilePacman extends PacmanBody{
 		textureRed = texturetile;
 	}
 
+	@Override
 	public void changeTexture() {
 		textureRed = TilePacman.texturetile;
 	}

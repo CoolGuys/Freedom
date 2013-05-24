@@ -90,6 +90,7 @@ public class PauseScreenModel {
 
 	
 	public static class QuitAction extends GAction {
+		@Override
 		public void performAction() {
 			GameField.getInstance().resetTickerListeners();
 			GameField.otherThreads.shutdownNow();
@@ -102,6 +103,7 @@ public class PauseScreenModel {
 	
 
 	public static class SaveLevelAction extends GAction {
+		@Override
 		public void performAction() {
 			SaveScreenModel.getInstance().setSourcePack(GameField.getInstance().getPathToSave());
 			SaveScreenModel.getInstance().setDescriptor("Enter Save Name");

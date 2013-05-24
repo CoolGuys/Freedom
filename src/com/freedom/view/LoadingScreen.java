@@ -34,6 +34,7 @@ public class LoadingScreen extends AbstractScreen {
 		loadingScreenModel.draw(g);
 	}
 	
+	@Override
 	public void prepareModel() {
 
 		//logger.info("Preparing");

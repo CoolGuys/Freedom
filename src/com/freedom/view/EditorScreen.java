@@ -45,6 +45,7 @@ public class EditorScreen extends GameScreen {
 	}
 
 
+	@Override
 	public void createInputMap() {
 		InputMap imap = this.getInputMap(JComponent.WHEN_FOCUSED);
 		imap.put(KeyStroke.getKeyStroke("W"), "move.up");
@@ -159,6 +160,7 @@ public class EditorScreen extends GameScreen {
 		amap.put("free.container", erase);
 	}
 
+	@Override
 	public void activateModel() {
 		GameField.getInstance().activate();
 		ScreensHolder.getInstance().add(guiPane);
@@ -173,6 +175,7 @@ public class EditorScreen extends GameScreen {
 	}
 	
 
+	@Override
 	public EditorScreen instance() {
 		return INSTANCE;
 	}
@@ -460,6 +463,7 @@ public class EditorScreen extends GameScreen {
 			this.setVisible(true);
 		}
 
+		@Override
 		public void paintComponent(Graphics g) {
 			msgDisplay.draw(g);
 			hpDisp.draw(g);

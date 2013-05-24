@@ -15,6 +15,7 @@ import javax.swing.JComponent;
 import javax.swing.JLayeredPane;
 import javax.swing.KeyStroke;
 
+import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.base.Stuff.StuffColor;
 import com.freedom.gameObjects.characters.Robot;
 import com.freedom.gameObjects.controlled.Box;
@@ -40,6 +41,7 @@ public class GameScreen extends AbstractScreen {
 		logger.setLevel(Level.WARNING);
 	}
 
+	@Override
 	public void prepareModel() {
 		GameField.getInstance().setCellSize(scale);
 	}
@@ -127,6 +129,7 @@ public class GameScreen extends AbstractScreen {
 		GameField.getInstance().draw(g);
 	}
 
+	@Override
 	public void activateModel() {
 		GameField.getInstance().activate();
 		ScreensHolder.getInstance().add(guiPane);
@@ -140,6 +143,7 @@ public class GameScreen extends AbstractScreen {
 			return INSTANCE;
 	}
 
+	@Override
 	public GameScreen instance() {
 		return INSTANCE;
 	}
@@ -165,10 +169,10 @@ public class GameScreen extends AbstractScreen {
 	public Point calculateDistanceFromRobotToScreenCenter(Robot robot) {
 		int deltaX = -this.getX() + ScreensHolder.getInstance().getWidth() / 2
 				- robot.getTargetCellCoordinates(robot.getDirection()).x
-				* Robot.getSize();
+				* Stuff.getSize();
 		int deltaY = -this.getY() + ScreensHolder.getInstance().getHeight() / 2
 				- robot.getTargetCellCoordinates(robot.getDirection()).y
-				* Robot.getSize();
+				* Stuff.getSize();
 		return new Point(deltaX, deltaY);
 	}
 
@@ -205,6 +209,7 @@ public class GameScreen extends AbstractScreen {
 		repaint();
 	}
 
+	@Override
 	public void deactivateModel() {
 		ScreensHolder.getInstance().remove(guiPane);
 		msgDisplay.removeMessage();
@@ -361,6 +366,7 @@ public class GameScreen extends AbstractScreen {
 			this.setVisible(true);
 		}
 
+		@Override
 		public void paintComponent(Graphics g) {
 			msgDisplay.draw(g);
 			hpDisp.draw(g);

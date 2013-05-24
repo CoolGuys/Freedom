@@ -55,6 +55,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		return this.rate;
 	}
 
+	@Override
 	public void itsAlive() {
 		if (this.alive) {
 			this.p = new PacmanSoul(this.rate, this, this.trekLenght);
@@ -62,6 +63,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		}
 	}
 
+	@Override
 	public void move(String direction) {
 
 		if (direction.equals("N"))
@@ -74,35 +76,43 @@ public class PacmanBody extends Stuff implements Moveable {
 			x -= step;
 	}
 
+	@Override
 	public boolean checkIfBeingMoved() {
 		return isMoving;
 	}
 
+	@Override
 	public void tellIfBeingMoved(boolean isMoved) {
 		this.isMoving = isMoved;
 	}
 
+	@Override
 	public void recalibrate() {
 		x = (int) Math.round(x);
 		y = (int) Math.round(y);
 	}
 
+	@Override
 	public int getX() {
 		return super.getX();
 	}
 
+	@Override
 	public int getY() {
 		return super.getY();
 	}
 
+	@Override
 	public double getStep() {
 		return step;
 	}
 
+	@Override
 	public void setDirection(String direction) {
 		this.direction = direction;
 	}
 
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		this.rate = Integer.parseInt(obj.getAttribute("rate"));
@@ -123,6 +133,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		// p.InHell();
 	}
 
+	@Override
 	public void die() {
 		if (this.alive) {
 			this.alive = false;
@@ -140,10 +151,11 @@ public class PacmanBody extends Stuff implements Moveable {
 	 * 
 	 * @author UshAle
 	 */
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("rate", String.valueOf((int) this.rate));
-		obj.setAttribute("trekLenght", String.valueOf((int) this.trekLenght));
+		obj.setAttribute("rate", String.valueOf(this.rate));
+		obj.setAttribute("trekLenght", String.valueOf(this.trekLenght));
 		obj.setAttribute("alive", String.valueOf(this.alive));
 		obj.setAttribute("class", "com.freedom.gameObjects.characters.PacmanBody");
 
@@ -161,6 +173,7 @@ public class PacmanBody extends Stuff implements Moveable {
 		t.start();
 	}
 
+	@Override
 	public boolean canGo() {
 		if (GameField.getInstance().cells[this
 				.getTargetCellCoordinates(direction).x][this
@@ -178,6 +191,7 @@ public class PacmanBody extends Stuff implements Moveable {
 	 * 
 	 * @return пара координат нужного целла
 	 * */
+	@Override
 	public Point getTargetCellCoordinates(String direction) {
 		Point point = new Point();
 		if (direction.equals("N")) {
@@ -328,23 +342,23 @@ public class PacmanBody extends Stuff implements Moveable {
 			Image texture1 = ImageIO
 					.read(new File("Resource/Textures/p1s.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			Image texture2 = ImageIO
 					.read(new File("Resource/Textures/p2s.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			Image texture3 = ImageIO
 					.read(new File("Resource/Textures/p3s.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			Image texture4 = ImageIO
 					.read(new File("Resource/Textures/p4s.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			Image texture5 = ImageIO
 					.read(new File("Resource/Textures/p5s.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 
 			PacmanBody.texture1S.getGraphics().drawImage(texture1, 0, 0, null);
 			PacmanBody.texture2S.getGraphics().drawImage(texture2, 0, 0, null);

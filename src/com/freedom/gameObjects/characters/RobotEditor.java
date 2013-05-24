@@ -42,6 +42,7 @@ public class RobotEditor extends Robot {
 		}
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("editor", "true");

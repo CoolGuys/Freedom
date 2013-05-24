@@ -47,6 +47,7 @@ public class SaveScreen extends AbstractScreen {
 		saveScreenModel.draw(g);
 	}
 	
+	@Override
 	public void prepareModel() {
 
 		logger.info("Preparing");
@@ -54,6 +55,7 @@ public class SaveScreen extends AbstractScreen {
 
 	}
 	
+	@Override
 	public void deactivateModel() {
 		saveScreenModel.deactivate();
 	}

@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.controllers;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -27,7 +26,7 @@ public class LevelExit extends Stuff {
 			texture1 = ImageIO
 					.read(new File("Resource/Textures/NextLevel.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,6 +43,7 @@ public class LevelExit extends Stuff {
 	 * @param - Scanner файла
 	 */
 	
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		this.nextLevelID = Integer.parseInt(obj.getAttribute("next"));
@@ -64,18 +64,20 @@ public class LevelExit extends Stuff {
 	 * @author UshAle
 	 */
 	
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("xr", String.valueOf((int) this.robotx));
-		obj.setAttribute("yr", String.valueOf((int) this.roboty));
+		obj.setAttribute("xr", String.valueOf(this.robotx));
+		obj.setAttribute("yr", String.valueOf(this.roboty));
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.LevelExit");
-		obj.setAttribute("next", String.valueOf((int) this.nextLevelID));
+		obj.setAttribute("next", String.valueOf(this.nextLevelID));
 		obj.setAttribute("buf", String.valueOf(this.buf));
 	}
 
 	
 	
 	
+	@Override
 	public void touch(Stuff element) {
 
 		if (element instanceof Robot) {
@@ -85,6 +87,7 @@ public class LevelExit extends Stuff {
 					roboty,this.buf);
 		}
 	}
+	@Override
 	public boolean absorbs(Stuff element) {
 			return false;
 	}

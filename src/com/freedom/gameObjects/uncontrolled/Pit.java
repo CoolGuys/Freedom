@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -28,11 +27,13 @@ public class Pit extends Stuff {
 		this.setColour("Red");
 	}
 
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		super.raiseDamage(Robot.maxLives);
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.uncontrolled.Pit");
@@ -43,7 +44,7 @@ public class Pit extends Stuff {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/Pit.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

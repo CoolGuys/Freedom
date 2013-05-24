@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -31,8 +30,8 @@ public class Trap extends Stuff {
 			this.textureRed = textureClosed;
 			SoundEngine.playClip(f1, -1, -15);
 			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
-					(int) (this.getX() * Stuff.getSize()),
-					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
+					this.getX() * Stuff.getSize(),
+					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
 			this.open = false;
 		} else {
@@ -40,8 +39,8 @@ public class Trap extends Stuff {
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
 			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
-					(int) (this.getX() * Stuff.getSize()),
-					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
+					this.getX() * Stuff.getSize(),
+					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
 		}
 	}
@@ -53,12 +52,13 @@ public class Trap extends Stuff {
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
 			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
-					(int) (this.getX() * Stuff.getSize()),
-					(int) (this.getY() * Stuff.getSize()), Stuff.getSize(),
+					this.getX() * Stuff.getSize(),
+					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
 		}
 	}
 
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		try {
@@ -77,10 +77,11 @@ public class Trap extends Stuff {
 	 * Метод, который добавляет инфу в файл если вы хотите чтоб всё работало
 	 * пихайте такие методы везде где стафф!
 	 */
+	@Override
 	public void loadToFile(Element obj) {
 
 		super.loadToFile(obj);
-		obj.setAttribute("damage", String.valueOf((int) this.damage));
+		obj.setAttribute("damage", String.valueOf(this.damage));
 		obj.setAttribute("used", String.valueOf(this.used));
 		obj.setAttribute("class",
 				"com.freedom.gameObjects.healthOperators.Trap");
@@ -97,11 +98,11 @@ public class Trap extends Stuff {
 			textureOpen = ImageIO.read(
 					new File("Resource/Textures/TrapOpen.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureClosed = ImageIO.read(
 					new File("Resource/Textures/TrapClosed.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			f1 = new File("Resource/Sound/beep-5.wav");
 			f2 = new File("Resource/Sound/ButtonClicked.wav");
 		} catch (IOException e) {

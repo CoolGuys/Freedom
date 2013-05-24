@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.healthOperators;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -25,7 +24,7 @@ public class TNT extends Stuff {
 	static {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/TNT.png")).getScaledInstance(getSize(), getSize(),
-					BufferedImage.SCALE_SMOOTH);;
+					Image.SCALE_SMOOTH);;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -41,6 +40,7 @@ public class TNT extends Stuff {
 		ifActive = false;
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class","com.freedom.gameObjects.healthOperators.TNT");
@@ -129,6 +129,7 @@ public class TNT extends Stuff {
 	}
 
 	private class TNTExploder implements Runnable {
+		@Override
 		public void run() {
 			try {
 				Thread.sleep(3000);

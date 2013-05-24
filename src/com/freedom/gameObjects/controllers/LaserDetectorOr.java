@@ -3,7 +3,6 @@ package com.freedom.gameObjects.controllers;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -45,6 +44,7 @@ public class LaserDetectorOr extends ButtonOr {
 		}
 	}
 
+	@Override
 	public void untouch(Stuff toucher) {
 		breaker.setToucher(toucher);
 		inertion.restart();
@@ -85,12 +85,12 @@ public class LaserDetectorOr extends ButtonOr {
 			textureOff = ImageIO.read(
 					new File("Resource/Textures/LaserDetector/0.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			for (int i = 1; i <= 3; i++) {
 				texturesOn[i] = ImageIO.read(
 						new File("Resource/Textures/LaserDetector/" + i
 								+ ".png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 			}
 		} catch (IOException e) {
 			logger.warning("Laser detector texture was corrupted");
@@ -110,6 +110,7 @@ public class LaserDetectorOr extends ButtonOr {
 		private Stuff toucher;
 	}
 
+	@Override
 	public boolean absorbs(Stuff element) {
 		if (element.getColour() != this.getColour())
 			return true;

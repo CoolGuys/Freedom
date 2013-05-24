@@ -40,6 +40,7 @@ public class PauseScreen extends AbstractScreen {
 			return INSTANCE;
 	}
 
+	@Override
 	public void prepareModel() {
 		pauseScreenModel.addButtons();
 	}
@@ -50,10 +51,12 @@ public class PauseScreen extends AbstractScreen {
 		pauseScreenModel.draw(g);
 	}
 
+	@Override
 	public void activateModel() {
 		pauseScreenModel.activate();
 	}
 
+	@Override
 	public void deactivateModel() {
 		pauseScreenModel.deactivate();
 	}
@@ -69,12 +72,14 @@ public class PauseScreen extends AbstractScreen {
 			pauseScreenModel.reactToClick(e.getPoint());
 		}
 
+		@Override
 		public void mouseMoved(MouseEvent e) {
 			pauseScreenModel.reactToRollOver(e.getPoint());
 		}
 	}
 
 	public static class ResumeAction extends AbstractAction {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			ScreensHolder.getInstance().removeScreen(getInstance());
 		}

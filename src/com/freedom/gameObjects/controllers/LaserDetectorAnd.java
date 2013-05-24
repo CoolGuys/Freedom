@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.controllers;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +32,7 @@ public class LaserDetectorAnd extends ButtonAnd {
 		}
 	}
 
+	@Override
 	public void untouch(Stuff toucher) {
 		super.untouch(toucher);
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
@@ -46,12 +46,12 @@ public class LaserDetectorAnd extends ButtonAnd {
 			textureOff = ImageIO.read(
 					new File("Resource/Textures/LaserDetector/0.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			for (int i = 1; i <= 3; i++) {
 				texturesOn[i] = ImageIO.read(
 						new File("Resource/Textures/LaserDetector/" + i
 								+ ".png")).getScaledInstance(getSize(),
-						getSize(), BufferedImage.SCALE_SMOOTH);
+						getSize(), Image.SCALE_SMOOTH);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

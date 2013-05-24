@@ -1,7 +1,10 @@
 package com.freedom.view;
 
-import java.awt.*;
-import javax.swing.*;
+import java.awt.EventQueue;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+
+import javax.swing.JFrame;
 
 /**
  * Класс FreedomGame производит начальный запуск программы.
@@ -13,6 +16,7 @@ public class FreedomGame {
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				
 				Frame frame = new Frame();

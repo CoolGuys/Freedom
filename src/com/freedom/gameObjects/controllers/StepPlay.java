@@ -10,10 +10,12 @@ import com.freedom.utilities.game.SoundEngine;
 public class StepPlay extends StepListener{
 	boolean used=false;
 	
+	@Override
 	public void loadToFile(Element obj) {
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.StepPlay");
 	}
 	
+	@Override
 	public void robotCome(){
 		if(!used){
 			used = true;

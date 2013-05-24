@@ -46,6 +46,7 @@ public class LoadScreen extends AbstractScreen {
 		loadScreenModel.draw(g);
 	}
 
+	@Override
 	public void activateModel() {
 		loadScreenModel.activate();
 		this.addMouseListener(l);
@@ -53,6 +54,7 @@ public class LoadScreen extends AbstractScreen {
 		this.addMouseWheelListener(l);
 	}
 
+	@Override
 	public void deactivateModel() {
 		loadScreenModel.deactivate();
 		this.removeMouseListener(l);
@@ -73,10 +75,12 @@ public class LoadScreen extends AbstractScreen {
 			loadScreenModel.reactToClick(e.getPoint());
 		}
 
+		@Override
 		public void mouseMoved(MouseEvent e) {
 			loadScreenModel.reactToRollOver(e.getPoint());
 		}
 
+		@Override
 		public void mouseWheelMoved(MouseWheelEvent e) {
 			int notches = e.getWheelRotation();
 			logger.info(""+getY()+"||"+ -LoadScreen.getInstance().getHeight()/5);

@@ -3,7 +3,6 @@ package com.freedom.gameObjects.controllers;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -63,10 +62,12 @@ public class ButtonOr extends Stuff {
 	}
 	
 
+	@Override
 	public int getUseAmount() {
 		return controlledCellsAmount;
 	}
 
+	@Override
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
@@ -75,6 +76,7 @@ public class ButtonOr extends Stuff {
 	 * 
 	 * @param - Scanner файла
 	 */
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
@@ -87,6 +89,7 @@ public class ButtonOr extends Stuff {
 		this.controlledCellsAmount = length;
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonOr");
@@ -94,6 +97,7 @@ public class ButtonOr extends Stuff {
 	
 
 	public class SignalOnSender implements ActionListener {
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
 				
@@ -110,6 +114,7 @@ public class ButtonOr extends Stuff {
 		}
 	}
 
+	@Override
 	public void giveInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].highlight();
 
@@ -119,6 +124,7 @@ public class ButtonOr extends Stuff {
 		}
 	}
 
+	@Override
 	public void removeInfo() {
 		GameField.getInstance().getCells()[(int) x][(int) y].unhighlight();
 
@@ -144,11 +150,11 @@ public class ButtonOr extends Stuff {
 			texturesPressed[i] = ImageIO.read(
 					new File("Resource/Textures/ButtonOR/Pressed"+i+".png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			texturesDepressed[i] = ImageIO.read(
 					new File("Resource/Textures/ButtonOR/Depressed"+i+".png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			}
 			f2 = new File("Resource/Sound/ButtonClicked.wav");
 			
@@ -157,6 +163,7 @@ public class ButtonOr extends Stuff {
 		}
 	}
 	
+	@Override
 	public void setControlled(Cell element) {
 		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
 		this.controlledCellsList[controlledCellsAmount][1] = element.getY();

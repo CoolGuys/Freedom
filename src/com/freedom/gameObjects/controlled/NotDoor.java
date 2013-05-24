@@ -2,9 +2,9 @@ package com.freedom.gameObjects.controlled;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
@@ -29,11 +29,11 @@ public class NotDoor extends Stuff {
 			textureClosedVertical = ImageIO.read(
 					new File("Resource/Textures/DoorClosedVertical.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureClosedHorisontal = ImageIO.read(
 					new File("Resource/Textures/DoorClosedHorisontal.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			;
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
@@ -55,6 +55,7 @@ public class NotDoor extends Stuff {
 	 * @author UshAle
 	 */
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.NotDoor");
@@ -110,9 +111,10 @@ public class NotDoor extends Stuff {
 			textureSet = true;
 			textureRed = textureOpen;
 		}
-		g.drawImage(textureRed, (int) (getX() * getSize()),
-				(int) (getY() * getSize()), getSize(), getSize(), null);
+		g.drawImage(textureRed, getX() * getSize(),
+				getY() * getSize(), getSize(), getSize(), null);
 	}
+	@Override
 	public boolean absorbs(Stuff element) {
 			return false;
 	}

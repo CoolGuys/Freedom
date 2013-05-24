@@ -1,12 +1,21 @@
 package com.freedom.utilities.game;
 
-import java.io.*;
-import java.util.concurrent.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineEvent.Type;
+import javax.sound.sampled.LineListener;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * Класс SoundEngine создает для переданного звукового файла отдельный поток, в
@@ -52,6 +61,7 @@ public class SoundEngine {
 			this.initVolumeValue = volume;
 		}
 
+		@Override
 		public void run() {
 			logger.setLevel(Level.OFF);
 			logger.info("Entering RUN: " + this.toString());

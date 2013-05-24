@@ -1,7 +1,6 @@
 package com.freedom.gameObjects.uncontrolled;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,7 +24,7 @@ public class Tile extends Stuff {
 		try {
 			texture1 = ImageIO.read(new File("Resource/Textures/Tile.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,6 +50,7 @@ public class Tile extends Stuff {
 	 * 
 	 * @author UshAle
 	 */
+	@Override
 	public void loadToFile(Element obj) {
 		obj.setAttribute("x", String.valueOf((int) this.x));
 		obj.setAttribute("y", String.valueOf((int) this.y));

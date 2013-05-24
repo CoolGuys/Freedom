@@ -2,7 +2,6 @@ package com.freedom.gameObjects.controlled;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -29,11 +28,11 @@ public class Door extends Stuff {
 			textureClosedVertical = ImageIO.read(
 					new File("Resource/Textures/DoorClosedVertical.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureClosedHorisontal = ImageIO.read(
 					new File("Resource/Textures/DoorClosedHorisontal.png"))
 					.getScaledInstance(getSize(), getSize(),
-							BufferedImage.SCALE_SMOOTH);
+							Image.SCALE_SMOOTH);
 			textureOpen = ImageIO.read(new File(
 					"Resource/Textures/EmptyTexture.png"));
 		} catch (IOException e) {
@@ -48,11 +47,13 @@ public class Door extends Stuff {
 		super.setExpConductive(false);
 	}
 
+	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 		obj.setAttribute("class", "com.freedom.gameObjects.controlled.Door");
 	}
 
+	@Override
 	public boolean useOff() {
 
 		textureRed = textureClosed;
@@ -64,6 +65,7 @@ public class Door extends Stuff {
 
 	}
 
+	@Override
 	public boolean useOn() {
 
 		textureRed = textureOpen;
@@ -105,11 +107,13 @@ public class Door extends Stuff {
 		}
 	}
 
+	@Override
 	public void draw(Graphics g) {
 		setTexture();
 		super.draw(g);
 	}
 
+	@Override
 	public boolean absorbs(Stuff element) {
 		return false;
 	}

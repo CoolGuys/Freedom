@@ -43,6 +43,7 @@ public class StepListener extends Ghost {
 	 * просто так не юзать
 	 */
 
+	@Override
 	public void itsAlive() {
 		this.p = new Checker();
 		GameField.getInstance().getThreads().execute(this.p);
@@ -87,6 +88,7 @@ public class StepListener extends Ghost {
 	/**
 	 * этот метод нужно заоверрайдить при наследовании
 	 */
+	@Override
 	public void loadToFile(Element obj) {
 		obj.setAttribute("class", "com.freedom.gameObjects.StepListener");
 		gleblo.info("Saving");
@@ -97,6 +99,7 @@ public class StepListener extends Ghost {
 	 * 
 	 * @param - Scanner файла
 	 */
+	@Override
 	public void readLvlFile(Element obj) {
 		super.readLvlFile(obj);
 		NodeList list = obj.getElementsByTagName("cels");
@@ -113,6 +116,7 @@ public class StepListener extends Ghost {
 	/**
 	 * просто так не юзать
 	 */
+	@Override
 	public int getUseAmount() {
 		return controlledCellsAmount;
 	}
@@ -120,11 +124,13 @@ public class StepListener extends Ghost {
 	/**
 	 * просто так не юзать
 	 */
+	@Override
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
 
 	private class Checker implements Runnable {
+		@Override
 		public void run() {
 			Thread.currentThread().setName(
 					"StepListener@" + Arrays.toString(controlledCellsList[0]));
