@@ -7,12 +7,13 @@ import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.view.AbstractScreen;
+import com.freedom.view.ScreensHolder;
 
 public final class Mover<MO extends Moveable> implements Runnable {
 
-	public Mover(MO mover, String direction, int distance, int delay, AbstractScreen theOneToRepaint)
+	public Mover(MO mover, String direction, int distance, int delay)
 	{
-		this.theOneToRepaint = theOneToRepaint;
+		this.theOneToRepaint = ScreensHolder.getInstance().getCurrentScreen();
 		this.direction = direction;
 		this.theOneToMove = mover;
 		this.delay = delay;

@@ -6,7 +6,6 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.model.GameField;
-import com.freedom.utilities.game.Mover;
 import com.freedom.view.EditorScreen;
 
 public class RobotEditor extends Robot {
@@ -51,20 +50,6 @@ public class RobotEditor extends Robot {
 		return true;
 	}
 
-
-	@Override
-	public void moveFine(String direction) {
-		if (!direction.equals(this.direction)) {
-			this.direction = direction;
-			EditorScreen.getInstance().repaint();
-			return;
-		}
-		Runnable r = new Mover<Robot>(this, direction, 1, 10,
-				EditorScreen.getInstance());
-
-		Thread t = new Thread(r);
-		t.start();
-	}
 
 	@Override
 	public void take() {

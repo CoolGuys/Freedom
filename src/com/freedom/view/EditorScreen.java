@@ -175,11 +175,6 @@ public class EditorScreen extends GameScreen {
 	}
 	
 
-	@Override
-	public EditorScreen instance() {
-		return INSTANCE;
-	}
-
 	private static EditorScreen INSTANCE;
 
 	private class CoarseMovementAction extends AbstractAction {

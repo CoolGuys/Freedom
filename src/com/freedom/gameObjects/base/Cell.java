@@ -137,7 +137,6 @@ public class Cell {
 		buf = this.content[this.contentAmount];
 		this.content[this.contentAmount] = null;
 		this.damage = this.damage - buf.getDamage();
-		buf.stopHarming();
 		// System.out.println("Remove on "+ buf.toString()+ ": " +
 		// contentAmount+" "+x+" "+y);
 

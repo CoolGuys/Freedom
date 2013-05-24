@@ -70,7 +70,7 @@ public class GLabel {
 		default:
 			break;
 		}
-		//ScreensHolder.getInstance().repaint();
+		//ScreensHolder.getInstance().getCurrentScreen().repaint();
 	}
 
 	public void draw(Graphics g) {

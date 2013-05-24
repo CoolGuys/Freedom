@@ -496,7 +496,7 @@ public class LaserBeam extends Stuff {
 
 			this.next.buildBeam();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 
 	}
 

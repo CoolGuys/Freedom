@@ -139,7 +139,7 @@ public class Laser extends Stuff {
 		else if (this.direction.equals("SE"))
 			this.direction = "S";
 		chooseTexture();
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 		// System.out.println("Laser direction: "+ this.direction);
 		if (condition)
 			this.useOn();

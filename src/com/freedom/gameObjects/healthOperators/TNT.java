@@ -110,7 +110,7 @@ public class TNT extends Stuff {
 			}
 
 			toWork.expBuf = 0;
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().repaint();
 		}
 		
 		if ((GameField.getInstance().getRobot().getX() == this.getX())&&(GameField.getInstance().getRobot().getY() == this.getY())){

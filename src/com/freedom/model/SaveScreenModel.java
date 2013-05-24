@@ -119,6 +119,7 @@ public class SaveScreenModel {
 					textField.setText("");
 
 					interactionLabel.setText("Overwrote");
+					SaveScreen.getInstance().repaint();
 					state = State.NORMAL;
 					return;
 				} else {
@@ -133,6 +134,8 @@ public class SaveScreenModel {
 				} catch (FileAlreadyExistsException exc) {
 					interactionLabel
 							.setText("File exists. Press enter to overwrite");
+
+					SaveScreen.getInstance().repaint();
 					state = State.OVEWRITING;
 					lastName = textField.getText();
 					return;
@@ -147,6 +150,7 @@ public class SaveScreenModel {
 				GameField.getInstance().setPathToSave("TmpSave");
 				textField.setText("");
 				interactionLabel.setText("Saved");
+				SaveScreen.getInstance().repaint();
 
 				return;
 			}

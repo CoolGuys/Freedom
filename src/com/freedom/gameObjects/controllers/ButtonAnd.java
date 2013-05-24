@@ -144,7 +144,7 @@ public class ButtonAnd extends Stuff {
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
 					ScreensHolder.getInstance().getCurrentScreen()
-							.instance()
+							
 							.repaint(
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
 											* getSize(),

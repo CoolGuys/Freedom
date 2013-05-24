@@ -172,22 +172,11 @@ public class Loader {
 				for (int x = 1; x < width - 1; x++) {// writing objects
 					for (int y = 1; y < height - 1; y++) {
 
-						Stuff meta = GameField.getInstance().cells[x][y]
-								.getMeta();
-						if(meta!=null)
-						{
-							Element obj = doc.createElement("obj");
-							meta.loadToFile(obj);
-							obj.setTextContent("\n");
-							lvl.appendChild(obj);
-						}
 						Stuff[] stu = GameField.getInstance().cells[x][y]
 								.getContent();
 						int l = GameField.getInstance().cells[x][y]
 								.getContentAmount();
 						for (int i = 0; i < l; i++) {
-							if(stu[i]==null)
-								System.out.println("LoaderSv");
 							if (stu[i].getLoadingType() == LoadingType.OBJ) {
 								Element obj = doc.createElement("obj");
 								stu[i].loadToFile(obj);
@@ -214,6 +203,14 @@ public class Loader {
 								lvl.appendChild(obj);
 							}
 
+						}
+						Stuff meta = GameField.getInstance().cells[x][y]
+								.getMeta();
+						if (meta != null) {
+							Element obj = doc.createElement("obj");
+							meta.loadToFile(obj);
+							obj.setTextContent("\n");
+							lvl.appendChild(obj);
 						}
 					}
 				}

@@ -29,7 +29,7 @@ public class Trap extends Stuff {
 			element.punch(this.damage);
 			this.textureRed = textureClosed;
 			SoundEngine.playClip(f1, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().repaint(
 					this.getX() * Stuff.getSize(),
 					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
@@ -38,7 +38,7 @@ public class Trap extends Stuff {
 			this.textureRed = textureOpen;
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().repaint(
 					this.getX() * Stuff.getSize(),
 					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
@@ -51,7 +51,7 @@ public class Trap extends Stuff {
 			this.textureRed = textureOpen;
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
+			ScreensHolder.getInstance().getCurrentScreen().repaint(
 					this.getX() * Stuff.getSize(),
 					this.getY() * Stuff.getSize(), Stuff.getSize(),
 					Stuff.getSize());
