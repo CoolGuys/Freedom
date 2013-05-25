@@ -239,6 +239,7 @@ public class Stuff {
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
+			harmTexture=null;
 			return;
 		}
 		case GREEN: {
@@ -246,6 +247,7 @@ public class Stuff {
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
+			harmTexture=null;
 			return;
 		}
 		case BLUE:
@@ -253,6 +255,7 @@ public class Stuff {
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
+			harmTexture=null;
 
 		}
 		
