@@ -17,7 +17,6 @@ import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.Mover;
-import com.freedom.view.GameScreen;
 
 public class PacmanBody extends Stuff implements Moveable {
 
@@ -168,9 +167,9 @@ public class PacmanBody extends Stuff implements Moveable {
 		//
 		// System.out.println(direction);
 		// this.die();
-		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10, GameScreen.getInstance());
-		Thread t = new Thread(r);
-		t.start();
+		Runnable r = new Mover<PacmanBody>(this, direction, 1, 10);
+
+		GameField.otherThreads.execute(r);
 	}
 
 	@Override

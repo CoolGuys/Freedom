@@ -158,22 +158,20 @@ public class Robot extends Stuff implements Moveable {
 				.getInstance().getHeight() / 2 - 4 * getSize())
 			GameScreen.getInstance().centerByRobotVertically(this);
 
-		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
-		Thread t = new Thread(r);
-		t.start();
+		Runnable r = new Mover<Robot>(this, direction, 1, 10);
 
+		GameField.otherThreads.execute(r);
 	}
 
 	public void moveFine(String direction) {
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().repaint();
 			return;
 		}
-		Runnable r = new Mover<Robot>(this, direction, 1, 10, GameScreen.getInstance());
+		Runnable r = new Mover<Robot>(this, direction, 1, 10);
 
-		Thread t = new Thread(r);
-		t.start();
+		GameField.otherThreads.execute(r);
 	}
 
 	/**
@@ -244,7 +242,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 	}
 
 	public void put() {
@@ -265,7 +263,7 @@ public class Robot extends Stuff implements Moveable {
 
 		// container[0].activate();
 		this.container[0] = null;
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 
 		return;
 
@@ -297,8 +295,19 @@ public class Robot extends Stuff implements Moveable {
 					s.removeInfo();
 			cell.isExamined = false;
 		}
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 
+	}
+	
+	public int punch(int damage) {
+		ScreensHolder.getInstance().repaint();
+		return super.punch(damage);
+	}
+
+	public void heal(int lives) {
+		this.lives = this.lives + lives;
+		if (this.lives > Robot.maxLives)
+			this.lives = Robot.maxLives;
 	}
 
 	@Override
@@ -325,6 +334,9 @@ public class Robot extends Stuff implements Moveable {
 		if (container[0] != null) {
 			container[0].draw(g);
 		}
+		g.drawImage(harmTexture, (int) (x * getSize()),
+				(int) (y * getSize()), null);
+		harmTexture = null;
 	}
 
 	@Override

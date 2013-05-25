@@ -143,10 +143,6 @@ public class GameScreen extends AbstractScreen {
 			return INSTANCE;
 	}
 
-	@Override
-	public GameScreen instance() {
-		return INSTANCE;
-	}
 
 	public void changeOffsetCoarse(String direction) {
 		logger.info("Offsettig");

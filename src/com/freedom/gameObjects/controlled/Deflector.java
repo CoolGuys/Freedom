@@ -90,7 +90,7 @@ public class Deflector extends Laser {
 			this.direction = Deflector.list.get(this.revolve(
 					list.indexOf(buf.direction), this.toDeflect));
 			super.useOn();
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().repaint();
 		}
 	}
 
@@ -119,7 +119,7 @@ public class Deflector extends Laser {
 			inertion.stop();
 
 			super.useOff();
-			ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+			ScreensHolder.getInstance().getCurrentScreen().repaint();
 		} catch (ClassCastException e) {
 			// TODO Logger message
 		}
@@ -130,8 +130,8 @@ public class Deflector extends Laser {
 	public void interact(Stuff interactor) {
 		super.useOff();
 		this.toDeflect++;
-		if (this.toDeflect > 7)
-			this.toDeflect = this.toDeflect - 7;
+		if (this.toDeflect > 8)
+			this.toDeflect = this.toDeflect - 8;
 	}
 
 	@Override

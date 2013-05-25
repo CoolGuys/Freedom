@@ -171,40 +171,46 @@ public class Loader {
 				int height = GameField.getInstance().cells[0].length;
 				for (int x = 1; x < width - 1; x++) {// writing objects
 					for (int y = 1; y < height - 1; y++) {
+
 						Stuff[] stu = GameField.getInstance().cells[x][y]
 								.getContent();
-						int l = stu.length;
+						int l = GameField.getInstance().cells[x][y]
+								.getContentAmount();
 						for (int i = 0; i < l; i++) {
-							try {
-								if (stu[i].getLoadingType() == LoadingType.OBJ) {
-									Element obj = doc.createElement("obj");
-									stu[i].loadToFile(obj);
-									obj.setTextContent("\n");
-									lvl.appendChild(obj);
-								}
-								if (stu[i].getLoadingType() == LoadingType.OBJC) {
-									// System.out.print(stu[i].getClass().getSimpleName());
-									Element obj = doc.createElement("obj");
-									stu[i].loadToFile(obj);
-									obj.setTextContent("\n");
-									int useam = stu[i].getUseAmount();
-									int useList[][] = stu[i].getUseList();
-									for (int i1 = 0; i1 < useam; i1++) {
-										Element cels = obj.getOwnerDocument()
-												.createElement("cels");
-										cels.setAttribute("x", String
-												.valueOf(useList[i1][0]));
-										cels.setAttribute("y", String
-												.valueOf(useList[i1][1]));
-										cels.setTextContent("\n");
-										obj.appendChild(cels);
-									}
-									lvl.appendChild(obj);
-								}
-
-							} catch (Exception ei) {
-
+							if (stu[i].getLoadingType() == LoadingType.OBJ) {
+								Element obj = doc.createElement("obj");
+								stu[i].loadToFile(obj);
+								obj.setTextContent("\n");
+								lvl.appendChild(obj);
 							}
+							if (stu[i].getLoadingType() == LoadingType.OBJC) {
+								// System.out.print(stu[i].getClass().getSimpleName());
+								Element obj = doc.createElement("obj");
+								stu[i].loadToFile(obj);
+								obj.setTextContent("\n");
+								int useam = stu[i].getUseAmount();
+								int useList[][] = stu[i].getUseList();
+								for (int i1 = 0; i1 < useam; i1++) {
+									Element cels = obj.getOwnerDocument()
+											.createElement("cels");
+									cels.setAttribute("x",
+											String.valueOf(useList[i1][0]));
+									cels.setAttribute("y",
+											String.valueOf(useList[i1][1]));
+									cels.setTextContent("\n");
+									obj.appendChild(cels);
+								}
+								lvl.appendChild(obj);
+							}
+
+						}
+						Stuff meta = GameField.getInstance().cells[x][y]
+								.getMeta();
+						if (meta != null) {
+							Element obj = doc.createElement("obj");
+							meta.loadToFile(obj);
+							obj.setTextContent("\n");
+							lvl.appendChild(obj);
 						}
 					}
 				}

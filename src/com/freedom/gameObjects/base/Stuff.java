@@ -1,18 +1,17 @@
 package com.freedom.gameObjects.base;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Rectangle2D;
+import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import javax.imageio.ImageIO;
 
 import org.w3c.dom.Element;
 
 import com.freedom.model.GameField;
+import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
 public class Stuff {
@@ -31,6 +30,7 @@ public class Stuff {
 	protected Image textureRed;
 	protected Image textureGreen;
 	protected Image textureBlue;
+	protected Image harmTexture;
 	protected static int size = GameField.getInstance().getCellSize();
 	public Stuff[] container = new Stuff[1];
 	protected int maxLives;
@@ -51,9 +51,6 @@ public class Stuff {
 	// for TNT
 	private boolean expConductive;
 
-	// for harming
-	private DamageSender damager;
-	private int toHarm; // буферное поле для передачи урона
 	private Logger logger = Logger.getLogger("Stuff");
 	public volatile boolean isMoving;
 
@@ -76,7 +73,6 @@ public class Stuff {
 			this.damage = damage;
 
 		this.setExpConductive(true);
-		damager = new DamageSender();
 		
 		if (lives < 1) {
 			this.lives = 1;
@@ -100,7 +96,6 @@ public class Stuff {
 		this.destroyable = false;
 		this.lives = 10;
 		this.setExpConductive(true);
-		damager = new DamageSender();
 		this.basicMaxLives = this.lives;
 	}
 
@@ -109,7 +104,6 @@ public class Stuff {
 		this.y = y;
 	}
 
-	// TODO пока в случае отсутствия цвета делает красным
 	public void readLvlFile(Element obj) {
 		this.x = Integer.parseInt(obj.getAttribute("x"));
 		this.y = Integer.parseInt(obj.getAttribute("y"));
@@ -232,26 +226,36 @@ public class Stuff {
 	public StuffColor getColor() {
 		return this.color;
 	}
+	
+	private void repaintSelf() {
+		GameScreen.getInstance().paintImmediately(getX(), getY(), getSize(), getSize());
+	}
 
 	public void draw(Graphics g) {
-
+		
 		switch (getColor()) {
 		case RED: {
 			g.drawImage(textureRed, (int) (x * getSize()),
+					(int) (y * getSize()), null);
+			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
 			return;
 		}
 		case GREEN: {
 			g.drawImage(textureGreen, (int) (x * getSize()),
 					(int) (y * getSize()), null);
+			g.drawImage(harmTexture, (int) (x * getSize()),
+					(int) (y * getSize()), null);
 			return;
 		}
 		case BLUE:
 			g.drawImage(textureBlue, (int) (x * getSize()),
 					(int) (y * getSize()), null);
+			g.drawImage(harmTexture, (int) (x * getSize()),
+					(int) (y * getSize()), null);
 
 		}
-
+		
 	}
 
 	public int getUseAmount() {
@@ -270,23 +274,6 @@ public class Stuff {
 		return null;
 	}
 
-	// TODO Remove this method
-	boolean harm(int damage) {
-		if (damage == 0) {
-			return false;
-		}
-		if (!this.destroyable)
-			return false;
-
-		this.toHarm = damage;
-		GameField.getInstance().getDeathTicker().addActionListener(damager);
-		return true;
-	}
-
-	void stopHarming() {
-		GameField.getInstance().getDeathTicker().removeActionListener(damager);
-	}
-
 	public void die() {
 		this.lives=0;
 		if (!isMoving)
@@ -295,7 +282,6 @@ public class Stuff {
 					.delete(this);
 	}
 
-	// разовый урон
 	public int punch(int damage) {
 		if (damage < 1) {
 			return 0;
@@ -303,17 +289,18 @@ public class Stuff {
 		if (!this.destroyable)
 			return 0;
 
-		Graphics2D g2 = (Graphics2D) ScreensHolder.getInstance().getCurrentScreen().getGraphics();
-		Rectangle2D r = new Rectangle((int) this.x * getSize(), (int) this.y
-				* getSize(), getSize(), getSize());
-		g2.setColor(Color.WHITE);
-		g2.fill(r);
+		
+		harmTexture = highlighterTexture;
+		repaintSelf();
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			logger.warning("Interrupted while punched");
-		}
-
+		}		
+		
+//		repaintSelf();
+		
+		
 		if (this.lives < damage) {
 			int lastLives = this.lives;
 			this.die();
@@ -321,7 +308,6 @@ public class Stuff {
 		}
 
 		this.lives = this.lives - damage;
-		ScreensHolder.getInstance().repaint();
 		return damage;
 	}
 
@@ -331,17 +317,6 @@ public class Stuff {
 			this.lives = this.maxLives;
 	}
 
-	// TODO Finish death handling
-	private class DamageSender implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Stuff.this.lives = Stuff.this.lives - Stuff.this.toHarm;
-			System.out.println(Stuff.this.lives);
-			if (Stuff.this.lives < 1) {
-				Stuff.this.die();
-			}
-		}
-	}
 
 	// фишки с рангом предметов
 
@@ -369,11 +344,23 @@ public class Stuff {
 			this.color = StuffColor.BLUE;
 		GameField.getInstance();
 		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
-		ScreensHolder.getInstance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 	}
 
 	public void setControlled(Cell element) {
 		return;
+	}
+	
+	private static Image highlighterTexture;
+	
+	static {
+		try {
+			highlighterTexture = ImageIO.read(new File("Resource/Textures/Highlighter.png"))
+					.getScaledInstance(getSize(), getSize(),
+							Image.SCALE_SMOOTH);
+		} catch (IOException e) {
+			//TODO Logger message
+		}
 	}
 	
 

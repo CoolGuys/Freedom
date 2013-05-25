@@ -7,12 +7,13 @@ import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.view.AbstractScreen;
+import com.freedom.view.ScreensHolder;
 
 public final class Mover<MO extends Moveable> implements Runnable {
 
-	public Mover(MO mover, String direction, int distance, int delay, AbstractScreen theOneToRepaint)
+	public Mover(MO mover, String direction, int distance, int delay)
 	{
-		this.theOneToRepaint = theOneToRepaint;
+		this.theOneToRepaint = ScreensHolder.getInstance().getCurrentScreen();
 		this.direction = direction;
 		this.theOneToMove = mover;
 		this.delay = delay;
@@ -23,7 +24,6 @@ public final class Mover<MO extends Moveable> implements Runnable {
 	public synchronized void run() {
 		Thread.currentThread().setName(
 				"Mover@" + theOneToMove.getClass().toString());
-		theOneToMove.setDirection(direction);
 		// logger.info(this.toString());
 		try {
 			if (GameField.getInstance().cells[theOneToMove
@@ -31,6 +31,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					.getTargetCellCoordinates(direction).y].locked == true
 					|| theOneToMove.checkIfBeingMoved())
 				return;
+			theOneToMove.setDirection(direction);
 			for (int k = 0; k < distance; k++) {
 				if (theOneToMove.canGo()) {
 					theOneToMove.tellIfBeingMoved(true);
@@ -82,7 +83,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 
 			theOneToMove.tellIfBeingMoved(false);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			return;
 		}
 
 	}

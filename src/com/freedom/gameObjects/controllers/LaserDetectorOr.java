@@ -62,7 +62,7 @@ public class LaserDetectorOr extends ButtonOr {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
 	}
 

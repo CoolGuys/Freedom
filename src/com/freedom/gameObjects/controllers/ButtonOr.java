@@ -49,7 +49,7 @@ public class ButtonOr extends Stuff {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().instance().repaint();
+		ScreensHolder.getInstance().getCurrentScreen().repaint();
 	}
 	@Override
 	public void touch(Stuff element) {
@@ -103,7 +103,7 @@ public class ButtonOr extends Stuff {
 				
 				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn()) {
-					ScreensHolder.getInstance().getCurrentScreen().instance().repaint(
+					ScreensHolder.getInstance().getCurrentScreen().repaint(
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
 											* getSize(),
 									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
