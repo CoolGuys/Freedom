@@ -242,7 +242,7 @@ public class Robot extends Stuff implements Moveable {
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintNeighbourhood();
 	}
 
 	public void put() {
@@ -261,9 +261,8 @@ public class Robot extends Stuff implements Moveable {
 				.add(this.container[0]))
 			return;
 
-		// container[0].activate();
 		this.container[0] = null;
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintNeighbourhood();
 
 		return;
 
@@ -297,11 +296,6 @@ public class Robot extends Stuff implements Moveable {
 		}
 		ScreensHolder.getInstance().getCurrentScreen().repaint();
 
-	}
-	
-	public int punch(int damage) {
-		ScreensHolder.getInstance().repaint();
-		return super.punch(damage);
 	}
 
 	public void heal(int lives) {

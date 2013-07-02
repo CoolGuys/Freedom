@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import org.w3c.dom.Element;
 
 import com.freedom.model.GameField;
-import com.freedom.view.GameScreen;
 import com.freedom.view.ScreensHolder;
 
 public class Stuff {
@@ -47,7 +46,6 @@ public class Stuff {
 	protected boolean destroyable;
 	protected int lives;
 
-
 	// for TNT
 	private boolean expConductive;
 
@@ -73,7 +71,7 @@ public class Stuff {
 			this.damage = damage;
 
 		this.setExpConductive(true);
-		
+
 		if (lives < 1) {
 			this.lives = 1;
 			this.destroyable = false;
@@ -84,11 +82,10 @@ public class Stuff {
 		this.basicMaxLives = this.lives;
 	}
 
-
 	public Stuff(boolean pickable, boolean passable) {
 
 		this.color = StuffColor.RED;
-		
+
 		this.pickable = pickable;
 		this.passable = passable;
 
@@ -116,10 +113,10 @@ public class Stuff {
 		}
 	}
 
-	public void setLives(int liv){
-		this.lives=liv;
+	public void setLives(int liv) {
+		this.lives = liv;
 	}
-	
+
 	public boolean isCoolEnough(Stuff element) {
 		return GameField.isCoolEnough(element, this);
 	}
@@ -164,9 +161,10 @@ public class Stuff {
 	// //getters
 
 	public boolean absorbs(Stuff element) {
-		if(element.getColour() != this.getColour())
+		if (element.getColour() != this.getColour())
 			return true;
-		else return false;
+		else
+			return false;
 	}
 
 	public int getX() {
@@ -226,20 +224,33 @@ public class Stuff {
 	public StuffColor getColor() {
 		return this.color;
 	}
-	
-	private void repaintSelf() {
-		GameScreen.getInstance().paintImmediately(getX(), getY(), getSize(), getSize());
+
+	public void repaintNeighbourhood() {
+		ScreensHolder
+				.getInstance()
+				.getCurrentScreen()
+				.repaint((getX() - 1) * getSize(), (getY() - 1) * getSize(),
+						getSize() * 3, getSize() * 3);
+	}
+
+	public void repaintSelf() {
+		ScreensHolder
+				.getInstance()
+				.getCurrentScreen()
+				.repaint(getX() * getSize(), getY() * getSize(), getSize(),
+						getSize());
+
 	}
 
 	public void draw(Graphics g) {
-		
+
 		switch (getColor()) {
 		case RED: {
 			g.drawImage(textureRed, (int) (x * getSize()),
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
-			harmTexture=null;
+			harmTexture = null;
 			return;
 		}
 		case GREEN: {
@@ -247,7 +258,7 @@ public class Stuff {
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
-			harmTexture=null;
+			harmTexture = null;
 			return;
 		}
 		case BLUE:
@@ -255,10 +266,10 @@ public class Stuff {
 					(int) (y * getSize()), null);
 			g.drawImage(harmTexture, (int) (x * getSize()),
 					(int) (y * getSize()), null);
-			harmTexture=null;
+			harmTexture = null;
 
 		}
-		
+
 	}
 
 	public int getUseAmount() {
@@ -278,11 +289,10 @@ public class Stuff {
 	}
 
 	public void die() {
-		this.lives=0;
+		this.lives = 0;
 		if (!isMoving)
-			isMoving=true;
-			GameField.getInstance().cells[this.getX()][this.getY()]
-					.delete(this);
+			isMoving = true;
+		GameField.getInstance().cells[this.getX()][this.getY()].delete(this);
 	}
 
 	public int punch(int damage) {
@@ -292,18 +302,14 @@ public class Stuff {
 		if (!this.destroyable)
 			return 0;
 
-		
 		harmTexture = highlighterTexture;
-		repaintSelf();
+		repaintNeighbourhood();
 		try {
 			Thread.sleep(10);
 		} catch (InterruptedException e) {
 			logger.warning("Interrupted while punched");
-		}		
-		
-//		repaintSelf();
-		
-		
+		}
+
 		if (this.lives < damage) {
 			int lastLives = this.lives;
 			this.die();
@@ -319,7 +325,6 @@ public class Stuff {
 		if (this.lives > this.maxLives)
 			this.lives = this.maxLives;
 	}
-
 
 	// фишки с рангом предметов
 
@@ -346,25 +351,25 @@ public class Stuff {
 		if (color.equalsIgnoreCase("Blue"))
 			this.color = StuffColor.BLUE;
 		GameField.getInstance();
-		this.maxLives = this.basicMaxLives * GameField.power.get(this.getColour());
+		this.maxLives = this.basicMaxLives
+				* GameField.power.get(this.getColour());
 		ScreensHolder.getInstance().getCurrentScreen().repaint();
 	}
 
 	public void setControlled(Cell element) {
 		return;
 	}
-	
+
 	private static Image highlighterTexture;
-	
+
 	static {
 		try {
-			highlighterTexture = ImageIO.read(new File("Resource/Textures/Highlighter.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
+			highlighterTexture = ImageIO
+					.read(new File("Resource/Textures/Highlighter.png"))
+					.getScaledInstance(getSize(), getSize(), Image.SCALE_SMOOTH);
 		} catch (IOException e) {
-			//TODO Logger message
+			// TODO Logger message
 		}
 	}
-	
 
 }

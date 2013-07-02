@@ -39,7 +39,6 @@ public class EditorScreen extends GameScreen {
 		this.setOpaque(true);
 		this.createInputMap();
 		this.createMovementController();
-		//setDoubleBuffered(true);
 		setDebugGraphicsOptions(DebugGraphics.FLASH_OPTION);
 		logger.setLevel(Level.WARNING);
 	}

@@ -6,14 +6,11 @@ import java.util.logging.Logger;
 import com.freedom.gameObjects.base.Moveable;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.AbstractScreen;
-import com.freedom.view.ScreensHolder;
 
 public final class Mover<MO extends Moveable> implements Runnable {
 
 	public Mover(MO mover, String direction, int distance, int delay)
 	{
-		this.theOneToRepaint = ScreensHolder.getInstance().getCurrentScreen();
 		this.direction = direction;
 		this.theOneToMove = mover;
 		this.delay = delay;
@@ -24,7 +21,6 @@ public final class Mover<MO extends Moveable> implements Runnable {
 	public synchronized void run() {
 		Thread.currentThread().setName(
 				"Mover@" + theOneToMove.getClass().toString());
-		// logger.info(this.toString());
 		try {
 			if (GameField.getInstance().cells[theOneToMove
 					.getTargetCellCoordinates(direction).x][theOneToMove
@@ -49,15 +45,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					for (int i = 0; i < 1.0 / theOneToMove.getStep(); i++) {
 
 						theOneToMove.move(direction);
-
-						theOneToRepaint.repaint(
-								(theOneToMove.getX() - 1) * GameField
-										.getInstance().getCellSize(),
-								(theOneToMove.getY() - 1) * GameField
-										.getInstance().getCellSize(),
-								GameField.getInstance().getCellSize() * 3,
-								GameField.getInstance().getCellSize() * 3);
-
+						((Stuff) theOneToMove).repaintNeighbourhood();
 						Thread.sleep(delay);
 					}
 
@@ -78,7 +66,7 @@ public final class Mover<MO extends Moveable> implements Runnable {
 
 				}
 				theOneToMove.recalibrate();
-				theOneToRepaint.repaint();
+				((Stuff)theOneToMove).repaintNeighbourhood();
 			}
 
 			theOneToMove.tellIfBeingMoved(false);
@@ -102,7 +90,6 @@ public final class Mover<MO extends Moveable> implements Runnable {
 
 	private MO theOneToMove;
 	private String direction;
-	private AbstractScreen theOneToRepaint;
 	private int delay;
 	private int distance;
 	private static Logger logger = Logger.getLogger("");

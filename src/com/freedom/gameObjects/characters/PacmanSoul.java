@@ -2,10 +2,8 @@ package com.freedom.gameObjects.characters;
 
 import java.util.logging.Logger;
 
-import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.PathFinder;
-import com.freedom.view.GameScreen;
 
 public class PacmanSoul implements Runnable {
 	private int stepRate;
@@ -93,10 +91,7 @@ public class PacmanSoul implements Runnable {
 			while (alive) {
 				if (GameField.getInstance().active) {
 					body.changeTexture();
-					GameScreen.getInstance().repaint(
-							body.getX() * Stuff.getSize(),
-							body.getY() * Stuff.getSize(), Stuff.getSize(),
-							Stuff.getSize());
+					body.repaintSelf();
 
 				}
 				try {
