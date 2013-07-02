@@ -40,7 +40,7 @@ public class LoadingScreenModel {
 	public void setLoadingObjectName(String name) {
 		labels[0].setText(name);
 		LoadingScreen.getInstance()
-				.paintImmediately(
+				.repaint(
 						0,
 						labels[0].getY()
 								-ScreensHolder.getInstance().getHeight() / 15,
