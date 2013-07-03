@@ -49,7 +49,7 @@ public class Wall extends Stuff {
 					g.drawImage(textureS, 0, 0, null);
 				} else
 					neighbourWalls[1] = true;
-
+		
 		if (cells[x - 1][y] != null)
 			if (cells[x - 1][y].getContentAmount() != 0)
 				if (!(cells[x - 1][y].getContent()[0] instanceof Wall)) {

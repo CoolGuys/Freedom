@@ -16,7 +16,6 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.ScreensHolder;
 
 public class ButtonAnd extends Stuff {
 	public ButtonAnd()
@@ -141,17 +140,10 @@ public class ButtonAnd extends Stuff {
 					continue;
 				//
 
-				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.useOn()) {
-					ScreensHolder.getInstance().getCurrentScreen()
-							
-							.repaint(
-									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
-											* getSize(),
-									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-											.getY() * getSize(), getSize(),
-									getSize());
-				}
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.useOn();
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.repaintSelf();
 			}
 		}
 	}

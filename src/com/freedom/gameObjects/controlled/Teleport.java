@@ -61,6 +61,10 @@ public class Teleport extends Stuff {
 				.add(element)) {
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
 					.deleteStuff();
+			GameField.getInstance().getCells()[this.getX()][this.getY()]
+							.repaintNeighbourhood();
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.repaintNeighbourhood();
 			return;
 		} else {
 			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
@@ -69,6 +73,10 @@ public class Teleport extends Stuff {
 					.add(element);
 			GameField.getInstance().getCells()[this.getX()][this.getY()]
 					.deleteStuff();
+			GameField.getInstance().getCells()[this.xLeadTo][this.yLeadTo]
+					.repaintNeighbourhood();
+			GameField.getInstance().getCells()[this.getX()][this.getY()]
+							.repaintNeighbourhood();
 			return;
 		}
 	}

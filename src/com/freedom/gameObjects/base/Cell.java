@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 
 import com.freedom.gameObjects.base.Stuff.LoadingType;
 import com.freedom.gameObjects.controlled.Teleport;
+import com.freedom.view.ScreensHolder;
 
 public class Cell {
 
@@ -193,6 +194,24 @@ public class Cell {
 
 	}
 
+	public void repaintNeighbourhood() {
+		ScreensHolder
+				.getInstance()
+				.getCurrentScreen()
+				.repaint((getX() - 1) * Stuff.getSize(),
+						(getY() - 1) * Stuff.getSize(), Stuff.getSize() * 3,
+						Stuff.getSize() * 3);
+	}
+
+	public void repaintSelf() {
+		ScreensHolder
+				.getInstance()
+				.getCurrentScreen()
+				.repaint(getX() * Stuff.getSize(), getY() * Stuff.getSize(),
+						Stuff.getSize(), Stuff.getSize());
+
+	}
+
 	// блок выдачи информации
 	public int getContentAmount() {
 		return (contentAmount);
@@ -263,7 +282,7 @@ public class Cell {
 	public boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOn()) {
-
+				content[0].repaintSelf();
 				return true;
 
 			}
@@ -274,6 +293,7 @@ public class Cell {
 	public boolean useOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOff()) {
+				content[0].repaintSelf();
 				return true;
 			}
 
