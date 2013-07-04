@@ -29,50 +29,21 @@ public class Robot extends Stuff implements Moveable {
 
 	public static int maxLives = 1000;
 
-	private static Image textureN;
-	private static Image textureS;
-	private static Image textureE;
-	private static Image textureW;
-
-	private static Logger logger = Logger.getLogger("Robot");
-
-	static {
-		try {
-			textureN = ImageIO.read(new File("Resource/Textures/RobotN.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
-
-			textureS = ImageIO.read(new File("Resource/Textures/RobotS.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
-
-			textureE = ImageIO.read(new File("Resource/Textures/RobotE.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
-
-			textureW = ImageIO.read(new File("Resource/Textures/RobotW.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
-		} catch (IOException e) {
-			logger.warning("Robot texture was corrupted or deleted");
-		}
-	}
-	
 	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
 	}
-	
+
 	public Robot(int posX, int posY, String direction, Stuff c, int lives) {
 		super(false, true, 0, maxLives);
-		super.type=LoadingType.DNW;
+		super.type = LoadingType.DNW;
 		super.x = posX;
 		super.y = posY;
 		this.setColour("Blue");
 		this.direction = direction;
 		this.container[0] = c;
 		GameField.getInstance().cells[(int) this.x][(int) this.y].add(this);
-		logger.setLevel(Level.ALL);
+		logger.setLevel(Level.WARNING);
 	}
 
 	@Override
@@ -166,7 +137,7 @@ public class Robot extends Stuff implements Moveable {
 	public void moveFine(String direction) {
 		if (!direction.equals(this.direction)) {
 			this.direction = direction;
-			ScreensHolder.getInstance().getCurrentScreen().repaint();
+			repaintSelf();
 			return;
 		}
 		Runnable r = new Mover<Robot>(this, direction, 1, 10);
@@ -306,31 +277,82 @@ public class Robot extends Stuff implements Moveable {
 
 	@Override
 	public void draw(Graphics g) {
-		// logger.info("Coords double:" + x + " " + y + "|| Coord int: "
+		// logger.warning("Coords double:" + x + " " + y + "|| Coord int: "
 		// + (int) (x * getSize()) + " " + (int) (y * getSize()));
 
 		Graphics2D g2 = (Graphics2D) g;
-		
+
 		if (direction.equals("N")) {
-			g2.drawImage(textureN, (int) (x * getSize()),
-					(int) (y * getSize()), null);
+			switch (color) {
+
+			case RED:
+				g2.drawImage(texturesN[1], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case GREEN:
+				g2.drawImage(texturesN[2], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case BLUE:
+				g2.drawImage(texturesN[3], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			}
 		} else if (direction.equals("S")) {
-			g2.drawImage(textureS, (int) (x * getSize()),
-					(int) (y * getSize()), null);
+			switch (color) {
+
+			case RED:
+				g2.drawImage(texturesS[1], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case GREEN:
+				g2.drawImage(texturesS[2], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case BLUE:
+				g2.drawImage(texturesS[3], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			}
 		} else if (direction.equals("E")) {
-			g2.drawImage(textureE, (int) (x * getSize()),
-					(int) (y * getSize()), null);
+			switch (color) {
+
+			case RED:
+				g2.drawImage(texturesE[1], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case GREEN:
+				g2.drawImage(texturesE[2], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case BLUE:
+				g2.drawImage(texturesE[3], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			}
 		} else {
-			g2.drawImage(textureW, (int) (x * getSize()),
-					(int) (y * getSize()), null);
+			switch (color) {
+
+			case RED:
+				g2.drawImage(texturesW[1], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case GREEN:
+				g2.drawImage(texturesW[2], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			case BLUE:
+				g2.drawImage(texturesW[3], (int) (x * getSize()),
+						(int) (y * getSize()), null);
+				break;
+			}
 		}
 
 		if (container[0] != null) {
 			container[0].draw(g);
 		}
-		g.drawImage(harmTexture, (int) (x * getSize()),
-				(int) (y * getSize()), null);
-		harmTexture = null;
+		g.drawImage(harmTexture, (int) (x * getSize()), (int) (y * getSize()),
+				null);
 	}
 
 	@Override
@@ -344,10 +366,57 @@ public class Robot extends Stuff implements Moveable {
 	}
 
 	@Override
+	public int punch(int damage) {
+		int ret = super.punch(damage);
+		GameScreen.getInstance().updateGUIPane();
+		return ret;
+	}
+
+	@Override
 	public void die() {
 		System.out.println("You are dead!");
 		super.die();
-		ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),GameScreen.getInstance());
+		GameField.getInstance().resetTickerListeners();
+		GameField.getInstance();
+		GameField.otherThreads.shutdownNow();
+		// TODO: Более оригинальная и элегантная обработка смерти
+		ScreensHolder.getInstance().swapScreens(StartScreen.getInstance(),
+				GameScreen.getInstance());
+	}
+
+	private static Image[] texturesN = new Image[4];
+	private static Image[] texturesS = new Image[4];
+	private static Image[] texturesW = new Image[4];
+	private static Image[] texturesE = new Image[4];
+
+	private static Logger logger = Logger.getLogger("Robot");
+
+	static {
+		try {
+			for (int i = 1; i < 4; i++) {
+				texturesN[i] = ImageIO.read(
+						new File("Resource/Textures/Robot/" + i + "N.png"))
+						.getScaledInstance(getSize(), getSize(),
+								Image.SCALE_SMOOTH);
+
+				texturesS[i] = ImageIO.read(
+						new File("Resource/Textures/Robot/" + i + "S.png"))
+						.getScaledInstance(getSize(), getSize(),
+								Image.SCALE_SMOOTH);
+
+				texturesE[i] = ImageIO.read(
+						new File("Resource/Textures/Robot/" + i + "E.png"))
+						.getScaledInstance(getSize(), getSize(),
+								Image.SCALE_SMOOTH);
+
+				texturesW[i] = ImageIO.read(
+						new File("Resource/Textures/Robot/" + i + "W.png"))
+						.getScaledInstance(getSize(), getSize(),
+								Image.SCALE_SMOOTH);
+			}
+		} catch (IOException e) {
+			logger.warning("Robot texture was corrupted or deleted");
+		}
 	}
 
 }
