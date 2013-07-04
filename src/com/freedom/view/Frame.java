@@ -25,7 +25,7 @@ class Frame extends JFrame {
 		setUndecorated(true);
 		getContentPane().setLayout(null);
 		try {
-			setIconImage(ImageIO.read(new File("Resource/Textures/RobotN.png")));
+			setIconImage(ImageIO.read(new File("Resource/Textures/Robot/1N.png")));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

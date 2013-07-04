@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -49,7 +50,6 @@ public class Stuff {
 	// for TNT
 	private boolean expConductive;
 
-	private Logger logger = Logger.getLogger("Stuff");
 	public volatile boolean isMoving;
 
 	public Stuff() {
@@ -296,20 +296,23 @@ public class Stuff {
 	}
 
 	public int punch(int damage) {
-		if (damage < 1) {
-			return 0;
-		}
+//		if (damage < 1) {
+//			return 0;
+//		}
 		if (!this.destroyable)
 			return 0;
 
 		harmTexture = highlighterTexture;
-		repaintNeighbourhood();
-		try {
-			Thread.sleep(10);
-		} catch (InterruptedException e) {
+		repaintSelf();
+		try{
+			Thread.sleep(20);
+		} catch (InterruptedException e)
+		{
 			logger.warning("Interrupted while punched");
 		}
-
+		harmTexture = null;
+		repaintSelf();
+		
 		if (this.lives < damage) {
 			int lastLives = this.lives;
 			this.die();
@@ -353,22 +356,24 @@ public class Stuff {
 		GameField.getInstance();
 		this.maxLives = this.basicMaxLives
 				* GameField.power.get(this.getColour());
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintSelf();
 	}
 
 	public void setControlled(Cell element) {
 		return;
 	}
 
+	public static Logger logger = Logger.getLogger("Stuff");
 	private static Image highlighterTexture;
 
 	static {
+		logger.setLevel(Level.WARNING);
 		try {
 			highlighterTexture = ImageIO
 					.read(new File("Resource/Textures/Highlighter.png"))
 					.getScaledInstance(getSize(), getSize(), Image.SCALE_SMOOTH);
 		} catch (IOException e) {
-			// TODO Logger message
+			logger.warning("Highlighter texture was corrupted or deleted");
 		}
 	}
 

@@ -134,8 +134,7 @@ public class TNT extends Stuff {
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.warning("TNT timed explosion didn't happen (was interrupted)");
 			}
 			TNT.this.activationProcess();
 

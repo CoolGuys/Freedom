@@ -91,7 +91,7 @@ public class PacmanSoul implements Runnable {
 			while (alive) {
 				if (GameField.getInstance().active) {
 					body.changeTexture();
-					body.repaintSelf();
+			//		body.repaintSelf();
 
 				}
 				try {

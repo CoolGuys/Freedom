@@ -282,7 +282,7 @@ public class Cell {
 	public boolean useOn() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOn()) {
-				content[0].repaintSelf();
+				repaintSelf();
 				return true;
 
 			}
@@ -293,7 +293,7 @@ public class Cell {
 	public boolean useOff() {
 		for (int i = 1; i < this.contentAmount; i++) {
 			if (this.content[i].useOff()) {
-				content[0].repaintSelf();
+				repaintSelf();
 				return true;
 			}
 

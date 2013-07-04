@@ -90,7 +90,7 @@ public class Deflector extends Laser {
 			this.direction = Deflector.list.get(this.revolve(
 					list.indexOf(buf.direction), this.toDeflect));
 			super.useOn();
-			ScreensHolder.getInstance().getCurrentScreen().repaint();
+			repaintSelf();
 		}
 	}
 

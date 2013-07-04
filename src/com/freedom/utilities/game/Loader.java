@@ -391,7 +391,7 @@ public class Loader {
 					 * newstuff).getX()][((Stuff) newstuff).getY()].add(((Stuff)
 					 * newstuff)); }
 					 */
-					lsm.setLoadingObjectName("Robot creating");
+					lsm.setLoadingObjectName("Robot");
 					lsm.setProgressPercent(0);
 					NodeList robotlist = lvl.getElementsByTagName("robot");
 					for (int rbti = 0; rbti < robotlist.getLength(); rbti++) {

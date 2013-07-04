@@ -6,7 +6,6 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.gameObjects.controlled.Teleport;
 import com.freedom.model.GameField;
-import com.freedom.view.EditorScreen;
 
 public class RobotEditor extends Robot {
 	public Stuff source;
@@ -62,7 +61,7 @@ public class RobotEditor extends Robot {
 			return;
 		container[0].x = x;
 		container[0].y = y;
-		EditorScreen.getInstance().repaint();
+		repaintNeighbourhood();
 	}
 
 	@Override
@@ -83,7 +82,7 @@ public class RobotEditor extends Robot {
 			return;
 		this.container[0] = null;
 
-		EditorScreen.getInstance().repaint();
+		repaintNeighbourhood();	
 		return;
 	}
 }

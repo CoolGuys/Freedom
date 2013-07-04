@@ -22,12 +22,13 @@ public final class Mover<MO extends Moveable> implements Runnable {
 		Thread.currentThread().setName(
 				"Mover@" + theOneToMove.getClass().toString());
 		try {
+			theOneToMove.setDirection(direction);
+			((Stuff)theOneToMove).repaintSelf();
 			if (GameField.getInstance().cells[theOneToMove
 					.getTargetCellCoordinates(direction).x][theOneToMove
 					.getTargetCellCoordinates(direction).y].locked == true
 					|| theOneToMove.checkIfBeingMoved())
 				return;
-			theOneToMove.setDirection(direction);
 			for (int k = 0; k < distance; k++) {
 				if (theOneToMove.canGo()) {
 					theOneToMove.tellIfBeingMoved(true);
@@ -50,23 +51,14 @@ public final class Mover<MO extends Moveable> implements Runnable {
 					}
 
 					theOneToMove.recalibrate();
-					// GameField.getInstance().cells[(int) theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).x][(int)
-					// theOneToMove
-					// .getTargetCellCoordinates(invertDirection()).y]
-					// .utilityAdd((Stuff) theOneToMove);
+					((Stuff)theOneToMove).repaintNeighbourhood();
 
 					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].clearMeta();
 					GameField.getInstance().cells[theOneToMove.getX()][theOneToMove
 							.getY()].add((Stuff) theOneToMove);
-
-					// logger.info("current" + theOneToMove.getX() + " "
-					// + theOneToMove.getY());
-
 				}
 				theOneToMove.recalibrate();
-				((Stuff)theOneToMove).repaintNeighbourhood();
 			}
 
 			theOneToMove.tellIfBeingMoved(false);

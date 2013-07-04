@@ -13,7 +13,6 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.ScreensHolder;
 
 public class LaserDetectorOr extends ButtonOr {
 
@@ -62,7 +61,7 @@ public class LaserDetectorOr extends ButtonOr {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintSelf();
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
 	}
 

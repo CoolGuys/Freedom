@@ -142,6 +142,21 @@ public class Teleport extends Stuff {
 	protected int getYLeadTo() {
 		return yLeadTo;
 	}
+	public void setDestination(Point p) {
+		this.xLeadTo = p.x;
+		this.yLeadTo = p.y;
+	}
+
+	@Override
+	public boolean absorbs(Stuff element) {
+		return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return false;
+	}
+	
 
 	private static Logger logger = Logger.getLogger("Teleport");
 	static {
@@ -163,18 +178,4 @@ public class Teleport extends Stuff {
 		}
 	}
 
-	public void setDestination(Point p) {
-		this.xLeadTo = p.x;
-		this.yLeadTo = p.y;
-	}
-
-	@Override
-	public boolean absorbs(Stuff element) {
-		return false;
-	}
-
-	@Override
-	public boolean reflects(Stuff element) {
-		return false;
-	}
 }

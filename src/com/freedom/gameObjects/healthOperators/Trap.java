@@ -10,7 +10,6 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.ScreensHolder;
 
 //TODO поправить, чтобы становился неактивным!
 
@@ -29,19 +28,10 @@ public class Trap extends Stuff {
 			element.punch(this.damage);
 			this.textureRed = textureClosed;
 			SoundEngine.playClip(f1, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().repaint(
-					this.getX() * Stuff.getSize(),
-					this.getY() * Stuff.getSize(), Stuff.getSize(),
-					Stuff.getSize());
+			repaintSelf();
 			this.open = false;
 		} else {
-			this.textureRed = textureOpen;
-			this.open = true;
-			SoundEngine.playClip(f2, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().repaint(
-					this.getX() * Stuff.getSize(),
-					this.getY() * Stuff.getSize(), Stuff.getSize(),
-					Stuff.getSize());
+			return;
 		}
 	}
 
@@ -51,10 +41,7 @@ public class Trap extends Stuff {
 			this.textureRed = textureOpen;
 			this.open = true;
 			SoundEngine.playClip(f2, -1, -15);
-			ScreensHolder.getInstance().getCurrentScreen().repaint(
-					this.getX() * Stuff.getSize(),
-					this.getY() * Stuff.getSize(), Stuff.getSize(),
-					Stuff.getSize());
+			repaintSelf();
 		}
 	}
 

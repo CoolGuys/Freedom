@@ -15,7 +15,6 @@ import org.w3c.dom.Element;
 import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.ScreensHolder;
 
 /*
  * признак конца - this.next.next = this.next;
@@ -461,12 +460,9 @@ public class LaserBeam extends Stuff {
 			this.next.prev = this;
 
 			this.next.setSource(this.source);
-			try {
-				this.next.reflect();
-			} catch(Exception e)
-			{
-				
-			}
+			
+			this.next.reflect();
+			
 			if (this.next.getDamage() == 0) {
 				this.next = null;
 				return;
@@ -496,7 +492,7 @@ public class LaserBeam extends Stuff {
 
 			this.next.buildBeam();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintSelf();
 
 	}
 
@@ -507,7 +503,7 @@ public class LaserBeam extends Stuff {
 		LaserBeam buf = this;
 		Cell[][] cellBuf = GameField.getInstance().cells;
 		while (buf.next != null) {
-
+			
 			if (buf.secondNext != null) {
 
 				/*GameField.getInstance().cells[buf.secondNext.getX()][buf.secondNext
@@ -515,6 +511,8 @@ public class LaserBeam extends Stuff {
 				buf.secondNext.deleteBeam();
 			}
 			cellBuf[buf.getX()][buf.getY()].delete(buf);
+			cellBuf[buf.getX()][buf.getY()].repaintSelf();
+			
 			// System.out.println(buf.getX() + " " + buf.getY() + );
 			buf = buf.next;
 		}
@@ -523,6 +521,7 @@ public class LaserBeam extends Stuff {
 			buf.secondNext.deleteBeam();	
 		}
 		cellBuf[buf.getX()][buf.getY()].delete(buf);
+		cellBuf[buf.getX()][buf.getY()].repaintSelf();
 		this.next = null;
 	}
 

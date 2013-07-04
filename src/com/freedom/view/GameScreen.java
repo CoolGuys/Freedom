@@ -223,6 +223,10 @@ public class GameScreen extends AbstractScreen {
 		ScreensHolder.getInstance().repaint();
 	}
 
+	public void updateGUIPane() {
+		guiPane.repaint();
+	}
+	
 	protected InGameMessageDisplay msgDisplay = new InGameMessageDisplay();
 	protected InGameGUIPane guiPane = new InGameGUIPane();
 	private int scale = 50;

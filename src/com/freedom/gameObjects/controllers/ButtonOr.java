@@ -16,7 +16,6 @@ import com.freedom.gameObjects.base.Cell;
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
-import com.freedom.view.ScreensHolder;
 
 public class ButtonOr extends Stuff {
 	public ButtonOr()
@@ -49,7 +48,7 @@ public class ButtonOr extends Stuff {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintSelf();
 	}
 	@Override
 	public void touch(Stuff element) {
@@ -100,19 +99,12 @@ public class ButtonOr extends Stuff {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			for (int i = 0; i < controlledCellsAmount; i++) {
-				
-				if (GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.useOn()) {
-					ScreensHolder.getInstance().getCurrentScreen().repaint(
-									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]].getX()
-											* getSize(),
-									GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-											.getY() * getSize(), getSize(),
-									getSize());
-				}
+				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
+						.useOn();
 			}
 		}
 	}
+	
 
 	@Override
 	public void giveInfo() {

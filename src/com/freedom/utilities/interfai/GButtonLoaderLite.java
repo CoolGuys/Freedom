@@ -12,7 +12,6 @@ import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.logging.Logger;
 
 import com.freedom.model.GameField;
@@ -67,9 +66,11 @@ public class GButtonLoaderLite {
 	}
 
 	private void loadLevel() throws IOException{
+		
 		File src = new File(fileToLoad);
 		File dst = new File("TmpSave");
-		Files.copy(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+		Files.delete(dst.toPath());
+		Files.copy(src.toPath(), dst.toPath());
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				LoadScreen.getInstance());
 		GameField.getInstance().loadLevel(dst.getAbsolutePath());

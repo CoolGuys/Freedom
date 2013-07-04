@@ -17,7 +17,7 @@ public class HitPointDisplay {
 
 	public void draw(Graphics g) {
 
-		String message = "Durability: "+GameField.getInstance().getRobot().getLives() + " Robot color: " + GameField.getInstance().getRobot().getColour();
+		String message = "Durability: "+GameField.getInstance().getRobot().getLives();
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_ON);

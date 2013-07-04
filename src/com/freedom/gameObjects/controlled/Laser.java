@@ -19,7 +19,6 @@ import org.w3c.dom.Element;
 
 import com.freedom.gameObjects.base.Stuff;
 import com.freedom.model.GameField;
-import com.freedom.view.ScreensHolder;
 
 public class Laser extends Stuff {
 	LaserBeam beamHead;
@@ -118,7 +117,7 @@ public class Laser extends Stuff {
 	@Override
 	// вращаем по часовой
 	public void interact(Stuff interactor) {
-		boolean condition = this.useOff();
+		boolean wasOn = this.useOff();
 		if (this.direction.equals("N"))
 			this.direction = "NE";
 		else if (this.direction.equals("S"))
@@ -139,9 +138,9 @@ public class Laser extends Stuff {
 		else if (this.direction.equals("SE"))
 			this.direction = "S";
 		chooseTexture();
-		ScreensHolder.getInstance().getCurrentScreen().repaint();
+		repaintSelf();
 		// System.out.println("Laser direction: "+ this.direction);
-		if (condition)
+		if (wasOn)
 			this.useOn();
 	}
 

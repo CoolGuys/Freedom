@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,10 +113,14 @@ public class SaveScreenModel {
 
 			case OVEWRITING:
 				if (textField.getText().equals(lastName)) {
-					GameField.getInstance().setPathToSave(
-							"Saves/" + lastName + ".lvl");
 					GameField.getInstance().saveCurrentLevelToPackage();
-					GameField.getInstance().setPathToSave("TmpSave");
+					File src = new File(sourcePack);
+					File dst = new File("Saves/"+lastName+".lvl");
+					try {
+						Files.copy(src.toPath(), dst.toPath(), StandardCopyOption.REPLACE_EXISTING);
+					} catch (IOException e1) {
+						logger.warning("Trouble while copying to save: "+e1.getMessage());
+					}
 					textField.setText("");
 
 					interactionLabel.setText("Overwrote");

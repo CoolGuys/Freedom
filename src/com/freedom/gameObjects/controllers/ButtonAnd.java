@@ -142,8 +142,6 @@ public class ButtonAnd extends Stuff {
 
 				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 						.useOn();
-				GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
-						.repaintSelf();
 			}
 		}
 	}
