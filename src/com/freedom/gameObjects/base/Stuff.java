@@ -232,7 +232,9 @@ public class Stuff {
 				.repaint((getX() - 1) * getSize(), (getY() - 1) * getSize(),
 						getSize() * 3, getSize() * 3);
 	}
-
+	/**
+	 * перересовать себя
+	 */
 	public void repaintSelf() {
 		ScreensHolder
 				.getInstance()

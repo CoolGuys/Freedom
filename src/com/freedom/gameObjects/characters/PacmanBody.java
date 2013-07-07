@@ -293,6 +293,7 @@ public class PacmanBody extends Stuff implements Moveable {
 			break;
 		default:
 		}
+		this.repaintSelf();
 	}
 	private static BufferedImage texture1S = new BufferedImage(getSize(),
 			getSize(), BufferedImage.TYPE_INT_ARGB);
