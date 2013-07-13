@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.Timer;
@@ -32,26 +33,13 @@ import com.freedom.view.ScreensHolder;
 
 public class GameField {
 
-	private int currentLevelId;
-	private String pathToSave;
-	private int previousLevelId;
-	//public Cell[][] previousCells;
-	private volatile Robot robot;
-	private volatile RobotEditor robotEditor;
 	public volatile Cell[][] cells;
 	public volatile Ghost[] ghosts;
-	private volatile int gostsAmount;
-	private int xSize;
-	private int ySize;
-	private int cellSize;
-	public Timer ticker = new Timer(2, null);
-	private Timer deathTicker = new Timer(100, null);
-	private static GameField INSTANCE;
+	
 	public static ExecutorService otherThreads;
 	public boolean active;
-	@SuppressWarnings("unused")
-	private Logger gleblo = Logger.getLogger("gleblo");
 
+	
 	public void setPathToSave(String pathToSaveFile) {
 		this.pathToSave = pathToSaveFile;
 	}
@@ -59,40 +47,37 @@ public class GameField {
 	public String getPathToSave() {
 		return this.pathToSave;
 	}
-	
-	public int setGstAmount(int number){
-		int previous=this.gostsAmount;
-		this.gostsAmount=number;
+
+	public int setGhostAmount(int number) {
+		int previous = this.gostsAmount;
+		this.gostsAmount = number;
 		return previous;
 	}
-	
+
 	public Ghost[] newGhosts(int amount) {
-		Ghost[] previousGsts=this.ghosts;
+		Ghost[] previousGsts = this.ghosts;
 		this.ghosts = new Ghost[amount];
-		this.gostsAmount=amount;
+		this.gostsAmount = amount;
 		return previousGsts;
 	}
-	
-	public Ghost setGhost(int i,Ghost gst){
-		Ghost prev=this.ghosts[i];
-		this.ghosts[i]=gst;
+
+	public Ghost setGhost(int i, Ghost gst) {
+		Ghost prev = this.ghosts[i];
+		this.ghosts[i] = gst;
 		return prev;
 	}
 
-	public int getGstAmount(){
+	public int getGhostAmount() {
 		return this.gostsAmount;
 	}
-	
-	public void setCurrentLevel(int currentLevelIdToSet) {
-		this.currentLevelId = currentLevelIdToSet;
-	}
+
 
 	public void setPreviousLevel(int prevoiusLevelIdToSet) {
 		this.previousLevelId = prevoiusLevelIdToSet;
 	}
 
 	public int getLevelId() {
-		return this.currentLevelId;
+		return this.getCurrentLevelId();
 	}
 
 	public void activate() {
@@ -112,19 +97,16 @@ public class GameField {
 	 * 
 	 * @param pathToPackage
 	 *            путь к файлу
-	 * @param levelID
-	 *            Апендикс, который сейчас не нужен
 	 */
 	public void loadLevel(String pathToPackage) {
 		GameField.getInstance().setPathToSave("TmpSave");
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
-		//previousCells = cells;
 		GameScreen.getInstance().setSize(cells.length * cellSize,
 				cells[1].length * cellSize);
 
 		GameScreen.getInstance().centerByRobot(getRobot());
-		
+
 	}
 
 	public ExecutorService getThreads() {
@@ -134,14 +116,17 @@ public class GameField {
 	public void switchToNextLevel(int nextLevelId, int robotx, int roboty,
 			boolean canTakeBuf) {
 
+		this.active = false;
+		resetTickerListeners();
+
+		logger.info("Switching to next level...");
+
 		ScreensHolder.getInstance().swapScreens(LoadingScreen.getInstance(),
 				GameScreen.getInstance());
-		resetTickerListeners();
 		otherThreads.shutdownNow();
-		this.active=false;
 		otherThreads = Executors.newCachedThreadPool();
-		previousLevelId = currentLevelId;
-		currentLevelId = nextLevelId;
+		previousLevelId = getCurrentLevelId();
+		setCurrentLevelId(nextLevelId);
 		Stuff buf = robot.getContent();
 		if (canTakeBuf) {
 			robot.emptyContainer();
@@ -159,14 +144,13 @@ public class GameField {
 			int previousy = robot.getY();
 			Stuff element = this.robot;
 			GameField.getInstance().getCells()[previousx][previousy]
-						.deleteStuff();
-			while((!GameField.getInstance().getCells()[robotx][roboty].add(element))){
+					.deleteStuff();
+			while ((!GameField.getInstance().getCells()[robotx][roboty]
+					.add(element))) {
 				GameField.getInstance().getCells()[robotx][roboty]
 						.deleteStuff();
 			}
-			
-			
-			
+
 			for (Stuff containedElement : element.container) {
 				if (containedElement != null) {
 					containedElement.x = robot.getX();
@@ -175,12 +159,10 @@ public class GameField {
 			}
 		}
 
-		try {
+		if (buf != null)
 			buf.itsAlive();
-		} catch (Exception E) {
 
-		}
-		this.robot.color=col;
+		this.robot.color = col;
 		this.robot.setLives(liv);
 		Loader.lvlToSv(nextLevelId, this.pathToSave);
 		GameScreen.getInstance().setSize(cells.length * cellSize,
@@ -189,13 +171,15 @@ public class GameField {
 		ScreensHolder.getInstance().swapScreens(GameScreen.getInstance(),
 				LoadingScreen.getInstance());
 
-		this.active=true;
+		logger.info("Done!");
+
+		this.active = true;
 		ScreensHolder.getInstance().repaint();
 	}
 
 	public void saveCurrentLevelToPackage() {
 		// this.pathToSave = "Saves/Save1.lvl";
-		Loader.lvlToSv(this.currentLevelId, this.pathToSave);
+		Loader.lvlToSv(this.getCurrentLevelId(), this.pathToSave);
 	}
 
 	public void resetTickerListeners() {
@@ -268,30 +252,58 @@ public class GameField {
 	public Timer getDeathTicker() {
 		return deathTicker;
 	}
+
+	// далее прописано распределение по классам
+	/*
+	 * здесь надо придумать потом цвета - в общем, свободу попугаям
+	 */
+	public static Map<String, Integer> power;
+	static {
+		power = new HashMap<String, Integer>();
+		power.put("Red", 1);
+		power.put("Green", 2);
+		power.put("Blue", 3);
+	}
+
+	public static boolean isCoolEnough(Stuff agent, Stuff object) {
+		if (power.get(agent.getColour()) >= power.get(object.getColour()))
+			return true;
+		return false;
+	}
+
+	public RobotEditor getRobotEditor() {
+		return robotEditor;
+	}
+
+	public void setRobotEditor(RobotEditor robotEditor) {
+		this.robotEditor = robotEditor;
+	}
 	
-	//далее прописано распределение по классам
-		/*
-		 * здесь надо придумать потом цвета - в общем, свободу попугаям
-		 */
-		public static Map<String,Integer> power;
-		static{
-			power = new HashMap<String,Integer>();
-			power.put("Red",1);
-			power.put("Green",2);
-			power.put("Blue",3);
-		}
-		
-		public static boolean isCoolEnough(Stuff agent, Stuff object){
-			if(power.get(agent.getColour())>=power.get(object.getColour()))
-				return true;
-			return false;
-		}
 
-		public RobotEditor getRobotEditor() {
-			return robotEditor;
-		}
+	public int getCurrentLevelId() {
+		return currentLevelId;
+	}
 
-		public void setRobotEditor(RobotEditor robotEditor) {
-			this.robotEditor = robotEditor;
-		}
+	public void setCurrentLevelId(int currentLevelId) {
+		this.currentLevelId = currentLevelId;
+	}
+
+	private int currentLevelId;
+	private String pathToSave;
+	private int previousLevelId;
+	private volatile Robot robot;
+	private volatile RobotEditor robotEditor;
+	private volatile int gostsAmount;
+	private int xSize;
+	private int ySize;
+	private int cellSize;
+	private Timer ticker = new Timer(2, null);
+	private Timer deathTicker = new Timer(100, null);
+	private static GameField INSTANCE;
+	
+	private static Logger logger = Logger.getLogger("gleblo");
+	static {
+		logger.setLevel(Level.ALL);
+	}
+
 }

@@ -19,6 +19,7 @@ public class LaserDetectorOr extends ButtonOr {
 	public LaserDetectorOr() {
 		super(true);
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
+		nativeLevel = GameField.getInstance().getCurrentLevelId();
 	}
 
 	@Override
@@ -50,10 +51,11 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	public void realUntouch(Stuff toucher) {
-		if(!GameField.getInstance().active) {
+		if(!GameField.getInstance().active || !(nativeLevel==GameField.getInstance().getCurrentLevelId())) {
 			inertion.stop();
 			return;
 		}
+		
 		inertion.stop();
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		sendingSignal = false;
@@ -121,4 +123,6 @@ public class LaserDetectorOr extends ButtonOr {
 	public boolean reflects(Stuff element) {
 		return !this.absorbs(element);
 	}
+	
+	private int nativeLevel;
 }

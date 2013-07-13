@@ -75,7 +75,7 @@ public class Loader {
 		// Wall wall = new Wall();
 		GameField.getInstance().cells = new Cell[x + 2][y + 2];
 		GameField.getInstance().newGhosts(0);
-		GameField.getInstance().setCurrentLevel(lvl);
+		GameField.getInstance().setCurrentLevelId(lvl);
 
 		for (int i = 1; i <= x; i++) {
 			for (int j = 1; j <= y; j++) {
@@ -291,7 +291,7 @@ public class Loader {
 			int tl;
 			tl = Integer.parseInt(doc.getDocumentElement().getAttribute(
 					"startLvl"));
-			GameField.getInstance().setCurrentLevel(tl);
+			GameField.getInstance().setCurrentLevelId(tl);
 			GameField.getInstance().setPreviousLevel(tl);
 			Loader.readLvl(tl, lvlfile);
 		} catch (Exception ei) {
