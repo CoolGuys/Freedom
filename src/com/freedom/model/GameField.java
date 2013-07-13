@@ -102,7 +102,10 @@ public class GameField {
 		GameField.getInstance().setPathToSave("TmpSave");
 		otherThreads = Executors.newCachedThreadPool();
 		Loader.loadSave(pathToPackage);
-		GameScreen.getInstance().setSize(cells.length * cellSize,
+		GameScreen.
+		getInstance().
+		setSize(cells.
+				length * cellSize,
 				cells[1].length * cellSize);
 
 		GameScreen.getInstance().centerByRobot(getRobot());

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
@@ -18,10 +19,9 @@ import com.freedom.model.GameField;
 import com.freedom.utilities.game.SoundEngine;
 
 public class ButtonAnd extends Stuff {
-	public ButtonAnd()
-	{
+	public ButtonAnd() {
 		super(false, true);
-		super.type=LoadingType.OBJC;
+		super.type = LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
@@ -31,19 +31,16 @@ public class ButtonAnd extends Stuff {
 		textureBlue = texturesDepressed[3];
 
 	}
-	
-	//конструктор ТОЛЬКо для детектора
-	public ButtonAnd(boolean ifLaserDetector){
+
+	// конструктор ТОЛЬКо для детектора
+	public ButtonAnd(boolean ifLaserDetector) {
 		super(false, false);
-		super.type=LoadingType.OBJC;
+		super.type = LoadingType.OBJC;
 		super.x = x;
 		super.y = y;
 		controlledCellsList = new int[10][2];
-
-		textureRed = texturesDepressed[1];
-		textureGreen = texturesDepressed[2];
-		textureBlue = texturesDepressed[3];
 	}
+
 	@Override
 	public void untouch(Stuff element) {
 		textureRed = texturesDepressed[1];
@@ -71,7 +68,6 @@ public class ButtonAnd extends Stuff {
 		GameField.getInstance().getTicker().addActionListener(sender);
 
 	}
-	
 
 	@Override
 	public int getUseAmount() {
@@ -82,6 +78,7 @@ public class ButtonAnd extends Stuff {
 	public int[][] getUseList() {
 		return controlledCellsList;
 	}
+
 	/**
 	 * Метод, который считывает всю инфу из файла с лвлами
 	 * 
@@ -105,10 +102,9 @@ public class ButtonAnd extends Stuff {
 	@Override
 	public void loadToFile(Element obj) {
 		super.loadToFile(obj);
-		obj.setAttribute("class", "com.freedom.gameObjects.controllers.ButtonAnd");
+		obj.setAttribute("class",
+				"com.freedom.gameObjects.controllers.ButtonAnd");
 	}
-
-	
 
 	@Override
 	public void giveInfo() {
@@ -129,7 +125,61 @@ public class ButtonAnd extends Stuff {
 					.unhighlight();
 		}
 	}
+	
+	// вставляет новый элемент в контрольный список
+		@Override
+		public void setControlled(Cell element) {
+			this.controlledCellsList[controlledCellsAmount][0] = element.getX();
+			this.controlledCellsList[controlledCellsAmount][1] = element.getY();
+			element.buttonsNumber++;
+			this.controlledCellsAmount++;
+		}
 
+		@Override
+		public boolean absorbs(Stuff element) {
+			return false;
+		}
+
+		@Override
+		public boolean reflects(Stuff element) {
+			return false;
+		}
+
+
+	
+
+	private static File f2; 
+	private static Image[] texturesPressed = new Image[4];
+	private static Image[] texturesDepressed = new Image[4];
+	
+	// массив с координатами селлов на которые действует батон
+	protected int[][] controlledCellsList;
+	
+	// количество целлов на которые действует батон
+	protected int controlledCellsAmount; 
+	
+	protected ActionListener sender;
+
+	private static Logger logger = Logger.getLogger("ButtonAnd");
+	static {
+		logger.setLevel(Level.ALL);
+		try {
+			for (int i = 1; i <= 3; i++) {
+				texturesPressed[i] = ImageIO.read(
+						new File("Resource/Textures/ButtonAND/Pressed" + i
+								+ ".png")).getScaledInstance(getSize(),
+						getSize(), Image.SCALE_SMOOTH);
+				texturesDepressed[i] = ImageIO.read(
+						new File("Resource/Textures/ButtonAND/Depressed" + i
+								+ ".png")).getScaledInstance(getSize(),
+						getSize(), Image.SCALE_SMOOTH);
+			}
+			f2 = new File("Resource/Sound/ButtonClicked.wav");
+		} catch (IOException e) {
+			logger.warning("Textures or sound corrupted");
+		}
+	}
+	
 	public class SignalOnSender implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -145,51 +195,6 @@ public class ButtonAnd extends Stuff {
 			}
 		}
 	}
-	private static Image[] texturesPressed = new Image[4];
-	private static Image[] texturesDepressed = new Image[4];
-	protected int[][] controlledCellsList;// массив с координатами селлов на
-	private static File f2; // которые действует
-	// батон
-	protected int controlledCellsAmount; // количество целлов на которые действует
-										// батон
-	protected ActionListener sender;
 
-	private static Logger logger = Logger.getLogger("ButtonAnd");
-	static {
-		try {
-			for(int i=1; i<=3;i++) {
-				texturesPressed[i] = ImageIO.read(
-						new File("Resource/Textures/ButtonAND/Pressed"+i+".png"))
-						.getScaledInstance(getSize(), getSize(),
-								Image.SCALE_SMOOTH);
-				texturesDepressed[i] = ImageIO.read(
-						new File("Resource/Textures/ButtonAND/Depressed"+i+".png"))
-						.getScaledInstance(getSize(), getSize(),
-								Image.SCALE_SMOOTH);
-				}
-			f2 = new File("Resource/Sound/ButtonClicked.wav");
-		} catch (IOException e) {
-			logger.warning("Textures or sound corrupted");
-		}
-	}
 	
-	//вставляет новый элемент в контрольный список
-	@Override
-	public void setControlled(Cell element) {
-		this.controlledCellsList[controlledCellsAmount][0] = element.getX();
-		this.controlledCellsList[controlledCellsAmount][1] = element.getY();
-		element.buttonsNumber++;
-		this.controlledCellsAmount++;
-	}
-	
-	@Override
-	public boolean absorbs(Stuff element){
-		return false;
-	}
-	
-	@Override
-	public boolean reflects(Stuff element) {
-		return false;
-	}
-
 }

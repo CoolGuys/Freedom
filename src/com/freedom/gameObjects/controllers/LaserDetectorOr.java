@@ -29,18 +29,21 @@ public class LaserDetectorOr extends ButtonOr {
 			sendingSignal = true;
 		}
 		switch (toucher.getColor()) {
-		case RED: {
+		case RED:
 			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[1];
+			repaintSelf();
 			return;
-		}
-		case GREEN: {
+
+		case GREEN:
 			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[2];
+			repaintSelf();
 			return;
-		}
-		case BLUE: {
+
+		case BLUE:
 			this.textureRed = this.textureGreen = this.textureBlue = texturesOn[3];
+			repaintSelf();
 			return;
-		}
+
 		}
 	}
 
@@ -51,11 +54,12 @@ public class LaserDetectorOr extends ButtonOr {
 	}
 
 	public void realUntouch(Stuff toucher) {
-		if(!GameField.getInstance().active || !(nativeLevel==GameField.getInstance().getCurrentLevelId())) {
+		if (!GameField.getInstance().active
+				|| !(nativeLevel == GameField.getInstance().getCurrentLevelId())) {
 			inertion.stop();
 			return;
 		}
-		
+
 		inertion.stop();
 		GameField.getInstance().getTicker().removeActionListener(sender);
 		sendingSignal = false;
@@ -63,8 +67,8 @@ public class LaserDetectorOr extends ButtonOr {
 			GameField.getInstance().getCells()[controlledCellsList[i][0]][controlledCellsList[i][1]]
 					.useOff();
 		}
-		repaintSelf();
 		this.textureRed = this.textureGreen = this.textureBlue = textureOff;
+		repaintSelf();
 	}
 
 	@Override
@@ -80,13 +84,14 @@ public class LaserDetectorOr extends ButtonOr {
 	private Timer inertion = new Timer(500, breaker);
 	protected SignalOnSender sender = new SignalOnSender();
 	private boolean sendingSignal;
+	private int nativeLevel;
+	
 
 	static {
 		try {
-			textureOff = ImageIO.read(
-					new File("Resource/Textures/LaserDetector/0.png"))
-					.getScaledInstance(getSize(), getSize(),
-							Image.SCALE_SMOOTH);
+			textureOff = ImageIO
+					.read(new File("Resource/Textures/LaserDetector/0.png"))
+					.getScaledInstance(getSize(), getSize(), Image.SCALE_SMOOTH);
 			for (int i = 1; i <= 3; i++) {
 				texturesOn[i] = ImageIO.read(
 						new File("Resource/Textures/LaserDetector/" + i
@@ -96,6 +101,21 @@ public class LaserDetectorOr extends ButtonOr {
 		} catch (IOException e) {
 			logger.warning("Laser detector texture was corrupted");
 		}
+	}
+
+	
+
+	@Override
+	public boolean absorbs(Stuff element) {
+		if (element.getColour() != this.getColour())
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean reflects(Stuff element) {
+		return !this.absorbs(element);
 	}
 
 	private class InertedCircuitBreaker implements ActionListener {
@@ -110,19 +130,4 @@ public class LaserDetectorOr extends ButtonOr {
 
 		private Stuff toucher;
 	}
-
-	@Override
-	public boolean absorbs(Stuff element) {
-		if (element.getColour() != this.getColour())
-			return true;
-		else
-			return false;
-	}
-
-	@Override
-	public boolean reflects(Stuff element) {
-		return !this.absorbs(element);
-	}
-	
-	private int nativeLevel;
 }
