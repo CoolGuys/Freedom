@@ -2337,6 +2337,13 @@
 			y="2" messageToDisplay="Hello world!!!">
 			<cels x="4" y="3" />
 		</gst>
+		<obj class="com.freedom.gameObjects.controlled.Box" color="Blue"
+			x="2" y="2">
+		</obj>
+		<gst class="com.freedom.utilities.multiplayer.Multytester" x="6"
+			y="6" sorc="true">
+			<cels x="6" y="6" />
+		</gst>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="3">
 		</obj>
 		<obj class="com.freedom.gameObjects.uncontrolled.Tile" x="2" y="4">

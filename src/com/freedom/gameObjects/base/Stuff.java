@@ -96,9 +96,37 @@ public class Stuff {
 		this.basicMaxLives = this.lives;
 	}
 
-	public void setXY(double x, double y) {
-		this.x = x;
-		this.y = y;
+	public void setXY(int x1,int y1){
+		this.x=	(double)x1;	
+		this.y=	(double)y1;	
+	}
+	
+	public void teleport(double x1, double y1) {
+		if (GameField.getInstance().getCells()[(int)x1][(int)y1].add(this)) {
+			GameField.getInstance().getCells()[(int)this.x][(int)this.y]
+					.deleteStuff();
+			GameField.getInstance().getCells()[(int)this.x][(int)this.y]
+							.repaintNeighbourhood();
+			GameField.getInstance().getCells()[(int) x1][(int) y1]
+					.repaintNeighbourhood();
+			this.x = x1;
+			this.y = y1;
+			return;
+		} else {
+			GameField.getInstance().getCells()[(int) x1][(int) y1]
+					.deleteStuff();
+			GameField.getInstance().getCells()[(int) x1][(int) y1].add(this);
+			GameField.getInstance().getCells()[(int) this.x][(int) this.y]
+					.deleteStuff();
+			GameField.getInstance().getCells()[(int) x1][(int) y1]
+					.repaintNeighbourhood();
+			GameField.getInstance().getCells()[(int) this.x][(int) this.y]
+					.repaintNeighbourhood();
+			this.x = x1;
+			this.y = y1;
+			return;
+		}
+
 	}
 
 	public void readLvlFile(Element obj) {
